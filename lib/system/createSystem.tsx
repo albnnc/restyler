@@ -25,7 +25,8 @@ export const createSystem = (options: {
         data.updateEffects.push(fn);
         return () => {
           data.updateEffects.splice(
-            data.updateEffects.findIndex(v => v === fn)
+            data.updateEffects.findIndex(v => v === fn),
+            1
           );
         };
       }, []);
