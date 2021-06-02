@@ -18,7 +18,7 @@ export const table: Theme = {
 
   body: {
     extend: {
-      '& td': {
+      '&:not(:first-child) td': {
         borderTop: '1px solid rgba(0, 0, 0, 0.1)'
       }
     }
