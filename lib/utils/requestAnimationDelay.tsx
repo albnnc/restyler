@@ -1,7 +1,7 @@
 export const requestAnimationDelay = (fn: () => void) => {
   let tick = 0;
   const count = () => {
-    if (tick < 10) {
+    if (tick < 100) {
       ++tick;
       requestAnimationFrame(count);
     } else {

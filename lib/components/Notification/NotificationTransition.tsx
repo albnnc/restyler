@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { useSharedRef, useTransition } from '../../hooks';
 import { TransitionRendererProps } from '../../utils';
 import { Notification, NotificationProps } from './Notification';
@@ -16,13 +16,13 @@ export const NotificationTransition = forwardRef<
     sharedRef,
     isOpen
   );
-  const [wasMounted, setWasMounted] = useState(false);
+  const wasMountedRef = useRef(false);
   useEffect(() => {
-    if (wasMounted && !isMounted) {
+    if (wasMountedRef.current && !isMounted) {
       handleCloseEnd?.();
-      setWasMounted(false);
-    } else {
-      setWasMounted(true);
+    }
+    if (isMounted) {
+      wasMountedRef.current = true;
     }
   }, [isMounted]);
   return isMounted ? (

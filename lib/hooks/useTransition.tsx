@@ -18,16 +18,18 @@ export const useTransition = <TElement extends HTMLElement>(
   const [isReallyMounted, setIsReallyMounted] = useState(!!isMounted);
   const [stage, setStage] = useState<TransitionState>(undefined);
   const isActiveRef = useRef(false);
-  const handlersRef = useRef({
-    transitionstart: () => {},
-    transitionend: () => {}
-  });
-  const clearHandlers = useCallback(() => {
-    handlersRef.current = {
-      transitionstart: () => {},
-      transitionend: () => {}
-    };
-  }, []);
+  const handlersRef = useRef<
+    | {
+        id: any;
+        transitionend: () => void;
+        transitionstart: () => void;
+      }
+    | undefined
+  >(undefined);
+  const clearHandlers = useCallback(
+    () => (handlersRef.current = undefined),
+    []
+  );
 
   useLayoutEffect(() => {
     if (isMounted === isReallyMounted && stage !== 'leave') {
@@ -35,8 +37,12 @@ export const useTransition = <TElement extends HTMLElement>(
     }
     isActiveRef.current = false;
     handlersRef.current = {
+      id: Symbol(),
       transitionstart: () => (isActiveRef.current = true),
       transitionend: () => {
+        if (!ref.current) {
+          return;
+        }
         isActiveRef.current = false;
         setIsReallyMounted(false);
         setStage(undefined);
@@ -47,9 +53,11 @@ export const useTransition = <TElement extends HTMLElement>(
     const handleEventListeners = (
       action: 'addEventListener' | 'removeEventListener'
     ) => {
-      Object.entries(handlersRef.current).forEach(([event, fn]) =>
-        ref.current?.[action](event, fn)
-      );
+      Object.entries(handlersRef.current ?? {}).forEach(([event, fn]) => {
+        if (typeof fn === 'function') {
+          ref.current?.[action](event, fn);
+        }
+      });
     };
 
     if (isMounted) {
@@ -69,9 +77,13 @@ export const useTransition = <TElement extends HTMLElement>(
     if (stage === 'enter') {
       setStage(undefined);
     } else if (stage === 'leave') {
+      // Waiting a little bit and checking if animation
+      // has started. If not, one have to force end transition,
+      // but only after checking the handler relevance.
+      const targetId = handlersRef.current?.id ?? Symbol();
       requestAnimationDelay(() => {
-        if (!isActiveRef.current) {
-          handlersRef.current.transitionend();
+        if (!isActiveRef.current && handlersRef.current === targetId) {
+          handlersRef.current?.transitionend();
         }
       });
     }

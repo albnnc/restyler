@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { useClickOutside, useSharedRef, useTransition } from '../../hooks';
 import { TransitionRendererProps } from '../../utils';
 import { SelectDrop, SelectDropProps } from './SelectDrop';
@@ -21,13 +21,13 @@ export const SelectDropTransition = forwardRef<
     handleClose();
   });
 
-  const [wasMounted, setWasMounted] = useState(false);
+  const wasMountedRef = useRef(false);
   useEffect(() => {
-    if (wasMounted && !isMounted) {
+    if (wasMountedRef.current && !isMounted) {
       handleCloseEnd?.();
-      setWasMounted(false);
-    } else {
-      setWasMounted(true);
+    }
+    if (isMounted) {
+      wasMountedRef.current = true;
     }
   }, [isMounted]);
 

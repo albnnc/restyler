@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { useClickOutside, useSharedRef, useTransition } from '../../hooks';
 import { TransitionRendererProps } from '../../utils';
 import { Layer } from '../Layer';
@@ -20,18 +20,18 @@ export const ModalTransition = forwardRef<HTMLDivElement, ModalTransitionProps>(
       HTMLDivElement
     >(layerRef, isOpen);
 
-    const [wasMounted, setWasMounted] = useState(false);
+    const wasMountedRef = useRef(false);
     useEffect(() => {
-      if (wasMounted && !isModalMounted && !isLayerMounted) {
+      if (wasMountedRef.current && !isLayerMounted) {
         handleCloseEnd?.();
-        setWasMounted(false);
-      } else {
-        setWasMounted(true);
+      }
+      if (isModalMounted || isLayerMounted) {
+        wasMountedRef.current = true;
       }
     }, [isModalMounted, isLayerMounted]);
 
     useClickOutside(modalRef, e => {
-      // do not close if closing another modal actually
+      // Do not close if targeting another modal actually.
       if (layerRef.current?.isSameNode(e.target as Element)) {
         handleClose?.();
       }
