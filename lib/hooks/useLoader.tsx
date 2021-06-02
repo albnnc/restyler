@@ -86,26 +86,24 @@ export const useLoader = (ids?: any[]) => {
   const targetIds = useMemo(() => (ids?.length === 0 ? [Symbol()] : ids), [
     ids
   ]);
+  const deps = [targetIds?.length ?? 0, ...(targetIds ?? [])];
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     registry.bind(targetIds, setIsLoading);
     return () => {
       registry.unbind(targetIds, setIsLoading);
     };
-  }, [targetIds]);
-  const load = useCallback(
-    async <T extends unknown>(promise: Promise<T>) => {
-      try {
-        registry.load(targetIds);
-        const r = await promise;
-        registry.unload(targetIds);
-        return r;
-      } catch (e) {
-        registry.unload(targetIds);
-        throw e;
-      }
-    },
-    [targetIds]
-  );
+  }, deps);
+  const load = useCallback(async <T extends unknown>(promise: Promise<T>) => {
+    try {
+      registry.load(targetIds);
+      const r = await promise;
+      registry.unload(targetIds);
+      return r;
+    } catch (e) {
+      registry.unload(targetIds);
+      throw e;
+    }
+  }, deps);
   return [isLoading, load] as const;
 };
