@@ -22,6 +22,11 @@ export const form: ComponentTheme = {
       direction: 'row'
     },
 
+    help: {
+      color: 'weakText',
+      margin: { top: 'smaller' }
+    },
+
     errors: {
       item: {
         color: 'danger',

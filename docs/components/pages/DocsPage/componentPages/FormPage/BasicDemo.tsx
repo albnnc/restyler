@@ -23,9 +23,8 @@ export const BasicDemo = () => {
           required
           name="password"
           label="Password"
-          validate={v =>
-            v.length < 8 ? ['At least 8 characters in length'] : []
-          }
+          help="At least 8 characters"
+          validate={v => (v.length < 8 ? ['Wrong format'] : [])}
         >
           <Input type="password" />
         </FormField>
