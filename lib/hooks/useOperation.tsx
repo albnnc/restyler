@@ -14,7 +14,12 @@ export const useOperation = <TOperationOptions, TOperationResult>(
     getNotification?: (
       isOk: boolean,
       result: TOperationResult
-    ) => ReactChild | Omit<NotificationOptions, 'system'>;
+    ) =>
+      | ReactChild
+      | boolean
+      | null
+      | undefined
+      | Omit<NotificationOptions, 'system'>;
     getQuestion?: (
       options: TOperationOptions
     ) => Omit<QuestionOptions, 'system'>;
