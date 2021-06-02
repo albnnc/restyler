@@ -81,7 +81,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
       return;
     }
     const optionsRef = createRef<HTMLDivElement>();
-    const enableScroll = disableScroll({ allowedRefs: [optionsRef] });
+    const enableScroll = disableScroll();
     const { top = 0, left = 0, height = 0, width = 0 } =
       sharedRef.current?.getBoundingClientRect() ?? {};
     openTransition({

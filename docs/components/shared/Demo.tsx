@@ -38,7 +38,7 @@ export const Demo = ({ code, contentProps, children, ...rest }: DemoProps) => {
     <Box css={{ position: 'relative' }} {...rest}>
       {code && codeButton}
       <Box
-        background="lightGrey"
+        background="lighterGrey"
         padding="50px"
         direction="row"
         align="center"
