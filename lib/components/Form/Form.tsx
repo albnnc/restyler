@@ -42,9 +42,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
     }, [values]);
 
     useEffect(() => {
-      if (shouldLiveValidate) {
-        onChange?.(targetManager);
-      }
+      onChange?.(targetManager);
     }, [errors]);
 
     return (
