@@ -64,10 +64,11 @@ export const createScroll: ComponentFactory<HTMLDivElement, ScrollProps> = ({
         if (!containerRef.current) {
           return;
         }
+        // @ts-ignore
+        // https://github.com/Microsoft/TypeScript/issues/28502
+        const resizeObserver = new ResizeObserver(updateOffsets);
+        resizeObserver.observe(containerRef.current);
         updateOffsets();
-        containerRef.current.addEventListener('resize', () => {
-          updateOffsets();
-        });
       }, [containerRef.current]);
 
       return (

@@ -5,23 +5,23 @@ const createPseudoStyle = (opacity, isLeft) => ({
   display: 'block',
   position: 'absolute',
   pointerEvents: 'none',
-  filter: 'blur(5px)',
-  top: '0.5rem',
-  width: '1.15rem',
-  height: 'calc(100% - 1rem)',
+  top: 0,
+  width: '10px',
+  height: '100%',
+  zIndex: 1,
   transition: 'opacity 0.2s',
 
   opacity,
   ...(isLeft
     ? {
-        left: '-0.6rem',
+        left: 0,
         background:
-          'linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.1) 100%)'
+          'linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 100%)'
       }
     : {
-        right: '-0.6rem',
+        right: 0,
         background:
-          'linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%)'
+          'linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%)'
       })
 });
 
