@@ -77,8 +77,8 @@ export const createSmartTable: SmartTableFactory = ({ registry }) => {
                     {header}
                     {sortSelection && (
                       <Button
-                        kind={`arrow-${
-                          sortSelection?.direction === 'asc' ? 'up' : 'down'
+                        kind={`arrow${
+                          sortSelection?.direction === 'asc' ? 'Up' : 'Down'
                         }`}
                         margin={{ left: 'small' }}
                       />

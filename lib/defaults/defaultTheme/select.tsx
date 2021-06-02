@@ -4,6 +4,7 @@ import { input } from './input';
 
 export const select: ComponentTheme = {
   extend: ({ props }) => ({
+    width: '100%',
     position: 'relative',
     ':after': {
       display: 'block',
