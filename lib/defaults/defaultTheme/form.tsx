@@ -9,7 +9,7 @@ export const form: ComponentTheme = {
       extend: ({ createStyle, props }) => ({
         ...(props.required
           ? {
-              ':after': {
+              '&:after': {
                 content: '" *"',
                 ...createStyle({ color: 'danger' })
               }
@@ -45,7 +45,7 @@ export const form: ComponentTheme = {
         const mediumMarginNegativeHalf = `calc(${mediumMargin} / -2)`;
         return {
           margin: mediumMarginNegativeHalf,
-          '& > *': {
+          '& > div': {
             flexBasis: '200px',
             flexShrink: 0,
             flexGrow: 1,
