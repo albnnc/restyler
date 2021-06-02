@@ -41,6 +41,7 @@ class LoaderRegistry {
         const datum = this.data.get(id);
         if (datum) {
           datum.subscriptions.push(fn);
+          this.update(datum);
         } else {
           this.data.set(id, { count: 0, subscriptions: [fn] });
         }
@@ -53,17 +54,17 @@ class LoaderRegistry {
   }
 
   unbind(ids: any[] | undefined, fn: Dispatch<SetStateAction<boolean>>) {
-    const filterDatum = datum =>
+    const unbindDatum = datum =>
       (datum.subscriptions = datum.subscriptions.filter(v => v !== fn));
     if (ids === undefined) {
-      filterDatum(this.globalDatum);
+      unbindDatum(this.globalDatum);
     } else {
       ids.forEach(id => {
         const datum = this.data.get(id);
         if (!datum) {
           return;
         }
-        filterDatum(datum);
+        unbindDatum(datum);
         if (datum.subscriptions.length < 1) {
           this.data.delete(id);
         }
