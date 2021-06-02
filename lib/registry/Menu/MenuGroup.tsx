@@ -1,12 +1,17 @@
-import React, { forwardRef, useContext, HTMLAttributes } from 'react';
+import React, {
+  forwardRef,
+  useContext,
+  HTMLAttributes,
+  ReactNode
+} from 'react';
 import { ComponentFactory, StyleProps } from '../../models';
 import { MenuContext } from './MenuContext';
 
 export interface MenuGroupProps
-  extends HTMLAttributes<HTMLDivElement>,
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
     StyleProps {
   id: string;
-  title: string;
+  title: ReactNode;
 }
 
 export const createMenuGroup: ComponentFactory<
