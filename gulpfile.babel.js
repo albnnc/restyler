@@ -2,12 +2,12 @@ import { promises as fsp } from 'fs';
 import ghpages from 'gh-pages';
 import execa from 'execa';
 import { argv } from 'yargs';
-
-import { task, dest, src, series, watch } from 'gulp';
 import ts from 'gulp-typescript';
-
+import { dest, series, src, task, watch } from 'gulp';
 import * as rollup from 'rollup';
 import rollupConfig from './rollup.config.js';
+
+const execaOptions = { stdout: 'inherit' };
 
 task('clean', async () => fsp.rmdir('./build', { recursive: true }));
 
@@ -40,18 +40,30 @@ task('start:lib', () => {
 });
 
 task('build:docs:js', async () => {
-  const { output, ...input } = rollupConfig;
-  const bundle = await rollup.rollup(input);
-  await bundle.write(output);
+  await execa.command(
+    'build-storybook -c storybook -o build/docs',
+    execaOptions
+  );
 });
 
 task('build:docs', series('clean', 'build:docs:js'));
 
-task('start:docs', () => {
-  const watcher = rollup.watch({ ...rollupConfig });
-  watcher.on('event', event => {
-    console.log(`[ROLLUP] ${event?.error ?? event.code}`);
-  });
+task('start:docs', async () => {
+  await execa.command(
+    'start-storybook -c storybook -p 6006 --ci',
+    execaOptions
+  );
+});
+
+task('lint', async () => {
+  await execa.command(
+    'npx eslint ./{src,storybook}/**/*.{js,jsx,ts,tsx} --fix',
+    execaOptions
+  );
+  await execa.command(
+    'npx prettier ./{src,storybook}/**/*.{js,jsx,ts,tsx} --write',
+    execaOptions
+  );
 });
 
 task('pages:publish', async () => {
@@ -71,22 +83,23 @@ task('release:git', async () => {
       'Specify version: `npm run release -- --release-version <version>`'
     );
   }
-  const options = { stdout: 'inherit' };
-  await execa.command(`git flow release start ${version}`, options);
-  await execa.command(`npm version --no-git-tag-version ${version}`, options);
-  await execa.command(`git commit -am ${version}`, options);
+  await execa.command(`git flow release start ${version}`, execaOptions);
+  await execa.command(
+    `npm version --no-git-tag-version ${version}`,
+    execaOptions
+  );
+  await execa.command(`git commit -am ${version}`, execaOptions);
   await execa.command(
     `git flow release finish ${version} -m ${version}`,
-    options
+    execaOptions
   );
-  await execa.command(`git push origin develop`, options);
-  await execa.command(`git push origin master`, options);
-  await execa.command(`git push origin ${version}`, options);
+  await execa.command(`git push origin develop`, execaOptions);
+  await execa.command(`git push origin master`, execaOptions);
+  await execa.command(`git push origin ${version}`, execaOptions);
 });
 
 task('release:npm', async () => {
-  const options = { stdout: 'inherit' };
-  await execa.command(`npm publish`, options);
+  await execa.command(`npm publish`, execaOptions);
 });
 
 task('release', series('release:git', 'build:lib', 'release:npm'));
