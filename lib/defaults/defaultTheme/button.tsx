@@ -1,21 +1,27 @@
-import { ComponentTheme } from '../../models';
+import { ComponentTheme, StyleProps } from '../../models';
 
-const createBasicKind = color => ({
+const createBasicKind = (color: string, additionalProps?: StyleProps) => ({
   padding: { vertical: 'smaller', horizontal: 'medium' },
   radius: 'small',
   background: 'transparent',
   color: 'strongText',
   border: { width: '1px', color: 'border' },
   font: 'small',
-  extend: ({ createStyle, props }) => ({
-    cursor: 'pointer',
-    textTransform: 'uppercase',
-    letterSpacing: '0.04rem',
-    transition: 'all 0.15s',
-    ...(props.disabled
-      ? createStyle({ color: 'border', border: { style: 'dashed' } })
-      : { '&:hover': createStyle({ color, border: color }) })
-  })
+  extend: [
+    ({ createStyle, props }) => ({
+      cursor: 'pointer',
+      textTransform: 'uppercase',
+      letterSpacing: '0.04rem',
+      transition: 'all 0.15s',
+      ...(props.disabled
+        ? createStyle({
+            color: 'weakText',
+            border: { color: 'border', style: 'dashed' }
+          })
+        : { '&:hover': createStyle({ color, border: color }) })
+    }),
+    ({ createStyle }) => createStyle(additionalProps ?? {})
+  ]
 });
 
 const createArrowKind = direction => ({
@@ -63,37 +69,15 @@ const createArrowKind = direction => ({
 export const button: ComponentTheme = {
   kinds: {
     primary: createBasicKind('primary'),
+    secondary: createBasicKind('primary', {
+      border: { color: 'border', style: 'dashed' }
+    }),
     success: createBasicKind('success'),
     warning: createBasicKind('warning'),
     danger: createBasicKind('danger'),
     arrowUp: createArrowKind('up'),
     arrowDown: createArrowKind('down'),
     arrowLeft: createArrowKind('left'),
-    arrowRight: createArrowKind('right'),
-    close: {
-      extend: {
-        width: '1.1em',
-        height: '1.1em',
-        position: 'relative',
-        verticalAlign: 'middle',
-        '&::before, &::after': {
-          content: '""',
-          display: 'block',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          width: '2px',
-          height: '1em',
-          transition: 'all 0.2s ease',
-          background: 'currentColor'
-        },
-        '&::before': { transform: 'translate(-50%, -50%) rotate(45deg)' },
-        '&::after': { transform: 'translate(-50%, -50%) rotate(-45deg)' },
-        '&:hover': {
-          '&::before': { transform: 'translate(-50%, -50%) rotate(225deg)' },
-          '&::after': { transform: 'translate(-50%, -50%) rotate(135deg)' }
-        }
-      }
-    }
+    arrowRight: createArrowKind('right')
   }
 };

@@ -8,6 +8,9 @@ export const BasicDemo = () => {
       <Button kind="primary" margin="small">
         Primary
       </Button>
+      <Button kind="secondary" margin="small">
+        Secondary
+      </Button>
       <Button kind="success" margin="small">
         Success
       </Button>
