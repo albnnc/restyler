@@ -1,8 +1,8 @@
-import { AllHTMLAttributes } from 'react';
+import { TdHTMLAttributes } from 'react';
 import { ComponentFactory, StyleProps } from '../../models';
 
 export interface TableCellProps
-  extends AllHTMLAttributes<HTMLTableCellElement>,
+  extends Omit<TdHTMLAttributes<HTMLTableCellElement>, 'align'>,
     StyleProps {}
 
 export const createTableCell: ComponentFactory<
