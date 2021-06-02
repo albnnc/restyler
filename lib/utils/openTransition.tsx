@@ -3,8 +3,8 @@ import {
   render as renderComponentAtNode,
   unmountComponentAtNode
 } from 'react-dom';
-import { onNextFrame } from '.';
 import { TransitionState } from '../hooks';
+import { onNextFrame } from './onNextFrame';
 
 export interface TransitionRendererProps {
   handleClose: () => void;
