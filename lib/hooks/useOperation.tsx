@@ -23,7 +23,7 @@ export const useOperation = <TOperationOptions, TOperationResult>(
       | undefined
       | Omit<NotificationOptions, 'system'>;
     getQuestion?: (
-      options: TOperationOptions
+      options?: TOperationOptions
     ) => Omit<QuestionOptions, 'system'>;
     loaderIds?: any[];
   }
@@ -31,7 +31,7 @@ export const useOperation = <TOperationOptions, TOperationResult>(
   const [isLoading, load] = useLoader(loaderIds);
   const { openQuestion } = useModal();
   const { openNotification } = useNotification();
-  const operation = useCallback(async (options: TOperationOptions): Promise<
+  const operation = useCallback(async (options?: TOperationOptions): Promise<
     TOperationResult | undefined
   > => {
     const questionOptions = getQuestion?.(options);
