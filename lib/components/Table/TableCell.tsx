@@ -1,4 +1,4 @@
-import { forwardRef, TdHTMLAttributes } from 'react';
+import React, { forwardRef, TdHTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
 import { StyleProps } from '../../models';
 

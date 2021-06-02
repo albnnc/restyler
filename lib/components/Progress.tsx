@@ -1,4 +1,4 @@
-import { forwardRef, ProgressHTMLAttributes } from 'react';
+import React, { forwardRef, ProgressHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
 import { StyleProps } from '../models';
 

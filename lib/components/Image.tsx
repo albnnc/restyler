@@ -1,4 +1,4 @@
-import { forwardRef, ImgHTMLAttributes } from 'react';
+import React, { forwardRef, ImgHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
 import { StyleProps } from '../models';
 

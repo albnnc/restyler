@@ -1,5 +1,5 @@
-import { useThemed } from 'lib/hooks';
-import { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, HTMLAttributes } from 'react';
+import { useThemed } from '../../hooks';
 import { StyleProps } from '../../models';
 
 export interface CardFooterProps
