@@ -8,7 +8,6 @@ import image from '@rollup/plugin-image';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import serve from 'rollup-plugin-serve';
-import visualizer from 'rollup-plugin-visualizer';
 import { terser } from 'rollup-plugin-terser';
 import livereload from 'rollup-plugin-livereload';
 
@@ -24,14 +23,10 @@ export default {
 
   output: isLib
     ? [
-        {
-          file: './build/index.js',
-          format: 'es'
-        },
-        {
-          file: './build/index.cjs',
-          format: 'cjs'
-        }
+        { file: './build/index.js', format: 'es' },
+        { file: './build/index.min.js', format: 'es', plugins: [terser()] },
+        { file: './build/index.cjs', format: 'cjs' },
+        { file: './build/index.min.cjs', format: 'cjs', plugins: [terser()] }
       ]
     : {
         dir: './build/docs',
@@ -61,7 +56,6 @@ export default {
       )
     ),
     image(),
-    ...(isProduction ? [terser(), visualizer()] : []),
     ...(!isLib
       ? [
           html(),
