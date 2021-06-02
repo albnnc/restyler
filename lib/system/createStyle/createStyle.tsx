@@ -14,6 +14,7 @@ import { createMarginStyle } from './createMarginStyle';
 import { createPaddingStyle } from './createPaddingStyle';
 import { createRadiusStyle } from './createRadiusStyle';
 import { createWeightStyle } from './createWeightStyle';
+import { createWrapStyle } from './createWrapStyle';
 
 export const createStyle = <T extends BasicStyleProps>(
   options: StyleFactoryOptions<T>
@@ -25,6 +26,7 @@ export const createStyle = <T extends BasicStyleProps>(
     createJustifyStyle(options),
     createAlignStyle(options),
     createBasisStyle(options),
+    createWrapStyle(options),
 
     createMarginStyle(options),
     createPaddingStyle(options),

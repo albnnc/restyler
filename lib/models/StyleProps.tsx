@@ -13,6 +13,7 @@ export type Font = string;
 export type Justify = string;
 export type Radius = string;
 export type Weight = string;
+export type Wrap = string | boolean;
 
 export type BasicMargin = string;
 export type Margin = BasicMargin | DirectionMap<BasicMargin>;
@@ -44,6 +45,7 @@ export interface BasicStyleProps {
   padding?: Padding;
   radius?: Radius;
   weight?: Weight;
+  wrap?: Wrap;
 }
 
 export interface StyleProps extends BasicStyleProps {
@@ -66,6 +68,8 @@ export const knownStyleProps = [
   'padding',
   'radius',
   'weight',
+  'wrap',
+
   'kind',
   'theme'
 ];
