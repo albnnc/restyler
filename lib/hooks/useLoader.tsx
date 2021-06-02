@@ -1,3 +1,4 @@
+import { hash } from 'lib/utils';
 import {
   useCallback,
   useEffect,
@@ -22,15 +23,15 @@ class LoaderRegistry {
   addDelta(ids: any[] | undefined, delta: 1 | -1) {
     const targetIds = ids === undefined ? Array.from(this.data.keys()) : ids;
     for (const id of targetIds) {
-      const datum = this.data.get(id);
+      let datum =
+        this.data.get(id) ??
+        this.data.set(id, { count: 0, subscriptions: [] }).get(id);
       if (!datum) {
         continue;
       }
       datum.count += delta;
-      this.update(datum);
     }
     this.globalDatum.count += delta * targetIds.length;
-    this.update(this.globalDatum);
   }
 
   bind(ids: any[] | undefined, fn: Dispatch<SetStateAction<boolean>>) {
@@ -41,43 +42,64 @@ class LoaderRegistry {
         const datum = this.data.get(id);
         if (datum) {
           datum.subscriptions.push(fn);
-          this.update(datum);
         } else {
           this.data.set(id, { count: 0, subscriptions: [fn] });
         }
       });
     }
+    // Updating newly bound subscriber in order
+    // it to be in sync with already exist data.
+    this.update(ids);
+  }
+
+  clean(ids: any[] | undefined) {
+    // Only non-global data have to be cleaned.
+    if (!ids) {
+      return;
+    }
+    ids.forEach(id => {
+      const datum = this.data.get(id);
+      if (datum && datum.count <= 0 && datum.subscriptions.length < 1) {
+        console.log('deleting', id);
+        this.data.delete(id);
+      }
+    });
   }
 
   load(ids: any[] | undefined) {
     this.addDelta(ids, 1);
+    this.update(ids);
+    this.clean(ids);
   }
 
   unbind(ids: any[] | undefined, fn: Dispatch<SetStateAction<boolean>>) {
-    const unbindDatum = datum =>
-      (datum.subscriptions = datum.subscriptions.filter(v => v !== fn));
+    const unbindDatum = datum => {
+      if (!datum) {
+        return;
+      }
+      datum.subscriptions = datum.subscriptions.filter(v => v !== fn);
+    };
     if (ids === undefined) {
       unbindDatum(this.globalDatum);
     } else {
-      ids.forEach(id => {
-        const datum = this.data.get(id);
-        if (!datum) {
-          return;
-        }
-        unbindDatum(datum);
-        if (datum.subscriptions.length < 1) {
-          this.data.delete(id);
-        }
-      });
+      ids.forEach(id => unbindDatum(this.data.get(id)));
     }
   }
 
   unload(ids: any[] | undefined) {
     this.addDelta(ids, -1);
+    this.update(ids);
+    this.clean(ids);
   }
 
-  update(datum: LoaderRegistryDatum) {
-    datum.subscriptions.forEach(fn => fn(datum.count > 0));
+  update(ids: any[] | undefined) {
+    const updateDatum = datum =>
+      datum?.subscriptions.forEach(fn => fn(datum.count > 0));
+    if (ids) {
+      ids.forEach(id => updateDatum(this.data.get(id)));
+    }
+    // Any update requires global datum to be also updated.
+    updateDatum(this.globalDatum);
   }
 }
 
@@ -94,7 +116,7 @@ export const useLoader = (ids?: any[]) => {
     return () => {
       loaderRegistry.unbind(targetIds, setIsLoading);
     };
-  }, deps);
+  }, [setIsLoading, ...deps]);
   const load = useCallback(async <T extends unknown>(promise: Promise<T>) => {
     try {
       loaderRegistry.load(targetIds);
