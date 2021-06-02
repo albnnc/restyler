@@ -2,7 +2,16 @@ import { Style } from './Style';
 import { BasicStyleProps } from './StyleProps';
 import { Variables } from './Variables';
 
-export type Extend = Function | Style | (Function | Style)[];
+export interface ExtendOptions<TProps = any> {
+  createStyle: (props: BasicStyleProps) => Style;
+  props: TProps;
+}
+
+export interface ExtendFn {
+  (options: ExtendOptions): Style;
+}
+
+export type Extend = ExtendFn | Style | (ExtendFn | Style)[];
 
 // tslint:disable:member-ordering
 export interface Theme extends BasicStyleProps {
