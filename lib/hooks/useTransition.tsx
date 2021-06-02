@@ -78,11 +78,11 @@ export const useTransition = <TElement extends HTMLElement>(
       setStage(undefined);
     } else if (stage === 'leave') {
       // Waiting a little bit and checking if animation
-      // has started. If not, one have to force end transition,
+      // has started. If not, one has to force end transition,
       // but only after checking the handler relevance.
       const targetId = handlersRef.current?.id ?? Symbol();
       requestAnimationDelay(() => {
-        if (!isActiveRef.current && handlersRef.current === targetId) {
+        if (!isActiveRef.current && handlersRef.current?.id === targetId) {
           handlersRef.current?.transitionend();
         }
       });
