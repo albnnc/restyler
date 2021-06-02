@@ -32,14 +32,14 @@ export const useOperation = <TOperationOptions, TOperationResult>(
   const { openQuestion } = useModal();
   const { openNotification } = useNotification();
   const operation = useCallback(async (options?: TOperationOptions): Promise<
-    TOperationResult | undefined
+    void
   > => {
     const questionOptions = getQuestion?.(options);
     const shouldContinue = questionOptions
       ? await openQuestion(questionOptions)
       : true;
     if (!shouldContinue) {
-      return;
+      return undefined;
     }
     let isOk = true;
     let result: TOperationResult | undefined;
@@ -61,10 +61,7 @@ export const useOperation = <TOperationOptions, TOperationResult>(
           : notification;
       openNotification(notificationOptions);
     }
-    if (error) {
-      throw error;
-    }
-    return result;
+    return undefined;
   }, deps);
   return operation;
 };
