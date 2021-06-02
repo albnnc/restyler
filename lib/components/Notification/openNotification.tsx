@@ -1,5 +1,5 @@
-import { System } from 'lib/models';
 import React, { createRef, useEffect, useReducer, RefObject } from 'react';
+import { System } from '../../models';
 import {
   openTransition,
   TransitionOptions,

@@ -1,4 +1,4 @@
-import { defaultSystem } from 'lib/defaults';
 import { createContext } from 'react';
+import { defaultSystem } from '../defaults';
 
 export const SystemContext = createContext(defaultSystem);

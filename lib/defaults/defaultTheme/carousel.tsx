@@ -1,5 +1,5 @@
-import { mergeThemes } from 'lib/utils/mergeThemes';
 import { Theme } from '../../models';
+import { mergeThemes } from '../../utils';
 import { button } from './button';
 
 export const carousel: Theme = {

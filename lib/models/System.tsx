@@ -1,4 +1,4 @@
-import { ModalOptions, QuestionOptions } from 'lib/components';
+import { ModalOptions, QuestionOptions } from '../components';
 import { Locale } from './Locale';
 import { Styled } from './Styled';
 import { SystemRegistry } from './SystemRegistry';

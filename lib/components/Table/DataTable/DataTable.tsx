@@ -1,7 +1,7 @@
-import { SystemContext } from 'lib/components/SystemContext';
 import React, { forwardRef, useContext, useMemo } from 'react';
 import { hash } from '../../../utils';
 import { Button } from '../../Button';
+import { SystemContext } from '../../SystemContext';
 import { Table } from '../Table';
 import { TableBody } from '../TableBody';
 import { TableCell } from '../TableCell';

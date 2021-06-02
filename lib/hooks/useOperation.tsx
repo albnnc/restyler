@@ -1,5 +1,5 @@
-import { NotificationOptions, QuestionOptions } from 'lib/components';
 import { isValidElement, useCallback, ReactChild } from 'react';
+import { NotificationOptions, QuestionOptions } from '../components';
 import { useLoader } from './useLoader';
 import { useModal } from './useModal';
 import { useNotification } from './useNotification';

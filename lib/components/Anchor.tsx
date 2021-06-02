@@ -1,5 +1,5 @@
-import { useThemed } from 'lib/hooks';
 import React, { forwardRef, AnchorHTMLAttributes } from 'react';
+import { useThemed } from '../hooks';
 import { StyleProps } from '../models';
 
 const isModifiedEvent = e => {
