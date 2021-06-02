@@ -60,7 +60,6 @@ class LoaderRegistry {
     ids.forEach(id => {
       const datum = this.data.get(id);
       if (datum && datum.count <= 0 && datum.subscriptions.length < 1) {
-        console.log('deleting', id);
         this.data.delete(id);
       }
     });
