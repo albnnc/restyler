@@ -13,7 +13,7 @@ import {
   createCarouselItem,
   createCarouselItemTransition
 } from './Carousel';
-import { createCheckbox } from './CheckBox';
+import { createCheckbox } from './Checkbox';
 import { createCollapse } from './Collapse';
 import { createContainer } from './Container';
 import { createForm, createFormField } from './Form';
