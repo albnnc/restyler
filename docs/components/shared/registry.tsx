@@ -28,6 +28,7 @@ export const {
   Progress,
   RadioGroup,
   RadioOption,
+  Scroll,
   Select,
   SmartTable,
   TabGroup,

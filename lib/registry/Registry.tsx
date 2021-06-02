@@ -36,6 +36,7 @@ import {
 } from './Notification';
 import { createProgress } from './Progress';
 import { createRadioGroup, createRadioOption } from './Radio';
+import { createScroll } from './Scroll';
 import {
   createSelect,
   createSelectOptions,
@@ -58,6 +59,7 @@ const factories = {
   Button: createButton,
   Collapse: createCollapse,
   Container: createContainer,
+  Scroll: createScroll,
   Heading: createHeading,
   Image: createImage,
   Layer: createLayer,

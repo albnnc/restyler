@@ -9,6 +9,7 @@ export * from './InputPage';
 export * from './ModalPage';
 export * from './NotificationPage';
 export * from './ProgressPage';
+export * from './ScrollPage';
 export * from './SelectPage';
 export * from './TablePage';
 export * from './TabPage';

@@ -19,6 +19,7 @@ import {
   ModalPage,
   NotificationPage,
   ProgressPage,
+  ScrollPage,
   SelectPage,
   TablePage,
   TabPage
@@ -79,6 +80,11 @@ export const groups = [
         title: 'Container',
         path: '/docs/layout/container',
         component: ContainerPage
+      },
+      {
+        title: 'Scroll',
+        path: '/docs/layout/scroll',
+        component: ScrollPage
       }
     ]
   },

@@ -19,6 +19,7 @@ import { modal } from './modal';
 import { notification } from './notification';
 import { progress } from './progress';
 import { radio } from './radio';
+import { scroll } from './scroll';
 import { select } from './select';
 import { tab } from './tab';
 import { table } from './table';
@@ -48,6 +49,7 @@ export const defaultTheme: Theme = {
   notification,
   progress,
   radio,
+  scroll,
   select,
   tab,
   table,
