@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { ComponentFactoryOptions, Locale, Theme } from '../models';
 import { Styled } from '../models';
@@ -15,21 +15,18 @@ export const createSystem = (options: {
     locale: deepFreeze(clone<Locale>(options.locale)),
     registry: {} as Registry,
     theme: deepFreeze(clone<Theme>(options.theme)),
-    updaters: [] as (() => void)[]
+    updateEffects: [] as (() => void)[]
   };
 
   const updateRelated = {
-    update: () => data.updaters.forEach(fn => fn()),
-    useUpdateCallback: (fn: Function) => {
-      const [_, tick] = useReducer(v => (v + 1) % 1_000_000, 0);
+    update: () => data.updateEffects.forEach(fn => fn()),
+    useUpdateEffect: (fn: () => void) => {
       useEffect(() => {
-        const update = () => {
-          tick();
-          fn();
-        };
-        data.updaters.push(update);
+        data.updateEffects.push(fn);
         return () => {
-          data.updaters.splice(data.updaters.findIndex(v => v === update));
+          data.updateEffects.splice(
+            data.updateEffects.findIndex(v => v === fn)
+          );
         };
       }, []);
     }
@@ -43,7 +40,7 @@ export const createSystem = (options: {
     },
     useTheme: () => {
       const [theme, setTheme] = useState<Theme>(themeRelated.getTheme());
-      updateRelated.useUpdateCallback(() => {
+      updateRelated.useUpdateEffect(() => {
         setTheme(themeRelated.getTheme());
       });
       return theme;
