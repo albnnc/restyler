@@ -13,8 +13,6 @@ export const menu: Theme = {
   color: 'rgba(0, 0, 0, 0.5)',
 
   extend: {
-    position: 'sticky',
-    top: '2rem',
     textTransform: 'uppercase',
     letterSpacing: '0.04rem'
   },
