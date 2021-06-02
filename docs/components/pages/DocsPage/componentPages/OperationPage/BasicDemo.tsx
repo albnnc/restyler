@@ -19,7 +19,8 @@ export const BasicDemo = () => {
         content: `Are you sure you want to modify user #${id}?`
       }),
       getNotification: (isOk, id) =>
-        isOk ? `Successfuly modified user #${id}` : 'An error occured'
+        isOk ? `Successfuly modified user #${id}` : 'An error occured',
+      deps: []
     }
   );
   return (
