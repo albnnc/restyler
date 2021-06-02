@@ -2,8 +2,8 @@ import { Box, Demo, Heading } from 'docs/components/shared';
 import React from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
-import { Blueprint } from './Blueprint';
-import blueprintCode from './Blueprint.tsx?raw';
+import { TableDemo } from './TableDemo';
+import tableDemoCode from './TableDemo.tsx?raw';
 
 export const ScrollPage = () => {
   return (
@@ -19,10 +19,10 @@ export const ScrollPage = () => {
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
       </Demo>
-      {/* <Heading kind="2">Blueprint</Heading>
-      <Demo code={blueprintCode}>
-        <Blueprint />
-      </Demo> */}
+      <Heading kind="2">Table</Heading>
+      <Demo code={tableDemoCode}>
+        <TableDemo />
+      </Demo>
     </>
   );
 };

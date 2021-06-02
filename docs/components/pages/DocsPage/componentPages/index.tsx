@@ -13,3 +13,4 @@ export * from './ScrollPage';
 export * from './SelectPage';
 export * from './TablePage';
 export * from './TabPage';
+export * from './FileInputPage';
