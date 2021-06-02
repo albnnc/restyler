@@ -7,14 +7,14 @@ import {
   SetStateAction
 } from 'react';
 
-interface RegistryDatum {
+interface LoaderRegistryDatum {
   count: number;
   subscriptions: Dispatch<SetStateAction<boolean>>[];
 }
 
-class Registry {
-  data = new Map<any, RegistryDatum>();
-  globalDatum: RegistryDatum = {
+class LoaderRegistry {
+  data = new Map<any, LoaderRegistryDatum>();
+  globalDatum: LoaderRegistryDatum = {
     count: 0,
     subscriptions: []
   };
@@ -75,12 +75,12 @@ class Registry {
     this.addDelta(ids, -1);
   }
 
-  update(datum: RegistryDatum) {
+  update(datum: LoaderRegistryDatum) {
     datum.subscriptions.forEach(fn => fn(datum.count > 0));
   }
 }
 
-const registry = new Registry();
+export const loaderRegistry = new LoaderRegistry();
 
 export const useLoader = (ids?: any[]) => {
   const targetIds = useMemo(() => (ids?.length === 0 ? [Symbol()] : ids), [
@@ -89,19 +89,19 @@ export const useLoader = (ids?: any[]) => {
   const deps = [targetIds?.length ?? 0, ...(targetIds ?? [])];
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    registry.bind(targetIds, setIsLoading);
+    loaderRegistry.bind(targetIds, setIsLoading);
     return () => {
-      registry.unbind(targetIds, setIsLoading);
+      loaderRegistry.unbind(targetIds, setIsLoading);
     };
   }, deps);
   const load = useCallback(async <T extends unknown>(promise: Promise<T>) => {
     try {
-      registry.load(targetIds);
+      loaderRegistry.load(targetIds);
       const r = await promise;
-      registry.unload(targetIds);
+      loaderRegistry.unload(targetIds);
       return r;
     } catch (e) {
-      registry.unload(targetIds);
+      loaderRegistry.unload(targetIds);
       throw e;
     }
   }, deps);
