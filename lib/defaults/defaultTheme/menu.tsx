@@ -43,7 +43,7 @@ export const menu: Theme = {
             height: '0.3em',
             borderRadius: '100vw',
             top: '50%',
-            right: props.isActive ? '1em' : '0.2rem',
+            right: props.isActive ? '0.5em' : 0,
             transform: 'translateY(-50%)',
             transition: 'all 0.15s',
             background: props.isActive ? 'currentColor' : 'transparent'
