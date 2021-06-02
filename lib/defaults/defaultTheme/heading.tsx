@@ -1,10 +1,10 @@
 import { ComponentTheme } from '../../models';
 
 export const heading: ComponentTheme = {
-  margin: { top: 'small', bottom: 'x-small' },
+  margin: { top: 'small', bottom: 'smaller' },
   font: 'large',
   weight: 'light',
-  color: 'text-strong',
+  color: 'strongText',
   kinds: {
     1: {
       margin: { top: 'large', bottom: 'small' },
@@ -12,14 +12,14 @@ export const heading: ComponentTheme = {
     },
     2: {
       margin: { top: 'large', bottom: 'small' },
-      font: 'xx-large'
+      font: 'largest'
     },
     3: {
       margin: { top: 'medium', bottom: 'small' },
-      font: 'x-large'
+      font: 'larger'
     },
     4: {
-      margin: { top: 'small', bottom: 'x-small' },
+      margin: { top: 'small', bottom: 'smaller' },
       font: 'large'
     }
   }

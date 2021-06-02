@@ -4,9 +4,9 @@ import React from 'react';
 export const OthersDemo = () => (
   <Box direction="row">
     <Button kind="close" />
-    <Button kind="arrow-up" margin={{ left: 'small' }} />
-    <Button kind="arrow-down" margin={{ left: 'small' }} />
-    <Button kind="arrow-left" margin={{ left: 'small' }} />
-    <Button kind="arrow-right" margin={{ left: 'small' }} />
+    <Button kind="arrowUp" margin={{ left: 'small' }} />
+    <Button kind="arrowDown" margin={{ left: 'small' }} />
+    <Button kind="arrowLeft" margin={{ left: 'small' }} />
+    <Button kind="arrowRight" margin={{ left: 'small' }} />
   </Box>
 );

@@ -9,7 +9,7 @@ const createTitleStyle = ({ createStyle }) => ({
 });
 
 export const menu: ComponentTheme = {
-  background: 'grey-light',
+  background: 'lightGrey',
   font: 'small',
   padding: 'medium',
   color: 'rgba(0, 0, 0, 0.5)',
@@ -20,16 +20,16 @@ export const menu: ComponentTheme = {
   },
 
   group: {
-    items: { padding: { top: 'x-small', left: 'large' } },
+    items: { padding: { top: 'smaller', left: 'large' } },
     extend: ({ createStyle }) => ({
-      '&:not(:first-child)': createStyle({ margin: { top: 'x-small' } })
+      '&:not(:first-child)': createStyle({ margin: { top: 'smaller' } })
     }),
     title: { extend: createTitleStyle }
   },
 
   item: {
     extend: ({ createStyle }) => ({
-      '&:not(:first-child)': createStyle({ margin: { top: 'x-small' } })
+      '&:not(:first-child)': createStyle({ margin: { top: 'smaller' } })
     }),
     title: {
       extend: ({ createStyle, props }) => {

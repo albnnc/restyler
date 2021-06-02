@@ -21,7 +21,7 @@ export const form: ComponentTheme = {
     errors: {
       item: {
         color: 'danger',
-        margin: { top: 'x-small' }
+        margin: { top: 'smaller' }
       }
     }
   },
@@ -33,9 +33,9 @@ export const form: ComponentTheme = {
       extend: ({ props }) => {
         const mediumMargin = props.theme.variables?.margin?.medium ?? 0;
         const mediumMarginHalf = `calc(${mediumMargin} / 2)`;
-        const mediumMarginHalfNegative = `calc(${mediumMargin} / -2)`;
+        const mediumMarginNegativeHalf = `calc(${mediumMargin} / -2)`;
         return {
-          margin: mediumMarginHalfNegative,
+          margin: mediumMarginNegativeHalf,
           '& > *': {
             flexBasis: '200px',
             flexShrink: 0,

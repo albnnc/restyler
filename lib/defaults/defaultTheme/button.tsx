@@ -1,10 +1,10 @@
 import { ComponentTheme } from '../../models';
 
 const createBasicKind = color => ({
-  padding: { vertical: 'x-small', horizontal: 'medium' },
+  padding: { vertical: 'smaller', horizontal: 'medium' },
   radius: 'small',
   background: 'transparent',
-  color: 'text-strong',
+  color: 'strongText',
   border: { width: '1px', color: 'border' },
   extend: ({ createStyle, props }) => ({
     transition: 'all 0.1s',
@@ -62,10 +62,10 @@ export const button: ComponentTheme = {
     success: createBasicKind('success'),
     warning: createBasicKind('warning'),
     danger: createBasicKind('danger'),
-    'arrow-up': createArrowKind('up'),
-    'arrow-down': createArrowKind('down'),
-    'arrow-left': createArrowKind('left'),
-    'arrow-right': createArrowKind('right'),
+    arrowUp: createArrowKind('up'),
+    arrowDown: createArrowKind('down'),
+    arrowLeft: createArrowKind('left'),
+    arrowRight: createArrowKind('right'),
     close: {
       extend: {
         width: '1.1em',

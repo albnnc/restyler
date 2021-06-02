@@ -45,7 +45,7 @@ export const Demo = ({ code, contentProps, children, ...rest }: DemoProps) => {
     >
       {code && codeButton}
       <Box
-        background="grey-light"
+        background="lightGrey"
         padding="50px"
         direction="row"
         align="center"

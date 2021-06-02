@@ -2,7 +2,7 @@ import { ComponentTheme } from '../../models';
 
 export const card: ComponentTheme = {
   radius: 'small',
-  elevation: 'x-small',
+  elevation: 'smaller',
   background: 'white',
   kinds: {
     body: { padding: 'medium' }

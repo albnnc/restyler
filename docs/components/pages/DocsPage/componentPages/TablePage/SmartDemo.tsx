@@ -23,7 +23,7 @@ const columns = [
 export const SmartDemo = () => (
   <Box
     radius="small"
-    elevation="x-small"
+    elevation="smaller"
     background="white"
     extend={{ overflow: 'hidden', minWidth: '350px' }}
   >

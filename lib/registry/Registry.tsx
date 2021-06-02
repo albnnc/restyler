@@ -50,6 +50,7 @@ import {
   createTableHead,
   createTableRow
 } from './Table';
+import { createTextArea } from './TextArea';
 
 const factories = {
   Anchor: createAnchor,
@@ -96,6 +97,7 @@ const factories = {
 
   Input: createInput,
   Checkbox: createCheckbox,
+  TextArea: createTextArea,
   FormField: createFormField,
   FormRow: createFormRow,
   Form: createForm,

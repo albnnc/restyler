@@ -2,7 +2,7 @@ import { ComponentTheme } from '../../models';
 
 export const notification: ComponentTheme = {
   radius: 'small',
-  elevation: 'x-large',
+  elevation: 'larger',
   background: 'rgba(0, 0, 0, 0.85)',
   padding: 'medium',
   color: 'white',

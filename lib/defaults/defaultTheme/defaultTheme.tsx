@@ -21,6 +21,7 @@ import { radio } from './radio';
 import { select } from './select';
 import { tab } from './tab';
 import { table } from './table';
+import { textArea } from './textArea';
 import { variables } from './variables';
 
 export const defaultTheme: Theme = {
@@ -32,8 +33,8 @@ export const defaultTheme: Theme = {
   button,
   card,
   carousel,
-  collapse,
   checkbox,
+  collapse,
   container,
   form,
   global,
@@ -47,5 +48,6 @@ export const defaultTheme: Theme = {
   radio,
   select,
   tab,
-  table
+  table,
+  textArea
 };

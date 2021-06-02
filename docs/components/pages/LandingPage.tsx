@@ -16,8 +16,8 @@ export const LandingPage = () => {
     <>
       <Navbar />
       <Box
-        background="grey-dark"
-        padding={{ vertical: 'x-large', horizontal: 'large' }}
+        background="darkGrey"
+        padding={{ vertical: 'larger', horizontal: 'large' }}
       >
         <Box direction="column" color="white" justify="center" align="center">
           <Heading kind="1" color="inherit" margin="none">
@@ -33,7 +33,7 @@ export const LandingPage = () => {
           <Button
             color="white"
             border="rgba(255, 255, 255, 0.2)"
-            padding={{ vertical: 'x-small', horizontal: 'medium' }}
+            padding={{ vertical: 'smaller', horizontal: 'medium' }}
             radius="none"
             margin="auto"
             className={css`
@@ -48,7 +48,7 @@ export const LandingPage = () => {
           </Button>
         </Box>
       </Box>
-      <Container padding={{ vertical: 'x-large' }}>
+      <Container padding={{ vertical: 'larger' }}>
         <Heading kind="2" margin={{ top: 'none' }}>
           About
         </Heading>

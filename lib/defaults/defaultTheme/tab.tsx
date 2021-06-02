@@ -7,7 +7,7 @@ export const tab: ComponentTheme = {
 
   option: {
     padding: {
-      vertical: 'x-small',
+      vertical: 'smaller',
       horizontal: 'medium'
     },
     border: {

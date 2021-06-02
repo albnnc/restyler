@@ -42,12 +42,12 @@ export const DocsPage = () => {
   return (
     <>
       <Navbar />
-      <Container background="grey-dark" padding={{ vertical: 'x-large' }}>
+      <Container background="darkGrey" padding={{ vertical: 'larger' }}>
         <Heading kind="1" color="white" margin="none">
           {capitalizeFirst(item)}
         </Heading>
       </Container>
-      <Container padding={{ vertical: 'x-large' }}>
+      <Container padding={{ vertical: 'larger' }}>
         <Box direction="row">
           <Box basis="100%" padding={{ right: 'large' }}>
             <Switch>

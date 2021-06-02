@@ -28,7 +28,7 @@ export const table: ComponentTheme = {
   },
   caption: {
     padding: { horizontal: 'medium', vertical: 'small' },
-    background: 'grey-dark',
+    background: 'darkGrey',
     color: 'white',
     extend: {
       textAlign: 'left',
@@ -36,7 +36,7 @@ export const table: ComponentTheme = {
     }
   },
   head: {
-    background: 'grey-dark',
+    background: 'darkGrey',
     color: 'white',
     extend: { userSelect: 'none' }
   }

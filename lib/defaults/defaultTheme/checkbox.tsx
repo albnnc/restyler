@@ -3,7 +3,7 @@ import { ComponentTheme } from '../../models';
 export const checkbox: ComponentTheme = {
   checker: {
     margin: { right: 'small' },
-    radius: 'x-small',
+    radius: 'smaller',
     background: 'white',
 
     extend: ({ createStyle, props }) => {
@@ -29,12 +29,12 @@ export const checkbox: ComponentTheme = {
           width: checkerSize,
           height: checkerSize,
           transition: 'all 0.2s',
-          ...createStyle({ redius: 'x-small', background: checkerColor })
+          ...createStyle({ redius: 'smaller', background: checkerColor })
         }
       });
       return props.value
         ? createStateStyle('primary', 'primary', '0.5rem')
-        : createStateStyle('border-strong', 'white', 0);
+        : createStateStyle('strongBorder', 'white', 0);
     }
   },
 

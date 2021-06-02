@@ -24,8 +24,8 @@ export const Navbar = () => {
       direction="row"
       justify="between"
       align="center"
-      elevation="x-large"
-      background="grey-dark"
+      elevation="larger"
+      background="darkGrey"
       className={css`
         position: relative;
         z-index: 1;

@@ -47,23 +47,23 @@ export const createCarousel: ComponentFactory<
       ref
     ) => {
       const childCollection = getChildren(children);
-      const [curIndex, setCurIndex] = useState<number>(initialSlide);
+      const [currIndex, setCurrIndex] = useState<number>(initialSlide);
       const [direction, setDirection] = useState<'left' | 'right'>('right');
 
       const handleChange = (direction: 'left' | 'right') => {
         const slideCount = childCollection.length;
         const newIndex =
-          curIndex === 0 && direction === 'left'
+          currIndex === 0 && direction === 'left'
             ? slideCount - 1
-            : (curIndex + (direction === 'left' ? -1 : 1)) % slideCount;
+            : (currIndex + (direction === 'left' ? -1 : 1)) % slideCount;
         onSlideChange?.({
           newIndex,
           newElement: childCollection[newIndex],
           slideCount,
-          prevIndex: curIndex,
-          prevElement: childCollection[curIndex]
+          prevIndex: currIndex,
+          prevElement: childCollection[currIndex]
         });
-        setCurIndex(newIndex);
+        setCurrIndex(newIndex);
         setDirection(direction);
       };
 
@@ -77,9 +77,9 @@ export const createCarousel: ComponentFactory<
       return (
         <ThemedWrap ref={ref} {...rest} direction="row">
           <Button
-            kind="arrow-left"
+            kind="arrowLeft"
             onClick={() => handleChange('left')}
-            disabled={!isInfinite && curIndex === 0}
+            disabled={!isInfinite && currIndex === 0}
             padding={{ horizontal: 'small' }}
           />
           {childCollection.map((child, index) => (
@@ -89,15 +89,15 @@ export const createCarousel: ComponentFactory<
               }}
               enterDirection={direction}
               key={`carausel${index}`}
-              isOpen={curIndex === index}
+              isOpen={currIndex === index}
             >
               {child}
             </CarouselItemTransition>
           ))}
           <Button
-            kind="arrow-right"
+            kind="arrowRight"
             onClick={() => handleChange('right')}
-            disabled={!isInfinite && curIndex === childCollection.length - 1}
+            disabled={!isInfinite && currIndex === childCollection.length - 1}
             padding={{ horizontal: 'small' }}
           />
         </ThemedWrap>

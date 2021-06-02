@@ -17,7 +17,7 @@ const createModalStyle = ({ width }) => ({
 
 export const modal: ComponentTheme = {
   radius: 'small',
-  elevation: 'xx-large',
+  elevation: 'largest',
   background: 'white',
   padding: 'medium',
   extend: createModalStyle({ width: '550px' }),
