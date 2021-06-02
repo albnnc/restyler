@@ -11,7 +11,7 @@ export interface TextAreaProps
     StyleProps {}
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ wrap, onChange, ...rest }, ref) => {
+  ({ wrap, value, onChange, ...rest }, ref) => {
     const ThemedTextArea = useThemed('textarea', {
       path: 'textArea',
       style: {
@@ -25,6 +25,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <ThemedTextArea
         ref={ref}
+        value={value ?? ''}
         onChange={e => {
           onChange?.(e.target.value);
         }}

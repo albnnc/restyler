@@ -8,7 +8,7 @@ export interface InputProps
     StyleProps {}
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ onChange, ...rest }, ref) => {
+  ({ value, onChange, ...rest }, ref) => {
     const ThemedInput = useThemed('input', {
       path: 'input',
       style: {
@@ -23,6 +23,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <ThemedInput
         ref={ref}
         type="text"
+        value={value ?? ''}
         onChange={e => {
           onChange?.(e.target.value);
         }}

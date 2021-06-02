@@ -11,3 +11,4 @@ export * from './useStack';
 export * from './useTabManager';
 export * from './useThemed';
 export * from './useTransition';
+export * from './useUpdateEffect';

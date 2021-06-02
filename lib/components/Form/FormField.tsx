@@ -87,7 +87,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       }));
     }, [required, hash(validate)]);
 
-    const fieldValue = get(values, name) as string | number;
+    const fieldValue = get(values, name);
     const fieldErrors = get(errors, name) as string[] | undefined;
 
     const validityProps = {
@@ -98,7 +98,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
 
     const childProps = {
       name,
-      value: fieldValue ?? '',
+      value: fieldValue,
       onChange: newFieldValue => {
         setValues(v => ({ ...v, [name]: newFieldValue }));
       },

@@ -6,6 +6,7 @@ export interface SelectOptionProps
   extends HTMLAttributes<HTMLDivElement>,
     StyleProps {
   isActive?: boolean;
+  isMultiple?: boolean;
   value: any;
 }
 

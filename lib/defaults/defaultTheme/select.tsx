@@ -1,4 +1,4 @@
-import { Theme } from '../../models';
+import { ExtendOptions, Theme } from '../../models';
 import { mergeThemes } from '../../utils';
 import { createInputLikeTheme } from './input';
 
@@ -14,7 +14,6 @@ export const select: Theme = {
     {
       extend: ({ props }) => ({
         lineHeight: 'calc(1.5 * 1rem)',
-
         width: '100%',
         position: 'relative',
         '&:after': {
@@ -46,6 +45,23 @@ export const select: Theme = {
           }
         : {})
     })
+  },
+
+  selection: {
+    extend: ({ props, createStyle }: ExtendOptions) =>
+      props.isMultiple
+        ? {
+            ...createStyle({
+              background: 'grey',
+              padding: { horizontal: 'smaller' },
+              radius: 'medium',
+              color: 'strongLightText'
+            }),
+            '& + &': {
+              marginLeft: '0.5em'
+            }
+          }
+        : {}
   },
 
   drop: {

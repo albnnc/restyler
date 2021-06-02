@@ -30,8 +30,14 @@ export const BasicDemo = () => {
         >
           <Input type="password" />
         </FormField>
-        <FormField required name="authType" label="Auth type" disabled>
+        <FormField required name="authType" label="Auth Type">
           <Select>
+            <SelectOption value="auth-type-1">OAuth</SelectOption>
+            <SelectOption value="auth-type-2">LDAP</SelectOption>
+          </Select>
+        </FormField>
+        <FormField required name="authTypes" label="Auth Type List">
+          <Select isMultiple>
             <SelectOption value="auth-type-1">OAuth</SelectOption>
             <SelectOption value="auth-type-2">LDAP</SelectOption>
           </Select>
