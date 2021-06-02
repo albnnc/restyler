@@ -27,13 +27,15 @@ const createPseudoStyle = (opacity, isLeft) => ({
 
 export const scroll: ComponentTheme = {
   extend: ({ props }) => ({
-    cursor: 'grab',
     position: 'relative',
     overflow: 'hidden',
     userSelect: 'none',
     '&::before': createPseudoStyle(0, true),
     '&::after': createPseudoStyle(0, false),
     ...(props.hasLeftOffset ? { '&::before': createPseudoStyle(1, true) } : {}),
-    ...(props.hasRightOffset ? { '&::after': createPseudoStyle(1, false) } : {})
+    ...(props.hasRightOffset
+      ? { '&::after': createPseudoStyle(1, false) }
+      : {}),
+    ...(props.hasLeftOffset || props.hasRightOffset ? { cursor: 'grab' } : {})
   })
 };

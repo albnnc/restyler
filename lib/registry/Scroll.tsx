@@ -75,6 +75,12 @@ export const createScroll: ComponentFactory<HTMLDivElement, ScrollProps> = ({
         <ThemedScroll {...scrollOptions} ref={ref} {...rest}>
           <ThemedScrollContainer
             ref={containerRef}
+            onClickCapture={e => {
+              if (holder.isMoving) {
+                e.stopPropagation();
+              }
+              holder.isMoving = false;
+            }}
             onMouseDown={e => {
               if (!containerRef.current) {
                 return;
@@ -86,7 +92,7 @@ export const createScroll: ComponentFactory<HTMLDivElement, ScrollProps> = ({
             onMouseLeave={() => {
               holder.isMouseDown = false;
             }}
-            onMouseUp={() => {
+            onMouseUp={e => {
               holder.isMouseDown = false;
             }}
             onMouseMove={e => {
@@ -99,6 +105,7 @@ export const createScroll: ComponentFactory<HTMLDivElement, ScrollProps> = ({
               const scrollLeft = holder.scrollLeft - walk;
               containerRef.current.scrollLeft = scrollLeft;
               updateOffsets();
+              holder.isMoving = true;
             }}
             {...scrollOptions}
             {...containerProps}

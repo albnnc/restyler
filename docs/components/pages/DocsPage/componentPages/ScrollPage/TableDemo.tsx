@@ -1,44 +1,26 @@
-import {
-  Box,
-  Scroll,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow
-} from 'docs/components/shared';
+import { Box, Scroll, SmartTable } from 'docs/components/shared';
 import React from 'react';
 
 export const TableDemo = () => {
   return (
     <Scroll extend={{ width: '300px' }}>
-      <Box extend={{ width: '600px' }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Flavor</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>1</TableCell>
-              <TableCell>Eric</TableCell>
-              <TableCell>Coconut</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>2</TableCell>
-              <TableCell>Chris</TableCell>
-              <TableCell>Watermelon</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>3</TableCell>
-              <TableCell>Ann</TableCell>
-              <TableCell>Strawberry</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+      <Box extend={{ width: '500px' }}>
+        <SmartTable
+          primaryKey="x"
+          data={[
+            { x: 1, y: 7, z: 10 },
+            { x: 2, y: 2, z: 28 },
+            { x: 3, y: 8, z: 52 },
+            { x: 4, y: 9, z: 92 },
+            { x: 5, y: 0, z: 12 }
+          ]}
+          columns={[
+            { key: 'x', header: 'x' },
+            { key: 'y', header: 'y' },
+            { key: 'z', header: 'z' }
+          ]}
+          expansion={({ x, y, z }) => `x + y + z = ${x + y + z}`}
+        />
       </Box>
     </Scroll>
   );
