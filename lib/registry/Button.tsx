@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import React, { forwardRef, ButtonHTMLAttributes } from 'react';
 import { ComponentFactory, StyleProps } from '../models';
 
 export interface ButtonProps
@@ -7,8 +7,8 @@ export interface ButtonProps
 
 export const createButton: ComponentFactory<HTMLButtonElement, ButtonProps> = ({
   themed
-}) =>
-  themed('button', {
+}) => {
+  const ThemedButton = themed('button', {
     path: 'button',
     style: {
       background: 'transparent',
@@ -21,3 +21,7 @@ export const createButton: ComponentFactory<HTMLButtonElement, ButtonProps> = ({
       padding: 0
     }
   });
+  return forwardRef((props, ref) => (
+    <ThemedButton ref={ref} type="button" {...props} />
+  ));
+};

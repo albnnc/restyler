@@ -8,6 +8,7 @@ import { checkbox } from './checkbox';
 import { collapse } from './collapse';
 import { container } from './container';
 import { defaults } from './defaults';
+import { file } from './file';
 import { form } from './form';
 import { global } from './global';
 import { heading } from './heading';
@@ -36,6 +37,7 @@ export const defaultTheme: Theme = {
   checkbox,
   collapse,
   container,
+  file,
   form,
   global,
   heading,

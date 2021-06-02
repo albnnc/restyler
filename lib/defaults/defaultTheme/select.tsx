@@ -6,7 +6,7 @@ export const select: ComponentTheme = {
   extend: ({ props }) => ({
     width: '100%',
     position: 'relative',
-    ':after': {
+    '&:after': {
       display: 'block',
       content: '""',
       position: 'absolute',

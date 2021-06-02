@@ -12,6 +12,7 @@ export const {
   Checkbox,
   Collapse,
   Container,
+  File,
   Form,
   FormField,
   FormRow,

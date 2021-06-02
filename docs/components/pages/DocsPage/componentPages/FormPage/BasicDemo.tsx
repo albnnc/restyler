@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  File,
   Form,
   FormField,
   Input,
@@ -24,7 +25,7 @@ export const BasicDemo = () => {
           name="password"
           label="Password"
           help="At least 8 characters"
-          validate={v => (v.length < 8 ? ['Wrong format'] : [])}
+          validate={v => (v?.length < 8 ? ['Wrong format'] : [])}
         >
           <Input type="password" />
         </FormField>
@@ -42,6 +43,9 @@ export const BasicDemo = () => {
         </FormField>
         <FormField name="address" label="Address">
           <TextArea />
+        </FormField>
+        <FormField name="cert" label="Certificate">
+          <File />
         </FormField>
         <Button type="submit" kind="primary" margin={{ top: 'medium' }}>
           Submit
