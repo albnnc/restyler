@@ -48,16 +48,13 @@ export const select: Theme = {
   },
 
   selection: {
-    extend: ({ props, createStyle }: ExtendOptions) =>
-      props.isMultiple
-        ? {
-            '& + &': createStyle({
-              padding: { left: 'small' },
-              margin: { left: 'small' },
-              border: { left: 'strongBorder' }
-            })
-          }
-        : {}
+    extend: ({ createStyle }: ExtendOptions) => ({
+      '& + &': createStyle({
+        padding: { left: 'small' },
+        margin: { left: 'small' },
+        border: { left: 'strongBorder' }
+      })
+    })
   },
 
   drop: {

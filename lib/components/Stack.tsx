@@ -56,7 +56,7 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(
           <ThemedStackLayer
             style={{
               ...(i === guidingChild ? {} : anchorStyle),
-              pointerEvents: i === interactiveChild ? 'all' : 'none'
+              pointerEvents: i === interactiveChild ? 'auto' : 'none'
             }}
           >
             {v}
