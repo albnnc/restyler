@@ -21,9 +21,7 @@ export const NotificationPage = () => {
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Open
-      </Heading>
+      <Heading kind="2">Open</Heading>
       <Demo code={openDemoCode} margin={{ vertical: 'medium' }}>
         <OpenDemo />
       </Demo>

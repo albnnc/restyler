@@ -2,10 +2,12 @@ import { Box, Demo, Heading } from 'docs/components/shared';
 import { Fragment } from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
-import { CardDemo } from './CardDemo';
-import cardDemoCode from './CardDemo.tsx?raw';
+import { CompoundLoaderDemo } from './CompoundLoaderDemo';
+import compoundLoaderDemo from './CompoundLoaderDemo.tsx?raw';
+import { SharedLoaderDemo } from './SharedLoaderDemo';
+import sharedLoaderDemoCode from './SharedLoaderDemo.tsx?raw';
 
-export const TabPage = () => {
+export const LoaderPage = () => {
   return (
     <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
@@ -19,9 +21,13 @@ export const TabPage = () => {
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
       </Demo>
-      <Heading kind="2">Card</Heading>
-      <Demo code={cardDemoCode} margin={{ vertical: 'medium' }}>
-        <CardDemo />
+      <Heading kind="2">Shared Loader</Heading>
+      <Demo code={sharedLoaderDemoCode} margin={{ vertical: 'medium' }}>
+        <SharedLoaderDemo />
+      </Demo>
+      <Heading kind="2">Compound Loader</Heading>
+      <Demo code={compoundLoaderDemo} margin={{ vertical: 'medium' }}>
+        <CompoundLoaderDemo />
       </Demo>
     </Fragment>
   );

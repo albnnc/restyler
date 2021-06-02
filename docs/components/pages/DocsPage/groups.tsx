@@ -11,12 +11,12 @@ import {
   AnchorPage,
   ButtonPage,
   CardPage,
-  CarouselPage,
   CollapsePage,
   ContainerPage,
   FilePage,
   FormPage,
   InputPage,
+  LoaderPage,
   ModalPage,
   NotificationPage,
   PieChartPage,
@@ -25,7 +25,8 @@ import {
   SelectPage,
   StackPage,
   TablePage,
-  TabPage
+  TabPage,
+  TransitionPage
 } from './componentPages';
 import { ThemingPage } from './generalPages';
 
@@ -220,6 +221,16 @@ export const groups = [
         title: 'Pie Chart',
         path: '/docs/others/pie-chart',
         component: PieChartPage
+      },
+      {
+        title: 'Loader',
+        path: '/docs/others/loader',
+        component: LoaderPage
+      },
+      {
+        title: 'Transition',
+        path: '/docs/others/transition',
+        component: TransitionPage
       }
     ]
   }

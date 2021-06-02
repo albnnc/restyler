@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Theme, Styled, Themed } from '../models';
+import { Styled, Theme, Themed } from '../models';
 import { filterStyleProps, get, merge, mergeThemes } from '../utils';
 import { createStyle } from './createStyle';
 

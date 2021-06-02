@@ -4,7 +4,7 @@ import {
   unmountComponentAtNode
 } from 'react-dom';
 import { TransitionState } from '../hooks';
-import { onNextFrame } from './onNextFrame';
+import { requestAnimationDelay } from './requestAnimationDelay';
 
 export interface TransitionRendererProps {
   handleClose: () => void;
@@ -44,7 +44,7 @@ export const openTransition = ({
   };
 
   const handleCloseEnd = () => {
-    onNextFrame(() => {
+    requestAnimationDelay(() => {
       unmountComponentAtNode(holderNode);
       targetNode.removeChild(holderNode);
       onCloseEnd?.();

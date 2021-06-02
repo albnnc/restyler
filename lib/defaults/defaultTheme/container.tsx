@@ -7,7 +7,10 @@ export const container: Theme = {
   content: {
     extend: {
       width: '80%',
-      maxWidth: '1024px'
+      maxWidth: '1024px',
+      '@media screen and (max-width: 500px)': {
+        width: 'calc(100% - 1.5rem)'
+      }
     }
   }
 };

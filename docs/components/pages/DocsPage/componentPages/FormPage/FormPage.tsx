@@ -20,15 +20,11 @@ export const FormPage = () => {
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Row
-      </Heading>
+      <Heading kind="2">Row</Heading>
       <Demo code={rowDemoCode} margin={{ vertical: 'medium' }}>
         <RowDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Addons
-      </Heading>
+      <Heading kind="2">Addons</Heading>
       <Demo code={addonsDemoCode} margin={{ vertical: 'medium' }}>
         <AddonsDemo />
       </Demo>

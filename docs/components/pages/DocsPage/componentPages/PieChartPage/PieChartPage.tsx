@@ -23,9 +23,7 @@ export const PieChartPage = () => {
       >
         <BasicDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Small
-      </Heading>
+      <Heading kind="2">Small</Heading>
       <Demo code={smallDemoCode} margin={{ vertical: 'medium' }}>
         <SmallDemo />
       </Demo>

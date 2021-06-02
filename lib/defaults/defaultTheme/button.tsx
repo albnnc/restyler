@@ -1,4 +1,4 @@
-import { Theme, StyleProps } from '../../models';
+import { StyleProps, Theme } from '../../models';
 
 const createBasicKind = (color: string, additionalProps?: StyleProps) => ({
   padding: { vertical: 'smaller', horizontal: 'medium' },

@@ -21,9 +21,7 @@ export const CarouselPage = () => {
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Infinite
-      </Heading>
+      <Heading kind="2">Infinite</Heading>
       <Box>
         Etiam a dolor congue, posuere arcu sit amet, consectetur augue. Sed eget
         luctus lectus. Aliquam tortor augue, pharetra eget suscipit eget, porta
@@ -32,9 +30,7 @@ export const CarouselPage = () => {
       <Demo code={infiniteDemoCode} margin={{ vertical: 'medium' }}>
         <InfiniteDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Auto Play
-      </Heading>
+      <Heading kind="2">Auto Play</Heading>
       <Box>
         Etiam a dolor congue, posuere arcu sit amet, consectetur augue. Sed eget
         luctus lectus. Aliquam tortor augue, pharetra eget suscipit eget, porta

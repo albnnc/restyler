@@ -1,11 +1,10 @@
-import { Box, Scroll, SmartTable } from 'docs/components/shared';
+import { Box, DataTable, Scroll } from 'docs/components/shared';
 
 export const TableDemo = () => {
   return (
     <Scroll css={{ width: '300px' }}>
       <Box css={{ width: '500px' }}>
-        <SmartTable
-          primaryKey="x"
+        <DataTable
           data={[
             { x: 1, y: 7, z: 10 },
             { x: 2, y: 2, z: 28 },
@@ -14,7 +13,7 @@ export const TableDemo = () => {
             { x: 5, y: 0, z: 12 }
           ]}
           columns={[
-            { key: 'x', header: 'x' },
+            { key: 'x', header: 'x', isPrimary: true },
             { key: 'y', header: 'y' },
             { key: 'z', header: 'z' }
           ]}

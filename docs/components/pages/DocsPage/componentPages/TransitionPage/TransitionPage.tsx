@@ -2,10 +2,8 @@ import { Box, Demo, Heading } from 'docs/components/shared';
 import { Fragment } from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
-import { CardDemo } from './CardDemo';
-import cardDemoCode from './CardDemo.tsx?raw';
 
-export const TabPage = () => {
+export const TransitionPage = () => {
   return (
     <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
@@ -18,10 +16,6 @@ export const TabPage = () => {
       </Box>
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
-      </Demo>
-      <Heading kind="2">Card</Heading>
-      <Demo code={cardDemoCode} margin={{ vertical: 'medium' }}>
-        <CardDemo />
       </Demo>
     </Fragment>
   );

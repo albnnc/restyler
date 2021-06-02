@@ -47,7 +47,7 @@ import {
 import { createStack } from './Stack';
 import { createTabGroup, createTabOption } from './Tab';
 import {
-  createSmartTable,
+  createDataTable,
   createTable,
   createTableBody,
   createTableCell,
@@ -86,7 +86,7 @@ const factories = {
   TableCell: createTableCell,
   TableHead: createTableHead,
   TableRow: createTableRow,
-  SmartTable: createSmartTable,
+  DataTable: createDataTable,
 
   Notification: createNotification,
   NotificationTransition: createNotificationTransition,

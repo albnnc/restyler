@@ -1,4 +1,10 @@
-export const data = [
+export interface Datum {
+  favColor: string;
+  id: number;
+  person: string;
+}
+
+export const data: Datum[] = [
   {
     id: 1,
     person: 'Eric',

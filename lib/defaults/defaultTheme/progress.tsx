@@ -10,14 +10,12 @@ const createColorKind = color => ({
 
 export const progress: Theme = {
   extend: ({ createStyle }) => ({
-    // read more about progress reset style: https://css-tricks.com/html5-progress-element/
+    // more about resetting progress style:
+    // https://css-tricks.com/html5-progress-element/
     appearance: 'none',
-    minWidth: '200px',
+    height: '4px',
     '&::-webkit-progress-bar': {
-      ...createStyle({
-        radius: 'small',
-        background: 'rgba(0, 0, 0, 0.1)'
-      }),
+      background: 'rgba(0, 0, 0, 0.1)',
       overflow: 'hidden'
     }
   }),

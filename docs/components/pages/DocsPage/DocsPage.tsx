@@ -16,31 +16,12 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import { DocsMenu } from './DocsMenu';
 import { groups } from './groups';
+import { useDocsRoute } from './useDocsRoute';
 
 export const DocsPage = () => {
-  const history = useHistory();
-  const [activeIds, setActiveIds] = useState<string[]>([]);
-
-  const match = useRouteMatch<{
-    group: string;
-    item?: string;
-  }>('/docs/:group/:item?');
-  const { group, item } = match?.params ?? {};
-  const title = groups
-    ?.find(v => v.path === `/docs/${group}`)
-    ?.items?.find(v => v.path === `/docs/${group}/${item}`)?.title;
-
-  useEffect(() => {
-    if (activeIds.length === 0) {
-      setActiveIds(
-        [
-          group && `/docs/${group}`,
-          group && item && `/docs/${group}/${item}`
-        ].filter(v => v) as string[]
-      );
-    }
-  }, [match?.params?.group]);
+  const { title } = useDocsRoute();
 
   return (
     <Fragment>
@@ -55,8 +36,8 @@ export const DocsPage = () => {
           <Box
             css={{
               margin: '1rem',
-              flex: '100 1',
-              minWidth: '300px'
+              flex: '100 1 300px',
+              maxWidth: '100%'
             }}
           >
             <Switch>
@@ -72,47 +53,7 @@ export const DocsPage = () => {
               <Redirect to="/docs/general/introduction" />
             </Switch>
           </Box>
-          {item && (
-            <Box
-              css={{
-                margin: '1rem',
-                flex: '1 0',
-                minWidth: '250px'
-              }}
-            >
-              <Menu
-                onGroupClick={id =>
-                  setActiveIds(
-                    activeIds.includes(id)
-                      ? activeIds.filter(v => v !== id)
-                      : [...activeIds, id]
-                  )
-                }
-                onItemClick={id => {
-                  setActiveIds([
-                    ...activeIds.filter(v => groups.some(g => g.path === v)),
-                    id
-                  ]);
-                  history.push(id);
-                }}
-                activeIds={activeIds}
-              >
-                {groups.map(group => (
-                  <MenuGroup
-                    key={group.path}
-                    id={group.path}
-                    title={group.title}
-                  >
-                    {group.items.map(item => (
-                      <MenuItem key={item.path} id={item.path}>
-                        {item.title}
-                      </MenuItem>
-                    ))}
-                  </MenuGroup>
-                ))}
-              </Menu>
-            </Box>
-          )}
+          <DocsMenu />
         </Box>
       </Container>
     </Fragment>

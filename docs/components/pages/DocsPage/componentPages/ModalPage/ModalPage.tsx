@@ -23,21 +23,15 @@ export const ModalPage = () => {
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Open
-      </Heading>
+      <Heading kind="2">Open</Heading>
       <Demo code={openDemoCode} margin={{ vertical: 'medium' }}>
         <OpenDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Nested
-      </Heading>
+      <Heading kind="2">Nested</Heading>
       <Demo code={nestedDemoCode} margin={{ vertical: 'medium' }}>
         <NestedDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Question
-      </Heading>
+      <Heading kind="2">Question</Heading>
       <Demo code={questionDemoCode} margin={{ vertical: 'medium' }}>
         <QuestionDemo />
       </Demo>

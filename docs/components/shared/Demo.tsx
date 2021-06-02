@@ -44,6 +44,7 @@ export const Demo = ({ code, contentProps, children, ...rest }: DemoProps) => {
         direction="row"
         align="center"
         justify="center"
+        css={{ overflow: 'hidden' }}
       >
         <Box {...contentProps}>{children}</Box>
       </Box>

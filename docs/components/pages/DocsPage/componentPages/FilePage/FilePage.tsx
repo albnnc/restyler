@@ -19,9 +19,7 @@ export const FilePage = () => {
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
       </Demo>
-      <Heading kind="2" margin={{ top: 'none' }}>
-        Custom
-      </Heading>
+      <Heading kind="2">Custom</Heading>
       <Box>
         Pellentesque vulputate eleifend orci, vitae vehicula odio porttitor ut.
         Vestibulum iaculis at velit id faucibus. Etiam a dolor congue, posuere

@@ -1,5 +1,12 @@
-import { useEffect, useState, RefObject } from 'react';
-import { onNextFrame } from '../utils';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  RefObject
+} from 'react';
+import { requestAnimationDelay } from '../utils';
 
 export type TransitionState = undefined | 'enter' | 'leave';
 
@@ -7,64 +14,67 @@ export const useTransition = <TElement extends HTMLElement>(
   ref: RefObject<TElement>,
   isMounted?: boolean
 ) => {
-  const [isFirstRender, setIsFirstRender] = useState(true);
-  useEffect(() => {
-    setIsFirstRender(false);
-  }, []);
-
+  const reflow = useCallback(() => ref.current?.offsetHeight, []);
   const [isReallyMounted, setIsReallyMounted] = useState(!!isMounted);
-  const [transitionState, setTransitionState] = useState<TransitionState>(
-    undefined
-  );
+  const [stage, setStage] = useState<TransitionState>(undefined);
+  const isActiveRef = useRef(false);
+  const handlersRef = useRef({
+    transitionstart: () => {},
+    transitionend: () => {}
+  });
 
   useEffect(() => {
-    if (isFirstRender) {
+    if (isMounted === isReallyMounted && stage !== 'leave') {
       return;
     }
-    let isTransitioning = false;
-    const onTransitionStart = () => (isTransitioning = true);
-    const onTransitionEnd = () => {
-      isTransitioning = false;
-      setIsReallyMounted(false);
-      setTransitionState(undefined);
-      removeEventListeners();
-    };
-    const addEventListeners = () => {
-      if (ref.current) {
-        ref.current.addEventListener('transitionstart', onTransitionStart);
-        ref.current.addEventListener('transitionend', onTransitionEnd);
+    isActiveRef.current = false;
+    handlersRef.current = {
+      transitionstart: () => (isActiveRef.current = true),
+      transitionend: () => {
+        isActiveRef.current = false;
+        setIsReallyMounted(false);
+        setStage(undefined);
+        handleEventListeners('removeEventListener');
       }
     };
-    const removeEventListeners = () => {
-      if (ref.current) {
-        ref.current.removeEventListener('transitionstart', onTransitionStart);
-        ref.current.removeEventListener('transitionend', onTransitionEnd);
-      }
+    const handleEventListeners = (
+      action: 'addEventListener' | 'removeEventListener'
+    ) => {
+      Object.entries(handlersRef.current).forEach(([event, fn]) =>
+        ref.current?.[action](event, fn)
+      );
     };
 
     if (isMounted) {
+      setStage('enter');
       setIsReallyMounted(true);
-      setTransitionState('enter');
-      onNextFrame(() => setTransitionState(undefined));
     } else {
-      setTransitionState('leave');
-      addEventListeners();
-      onNextFrame(() => {
-        if (!isTransitioning) {
-          onTransitionEnd();
+      setStage('leave');
+      handleEventListeners('addEventListener');
+    }
+    return () => handleEventListeners('removeEventListener');
+  }, [isMounted]);
+
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+    reflow();
+    if (stage === 'enter') {
+      setStage(undefined);
+    } else if (stage === 'leave') {
+      requestAnimationDelay(() => {
+        if (!isActiveRef.current) {
+          handlersRef.current.transitionend();
         }
       });
     }
-    return removeEventListeners;
-  }, [isMounted]);
+  }, [stage]);
 
-  const transitionProps = {
-    ref,
-    ...(transitionState ? { 'data-transition': transitionState } : {})
-  };
+  const transitionProps = useMemo(
+    () => (stage ? { 'data-transition': stage } : {}),
+    [stage]
+  );
 
-  return [isReallyMounted, transitionProps] as [
-    boolean,
-    { 'data-transition': 'leave' | 'enter' }
-  ];
+  return [isReallyMounted, transitionProps] as const;
 };
