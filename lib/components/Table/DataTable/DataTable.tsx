@@ -83,7 +83,7 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
                   <TableRow
                     onClick={() => {
                       onRowClick?.(datum);
-                      if (expansion) {
+                      if (expansion && primaryKey in datum) {
                         setExpansionValue(
                           expansionValue === primaryValue
                             ? undefined
@@ -101,13 +101,15 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
                       </TableCell>
                     ))}
                   </TableRow>
-                  {expansion && expansionValue === primaryValue && (
-                    <TableRow>
-                      <TableCell colSpan={columns.length}>
-                        {expansion(datum) || null}
-                      </TableCell>
-                    </TableRow>
-                  )}
+                  {expansion &&
+                    primaryKey in datum &&
+                    expansionValue === primaryValue && (
+                      <TableRow>
+                        <TableCell colSpan={columns.length}>
+                          {expansion(datum) || null}
+                        </TableCell>
+                      </TableRow>
+                    )}
                 </Fragment>
               );
             })
