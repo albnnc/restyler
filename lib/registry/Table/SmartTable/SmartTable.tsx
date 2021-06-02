@@ -110,7 +110,9 @@ export const createSmartTable: SmartTableFactory = ({ registry }) => {
                         key={`table-cell-${rowIndex}-${columnIndex}`}
                         kind={expansion || onRowClick ? 'hoverable' : undefined}
                       >
-                        {render ? render(get(datum, key)) : get(datum, key)}
+                        {render
+                          ? render(get(datum, key), datum)
+                          : get(datum, key)}
                       </TableCell>
                     ))}
                   </TableRow>
