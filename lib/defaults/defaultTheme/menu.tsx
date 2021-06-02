@@ -1,0 +1,57 @@
+import { ComponentTheme } from '~lib/models';
+
+const createTitleStyle = ({ createStyle }) => ({
+  userSelect: 'none',
+  cursor: 'pointer',
+  textTransform: 'uppercase',
+  letterSpacing: '1px',
+  '&:hover': createStyle({ color: 'primary' })
+});
+
+export const menu: ComponentTheme = {
+  background: 'grey-light',
+  font: 'small',
+  padding: 'medium',
+  color: 'rgba(0, 0, 0, 0.5)',
+
+  extend: {
+    position: 'sticky',
+    top: '2rem'
+  },
+
+  group: {
+    items: { padding: { top: 'small', left: 'medium' } },
+    extend: ({ createStyle }) => ({
+      '& + &': createStyle({ margin: { top: 'small' } })
+    }),
+    title: { extend: createTitleStyle }
+  },
+
+  item: {
+    extend: ({ createStyle }) => ({
+      '& + &': createStyle({ margin: { top: 'x-small' } })
+    }),
+    title: {
+      extend: ({ createStyle, props }) => {
+        return {
+          ...createTitleStyle({ createStyle }),
+          position: 'relative',
+
+          '&::after': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            width: '0.3em',
+            height: '0.3em',
+            borderRadius: '100vw',
+            top: '50%',
+            right: props.isActive ? '1em' : '0.2rem',
+            transform: 'translateY(-50%)',
+            transition: 'all 0.15s',
+            background: props.isActive ? 'currentColor' : 'transparent'
+          }
+        };
+      }
+    }
+  }
+};
