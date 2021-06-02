@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Form,
   FormField,
   Input,
@@ -7,7 +8,7 @@ import {
   RadioOption,
   Select
 } from 'docs/components/shared';
-import { useFormManager } from 'lib/hooks';
+import { useFormManager } from 'lib';
 import React from 'react';
 
 export const BasicDemo = () => {
@@ -28,11 +29,20 @@ export const BasicDemo = () => {
             <RadioOption value={false}>No</RadioOption>
           </RadioGroup>
         </FormField>
+        <Button type="submit" kind="primary" margin={{ top: 'medium' }}>
+          Submit
+        </Button>
       </Form>
       <Box margin={{ top: 'x-large' }}>
         <Box>Form values</Box>
         <pre>
           <code>{JSON.stringify(manager.values, null, 2)}</code>
+        </pre>
+      </Box>
+      <Box margin={{ top: 'x-large' }}>
+        <Box>Form errors</Box>
+        <pre>
+          <code>{JSON.stringify(manager.errors, null, 2)}</code>
         </pre>
       </Box>
     </>

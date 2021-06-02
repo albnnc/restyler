@@ -2,11 +2,17 @@ import React, {
   cloneElement,
   forwardRef,
   useContext,
+  useEffect,
   FormEventHandler,
   HTMLAttributes,
   ReactElement
 } from 'react';
-import { ComponentFactory, FormWidgetProps, StyleProps } from '../../models';
+import {
+  ComponentFactory,
+  FormFieldValidator,
+  FormWidgetProps,
+  StyleProps
+} from '../../models';
 import { clone, get, set } from '../../utils';
 import { InputProps } from '../Input';
 import { FormContext } from './FormContext';
@@ -23,7 +29,7 @@ export interface FormFieldProps
   help?: string;
   label?: string;
   name: string;
-  validate?: (value: any) => string[];
+  validate?: FormFieldValidator;
 }
 
 export const createFormField: ComponentFactory<
@@ -55,16 +61,23 @@ export const createFormField: ComponentFactory<
       },
       ref
     ) => {
-      const { values, setValues, errors, setErrors } = useContext(FormContext);
-      const setFieldRelated = (
-        target: any,
-        setTarget: (v: any) => void,
-        value: any
-      ) => {
-        const copy = clone<any>(target);
-        set(copy, name, value);
-        setTarget(copy);
-      };
+      const {
+        manager: { values, setValues, errors, validators, setValidators }
+      } = useContext(FormContext);
+
+      useEffect(() => {
+        setValidators(v => ({
+          ...v,
+          [name]: value => {
+            const newFieldErrors = validate?.(value) ?? [];
+            if (required && [undefined, null, ''].includes(value)) {
+              newFieldErrors.push('Required');
+            }
+            return newFieldErrors;
+          }
+        }));
+      }, [required, validate]);
+
       const fieldValue = get(values, name) as string | number;
       const fieldErrors = get(errors, name) as string[] | undefined;
 
@@ -78,12 +91,7 @@ export const createFormField: ComponentFactory<
         name,
         value: fieldValue ?? '',
         onChange: newFieldValue => {
-          const newFieldErrors = validate?.(newFieldValue) ?? [];
-          if (required && [undefined, null, ''].includes(newFieldValue)) {
-            newFieldErrors.push('Required');
-          }
-          setFieldRelated(values, setValues, newFieldValue);
-          setFieldRelated(errors, setErrors, newFieldErrors);
+          setValues(v => ({ ...v, [name]: newFieldValue }));
         },
         ...validityProps
       };

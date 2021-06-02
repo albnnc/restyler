@@ -1,5 +1,6 @@
 export * from './ComponentFactory';
 export * from './DirectionMap';
+export * from './FormFieldValidator';
 export * from './FormManager';
 export * from './FormWidgetProps';
 export * from './Locale';

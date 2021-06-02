@@ -48,6 +48,7 @@ task('build:docs:js', () => {
 task('build:docs', series('clean', 'build:docs:js'));
 
 task('start:docs', () => {
+  const webpackConfig = createWebpackConfig(true);
   const devServerConfig = {
     hot: true,
     inline: true,
@@ -57,7 +58,7 @@ task('start:docs', () => {
   };
   WebpackDevServer.addDevServerEntrypoints(webpackConfig, devServerConfig);
   new WebpackDevServer(webpackCompiler(webpackConfig), devServerConfig).listen(
-    8080
+    4200
   );
 });
 

@@ -9,29 +9,72 @@ export interface FormProps
   manager?: FormManager;
   onChange?: (manager: FormManager) => void;
   onSubmit?: (manager: FormManager) => void;
+  shouldLiveValidate?: boolean;
 }
 
 export const createForm: ComponentFactory<HTMLFormElement, FormProps> = ({
   themed
 }) => {
   const ThemedForm = themed('form', { path: 'form' });
-  return forwardRef(({ manager, onChange, onSubmit, ...rest }, ref) => {
-    const innerManager = useFormManager();
-    const targetManager = manager ?? innerManager;
-    useEffect(() => {
-      onChange?.(targetManager);
-    }, [targetManager.values]);
-    return (
-      <FormContext.Provider value={targetManager}>
-        <ThemedForm
-          ref={ref}
-          onSubmit={e => {
-            e.preventDefault();
-            onSubmit?.(targetManager);
+  return forwardRef(
+    ({ manager, onChange, onSubmit, shouldLiveValidate, ...rest }, ref) => {
+      const innerManager = useFormManager();
+      const targetManager = manager ?? innerManager;
+      const { values, errors, setErrors, validators } = targetManager;
+
+      const validate = () => {
+        const newErrors = {} as any;
+        Reflect.ownKeys(validators).forEach((name: string) => {
+          const newFieldErrors = validators[name](values[name]);
+          if (newFieldErrors?.length > 0) {
+            newErrors[name] = newFieldErrors;
+          }
+        });
+        const hasNewErrors = Reflect.ownKeys(newErrors).length > 0;
+        return [newErrors, hasNewErrors] as [any, boolean];
+      };
+
+      useEffect(() => {
+        if (shouldLiveValidate) {
+          const [newErrors, hasNewErrors] = validate();
+          if (hasNewErrors) {
+            setErrors(newErrors);
+          }
+        } else {
+          onChange?.(targetManager);
+        }
+      }, [targetManager.values]);
+
+      useEffect(() => {
+        if (shouldLiveValidate) {
+          onChange?.(targetManager);
+        }
+      }, [errors]);
+
+      return (
+        <FormContext.Provider
+          value={{
+            manager: targetManager,
+            shouldLiveValidate: !!shouldLiveValidate
           }}
-          {...rest}
-        />
-      </FormContext.Provider>
-    );
-  });
+        >
+          <ThemedForm
+            ref={ref}
+            noValidate
+            onSubmit={e => {
+              e.preventDefault();
+              const [newErrors, hasNewErrors] = validate();
+              if (!shouldLiveValidate) {
+                setErrors(newErrors);
+              }
+              if (!hasNewErrors) {
+                onSubmit?.(targetManager);
+              }
+            }}
+            {...rest}
+          />
+        </FormContext.Provider>
+      );
+    }
+  );
 };
