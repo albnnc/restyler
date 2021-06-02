@@ -28,7 +28,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
         }
       });
       const hasNewErrors = Reflect.ownKeys(newErrors).length > 0;
-      return [newErrors, hasNewErrors] as [any, boolean];
+      return [newErrors, hasNewErrors] as const;
     };
 
     useEffect(() => {
@@ -37,10 +37,9 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
         if (hasNewErrors) {
           setErrors(newErrors);
         }
-      } else {
-        onChange?.(targetManager);
       }
-    }, [targetManager.values]);
+      onChange?.(targetManager);
+    }, [values]);
 
     useEffect(() => {
       if (shouldLiveValidate) {
