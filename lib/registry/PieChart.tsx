@@ -59,8 +59,9 @@ export const createPieChart: ComponentFactory<SVGSVGElement, PieChartProps> = ({
         if (value < 1) {
           continue;
         }
+        const hasAnythingElse = value < totalValue;
         const ratio = value / totalValue;
-        const ratioGap = angleGap / (2 * Math.PI);
+        const ratioGap = hasAnythingElse ? angleGap / (2 * Math.PI) : 0;
         const ratioLoss = ratio * ratioGap * totalCount;
         const ratioDelta = ratio - ratioLoss;
         const dashOffset = -ratioOffset * totalLength;
