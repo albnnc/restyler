@@ -65,9 +65,6 @@ export const useTransition = <TElement extends HTMLElement>(
   }, [isMounted]);
 
   useLayoutEffect(() => {
-    if (!ref.current) {
-      return;
-    }
     reflow();
     if (stage === 'enter') {
       setStage(undefined);
