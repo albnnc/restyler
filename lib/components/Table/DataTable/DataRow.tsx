@@ -3,7 +3,6 @@ import { get, hash } from '../../../utils';
 import { TableCell } from '../TableCell';
 import { TableRow, TableRowProps } from '../TableRow';
 import { Column } from './Column';
-import { DataTableProps } from './DataTableProps';
 
 interface DataRowProps<TDatum> extends TableRowProps {
   columns: Column<TDatum>[];
@@ -12,8 +11,14 @@ interface DataRowProps<TDatum> extends TableRowProps {
   rowIndex: number;
 }
 
-export const DataRow = (props: DataRowProps<any>) => {
-  const { columns, expansion, datum, rowIndex, onClick, ...rest } = props;
+export const DataRow = ({
+  columns,
+  expansion,
+  datum,
+  rowIndex,
+  onClick,
+  ...rest
+}: DataRowProps<any>) => {
   const [isOpen, setIsOpen] = useState(false);
   return useMemo(
     () => (
@@ -48,6 +53,14 @@ export const DataRow = (props: DataRowProps<any>) => {
         )}
       </Fragment>
     ),
-    [isOpen, ...Object.values(props)]
+    [
+      isOpen,
+      columns,
+      expansion,
+      datum,
+      rowIndex,
+      onClick,
+      Reflect.ownKeys(rest).length
+    ]
   );
 };
