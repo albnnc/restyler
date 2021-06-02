@@ -1,4 +1,5 @@
 import { BasicBorder, StyleProps } from '../models';
+import { clone } from './clone';
 import { createSideMap } from './createSideMap';
 import { isBasicBorder, isObject } from './guards';
 import { merge } from './merge';
@@ -19,7 +20,10 @@ export const mergeStyleProps = (...args: StyleProps[]): StyleProps => {
       }
     }
     if (key === 'extend') {
-      return [...(Array.isArray(a) ? a : [a]), ...(Array.isArray(b) ? b : [b])];
+      return clone([
+        ...(Array.isArray(a) ? a : [a]),
+        ...(Array.isArray(b) ? b : [b])
+      ]);
     }
     return undefined;
   });

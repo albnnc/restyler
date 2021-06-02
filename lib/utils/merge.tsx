@@ -1,3 +1,4 @@
+import { clone } from './clone';
 import { isFunction, isObject } from './guards';
 
 type MergeFn = (a: any, b: any, key?: string) => any;
@@ -10,11 +11,11 @@ const mergeSingle = (target: any, source: any, fn?: MergeFn) => {
     if (targetValue !== undefined && fnValue !== undefined) {
       target[key] = fnValue;
     } else if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
-      target[key] = targetValue.concat(sourceValue);
+      target[key] = [...clone(targetValue), ...clone(sourceValue)];
     } else if (isObject(targetValue) && isObject(sourceValue)) {
-      target[key] = mergeSingle({ ...targetValue }, sourceValue, fn);
+      target[key] = mergeSingle({ ...targetValue }, { ...sourceValue }, fn);
     } else {
-      target[key] = sourceValue;
+      target[key] = clone(sourceValue);
     }
   });
   return target;

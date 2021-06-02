@@ -1,4 +1,6 @@
-export const clone = <T extends any>(item): T => {
+export const clone = <T extends any>(data: T): T => {
+  // TODO: fix types
+  const item = data as any;
   if (!item) {
     return item;
   }
