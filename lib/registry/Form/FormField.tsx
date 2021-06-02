@@ -5,7 +5,8 @@ import React, {
   useEffect,
   FormEventHandler,
   HTMLAttributes,
-  ReactElement
+  ReactElement,
+  ReactNode
 } from 'react';
 import {
   ComponentFactory,
@@ -17,9 +18,18 @@ import { clone, get, set } from '../../utils';
 import { InputProps } from '../Input';
 import { FormContext } from './FormContext';
 
+interface FormFieldAddonProps {
+  prefix?: ReactNode;
+  suffix?: ReactNode;
+}
+
 export interface FormFieldProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
+  extends Omit<
+      HTMLAttributes<HTMLDivElement>,
+      keyof FormWidgetProps | keyof FormFieldAddonProps
+    >,
     FormWidgetProps,
+    FormFieldAddonProps,
     StyleProps {
   children?: ReactElement<{
     name?: string;
@@ -57,6 +67,8 @@ export const createFormField: ComponentFactory<
         disabled,
         required,
         invalid,
+        prefix,
+        suffix,
         ...rest
       },
       ref
@@ -109,7 +121,11 @@ export const createFormField: ComponentFactory<
               {label}
             </ThemedFormFieldLabel>
           )}
-          <ThemedFormFieldControl>{child}</ThemedFormFieldControl>
+          <ThemedFormFieldControl>
+            {prefix}
+            {child}
+            {suffix}
+          </ThemedFormFieldControl>
           {(fieldErrors?.length ?? 0) > 0 && (
             <ThemedFormFieldErrors>
               {fieldErrors?.map(v => (

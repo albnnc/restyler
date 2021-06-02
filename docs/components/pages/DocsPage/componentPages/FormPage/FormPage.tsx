@@ -1,5 +1,7 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
 import React from 'react';
+import { AddonsDemo } from './AddonsDemo';
+import addonsDemoCode from './AddonsDemo.tsx?raw';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 import { RowDemo } from './RowDemo';
@@ -23,6 +25,12 @@ export const FormPage = () => {
       </Heading>
       <Demo code={rowDemoCode} margin={{ vertical: 'medium' }}>
         <RowDemo />
+      </Demo>
+      <Heading kind="2" margin={{ top: 'none' }}>
+        Addons
+      </Heading>
+      <Demo code={addonsDemoCode} margin={{ vertical: 'medium' }}>
+        <AddonsDemo />
       </Demo>
     </>
   );

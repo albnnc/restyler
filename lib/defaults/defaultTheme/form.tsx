@@ -18,6 +18,10 @@ export const form: ComponentTheme = {
       })
     },
 
+    control: {
+      direction: 'row'
+    },
+
     errors: {
       item: {
         color: 'danger',
