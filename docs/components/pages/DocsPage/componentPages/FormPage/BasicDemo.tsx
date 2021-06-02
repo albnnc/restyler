@@ -16,7 +16,7 @@ export const BasicDemo = () => {
   const manager = useFormManager();
   return (
     <>
-      <Form manager={manager}>
+      <Form manager={manager} kind="vertical">
         <FormField required name="login" label="Login" />
         <FormField required name="password" label="Password">
           <Input type="password" />

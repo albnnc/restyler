@@ -16,7 +16,7 @@ import {
 import { createCheckbox } from './Checkbox';
 import { createCollapse } from './Collapse';
 import { createContainer } from './Container';
-import { createForm, createFormField } from './Form';
+import { createForm, createFormField, createFormRow } from './Form';
 import { createHeading } from './Heading';
 import { createImage } from './Image';
 import { createInput } from './Input';
@@ -97,6 +97,7 @@ const factories = {
   Input: createInput,
   Checkbox: createCheckbox,
   FormField: createFormField,
+  FormRow: createFormRow,
   Form: createForm,
 
   Progress: createProgress,
