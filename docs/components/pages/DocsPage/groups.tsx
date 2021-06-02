@@ -14,7 +14,7 @@ import {
   CarouselPage,
   CollapsePage,
   ContainerPage,
-  FileInputPage,
+  FilePage,
   FormPage,
   InputPage,
   ModalPage,
@@ -130,7 +130,7 @@ export const groups = [
       {
         title: 'File',
         path: '/docs/inputs/file',
-        component: FileInputPage
+        component: FilePage
       },
       {
         title: 'Form',
