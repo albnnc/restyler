@@ -20,16 +20,16 @@ export const menu: ComponentTheme = {
   },
 
   group: {
-    items: { padding: { top: 'small', left: 'medium' } },
+    items: { padding: { top: 'x-small', left: 'large' } },
     extend: ({ createStyle }) => ({
-      '& + &': createStyle({ margin: { top: 'small' } })
+      '&:not(:first-child)': createStyle({ margin: { top: 'x-small' } })
     }),
     title: { extend: createTitleStyle }
   },
 
   item: {
     extend: ({ createStyle }) => ({
-      '& + &': createStyle({ margin: { top: 'x-small' } })
+      '&:not(:first-child)': createStyle({ margin: { top: 'x-small' } })
     }),
     title: {
       extend: ({ createStyle, props }) => {
