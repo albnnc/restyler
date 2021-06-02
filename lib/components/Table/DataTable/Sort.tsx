@@ -1,4 +1,4 @@
-export type Comparator = <T extends object>(a: T, b: T) => 1 | 0 | -1;
+export type Comparator = (a: any, b: any) => 1 | 0 | -1;
 
 export type SortDirection = 'asc' | 'desc';
 
