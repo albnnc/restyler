@@ -3,7 +3,7 @@ import { ComponentTheme } from '../../models';
 export const defaults: ComponentTheme = {
   padding: 'none',
   margin: 'none',
-  font: 'medium',
+  font: 'inherit',
   color: 'inherit',
   extend: {
     lineHeight: 1.5,

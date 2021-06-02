@@ -10,7 +10,7 @@ const createTitleStyle = ({ createStyle }) => ({
 
 export const menu: ComponentTheme = {
   background: 'lightGrey',
-  font: 'small',
+  font: 'medium',
   padding: 'medium',
   color: 'rgba(0, 0, 0, 0.5)',
 
