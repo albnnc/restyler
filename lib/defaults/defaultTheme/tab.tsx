@@ -6,9 +6,14 @@ export const tab: ComponentTheme = {
   },
 
   option: {
+    padding: {
+      vertical: 'x-small',
+      horizontal: 'medium'
+    },
     border: {
       bottom: { width: '2px', color: 'transparent' }
     },
+    color: 'text',
 
     extend: ({ createStyle, props }) => ({
       cursor: 'pointer',

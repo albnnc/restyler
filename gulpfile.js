@@ -93,9 +93,9 @@ task('release:git', async () => {
     `git flow release finish ${version} -m ${version}`,
     options
   );
-  await execa.command(`git push origin develop`);
-  await execa.command(`git push origin master`);
-  await execa.command(`git push origin ${version}`);
+  await execa.command(`git push origin develop`, options);
+  await execa.command(`git push origin master`, options);
+  await execa.command(`git push origin ${version}`, options);
 });
 
 task('release:npm', async () => {
