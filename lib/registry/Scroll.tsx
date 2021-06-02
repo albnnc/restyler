@@ -1,10 +1,9 @@
-import { useSharedRef } from 'lib/hooks';
 import React, {
   forwardRef,
-  useState,
-  HTMLAttributes,
+  useEffect,
   useRef,
-  useEffect
+  useState,
+  HTMLAttributes
 } from 'react';
 import { ComponentFactory, StyleProps } from '../models';
 
@@ -49,6 +48,7 @@ export const createScroll: ComponentFactory<HTMLDivElement, ScrollProps> = ({
       const [hasLeftOffset, setHasLeftOffset] = useState(false);
       const [hasRightOffset, setHasRightOffset] = useState(false);
       const scrollOptions = { hasLeftOffset, hasRightOffset };
+
       const updateOffsets = () => {
         if (!containerRef.current) {
           return;
@@ -61,7 +61,13 @@ export const createScroll: ComponentFactory<HTMLDivElement, ScrollProps> = ({
       };
 
       useEffect(() => {
+        if (!containerRef.current) {
+          return;
+        }
         updateOffsets();
+        containerRef.current.addEventListener('resize', () => {
+          updateOffsets();
+        });
       }, [containerRef.current]);
 
       return (
