@@ -31,7 +31,7 @@ export const Navbar = () => {
         }
       }}
       elevation="larger"
-      background="darkGrey"
+      background="darkerGrey"
       css={{
         position: 'relative',
         zIndex: 1

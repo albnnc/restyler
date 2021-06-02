@@ -15,7 +15,7 @@ export const LandingPage = () => {
     <Fragment>
       <Navbar />
       <Box
-        background="darkGrey"
+        background="darkerGrey"
         padding={{ vertical: 'larger', horizontal: 'large' }}
       >
         <Box direction="column" color="white" justify="center" align="center">

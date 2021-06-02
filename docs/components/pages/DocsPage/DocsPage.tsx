@@ -26,7 +26,7 @@ export const DocsPage = () => {
   return (
     <Fragment>
       <Navbar />
-      <Container background="darkGrey" padding={{ vertical: 'larger' }}>
+      <Container background="darkerGrey" padding={{ vertical: 'larger' }}>
         <Heading kind="1" color="white" margin="none">
           {title}
         </Heading>

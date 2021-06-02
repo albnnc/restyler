@@ -5,11 +5,14 @@ export const variables: Variables = {
     black: '#000000',
     white: '#ffffff',
 
-    grey: '#575757',
-    lightGrey: '#f5f5f5',
-    darkGrey: '#212121',
+    lighterGrey: '#f5f5f5',
+    lightGrey: '#c3c3c3',
+    grey: '#636363',
+    darkGrey: '#494949',
+    darkerGrey: '#212121',
 
     primary: '#17a1f7',
+    info: '#51b8d8',
     success: '#40af45',
     danger: '#f44336',
     warning: '#f59200',
