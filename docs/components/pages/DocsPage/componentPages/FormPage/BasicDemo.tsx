@@ -19,7 +19,14 @@ export const BasicDemo = () => {
     <>
       <Form manager={manager} kind="vertical">
         <FormField required name="login" label="Login" />
-        <FormField required name="password" label="Password">
+        <FormField
+          required
+          name="password"
+          label="Password"
+          validate={v =>
+            v.length < 8 ? ['At least 8 characters in length'] : []
+          }
+        >
           <Input type="password" />
         </FormField>
         <FormField required name="authType" label="Auth type">

@@ -14,7 +14,7 @@ import {
   FormWidgetProps,
   StyleProps
 } from '../../models';
-import { clone, get, set } from '../../utils';
+import { get, hash } from '../../utils';
 import { InputProps } from '../Input';
 import { FormContext } from './FormContext';
 
@@ -78,6 +78,7 @@ export const createFormField: ComponentFactory<
       } = useContext(FormContext);
 
       useEffect(() => {
+        console.log('setting validator for', name);
         setValidators(v => ({
           ...v,
           [name]: value => {
@@ -88,7 +89,7 @@ export const createFormField: ComponentFactory<
             return newFieldErrors;
           }
         }));
-      }, [required, validate]);
+      }, [required, hash(validate)]);
 
       const fieldValue = get(values, name) as string | number;
       const fieldErrors = get(errors, name) as string[] | undefined;
