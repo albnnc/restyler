@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { FormManager } from '../models';
 
-export const useFormManager = (defaults?: {
+export interface FormManagerDefaults {
   errors?: any;
   validators?: any;
   values?: any;
-}): FormManager => {
+}
+
+export const useFormManager = (defaults?: FormManagerDefaults): FormManager => {
   const [values, setValues] = useState(defaults?.values ?? ({} as any));
   const [errors, setErrors] = useState(defaults?.errors ?? ({} as any));
   const [validators, setValidators] = useState(
