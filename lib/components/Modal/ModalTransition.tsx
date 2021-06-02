@@ -37,6 +37,10 @@ export const ModalTransition = forwardRef<HTMLDivElement, ModalTransitionProps>(
       }
     });
 
+    useEffect(() => {
+      modalRef.current?.focus();
+    }, []);
+
     if (!isLayerMounted) {
       return null;
     }

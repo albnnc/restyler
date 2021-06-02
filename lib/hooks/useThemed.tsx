@@ -25,8 +25,9 @@ export const useThemed = <
 > => {
   const { path, style } = options;
   const { styled, registry } = useContext(SystemContext);
-  if (registry[path]) {
-    return registry[path];
+  const token = `${tag}.${path}`;
+  if (registry[token]) {
+    return registry[token];
   }
 
   const ThemedComponent = styled<Tag, StyleProps & ExtraProps>(tag, props => {
@@ -52,10 +53,10 @@ export const useThemed = <
   });
 
   // TODO: remove `any`
-  registry[path] = forwardRef<Tag, any>((props, ref) => {
+  registry[token] = forwardRef<Tag, any>((props, ref) => {
     const { theme } = useContext(SystemContext);
     return <ThemedComponent ref={ref} theme={theme} {...props} />;
   });
 
-  return registry[path];
+  return registry[token];
 };
