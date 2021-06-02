@@ -9,7 +9,7 @@ import rollupConfig from './rollup.config.js';
 
 const execaOptions = { stdout: 'inherit' };
 
-task('clean', async () => fsp.rmdir('./build', { recursive: true }));
+task('clean', async () => fsp.rm('./build', { recursive: true, force: true }));
 
 task('build:lib:js', async () => {
   const { output, ...input } = rollupConfig;
@@ -21,7 +21,7 @@ task('build:lib:js', async () => {
 });
 
 task('build:lib:types', () => {
-  return src('./lib/**/*.tsx')
+  return src(['./src/**/*.tsx', '!./src/**/*.stories.*'])
     .pipe(
       ts({
         ...require('./tsconfig.json').compilerOptions,

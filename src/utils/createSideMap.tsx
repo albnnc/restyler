@@ -2,7 +2,7 @@ import { DirectionMap, SideMap } from '../models';
 import { clone } from './clone';
 import { isString } from './guards';
 
-export const createSideMap = <T extends any>(
+export const createSideMap = <T extends any = string>(
   prop: T | DirectionMap<T>,
   isBasic?: (v) => v is T
 ): SideMap<T> => {
@@ -16,18 +16,19 @@ export const createSideMap = <T extends any>(
     };
   }
   if (typeof prop !== 'object') {
-    return prop;
+    return {};
   }
-  const copy: SideMap<T> = clone(prop);
+  const { vertical, horizontal } = prop as DirectionMap<T>;
+  const copy = clone(prop) as SideMap<T>;
   delete copy['vertical'];
   delete copy['horizontal'];
-  if (prop.vertical) {
-    copy.top = clone(prop.vertical);
-    copy.bottom = clone(prop.vertical);
+  if (vertical) {
+    copy.top = clone(vertical);
+    copy.bottom = clone(vertical);
   }
-  if (prop.horizontal) {
-    copy.left = clone(prop.horizontal);
-    copy.right = clone(prop.horizontal);
+  if (horizontal) {
+    copy.left = clone(horizontal);
+    copy.right = clone(horizontal);
   }
   return copy;
 };
