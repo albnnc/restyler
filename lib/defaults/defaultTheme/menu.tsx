@@ -3,8 +3,6 @@ import { ComponentTheme } from '../../models';
 const createTitleStyle = ({ createStyle }) => ({
   userSelect: 'none',
   cursor: 'pointer',
-  textTransform: 'uppercase',
-  letterSpacing: '0.04rem',
   '&:hover': createStyle({ color: 'primary' })
 });
 
@@ -16,7 +14,9 @@ export const menu: ComponentTheme = {
 
   extend: {
     position: 'sticky',
-    top: '2rem'
+    top: '2rem',
+    textTransform: 'uppercase',
+    letterSpacing: '0.04rem'
   },
 
   group: {
