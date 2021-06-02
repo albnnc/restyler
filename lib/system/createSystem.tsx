@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { useEffect } from 'react';
 import { ComponentFactoryOptions, Locale, Theme } from '../models';
 import { Styled } from '../models';
@@ -20,9 +20,13 @@ export const createSystem = (options: {
 
   const updateRelated = {
     update: () => data.updaters.forEach(fn => fn()),
-    useUpdates: () => {
-      const [tick, update] = useReducer(v => v + 1, 0);
+    useUpdateCallback: (fn: Function) => {
+      const [_, tick] = useReducer(v => (v + 1) % 1_000_000, 0);
       useEffect(() => {
+        const update = () => {
+          tick();
+          fn();
+        };
         data.updaters.push(update);
         return () => {
           data.updaters.splice(data.updaters.findIndex(v => v === update));
@@ -38,8 +42,11 @@ export const createSystem = (options: {
       updateRelated.update();
     },
     useTheme: () => {
-      updateRelated.useUpdates();
-      return themeRelated.getTheme();
+      const [theme, setTheme] = useState<Theme>(themeRelated.getTheme());
+      updateRelated.useUpdateCallback(() => {
+        setTheme(themeRelated.getTheme());
+      });
+      return theme;
     }
   };
 
