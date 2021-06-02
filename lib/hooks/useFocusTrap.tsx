@@ -1,48 +1,70 @@
-import { useEffect, RefObject } from 'react';
+import { useEffect, useState, RefObject } from 'react';
+import { useStack } from './useStack';
 
 export const useFocusTrap = <T extends HTMLElement>(ref: RefObject<T>) => {
+  const isOnTop = useStack(ref);
+
+  const [firstFocusable, setFirstFocusable] = useState<HTMLElement | undefined>(
+    undefined
+  );
+  const [lastFocusable, setLastFocusable] = useState<HTMLElement | undefined>(
+    undefined
+  );
+
   useEffect(() => {
-    if (!ref.current) {
-      return;
-    }
-
     const el = ref.current;
-    const focusableEls = el.querySelectorAll(focusableSelector);
-    const firstFocusable = focusableEls[0] as HTMLElement | undefined;
-    const lastFocusable = focusableEls[focusableEls.length - 1] as
-      | HTMLElement
-      | undefined;
-
-    if (!firstFocusable || !lastFocusable) {
-      (document.activeElement as any)?.blur();
+    if (!el || !isOnTop) {
       return;
     }
+    const focusables = el.querySelectorAll(focusableSelector);
+    const first = focusables[0] as HTMLElement | undefined;
+    const last = focusables[focusables.length - 1] as HTMLElement | undefined;
+    setFirstFocusable(first);
+    setLastFocusable(last);
+    const hasActiveElement =
+      document.activeElement || document.activeElement !== document.body;
+    if (!hasActiveElement || el.contains(document.activeElement)) {
+      return;
+    }
+    if (!first || !last) {
+      (document.activeElement as HTMLElement)?.blur();
+    } else {
+      first.focus();
+    }
+    // One needs to update focusables on each component
+    // rerender, so we don't specify deps.
+  });
 
-    firstFocusable.focus();
-
-    const onKey = e => {
+  useEffect(() => {
+    if (!isOnTop) {
+      return;
+    }
+    const listener = e => {
       if (e.key !== 'Tab') {
         return;
       }
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusable) {
-          lastFocusable?.focus();
-          e.preventDefault();
+      const hasActiveElement =
+        document.activeElement || document.activeElement !== document.body;
+      if (hasActiveElement) {
+        if (e.shiftKey) {
+          if (document.activeElement === firstFocusable) {
+            lastFocusable?.focus();
+          }
+        } else {
+          if (document.activeElement === lastFocusable) {
+            firstFocusable?.focus();
+          }
         }
       } else {
-        if (document.activeElement === lastFocusable) {
-          firstFocusable?.focus();
-          e.preventDefault();
-        }
+        firstFocusable?.focus();
       }
+      e.preventDefault();
     };
-
-    el.addEventListener('keydown', onKey);
-
+    window.addEventListener('keydown', listener);
     return () => {
-      el.removeEventListener('keydown', onKey);
+      window.removeEventListener('keydown', listener);
     };
-  }, [ref.current]);
+  }, [isOnTop, firstFocusable, lastFocusable]);
 };
 
 const focusableSelector =

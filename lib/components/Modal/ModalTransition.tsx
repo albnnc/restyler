@@ -1,8 +1,9 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
 import {
   useClickOutside,
   useFocusTrap,
   useSharedRef,
+  useStack,
   useTransition
 } from '../../hooks';
 import { TransitionRendererProps } from '../../utils';
@@ -44,6 +45,16 @@ export const ModalTransition = forwardRef<HTMLDivElement, ModalTransitionProps>(
 
     useFocusTrap(modalRef);
 
+    const isOnTop = useStack(modalStackId);
+
+    useEffect(() => {
+      const listener = e => e.key === 'Escape' && handleClose?.();
+      isOnTop && window.addEventListener('keydown', listener);
+      return () => {
+        window.removeEventListener('keydown', listener);
+      };
+    }, [isOnTop]);
+
     if (!isLayerMounted) {
       return null;
     }
@@ -57,3 +68,5 @@ export const ModalTransition = forwardRef<HTMLDivElement, ModalTransitionProps>(
     );
   }
 );
+
+const modalStackId = Symbol();

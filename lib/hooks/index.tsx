@@ -6,6 +6,7 @@ export * from './useModal';
 export * from './useNotification';
 export * from './useOperation';
 export * from './useSharedRef';
+export * from './useStack';
 export * from './useTabManager';
 export * from './useThemed';
 export * from './useTransition';
