@@ -1,5 +1,10 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
-import { useClickOutside, useSharedRef, useTransition } from '../../hooks';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useSharedRef,
+  useTransition
+} from '../../hooks';
 import { TransitionRendererProps } from '../../utils';
 import { Layer } from '../Layer';
 import { Modal, ModalProps } from './Modal';
@@ -37,9 +42,7 @@ export const ModalTransition = forwardRef<HTMLDivElement, ModalTransitionProps>(
       }
     });
 
-    useEffect(() => {
-      modalRef.current?.focus();
-    }, []);
+    useFocusTrap(modalRef);
 
     if (!isLayerMounted) {
       return null;

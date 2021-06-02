@@ -1,4 +1,5 @@
 export * from './useClickOutside';
+export * from './useFocusTrap';
 export * from './useFormManager';
 export * from './useLoader';
 export * from './useModal';
