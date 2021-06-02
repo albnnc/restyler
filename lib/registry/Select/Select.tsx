@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   useEffect,
   useState,
+  Children,
   HTMLAttributes,
   ReactElement
 } from 'react';
@@ -34,7 +35,10 @@ export const createSelect: ComponentFactory<HTMLDivElement, SelectProps> = ({
       setInnerValue(value);
     }, [value]);
 
-    const currentOption = children.find(v => v.props.value === innerValue);
+    const childrenArray = Children.toArray(children) as ReactElement<
+      SelectOptionProps
+    >[];
+    const currentOption = childrenArray.find(v => v.props.value === innerValue);
     const displayData = currentOption?.props?.children ??
       currentOption?.props?.value ??
       props.placeholder ?? <>&nbsp;</>;
@@ -54,7 +58,7 @@ export const createSelect: ComponentFactory<HTMLDivElement, SelectProps> = ({
             style={{ position: 'fixed', top, left, width }}
             {...props}
           >
-            {children.map(v =>
+            {childrenArray.map(v =>
               cloneElement(v, {
                 onClick: () => {
                   const elementValue = v.props.value;
