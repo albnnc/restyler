@@ -12,10 +12,8 @@ import { DataTableProps } from './DataTableProps';
 import { getSorted, getSortObject, useSortSelections } from './utils';
 
 export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
-  (props, ref) => {
-    const { columns, data, expansion, onRowClick, ...rest } = props;
+  ({ columns, data, expansion, getRowProps, ...rest }, ref) => {
     const { locale } = useContext(SystemContext);
-
     const { sortSelections, toggleSortSelection } = useSortSelections(columns);
     const sorted = useMemo(
       () =>
@@ -25,7 +23,6 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
         ),
       [data, sortSelections]
     );
-
     const primaryKey = useMemo(() => {
       const primaryColumn = columns.find(v => v.isPrimary);
       const primaryKey = primaryColumn?.key ?? columns[0]?.key;
@@ -34,7 +31,6 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
       }
       return primaryKey;
     }, [columns]);
-
     return (
       <Table ref={ref} {...rest}>
         <TableHead>
@@ -74,9 +70,11 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
               return (
                 <DataRow
                   key={`table-row-${rowIndex}-${hashValue}`}
+                  columns={columns}
                   datum={datum}
+                  expansion={expansion}
                   rowIndex={rowIndex}
-                  {...props}
+                  {...getRowProps?.(datum)}
                 />
               );
             })

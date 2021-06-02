@@ -1,39 +1,38 @@
-import React, { useMemo, useState, Fragment } from 'react';
+import React, { useMemo, useState, Fragment, ReactNode } from 'react';
 import { get, hash } from '../../../utils';
 import { TableCell } from '../TableCell';
-import { TableRow } from '../TableRow';
+import { TableRow, TableRowProps } from '../TableRow';
+import { Column } from './Column';
 import { DataTableProps } from './DataTableProps';
 
-interface DataRowProps<TDatum> extends DataTableProps<TDatum> {
+interface DataRowProps<TDatum> extends TableRowProps {
+  columns: Column<TDatum>[];
   datum: TDatum;
+  expansion?: (datum: TDatum) => ReactNode;
   rowIndex: number;
 }
 
-export const DataRow = ({
-  columns,
-  expansion,
-  onRowClick,
-  datum,
-  rowIndex
-}: DataRowProps<any>) => {
+export const DataRow = (props: DataRowProps<any>) => {
+  const { columns, expansion, datum, rowIndex, onClick, ...rest } = props;
   const [isOpen, setIsOpen] = useState(false);
   return useMemo(
     () => (
       <Fragment>
         <TableRow
           onClick={() => {
-            onRowClick?.(datum);
+            onClick?.(datum);
             if (expansion) {
               setIsOpen(!isOpen);
             }
           }}
+          {...rest}
         >
           {columns.map(({ key, render }, columnIndex) => {
             const hashValue = hash(datum?.[key]);
             return (
               <TableCell
                 key={`table-cell-${rowIndex}-${columnIndex}-${hashValue}`}
-                kind={expansion || onRowClick ? 'hoverable' : undefined}
+                kind={expansion || onClick ? 'hoverable' : undefined}
               >
                 {render?.(datum) ?? get(datum, key)}
               </TableCell>
@@ -49,6 +48,6 @@ export const DataRow = ({
         )}
       </Fragment>
     ),
-    [columns, expansion, onRowClick, datum, rowIndex, isOpen]
+    [isOpen, ...Object.values(props)]
   );
 };
