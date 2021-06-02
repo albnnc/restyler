@@ -1,5 +1,5 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
-import { ComponentFactory, StyleProps } from '~lib/models';
+import { ComponentFactory, StyleProps } from '../../models';
 import { menuContextDefaults, MenuContext } from './MenuContext';
 
 export interface MenuProps extends HTMLAttributes<HTMLDivElement>, StyleProps {

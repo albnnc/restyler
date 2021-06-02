@@ -1,4 +1,4 @@
-import { ComponentTheme } from '~lib/models';
+import { ComponentTheme } from '../../models';
 
 const createModalStyle = ({ width }) => ({
   width,

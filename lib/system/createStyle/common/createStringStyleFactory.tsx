@@ -1,4 +1,4 @@
-import { StyleFactory, StyleProps } from '~lib/models';
+import { StyleFactory, StyleProps } from '../../../models';
 
 export const createStringStyleFactory = <T extends StyleProps>(
   targetProp: string,

@@ -1,6 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
-import { createSystem, defaultTheme, isStyleProp } from '~lib';
+import { createSystem, defaultTheme, isStyleProp } from 'lib';
 
 export const { getRegistry, getTheme, setTheme, useTheme } = createSystem({
   locale: {

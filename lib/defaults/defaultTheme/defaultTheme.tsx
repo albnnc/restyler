@@ -1,4 +1,4 @@
-import { Theme } from '~lib/models';
+import { Theme } from '../../models';
 import { anchor } from './anchor';
 import { box } from './box';
 import { button } from './button';

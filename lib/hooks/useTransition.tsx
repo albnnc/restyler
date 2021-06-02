@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, HTMLAttributes, RefObject } from 'react';
-import { onNextFrame } from '~lib/utils';
+import { onNextFrame } from '../utils';
 
 export type TransitionState = undefined | 'enter' | 'leave';
 

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { TransitionRendererProps } from '~lib/utils';
+import { TransitionRendererProps } from '../../utils';
 import { ModalOptions } from './openModal';
 
 export interface QuestionRendererProps extends TransitionRendererProps {

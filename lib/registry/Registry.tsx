@@ -1,4 +1,4 @@
-import { ComponentFactoryOptions } from '~lib/models';
+import { ComponentFactoryOptions } from '../models';
 import { createAnchor } from './Anchor';
 import { createBox } from './Box';
 import { createButton } from './Button';

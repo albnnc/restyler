@@ -1,5 +1,5 @@
+import { Button } from 'docs/components/shared';
 import React from 'react';
-import { Button } from '~docs/components/shared';
 
 export const BasicDemo = () => {
   return (

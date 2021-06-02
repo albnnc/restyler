@@ -1,4 +1,4 @@
-import { ComponentTheme } from '~lib/models';
+import { ComponentTheme } from '../../models';
 
 const createBasicKind = color => ({
   padding: { vertical: 'x-small', horizontal: 'medium' },

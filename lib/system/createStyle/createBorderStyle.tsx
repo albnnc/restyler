@@ -1,5 +1,5 @@
-import { BasicBorder, StyleFactory, StyleProps } from '~lib/models';
-import { isBasicBorder } from '~lib/utils';
+import { BasicBorder, StyleFactory, StyleProps } from '../../models';
+import { isBasicBorder } from '../../utils';
 import { createDirectionMapStyleFactory } from './common';
 
 export const createBasicStyleFactory = <T extends StyleProps>(

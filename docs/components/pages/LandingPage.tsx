@@ -1,6 +1,3 @@
-import { css } from 'emotion';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -8,7 +5,10 @@ import {
   Heading,
   Navbar,
   NavAnchor
-} from '~docs/components/shared';
+} from 'docs/components/shared';
+import { css } from 'emotion';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 export const LandingPage = () => {
   const history = useHistory();

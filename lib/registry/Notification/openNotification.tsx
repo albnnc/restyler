@@ -3,7 +3,7 @@ import {
   openTransition,
   TransitionOptions,
   TransitionRendererProps
-} from '~lib/utils';
+} from '../../utils';
 import { NotificationProps } from './Notification';
 
 export enum NotificationPlacement {

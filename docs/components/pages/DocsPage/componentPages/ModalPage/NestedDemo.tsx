@@ -1,5 +1,5 @@
+import { openModal, Button } from 'docs/components/shared';
 import React from 'react';
-import { openModal, Button } from '~docs/components/shared';
 
 const Opener = ({ level }) =>
   level ? (

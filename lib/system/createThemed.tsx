@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import { Styled, Themed } from '~lib/models';
-import { filterStyleProps, get, merge, mergeStyleProps } from '~lib/utils';
+import { Styled, Themed } from '../models';
+import { filterStyleProps, get, merge, mergeStyleProps } from '../utils';
 import { createStyle } from './createStyle';
 
 export const createThemed = (styled: Styled, useTheme) => {

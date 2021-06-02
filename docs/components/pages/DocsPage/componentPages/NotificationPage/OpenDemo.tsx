@@ -1,5 +1,5 @@
+import { openNotification, Button } from 'docs/components/shared';
 import React from 'react';
-import { openNotification, Button } from '~docs/components/shared';
 
 export const OpenDemo = () => (
   <Button

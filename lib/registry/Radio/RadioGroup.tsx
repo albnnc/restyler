@@ -7,7 +7,7 @@ import React, {
   HTMLAttributes,
   ReactElement
 } from 'react';
-import { ComponentFactory, FormWidgetProps, StyleProps } from '~lib/models';
+import { ComponentFactory, FormWidgetProps, StyleProps } from '../../models';
 import { RadioItemProps } from './RadioItemProps';
 
 export interface RadioGroupProps

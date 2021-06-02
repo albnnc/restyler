@@ -1,4 +1,4 @@
-import { knownStyleProps, BasicBorder, StyleProps } from '~lib/models';
+import { knownStyleProps, BasicBorder, StyleProps } from '../models';
 
 export const isString = (v): v is string => typeof v === 'string';
 export const isObject = (v): v is object => typeof v === 'object' && v;

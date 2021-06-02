@@ -1,4 +1,4 @@
-import { ComponentTheme } from '~lib/models';
+import { ComponentTheme } from '../../models';
 
 export const heading: ComponentTheme = {
   margin: { top: 'small', bottom: 'x-small' },

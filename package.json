@@ -1,8 +1,9 @@
 {
   "name": "restyler",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "main": "build/restyler.js",
+  "types": "build/index.d.ts",
   "files": [
     "build/**/*"
   ],
@@ -15,7 +16,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.3.3",
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
@@ -45,7 +46,8 @@
     "fork-ts-checker-webpack-plugin": "^0.5.2",
     "gh-pages": "^3.1.0",
     "gulp": "^4.0.2",
-    "html-webpack-plugin": "^4.3.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "html-webpack-plugin": "^4.4.1",
     "jest": "^26.0.1",
     "normalize.css": "^8.0.1",
     "prettier": "^2.0.5",
@@ -62,9 +64,9 @@
     "tslint-react": "^3.6.0",
     "typescript": "^3.9.7",
     "url-parse": "^1.4.7",
-    "webpack": "4.28.4",
+    "webpack": "^4.44.1",
     "webpack-bundle-analyzer": "^3.7.0",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2",
     "webpack-stream": "^5.2.1"

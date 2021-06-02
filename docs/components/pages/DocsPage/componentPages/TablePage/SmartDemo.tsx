@@ -1,5 +1,5 @@
+import { Box, SmartTable } from 'docs/components/shared';
 import React from 'react';
-import { Box, SmartTable } from '~docs/components/shared';
 import { data } from './data';
 
 const columns = [

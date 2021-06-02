@@ -1,5 +1,5 @@
+import { Box, Demo, Heading } from 'docs/components/shared';
 import React from 'react';
-import { Box, Demo, Heading } from '~docs/components/shared';
 import { AutoPlayDemo } from './AutoPlayDemo';
 import autoPlayDemoCode from './AutoPlayDemo.tsx?raw';
 import { BasicDemo } from './BasicDemo';

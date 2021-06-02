@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
-import { ComponentFactory, StyleProps } from '~lib/models';
+import { ComponentFactory, StyleProps } from '../models';
 
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,

@@ -1,3 +1,13 @@
+import { Navbar } from 'docs/components/shared';
+import {
+  Box,
+  Container,
+  Heading,
+  Menu,
+  MenuGroup,
+  MenuItem
+} from 'docs/components/shared';
+import { capitalizeFirst } from 'lib';
 import React, { useEffect, useState } from 'react';
 import {
   useHistory,
@@ -6,16 +16,6 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import { Navbar } from '~docs/components/shared';
-import {
-  Box,
-  Container,
-  Heading,
-  Menu,
-  MenuGroup,
-  MenuItem
-} from '~docs/components/shared';
-import { capitalizeFirst } from '~lib';
 import { groups } from './groups';
 
 export const DocsPage = () => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormManager } from '~lib/models';
+import { FormManager } from '../models';
 
 export const useFormManager = (defaults?: {
   errors?: any;

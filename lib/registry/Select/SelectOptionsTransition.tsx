@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { useClickOutside, useSharedRef, useTransition } from '~lib/hooks';
-import { ComponentFactory } from '~lib/models';
-import { TransitionRendererProps } from '~lib/utils';
+import { useClickOutside, useSharedRef, useTransition } from '../../hooks';
+import { ComponentFactory } from '../../models';
+import { TransitionRendererProps } from '../../utils';
 import { SelectOptionsProps } from './SelectOptions';
 
 export interface SelectOptionsTransitionProps

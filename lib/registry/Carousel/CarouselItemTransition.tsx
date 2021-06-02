@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { useSharedRef, useTransition } from '~lib/hooks';
-import { ComponentFactory } from '~lib/models';
+import { useSharedRef, useTransition } from '../../hooks';
+import { ComponentFactory } from '../../models';
 import { CarouselItemProps } from './CarouselItem';
 
 export interface CarouselItemTransitionProps extends CarouselItemProps {

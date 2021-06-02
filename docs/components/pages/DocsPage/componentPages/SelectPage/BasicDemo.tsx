@@ -1,5 +1,5 @@
+import { Select } from 'docs/components/shared';
 import React from 'react';
-import { Select } from '~docs/components/shared';
 
 export const BasicDemo = () => (
   <Select

@@ -1,5 +1,4 @@
-import { filterStyleProps, ComponentTheme } from '~lib';
-import { defaultTheme } from '../../lib/defaults/defaultTheme';
+import { defaultTheme, filterStyleProps, ComponentTheme } from 'lib';
 
 const blueprintColor = '#17a1f7';
 

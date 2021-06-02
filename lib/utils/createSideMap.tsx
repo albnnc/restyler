@@ -1,4 +1,4 @@
-import { DirectionMap, SideMap } from '~lib/models';
+import { DirectionMap, SideMap } from '../models';
 import { clone } from './clone';
 import { isString } from './guards';
 

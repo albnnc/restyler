@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes, ReactNode } from 'react';
-import { ComponentFactory, StyleProps } from '~lib/models';
-import { hash } from '~lib/utils';
+import { ComponentFactory, StyleProps } from '../../models';
+import { hash } from '../../utils';
 
 export interface SelectOption {
   name?: ReactNode;

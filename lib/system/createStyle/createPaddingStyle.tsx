@@ -1,4 +1,4 @@
-import { isString } from '~lib/utils';
+import { isString } from '../../utils';
 import {
   createDirectionMapStyleFactory,
   createStringStyleFactory

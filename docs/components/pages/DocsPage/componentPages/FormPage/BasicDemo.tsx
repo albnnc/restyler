@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   Form,
@@ -7,8 +6,9 @@ import {
   RadioGroup,
   RadioOption,
   Select
-} from '~docs/components/shared';
-import { useFormManager } from '~lib/hooks';
+} from 'docs/components/shared';
+import { useFormManager } from 'lib/hooks';
+import React from 'react';
 
 export const BasicDemo = () => {
   const manager = useFormManager();

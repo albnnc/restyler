@@ -10,7 +10,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const absolutize = v => path.join(__dirname, v);
 const isProduction = process.env.NODE_ENV === 'production';
 
-module.exports = isDocs => ({
+module.exports = (isDocs, libraryTarget) => ({
   entry: isDocs ? absolutize('docs/index.tsx') : absolutize('lib/index.tsx'),
 
   mode: isProduction ? 'production' : 'development',
@@ -80,12 +80,12 @@ module.exports = isDocs => ({
         }
       }
     : {
-        plugins: [
-          new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
-          new BundleAnalyzerPlugin()
-        ],
+        plugins: [new webpack.EnvironmentPlugin({ NODE_ENV: 'development' })],
         output: {
-          filename: 'restyler.js'
+          filename: `restyler${
+            libraryTarget === `commonjs` ? `.js` : `.${libraryTarget}.js`
+          }`,
+          libraryTarget
         },
         externals: {
           react: {

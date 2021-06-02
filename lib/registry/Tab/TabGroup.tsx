@@ -5,8 +5,8 @@ import React, {
   HTMLAttributes,
   ReactElement
 } from 'react';
-import { useTabManager } from '~lib/hooks';
-import { ComponentFactory, StyleProps, TabManager } from '~lib/models';
+import { useTabManager } from '../../hooks';
+import { ComponentFactory, StyleProps, TabManager } from '../../models';
 import { TabOptionProps } from './TabOption';
 
 export interface TabGroupProps

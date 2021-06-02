@@ -1,5 +1,5 @@
 import React, { forwardRef, useContext, HTMLAttributes } from 'react';
-import { ComponentFactory, StyleProps } from '~lib/models';
+import { ComponentFactory, StyleProps } from '../../models';
 import { MenuContext } from './MenuContext';
 
 export interface MenuItemProps

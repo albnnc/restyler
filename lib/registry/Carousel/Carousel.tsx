@@ -1,5 +1,5 @@
 import React, { forwardRef, useState, HTMLAttributes, ReactNode } from 'react';
-import { ComponentFactory, StyleProps } from '~lib/models';
+import { ComponentFactory, StyleProps } from '../../models';
 import { getChildren } from './getChildren';
 import { useAutoPlay } from './useAutoPlay';
 

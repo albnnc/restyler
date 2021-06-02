@@ -1,5 +1,5 @@
 import React, { forwardRef, InputHTMLAttributes } from 'react';
-import { ComponentFactory, FormWidgetProps, StyleProps } from '~lib/models';
+import { ComponentFactory, FormWidgetProps, StyleProps } from '../models';
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,

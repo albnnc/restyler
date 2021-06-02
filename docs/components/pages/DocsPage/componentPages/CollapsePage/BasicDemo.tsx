@@ -1,5 +1,5 @@
+import { Anchor, Collapse } from 'docs/components/shared';
 import React, { useState } from 'react';
-import { Anchor, Collapse } from '~docs/components/shared';
 
 export const BasicDemo = () => {
   const [isOpen, setIsOpen] = useState(true);

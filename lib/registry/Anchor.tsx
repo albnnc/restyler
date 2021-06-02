@@ -1,5 +1,5 @@
 import React, { forwardRef, AnchorHTMLAttributes } from 'react';
-import { ComponentFactory, StyleProps } from '~lib/models';
+import { ComponentFactory, StyleProps } from '../models';
 
 const isModifiedEvent = e => {
   return !!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey);

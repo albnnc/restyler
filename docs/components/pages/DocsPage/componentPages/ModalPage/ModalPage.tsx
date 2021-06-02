@@ -1,5 +1,5 @@
+import { Box, Demo, Heading } from 'docs/components/shared';
 import React from 'react';
-import { Box, Demo, Heading } from '~docs/components/shared';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 import { NestedDemo } from './NestedDemo';

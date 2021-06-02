@@ -1,4 +1,4 @@
-import { BasicStyleProps, Style, StyleFactoryOptions } from '~lib/models';
+import { BasicStyleProps, Style, StyleFactoryOptions } from '../../models';
 
 export const createDirectionStyle = <T extends BasicStyleProps>({
   props

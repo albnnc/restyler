@@ -1,5 +1,5 @@
+import { Box, Button } from 'docs/components/shared';
 import React from 'react';
-import { Box, Button } from '~docs/components/shared';
 
 export const OthersDemo = () => (
   <Box direction="row">

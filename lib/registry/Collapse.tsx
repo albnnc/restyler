@@ -6,7 +6,7 @@ import React, {
   CSSProperties,
   HTMLAttributes
 } from 'react';
-import { ComponentFactory, StyleProps } from '~lib/models';
+import { ComponentFactory, StyleProps } from '../models';
 
 export interface CollapseProps
   extends HTMLAttributes<HTMLDivElement>,

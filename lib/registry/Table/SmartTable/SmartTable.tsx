@@ -6,8 +6,8 @@ import React, {
   ReactNode,
   Ref
 } from 'react';
-import { ComponentFactoryOptions } from '~lib/models';
-import { get } from '~lib/utils';
+import { ComponentFactoryOptions } from '../../../models';
+import { get } from '../../../utils';
 import { TableProps } from '../Table';
 import { Column } from './Column';
 import { getSorted, useSortSelections } from './utils';

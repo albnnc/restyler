@@ -1,5 +1,5 @@
-import { BasicStyleProps, Style, StyleFactory } from '~lib/models';
-import { capitalizeFirst } from '~lib/utils';
+import { BasicStyleProps, Style, StyleFactory } from '../../../models';
+import { capitalizeFirst } from '../../../utils';
 
 export const createDirectionMapStyleFactory = <T extends BasicStyleProps>(
   targetProp: string,

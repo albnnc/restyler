@@ -1,5 +1,5 @@
-import { ComponentTheme } from '~lib/models';
-import { mergeStyleProps } from '~lib/utils';
+import { ComponentTheme } from '../../models';
+import { mergeStyleProps } from '../../utils';
 import { input } from './input';
 
 export const select: ComponentTheme = {

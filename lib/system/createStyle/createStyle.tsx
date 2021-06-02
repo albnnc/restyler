@@ -1,5 +1,5 @@
-import { BasicStyleProps, Style, StyleFactoryOptions } from '~lib/models';
-import { merge } from '~lib/utils';
+import { BasicStyleProps, Style, StyleFactoryOptions } from '../../models';
+import { merge } from '../../utils';
 import { createAlignStyle } from './createAlignStyle';
 import { createBackgroundStyle } from './createBackgroundStyle';
 import { createBasisStyle } from './createBasisStyle';

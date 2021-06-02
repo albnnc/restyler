@@ -1,12 +1,12 @@
-import React from 'react';
 import {
   Card,
   CardBody,
   CardHeader,
   TabGroup,
   TabOption
-} from '~docs/components/shared';
-import { useTabManager } from '~lib/hooks';
+} from 'docs/components/shared';
+import { useTabManager } from 'lib/hooks';
+import React from 'react';
 
 export const CardDemo = () => {
   const manager = useTabManager('a');

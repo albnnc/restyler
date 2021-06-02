@@ -1,4 +1,4 @@
-import { ComponentTheme } from '~lib';
+import { ComponentTheme } from '../..';
 
 export const tab: ComponentTheme = {
   group: {

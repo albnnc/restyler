@@ -1,5 +1,5 @@
+import { Carousel } from 'docs/components/shared';
 import React from 'react';
-import { Carousel } from '~docs/components/shared';
 
 export const AutoPlayDemo = () => {
   return (

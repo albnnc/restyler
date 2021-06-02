@@ -1,8 +1,8 @@
 import { useReducer } from 'react';
 import { useEffect } from 'react';
-import { ComponentFactoryOptions, Locale, Theme } from '~lib/models';
-import { Styled } from '~lib/models';
-import { createRegistry, Registry } from '~lib/registry';
+import { ComponentFactoryOptions, Locale, Theme } from '../models';
+import { Styled } from '../models';
+import { createRegistry, Registry } from '../registry';
 import { clone, deepFreeze } from '../utils';
 import { createThemed } from './createThemed';
 

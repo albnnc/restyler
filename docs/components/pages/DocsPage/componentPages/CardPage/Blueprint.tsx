@@ -1,11 +1,6 @@
+import { Card, CardBody, CardFooter, CardHeader } from 'docs/components/shared';
+import { blueprintTheme } from 'docs/core';
 import React from 'react';
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader
-} from '~docs/components/shared';
-import { blueprintTheme } from '~docs/core';
 
 export const Blueprint = () => {
   return (

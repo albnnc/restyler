@@ -1,4 +1,4 @@
-import { getRegistry } from '~docs/core';
+import { getRegistry } from 'docs/core';
 
 export const {
   Anchor,

@@ -1,5 +1,5 @@
-import { BasicStyleProps, Style, StyleFactoryOptions } from '~lib/models';
-import { merge } from '~lib/utils';
+import { BasicStyleProps, Style, StyleFactoryOptions } from '../../models';
+import { merge } from '../../utils';
 import { createStyle } from './createStyle';
 
 export const createExtendStyle = <T extends BasicStyleProps>({

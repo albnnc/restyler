@@ -6,9 +6,9 @@ import React, {
   HTMLAttributes,
   InputHTMLAttributes
 } from 'react';
-import { useSharedRef } from '~lib/hooks';
-import { ComponentFactory, FormWidgetProps, StyleProps } from '~lib/models';
-import { disableScroll, openTransition } from '~lib/utils';
+import { useSharedRef } from '../../hooks';
+import { ComponentFactory, FormWidgetProps, StyleProps } from '../../models';
+import { disableScroll, openTransition } from '../../utils';
 
 export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,

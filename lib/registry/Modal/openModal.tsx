@@ -1,5 +1,5 @@
 import React from 'react';
-import { disableScroll, openTransition, TransitionOptions } from '~lib/utils';
+import { disableScroll, openTransition, TransitionOptions } from '../../utils';
 import { ModalProps } from './Modal';
 
 export interface ModalOptions

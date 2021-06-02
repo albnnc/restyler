@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { FormManager } from '~lib/models';
+import { FormManager } from '../../models';
 
 export const FormContext = createContext({
   values: {} as any,

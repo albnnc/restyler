@@ -1,6 +1,6 @@
+import { AnchorProps } from 'lib';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { AnchorProps } from '~lib';
 import { Anchor } from './registry';
 
 export interface NavAnchorProps extends AnchorProps {

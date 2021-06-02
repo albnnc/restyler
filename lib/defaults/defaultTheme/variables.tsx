@@ -1,4 +1,4 @@
-import { Variables } from '~lib/models';
+import { Variables } from '../../models';
 
 export const variables: Variables = {
   palette: {

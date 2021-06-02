@@ -6,8 +6,8 @@ import React, {
   HTMLAttributes,
   ReactElement
 } from 'react';
-import { ComponentFactory, FormWidgetProps, StyleProps } from '~lib/models';
-import { clone, get, set } from '~lib/utils';
+import { ComponentFactory, FormWidgetProps, StyleProps } from '../../models';
+import { clone, get, set } from '../../utils';
 import { InputProps } from '../Input';
 import { FormContext } from './FormContext';
 

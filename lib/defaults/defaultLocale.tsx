@@ -1,4 +1,4 @@
-import { Locale } from '~lib/models';
+import { Locale } from '../models';
 
 export const defaultLocale: Locale = {
   cancelText: 'Cancel',

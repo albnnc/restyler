@@ -1,11 +1,11 @@
-import React from 'react';
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow
-} from '~docs/components/shared';
+} from 'docs/components/shared';
+import React from 'react';
 
 export const BasicDemo = () => {
   return (

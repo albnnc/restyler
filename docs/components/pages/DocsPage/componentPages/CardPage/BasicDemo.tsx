@@ -1,10 +1,5 @@
+import { Card, CardBody, CardFooter, CardHeader } from 'docs/components/shared';
 import React from 'react';
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader
-} from '~docs/components/shared';
 
 export const BasicDemo = () => (
   <Card>

@@ -1,5 +1,5 @@
+import { Box, Progress } from 'docs/components/shared';
 import React from 'react';
-import { Box, Progress } from '~docs/components/shared';
 
 const ranges = [
   {

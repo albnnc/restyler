@@ -1,4 +1,4 @@
-import { BasicBorder, StyleProps } from '~lib/models';
+import { BasicBorder, StyleProps } from '../models';
 import { createSideMap } from './createSideMap';
 import { isBasicBorder, isObject } from './guards';
 import { merge } from './merge';

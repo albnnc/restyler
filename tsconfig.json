@@ -3,7 +3,6 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "rootDir": ".",
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
@@ -13,13 +12,8 @@
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "paths": {
-      "*": ["types/*"],
-      "~lib": ["lib"],
-      "~lib/*": ["lib/*", ".tmp/api/*"],
-      "~docs/*": ["docs/*"]
-    },
     "resolveJsonModule": true,
+    "rootDir": ".",
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "esnext"

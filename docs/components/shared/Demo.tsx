@@ -1,8 +1,8 @@
+import { useTheme } from 'docs/core';
 import { css } from 'emotion';
+import { BoxProps } from 'lib';
 import React, { useState } from 'react';
 import { MdCode } from 'react-icons/md';
-import { useTheme } from '~docs/core';
-import { BoxProps } from '~lib';
 import { Highlight } from './Highlight';
 import { Box, Button, Collapse } from './registry';
 

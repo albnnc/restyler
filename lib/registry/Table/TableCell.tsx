@@ -1,5 +1,5 @@
 import { AllHTMLAttributes } from 'react';
-import { ComponentFactory, StyleProps } from '~lib/models';
+import { ComponentFactory, StyleProps } from '../../models';
 
 export interface TableCellProps
   extends AllHTMLAttributes<HTMLTableCellElement>,

@@ -3,7 +3,7 @@ import {
   PropsWithoutRef,
   RefAttributes
 } from 'react';
-import { Registry } from '~lib/registry';
+import { Registry } from '../registry';
 import { Locale } from './Locale';
 import { Themed } from './Themed';
 

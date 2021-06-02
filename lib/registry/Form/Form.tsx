@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, HTMLAttributes } from 'react';
-import { useFormManager } from '~lib/hooks';
-import { ComponentFactory, FormManager, StyleProps } from '~lib/models';
+import { useFormManager } from '../../hooks';
+import { ComponentFactory, FormManager, StyleProps } from '../../models';
 import { FormContext } from './FormContext';
 
 export interface FormProps

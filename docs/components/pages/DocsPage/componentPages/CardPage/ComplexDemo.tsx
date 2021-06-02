@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Button,
   Card,
@@ -7,8 +6,9 @@ import {
   CardHeader,
   Heading,
   Image
-} from '~docs/components/shared';
-import mountains from '~docs/images/mountains.jpg';
+} from 'docs/components/shared';
+import mountains from 'docs/images/mountains.jpg';
+import React from 'react';
 
 export const ComplexDemo = () => (
   <Card>
