@@ -1,8 +1,8 @@
-import { PieChart } from 'docs/components/shared';
-import { useTheme } from 'docs/core';
+import { PieChart, SystemContext } from 'docs/components/shared';
+import { useContext } from 'react';
 
 export const BasicDemo = () => {
-  const theme = useTheme();
+  const { theme } = useContext(SystemContext);
   const palette = theme.variables?.palette ?? {};
   return (
     <PieChart

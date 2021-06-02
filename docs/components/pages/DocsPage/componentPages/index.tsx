@@ -1,7 +1,6 @@
 export * from './AnchorPage';
 export * from './ButtonPage';
 export * from './CardPage';
-export * from './CarouselPage';
 export * from './CollapsePage';
 export * from './ContainerPage';
 export * from './FilePage';
@@ -10,6 +9,7 @@ export * from './InputPage';
 export * from './LoaderPage';
 export * from './ModalPage';
 export * from './NotificationPage';
+export * from './OperationPage';
 export * from './PieChartPage';
 export * from './ProgressPage';
 export * from './ScrollPage';

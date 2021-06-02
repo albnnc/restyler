@@ -9,21 +9,22 @@ export const CompoundLoaderDemo = () => {
   const c = useMemo(() => Symbol(), []);
   return (
     <Box direction="row" css={{ gap: '0.5rem' }}>
-      <Loadable loaderIds={[a]}>A</Loadable>
-      <Loadable loaderIds={[b]}>B</Loadable>
-      <Loadable loaderIds={[c]}>C</Loadable>
-      <Loadable loaderIds={[a, b]}>A + B</Loadable>
-      <Loadable loaderIds={[b, c]}>B + C</Loadable>
-      <Loadable loaderIds={[]}>Global</Loadable>
+      <Loadable ids={[a]}>A</Loadable>
+      <Loadable ids={[b]}>B</Loadable>
+      <Loadable ids={[c]}>C</Loadable>
+      <Loadable ids={[]}>D</Loadable>
+      <Loadable ids={[a, b]}>A + B</Loadable>
+      <Loadable ids={[b, c]}>B + C</Loadable>
+      <Loadable ids={undefined}>Global</Loadable>
     </Box>
   );
 };
 
 const Loadable = ({
-  loaderIds,
+  ids,
   ...rest
-}: { loaderIds: any[] } & ButtonProps) => {
-  const [isLoading, load] = useLoader(...loaderIds);
+}: { ids: any[] | undefined } & ButtonProps) => {
+  const [isLoading, load] = useLoader(ids);
   const handleClick = useCallback(() => load(delay(2000)), []);
   return (
     <Button

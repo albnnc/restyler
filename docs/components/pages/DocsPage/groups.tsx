@@ -19,6 +19,7 @@ import {
   LoaderPage,
   ModalPage,
   NotificationPage,
+  OperationPage,
   PieChartPage,
   ProgressPage,
   ScrollPage,
@@ -211,12 +212,6 @@ export const groups = [
         path: '/docs/others/table',
         component: TablePage
       },
-      // WIP
-      // {
-      //   title: 'Carousel',
-      //   path: '/docs/others/carousel',
-      //   component: CarouselPage
-      // },
       {
         title: 'Pie Chart',
         path: '/docs/others/pie-chart',
@@ -226,6 +221,11 @@ export const groups = [
         title: 'Loader',
         path: '/docs/others/loader',
         component: LoaderPage
+      },
+      {
+        title: 'Operation',
+        path: '/docs/others/operation',
+        component: OperationPage
       },
       {
         title: 'Transition',

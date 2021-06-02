@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useState,
   Dispatch,
   SetStateAction
@@ -18,10 +19,13 @@ class Registry {
     subscriptions: []
   };
 
-  addDelta(ids: any[], delta: 1 | -1) {
-    const targetIds = ids.length < 1 ? Array.from(this.data.keys()) : ids;
+  addDelta(ids: any[] | undefined, delta: 1 | -1) {
+    const targetIds = ids === undefined ? Array.from(this.data.keys()) : ids;
     for (const id of targetIds) {
-      const datum = this.ensureDatum(id);
+      const datum = this.data.get(id);
+      if (!datum) {
+        continue;
+      }
       datum.count += delta;
       this.update(datum);
     }
@@ -29,8 +33,8 @@ class Registry {
     this.update(this.globalDatum);
   }
 
-  bind(ids: any, fn: Dispatch<SetStateAction<boolean>>) {
-    if (ids.length < 1) {
+  bind(ids: any[] | undefined, fn: Dispatch<SetStateAction<boolean>>) {
+    if (ids === undefined) {
       this.globalDatum.subscriptions.push(fn);
     } else {
       ids.forEach(id => {
@@ -44,26 +48,21 @@ class Registry {
     }
   }
 
-  ensureDatum(id: any) {
-    const datum = this.data.get(id);
-    if (!datum) {
-      throw new Error('Unable to find loader');
-    }
-    return datum;
-  }
-
-  load(ids: any[]) {
+  load(ids: any[] | undefined) {
     this.addDelta(ids, 1);
   }
 
-  unbind(ids: any, fn: Dispatch<SetStateAction<boolean>>) {
+  unbind(ids: any[] | undefined, fn: Dispatch<SetStateAction<boolean>>) {
     const filterDatum = datum =>
       (datum.subscriptions = datum.subscriptions.filter(v => v !== fn));
-    if (ids.length < 1) {
+    if (ids === undefined) {
       filterDatum(this.globalDatum);
     } else {
       ids.forEach(id => {
-        const datum = this.ensureDatum(id);
+        const datum = this.data.get(id);
+        if (!datum) {
+          return;
+        }
         filterDatum(datum);
         if (datum.subscriptions.length < 1) {
           this.data.delete(id);
@@ -72,7 +71,7 @@ class Registry {
     }
   }
 
-  unload(ids: any[]) {
+  unload(ids: any[] | undefined) {
     this.addDelta(ids, -1);
   }
 
@@ -83,27 +82,30 @@ class Registry {
 
 const registry = new Registry();
 
-export const useLoader = (...ids: any[]) => {
+export const useLoader = (ids?: any[]) => {
+  const targetIds = useMemo(() => (ids?.length === 0 ? [Symbol()] : ids), [
+    ids
+  ]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    registry.bind(ids, setIsLoading);
+    registry.bind(targetIds, setIsLoading);
     return () => {
-      registry.unbind(ids, setIsLoading);
+      registry.unbind(targetIds, setIsLoading);
     };
-  }, [ids]);
+  }, [targetIds]);
   const load = useCallback(
     async <T extends unknown>(promise: Promise<T>) => {
       try {
-        registry.load(ids);
+        registry.load(targetIds);
         const r = await promise;
-        registry.unload(ids);
+        registry.unload(targetIds);
         return r;
       } catch (e) {
-        registry.unload(ids);
+        registry.unload(targetIds);
         throw e;
       }
     },
-    [ids]
+    [targetIds]
   );
   return [isLoading, load] as const;
 };

@@ -4,7 +4,7 @@ import { useLoader } from 'lib';
 import { useCallback } from 'react';
 
 export const SharedLoaderDemo = () => {
-  const [isLoading, load] = useLoader(sharedLoaderId);
+  const [isLoading, load] = useLoader([sharedLoaderId]);
   return (
     <Box direction="column">
       <AnotherComponent />
@@ -26,7 +26,7 @@ export const SharedLoaderDemo = () => {
 const sharedLoaderId = Symbol();
 
 const AnotherComponent = () => {
-  const [isLoading, load] = useLoader(sharedLoaderId);
+  const [isLoading, load] = useLoader([sharedLoaderId]);
   const addTask = useCallback(() => load(delay(2000)), []);
   return (
     <Button kind="primary" onClick={addTask}>

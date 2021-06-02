@@ -1,6 +1,5 @@
-import { useTheme } from 'docs/core';
-import { BoxProps } from 'lib';
-import { useState } from 'react';
+import { BoxProps, SystemContext } from 'lib';
+import { useContext, useState } from 'react';
 import { MdCode } from 'react-icons/md';
 import { Highlight } from './Highlight';
 import { Box, Button, Collapse } from './registry';
@@ -12,7 +11,7 @@ export interface DemoProps extends BoxProps {
 
 export const Demo = ({ code, contentProps, children, ...rest }: DemoProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const theme = useTheme();
+  const { theme } = useContext(SystemContext);
 
   const codeButton = (
     <Button

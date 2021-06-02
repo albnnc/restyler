@@ -1,6 +1,11 @@
 {
   "name": "restyler",
-  "version": "0.18.0",
+  "version": "0.19.0",
+  "homepage": "https://albnnc.github.io/restyler",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/albnnc/restyler.git"
+  },
   "license": "MIT",
   "main": "build/index.cjs",
   "module": "build/index.js",

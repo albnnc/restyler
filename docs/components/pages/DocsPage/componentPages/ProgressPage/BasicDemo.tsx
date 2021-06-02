@@ -1,27 +1,5 @@
 import { Box, Progress } from 'docs/components/shared';
 
-const ranges = [
-  {
-    value: 0
-  },
-  {
-    value: 0.2,
-    kind: 'danger'
-  },
-  {
-    value: 0.5,
-    kind: 'warning'
-  },
-  {
-    value: 1,
-    kind: 'success'
-  },
-  {
-    value: 1,
-    kind: 'primary'
-  }
-];
-
 export const BasicDemo = () => {
   return (
     <Box direction="column">
@@ -43,3 +21,25 @@ export const BasicDemo = () => {
     </Box>
   );
 };
+
+const ranges = [
+  {
+    value: 0
+  },
+  {
+    value: 0.2,
+    kind: 'danger'
+  },
+  {
+    value: 0.5,
+    kind: 'warning'
+  },
+  {
+    value: 1,
+    kind: 'success'
+  },
+  {
+    value: 1,
+    kind: 'primary'
+  }
+];

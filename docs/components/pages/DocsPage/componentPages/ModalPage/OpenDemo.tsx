@@ -1,6 +1,7 @@
-import { openModal, Button } from 'docs/components/shared';
+import { useModal, Button } from 'docs/components/shared';
 
 export const OpenDemo = () => {
+  const { openModal } = useModal();
   return (
     <Button
       kind="primary"

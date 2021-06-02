@@ -1,8 +1,9 @@
-import { openQuestion, Button } from 'docs/components/shared';
+import { useModal, Button } from 'docs/components/shared';
 import { useState } from 'react';
 
 export const QuestionDemo = () => {
   const [message, setMessage] = useState('');
+  const { openQuestion } = useModal();
 
   const onClick = async () => {
     const mayDo = await openQuestion({

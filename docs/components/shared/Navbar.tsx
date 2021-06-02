@@ -1,5 +1,6 @@
+import { jsx } from '@emotion/core';
 import { NavAnchor, NavAnchorProps } from './NavAnchor';
-import { Box } from './registry';
+import { Box, Container } from './registry';
 
 const StyledAnchor = (props: NavAnchorProps) => (
   <NavAnchor
@@ -18,11 +19,17 @@ const StyledAnchor = (props: NavAnchorProps) => (
 
 export const Navbar = () => {
   return (
-    <Box
-      padding={{ vertical: '1.5rem', horizontal: 'large' }}
-      direction="row"
-      justify="between"
-      align="center"
+    <Container
+      padding={{ vertical: '1.5rem' }}
+      contentProps={{
+        direction: 'row',
+        justify: 'between',
+        align: 'center',
+        css: {
+          maxWidth: '100%',
+          width: 'calc(100% - 4rem)'
+        }
+      }}
       elevation="larger"
       background="darkGrey"
       css={{
@@ -39,6 +46,6 @@ export const Navbar = () => {
       <StyledAnchor href="https://github.com/albnnc/restyler">
         GITHUB
       </StyledAnchor>
-    </Box>
+    </Container>
   );
 };

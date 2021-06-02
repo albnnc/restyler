@@ -1,13 +1,9 @@
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
+import { theme } from 'docs/core';
 import { createSystem, isStyleProp } from 'lib';
-import { theme } from './theme';
 
-export const { getRegistry, getTheme, setTheme, useTheme } = createSystem({
-  locale: {
-    cancelText: 'Cancel',
-    confirmText: 'OK'
-  },
+export const system = createSystem({
   theme,
   styled: (tag, fn) =>
     styled(tag, {
