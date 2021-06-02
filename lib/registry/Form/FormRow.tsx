@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import React, { forwardRef, HTMLAttributes } from 'react';
 import { ComponentFactory, StyleProps } from '../../models';
 
 export interface FormRowProps
@@ -7,4 +7,14 @@ export interface FormRowProps
 
 export const createFormRow: ComponentFactory<HTMLDivElement, FormRowProps> = ({
   themed
-}) => themed('div', { path: 'form.row' });
+}) => {
+  const ThemedFormRow = themed('div', { path: 'form.row' });
+  const ThemedFormRowContent = themed('div', { path: 'form.row.content' });
+  return forwardRef<HTMLDivElement, FormRowProps>(
+    ({ children, ...rest }, ref) => (
+      <ThemedFormRow ref={ref} {...rest}>
+        <ThemedFormRowContent>{children}</ThemedFormRowContent>
+      </ThemedFormRow>
+    )
+  );
+};

@@ -27,21 +27,23 @@ export const form: ComponentTheme = {
   },
 
   row: {
-    direction: 'row',
-    wrap: true,
-    extend: ({ props }) => {
-      const mediumMargin = props.theme.variables?.margin?.medium ?? 0;
-      const mediumMarginHalf = `calc(${mediumMargin} / 2)`;
-      const mediumMarginHalfNegative = `calc(${mediumMargin} / -2)`;
-      return {
-        margin: mediumMarginHalfNegative,
-        '& > *': {
-          flexBasis: '200px',
-          flexShrink: 0,
-          flexGrow: 1,
-          margin: mediumMarginHalf
-        }
-      };
+    content: {
+      direction: 'row',
+      wrap: true,
+      extend: ({ props }) => {
+        const mediumMargin = props.theme.variables?.margin?.medium ?? 0;
+        const mediumMarginHalf = `calc(${mediumMargin} / 2)`;
+        const mediumMarginHalfNegative = `calc(${mediumMargin} / -2)`;
+        return {
+          margin: mediumMarginHalfNegative,
+          '& > *': {
+            flexBasis: '200px',
+            flexShrink: 0,
+            flexGrow: 1,
+            margin: mediumMarginHalf
+          }
+        };
+      }
     }
   },
 
