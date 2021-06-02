@@ -7,7 +7,7 @@ const createBasicKind = color => ({
   color: 'strongText',
   border: { width: '1px', color: 'border' },
   extend: ({ createStyle, props }) => ({
-    transition: 'all 0.1s',
+    transition: 'all 0.15s',
     ...(props.disabled
       ? createStyle({ color: 'border', border: { style: 'dashed' } })
       : { '&:hover': createStyle({ color, border: color }) })

@@ -46,9 +46,7 @@ export const form: ComponentTheme = {
         return {
           margin: mediumMarginNegativeHalf,
           '& > div': {
-            flexBasis: '200px',
-            flexShrink: 0,
-            flexGrow: 1,
+            flex: '1 0 200px',
             margin: mediumMarginHalf
           }
         };

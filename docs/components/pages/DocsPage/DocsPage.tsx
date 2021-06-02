@@ -48,8 +48,14 @@ export const DocsPage = () => {
         </Heading>
       </Container>
       <Container padding={{ vertical: 'larger' }}>
-        <Box direction="row">
-          <Box basis="100%" padding={{ right: 'large' }}>
+        <Box margin="-1rem" direction="row" wrap="reverse">
+          <Box
+            extend={{
+              margin: '1rem',
+              flex: '100 1',
+              minWidth: '300px'
+            }}
+          >
             <Switch>
               {groups
                 .reduce((prev, curr) => [...prev, ...curr.items], [])
@@ -64,7 +70,13 @@ export const DocsPage = () => {
             </Switch>
           </Box>
           {item && (
-            <Box basis="300px">
+            <Box
+              extend={{
+                margin: '1rem',
+                flex: '1 0',
+                minWidth: '250px'
+              }}
+            >
               <Menu
                 onGroupClick={id =>
                   setActiveIds(

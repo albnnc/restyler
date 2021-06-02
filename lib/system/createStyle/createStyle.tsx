@@ -2,12 +2,12 @@ import { BasicStyleProps, Style, StyleFactoryOptions } from '../../models';
 import { merge } from '../../utils';
 import { createAlignStyle } from './createAlignStyle';
 import { createBackgroundStyle } from './createBackgroundStyle';
-import { createBasisStyle } from './createBasisStyle';
 import { createBorderStyle } from './createBorderStyle';
 import { createColorStyle } from './createColorStyle';
 import { createDirectionStyle } from './createDirectionStyle';
 import { createElevationStyle } from './createElevationStyle';
 import { createExtendStyle } from './createExtendStyle';
+import { createFlexStyle } from './createFlexStyle';
 import { createFontStyle } from './createFontStyle';
 import { createJustifyStyle } from './createJustifyStyle';
 import { createMarginStyle } from './createMarginStyle';
@@ -25,8 +25,8 @@ export const createStyle = <T extends BasicStyleProps>(
     createDirectionStyle(options),
     createJustifyStyle(options),
     createAlignStyle(options),
-    createBasisStyle(options),
     createWrapStyle(options),
+    createFlexStyle(options),
 
     createMarginStyle(options),
     createPaddingStyle(options),

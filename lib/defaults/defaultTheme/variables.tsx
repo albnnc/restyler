@@ -87,6 +87,9 @@ export const variables: Variables = {
     larger: '4rem',
     largest: '8rem'
   },
+  wrap: {
+    reverse: 'wrap-reverse'
+  },
   font: {
     smallest: '10px',
     smaller: '12px',

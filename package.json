@@ -1,6 +1,6 @@
 {
   "name": "restyler",
-  "version": "0.12.3",
+  "version": "0.13.0",
   "license": "MIT",
   "main": "build/restyler.js",
   "types": "build/index.d.ts",
@@ -57,7 +57,7 @@
     "raw-loader": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-icons": "^3.10.0",
+    "react-icons": "^3.11.0",
     "react-router-dom": "^5.1.2",
     "react-svg-loader": "^3.0.3",
     "style-loader": "^0.23.1",

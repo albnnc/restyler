@@ -7,11 +7,15 @@ export const notification: ComponentTheme = {
   padding: 'medium',
   color: 'white',
   margin: 'medium',
-  extend: ({ props }) => {
+  extend: ({}) => {
     return {
       width: '400px',
-      transition:
-        'opacity 0.2s, transform 0.2s, top 0.3s ease, bottom 0.3s ease',
+      transition: [
+        'opacity 0.2s',
+        'transform 0.2s',
+        'top 0.3s ease',
+        'bottom 0.3s ease'
+      ].join(', '),
       opacity: 1,
       transform: 'translate(0)',
 

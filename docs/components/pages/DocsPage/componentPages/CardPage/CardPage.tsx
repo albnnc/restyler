@@ -22,7 +22,7 @@ export const CardPage = () => {
       </Box>
       <Demo
         code={basicDemoCode}
-        contentProps={{ basis: '350px' }}
+        contentProps={{ flex: '1 1 350px' }}
         margin={{ vertical: 'medium' }}
       >
         <BasicDemo />
@@ -30,7 +30,7 @@ export const CardPage = () => {
       <Heading kind="2">Complex</Heading>
       <Demo
         code={complexDemoCode}
-        contentProps={{ basis: '350px' }}
+        contentProps={{ flex: '1 1 350px' }}
         margin={{ vertical: 'medium' }}
       >
         <ComplexDemo />
@@ -38,7 +38,7 @@ export const CardPage = () => {
       <Heading kind="2">Blueprint</Heading>
       <Demo
         code={blueprintCode}
-        contentProps={{ basis: '350px' }}
+        contentProps={{ flex: '1 1 350px' }}
         margin={{ vertical: 'medium' }}
       >
         <Blueprint />

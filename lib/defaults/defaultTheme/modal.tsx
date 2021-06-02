@@ -4,7 +4,7 @@ const createModalStyle = ({ width }) => ({
   width,
   maxWidth: 'calc(100% - 2rem)',
   transform: 'translateY(0)',
-  transition: 'all 0.2s',
+  transition: 'transform 0.2s',
 
   '&[data-transition="enter"]': {
     transform: 'translateY(1rem)'

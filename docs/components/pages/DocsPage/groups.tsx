@@ -1,5 +1,13 @@
 import React from 'react';
 import {
+  MdExtension,
+  MdFeedback,
+  MdFontDownload,
+  MdInfo,
+  MdNavigation,
+  MdViewQuilt
+} from 'react-icons/md';
+import {
   AnchorPage,
   ButtonPage,
   CardPage,
@@ -20,7 +28,11 @@ const TodoComponent = () => <>TODO</>;
 
 export const groups = [
   {
-    title: 'General',
+    title: (
+      <>
+        <MdInfo /> General
+      </>
+    ),
     path: '/docs/general',
     items: [
       {
@@ -41,93 +53,152 @@ export const groups = [
     ]
   },
   {
-    title: 'Components',
-    path: '/docs/components',
+    title: (
+      <>
+        <MdViewQuilt /> Layout
+      </>
+    ),
+    path: '/docs/layout',
     items: [
       {
-        title: 'Global',
-        path: '/docs/components/global',
-        component: TodoComponent
-      },
-      {
-        title: 'Button',
-        path: '/docs/components/button',
-        component: ButtonPage
-      },
-      {
-        title: 'Anchor',
-        path: '/docs/components/anchor',
-        component: AnchorPage
-      },
-      {
         title: 'Box',
-        path: '/docs/components/box',
+        path: '/docs/layout/box',
         component: TodoComponent
       },
       {
         title: 'Card',
-        path: '/docs/components/card',
+        path: '/docs/layout/card',
         component: CardPage
       },
       {
-        title: 'Modal',
-        path: '/docs/components/modal',
-        component: ModalPage
-      },
-      {
-        title: 'Notification',
-        path: '/docs/components/notification',
-        component: NotificationPage
-      },
-      {
         title: 'Collapse',
-        path: '/docs/components/collapse',
+        path: '/docs/layout/collapse',
         component: CollapsePage
       },
       {
         title: 'Container',
-        path: '/docs/components/container',
+        path: '/docs/layout/container',
         component: ContainerPage
+      }
+    ]
+  },
+  {
+    title: (
+      <>
+        <MdFontDownload /> Inputs
+      </>
+    ),
+    path: '/docs/inputs',
+    items: [
+      {
+        title: 'Button',
+        path: '/docs/inputs/button',
+        component: ButtonPage
       },
       {
+        title: 'Input',
+        path: '/docs/inputs/input',
+        component: InputPage
+      },
+      {
+        title: 'TextArea',
+        path: '/docs/inputs/textarea',
+        component: TodoComponent
+      },
+      {
+        title: 'Select',
+        path: '/docs/inputs/select',
+        component: SelectPage
+      },
+      {
+        title: 'Checkbox',
+        path: '/docs/inputs/checkbox',
+        component: TodoComponent
+      },
+      {
+        title: 'Radio',
+        path: '/docs/inputs/radio',
+        component: TodoComponent
+      },
+      {
+        title: 'File',
+        path: '/docs/inputs/file',
+        component: TodoComponent
+      },
+      {
+        title: 'Form',
+        path: '/docs/inputs/form',
+        component: FormPage
+      }
+    ]
+  },
+  {
+    title: (
+      <>
+        <MdNavigation /> Navigation
+      </>
+    ),
+    path: '/docs/navigation',
+    items: [
+      {
+        title: 'Anchor',
+        path: '/docs/navigation/anchor',
+        component: AnchorPage
+      },
+      {
+        title: 'Tabs',
+        path: '/docs/navigation/tab',
+        component: TabPage
+      }
+    ]
+  },
+  {
+    title: (
+      <>
+        <MdFeedback /> Feedback
+      </>
+    ),
+    path: '/docs/feedback',
+    items: [
+      {
+        title: 'Modal',
+        path: '/docs/feedback/modal',
+        component: ModalPage
+      },
+      {
+        title: 'Notification',
+        path: '/docs/feedback/notification',
+        component: NotificationPage
+      },
+      {
+        title: 'Progress',
+        path: '/docs/feedback/progress',
+        component: ProgressPage
+      }
+    ]
+  },
+  {
+    title: (
+      <>
+        <MdExtension /> Others
+      </>
+    ),
+    path: '/docs/others',
+    items: [
+      {
         title: 'Heading',
-        path: '/docs/components/heading',
+        path: '/docs/others/heading',
         component: TodoComponent
       },
       {
         title: 'Table',
-        path: '/docs/components/table',
+        path: '/docs/others/table',
         component: TablePage
       },
       {
-        title: 'Input',
-        path: '/docs/components/input',
-        component: InputPage
-      },
-      {
-        title: 'Select',
-        path: '/docs/components/select',
-        component: SelectPage
-      },
-      {
-        title: 'Form',
-        path: '/docs/components/form',
-        component: FormPage
-      },
-      {
-        title: 'Progress',
-        path: '/docs/components/progress',
-        component: ProgressPage
-      },
-      {
         title: 'Carousel',
-        path: '/docs/components/carousel',
+        path: '/docs/others/carousel',
         component: CarouselPage
-      },
-      {
-        title: 'Tabs',
-        path: '/docs/components/tab',
-        component: TabPage
       }
     ]
   }

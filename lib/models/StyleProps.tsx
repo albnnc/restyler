@@ -4,11 +4,11 @@ import { Theme } from './Theme';
 
 export type Align = string;
 export type Background = string;
-export type Basis = string;
 export type Color = string;
 export type Direction = 'row' | 'column';
 export type Elevation = string;
 export type Extend = Function | Style | (Function | Style)[];
+export type Flex = string;
 export type Font = string;
 export type Justify = string;
 export type Radius = string;
@@ -33,12 +33,12 @@ export type Border = BasicBorder | DirectionMap<BasicBorder>;
 export interface BasicStyleProps {
   align?: Align;
   background?: Background;
-  basis?: Basis;
   border?: Border;
   color?: Color;
   direction?: Direction;
   elevation?: Elevation;
   extend?: Extend;
+  flex?: Flex;
   font?: Font;
   justify?: Font;
   margin?: Margin;
@@ -56,12 +56,12 @@ export interface StyleProps extends BasicStyleProps {
 export const knownStyleProps = [
   'align',
   'background',
-  'basis',
   'border',
   'color',
   'direction',
   'elevation',
   'extend',
+  'flex',
   'font',
   'justify',
   'margin',

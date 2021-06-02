@@ -36,12 +36,12 @@ export const LandingPage = () => {
             padding={{ vertical: 'smaller', horizontal: 'medium' }}
             radius="none"
             margin="auto"
-            className={css`
-              transition: all 0.1s;
-              &:hover {
-                background: rgba(255, 255, 255, 0.05);
+            extend={{
+              transition: 'background 0.2s',
+              '&:hover': {
+                background: 'rgba(255, 255, 255, 0.05)'
               }
-            `}
+            }}
             onClick={() => history.push('/docs')}
           >
             Discover

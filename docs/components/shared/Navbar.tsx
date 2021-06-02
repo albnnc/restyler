@@ -1,4 +1,3 @@
-import { css } from 'emotion';
 import React from 'react';
 import { NavAnchor, NavAnchorProps } from './NavAnchor';
 import { Box } from './registry';
@@ -8,12 +7,13 @@ const StyledAnchor = (props: NavAnchorProps) => (
     {...props}
     weight="light"
     color="rgba(255, 255, 255, 0.7)"
-    className={css`
-      transition: all 0.1s;
-      &:hover {
-        color: white;
+    extend={{
+      letterSpacing: '0.04rem',
+      transition: 'color 0.1s',
+      '&:hover': {
+        color: 'white'
       }
-    `}
+    }}
   />
 );
 
@@ -26,10 +26,10 @@ export const Navbar = () => {
       align="center"
       elevation="larger"
       background="darkGrey"
-      className={css`
-        position: relative;
-        z-index: 1;
-      `}
+      extend={{
+        position: 'relative',
+        zIndex: 1
+      }}
     >
       <Box direction="row">
         <StyledAnchor to="/">UNNAMED</StyledAnchor>
@@ -37,7 +37,7 @@ export const Navbar = () => {
           DOCS
         </StyledAnchor>
       </Box>
-      <StyledAnchor href="https://github.com/albnnc/unnamed">
+      <StyledAnchor href="https://github.com/albnnc/restyler">
         GITHUB
       </StyledAnchor>
     </Box>
