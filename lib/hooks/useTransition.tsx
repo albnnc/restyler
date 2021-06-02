@@ -2,97 +2,100 @@ import {
   useCallback,
   useLayoutEffect,
   useMemo,
+  useReducer,
   useRef,
-  useState,
   RefObject
 } from 'react';
 import { requestAnimationDelay } from '../utils';
 
-export type TransitionState = undefined | 'enter' | 'leave';
+export type TransitionStage = undefined | 'enter' | 'leave';
 
 export const useTransition = <TElement extends HTMLElement>(
   ref: RefObject<TElement>,
   isMounted?: boolean
 ) => {
   const reflow = useCallback(() => ref.current?.offsetHeight, []);
-  const [isReallyMounted, setIsReallyMounted] = useState(!!isMounted);
-  const [stage, setStage] = useState<TransitionState>(undefined);
-  const isActiveRef = useRef(false);
-  const handlersRef = useRef<
-    | {
-        id: any;
-        transitionend: () => void;
-        transitionstart: () => void;
-      }
-    | undefined
-  >(undefined);
-  const clearHandlers = useCallback(
-    () => (handlersRef.current = undefined),
+  const [_, rerender] = useReducer(() => Symbol(), Symbol());
+
+  const transition = useRef({
+    stage: undefined as TransitionStage,
+    isAnimating: false,
+    isMounted: !!isMounted,
+    handlers: undefined as
+      | undefined
+      | {
+          id: any;
+          transitionend: () => void;
+          transitionstart: () => void;
+        }
+  }).current;
+
+  const handleEventListeners = useCallback(
+    (action: 'add' | 'remove', handlers: typeof transition['handlers']) => {
+      Object.entries(handlers ?? {}).forEach(([event, fn]) => {
+        if (typeof fn === 'function') {
+          ref.current?.[`${action}EventListener`](event, fn);
+        }
+      });
+    },
     []
   );
 
   useLayoutEffect(() => {
-    if (isMounted === isReallyMounted && stage !== 'leave') {
+    if (isMounted === transition.isMounted && transition.stage !== 'leave') {
       return;
     }
-    isActiveRef.current = false;
-    handlersRef.current = {
+    transition.isAnimating = false;
+    const handlers = (transition.handlers = {
       id: Symbol(),
-      transitionstart: () => (isActiveRef.current = true),
+      transitionstart: () => (transition.isAnimating = true),
       transitionend: () => {
         if (!ref.current) {
           return;
         }
-        isActiveRef.current = false;
-        setIsReallyMounted(false);
-        setStage(undefined);
-        handleEventListeners('removeEventListener');
-        clearHandlers();
+        handleEventListeners('remove', handlers);
+        transition.isMounted = transition.stage !== 'leave';
+        transition.isAnimating = false;
+        transition.stage = undefined;
+        rerender();
       }
-    };
-    const handleEventListeners = (
-      action: 'addEventListener' | 'removeEventListener'
-    ) => {
-      Object.entries(handlersRef.current ?? {}).forEach(([event, fn]) => {
-        if (typeof fn === 'function') {
-          ref.current?.[action](event, fn);
-        }
-      });
-    };
-
+    });
     if (isMounted) {
-      setStage(stage => (stage === undefined ? 'enter' : undefined));
-      setIsReallyMounted(true);
-      handleEventListeners('removeEventListener');
-      clearHandlers();
+      transition.stage = transition.stage === undefined ? 'enter' : undefined;
+      transition.isMounted = true;
+      handleEventListeners('remove', handlers);
     } else {
-      setStage('leave');
-      handleEventListeners('addEventListener');
+      transition.stage = 'leave';
+      handleEventListeners('add', handlers);
     }
-    return () => handleEventListeners('removeEventListener');
+    rerender();
+    return () => {
+      handleEventListeners('remove', handlers);
+    };
   }, [isMounted]);
 
   useLayoutEffect(() => {
     reflow();
-    if (stage === 'enter') {
-      setStage(undefined);
-    } else if (stage === 'leave') {
+    if (transition.stage === 'enter') {
+      transition.stage = undefined;
+      rerender();
+    } else if (transition.stage === 'leave') {
       // Waiting a little bit and checking if animation
       // has started. If not, one has to force end transition,
       // but only after checking the handler relevance.
-      const targetId = handlersRef.current?.id ?? Symbol();
+      const targetId = transition.handlers?.id ?? Symbol();
       requestAnimationDelay(() => {
-        if (!isActiveRef.current && handlersRef.current?.id === targetId) {
-          handlersRef.current?.transitionend();
+        if (!transition.isAnimating && transition.handlers?.id === targetId) {
+          transition.handlers?.transitionend();
         }
       });
     }
-  }, [stage]);
+  }, [transition.stage]);
 
   const transitionProps = useMemo(
-    () => (stage ? { 'data-transition': stage } : {}),
-    [stage]
+    () => ({ 'data-transition': transition.stage }),
+    [transition.stage]
   );
 
-  return [isReallyMounted, transitionProps] as const;
+  return [transition.isMounted, transitionProps] as const;
 };

@@ -13,6 +13,7 @@ injectGlobal`
     padding: 0;
     min-height: 100%;
     color: ${theme.variables?.palette?.text};
+    line-height: 1.5;
   }
 `;
 

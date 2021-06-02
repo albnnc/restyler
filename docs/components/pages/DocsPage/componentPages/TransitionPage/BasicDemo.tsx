@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/core';
 import { Box, Button } from 'docs/components/shared';
-import { BoxProps, useTransition } from 'lib';
+import { useTransition, BoxProps } from 'lib';
 import { forwardRef, useRef, useState } from 'react';
 
 export const BasicDemo = () => {

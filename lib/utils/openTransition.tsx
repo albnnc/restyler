@@ -3,7 +3,7 @@ import {
   render as renderComponentAtNode,
   unmountComponentAtNode
 } from 'react-dom';
-import { TransitionState } from '../hooks';
+import { TransitionStage } from '../hooks';
 
 export interface TransitionRendererProps {
   handleClose: () => void;
@@ -32,13 +32,13 @@ export const openTransition = ({
   const holderNode = document.createElement('div');
   const targetNode = mountNode ?? rootNode;
 
-  let state: TransitionState = 'enter';
+  let stage: TransitionStage = 'enter';
   let isOpen = false;
 
   const handleClose = () => {
     onClose?.();
     isOpen = false;
-    state = undefined;
+    stage = undefined;
     renderOnce();
   };
 
@@ -54,12 +54,12 @@ export const openTransition = ({
       holderNode,
       () => {
         if (!isOpen) {
-          if (state === 'enter') {
+          if (stage === 'enter') {
             isOpen = true;
-            state = undefined;
+            stage = undefined;
             renderOnce();
-          } else if (state === undefined) {
-            state = 'leave';
+          } else if (stage === undefined) {
+            stage = 'leave';
             renderOnce();
           }
         }
