@@ -1,7 +1,7 @@
 const fsp = require('fs').promises;
 const ghpages = require('gh-pages');
 
-const { task, dest, src, series, parallel } = require('gulp');
+const { task, dest, src, series, watch } = require('gulp');
 const ts = require('gulp-typescript');
 
 const webpackStream = require('webpack-stream');
@@ -38,9 +38,13 @@ task('build:lib:types', () => {
 
 task('build:lib', series('clean', 'build:lib:js', 'build:lib:types'));
 
+task('start:lib', () => {
+  watch(['lib/**/*'], series('build:lib:js', 'build:lib:types'));
+});
+
 task('build:docs:js', () => {
   const webpackConfig = createWebpackConfig(true);
-  return src('./docs/index.tsx')
+  return src('docs/index.tsx')
     .pipe(webpackStream(webpackConfig, webpackCompiler))
     .pipe(dest('build/docs'));
 });

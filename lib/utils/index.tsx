@@ -10,6 +10,7 @@ export * from './guards';
 export * from './hash';
 export * from './merge';
 export * from './mergeStyleProps';
+export * from './mergeTheme';
 export * from './onNextFrame';
 export * from './openTransition';
 export * from './pick';
