@@ -1,5 +1,4 @@
 import { DirectionMap } from './DirectionMap';
-import { Style } from './Style';
 import { Theme } from './Theme';
 
 export type Align = string;
@@ -7,7 +6,6 @@ export type Background = string;
 export type Color = string;
 export type Direction = 'row' | 'column';
 export type Elevation = string;
-export type Extend = Function | Style | (Function | Style)[];
 export type Flex = string;
 export type Font = string;
 export type Justify = string;
@@ -37,7 +35,6 @@ export interface BasicStyleProps {
   color?: Color;
   direction?: Direction;
   elevation?: Elevation;
-  extend?: Extend;
   flex?: Flex;
   font?: Font;
   justify?: Font;
@@ -60,7 +57,6 @@ export const knownStyleProps = [
   'color',
   'direction',
   'elevation',
-  'extend',
   'flex',
   'font',
   'justify',

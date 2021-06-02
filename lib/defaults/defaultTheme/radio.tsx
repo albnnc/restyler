@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const radio: ComponentTheme = {
+export const radio: Theme = {
   option: {
     extend: {
       '& + &': {

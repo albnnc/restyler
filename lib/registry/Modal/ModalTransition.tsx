@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useClickOutside, useSharedRef, useTransition } from '../../hooks';
 import { ComponentFactory } from '../../models';
 import { TransitionRendererProps } from '../../utils';
@@ -16,15 +16,15 @@ export const createModalTransition: ComponentFactory<
     ({ handleClose, handleCloseEnd, isOpen, ...rest }, ref) => {
       const { Layer, Modal } = registry;
 
-      const [
-        isModalMounted,
-        { ref: modalRef, ...modalTransitionProps }
-      ] = useTransition<HTMLDivElement>(isOpen);
+      const modalRef = useSharedRef<HTMLDivElement>(null, [ref]);
+      const [isModalMounted, modalTransitionProps] = useTransition<
+        HTMLDivElement
+      >(modalRef, isOpen);
+
+      const layerRef = useRef<HTMLDivElement>(null);
       const [isLayerMounted, layerTransitionProps] = useTransition<
         HTMLDivElement
-      >(isOpen);
-
-      const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, modalRef]);
+      >(layerRef, isOpen);
 
       const [wasMounted, setWasMounted] = useState(false);
       useEffect(() => {
@@ -36,9 +36,9 @@ export const createModalTransition: ComponentFactory<
         }
       }, [isModalMounted, isLayerMounted]);
 
-      useClickOutside(sharedRef, e => {
+      useClickOutside(modalRef, e => {
         // do not close if closing another modal actually
-        if (layerTransitionProps.ref.current?.isSameNode(e.target as Element)) {
+        if (layerRef.current?.isSameNode(e.target as Element)) {
           handleClose?.();
         }
       });
@@ -48,9 +48,9 @@ export const createModalTransition: ComponentFactory<
       }
 
       return (
-        <Layer {...layerTransitionProps} kind="backdrop">
+        <Layer ref={layerRef} {...layerTransitionProps} kind="backdrop">
           {isModalMounted && (
-            <Modal ref={sharedRef} {...modalTransitionProps} {...rest} />
+            <Modal ref={modalRef} {...modalTransitionProps} {...rest} />
           )}
         </Layer>
       );

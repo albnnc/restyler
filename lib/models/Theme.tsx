@@ -1,14 +1,21 @@
+import { Style } from './Style';
 import { BasicStyleProps } from './StyleProps';
 import { Variables } from './Variables';
 
-export interface ComponentTheme extends BasicStyleProps {
-  kinds?: { [kind: string]: ComponentTheme };
-  [other: string]: any;
-}
+export type Extend = Function | Style | (Function | Style)[];
 
-export interface Theme {
-  defaults?: ComponentTheme;
+// tslint:disable:member-ordering
+export interface Theme extends BasicStyleProps {
+  /** CSS generator to extend StyleProps. */
+  extend?: Extend;
+
+  /** Only top-level variables are supported currently. */
   variables?: Variables;
 
-  [componentName: string]: ComponentTheme | undefined;
+  /** Custom kinds of current component. */
+  kinds?: { [kind: string]: Theme };
+
+  /** Sub-component themes. */
+  [other: string]: any;
 }
+// tslint:enable:member-ordering

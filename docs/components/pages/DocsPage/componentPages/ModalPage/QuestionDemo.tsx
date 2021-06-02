@@ -1,5 +1,5 @@
 import { openQuestion, Button } from 'docs/components/shared';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export const QuestionDemo = () => {
   const [message, setMessage] = useState('');

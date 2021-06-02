@@ -1,5 +1,5 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 import { CustomLabelDemo } from './CustomLabelDemo';
@@ -7,7 +7,7 @@ import customLabelDemoCode from './CustomLabelDemo.tsx?raw';
 
 export const FilePage = () => {
   return (
-    <>
+    <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
         Basic
       </Heading>
@@ -30,6 +30,6 @@ export const FilePage = () => {
       <Demo code={customLabelDemoCode} margin={{ vertical: 'medium' }}>
         <CustomLabelDemo />
       </Demo>
-    </>
+    </Fragment>
   );
 };

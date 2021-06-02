@@ -1,34 +1,54 @@
-import { ComponentTheme } from '../../models';
-import { mergeStyleProps } from '../../utils';
-import { input } from './input';
+import { Theme } from '../../models';
+import { mergeThemes } from '../../utils';
+import { createInputLikeTheme } from './input';
 
-export const select: ComponentTheme = {
-  extend: ({ props }) => ({
-    width: '100%',
-    position: 'relative',
-    '&:after': {
-      display: 'block',
-      content: '""',
-      position: 'absolute',
-      right: '0.7rem',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      width: 0,
-      height: 0,
-      borderLeft: '5px solid transparent',
-      borderRight: '5px solid transparent',
-      borderTop: `5px solid ${props.theme.variables?.palette?.['text']}`
+export const select: Theme = {
+  ...mergeThemes(
+    {},
+    createInputLikeTheme({
+      canBeDisabled: true,
+      canBeFocused: false,
+      canBeHovered: true,
+      canBeInvalid: true
+    }),
+    {
+      extend: ({ props }) => ({
+        lineHeight: 'calc(1.5 * 1rem)',
+
+        width: '100%',
+        position: 'relative',
+        '&:after': {
+          display: 'block',
+          content: '""',
+          position: 'absolute',
+          right: '0.7rem',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: 0,
+          height: 0,
+          borderLeft: '5px solid transparent',
+          borderRight: '5px solid transparent',
+          borderTop: `5px solid ${props.theme.variables?.palette?.['text']}`
+        }
+      })
     }
-  }),
+  ),
 
-  input: mergeStyleProps({}, input, {
-    extend: {
+  option: {
+    padding: 'small',
+    extend: ({ props }) => ({
       cursor: 'pointer',
-      paddingRight: 'calc(1.4rem + 5px)'
-    }
-  }),
+      '&:hover': { background: 'rgba(0, 0, 0, 0.05)' },
+      ...(props.isActive
+        ? {
+            background: 'rgba(0, 0, 0, 0.05)',
+            '&:hover': { background: 'rgba(0, 0, 0, 0.1)' }
+          }
+        : {})
+    })
+  },
 
-  options: {
+  drop: {
     background: 'white',
     radius: 'small',
     elevation: 'medium',
@@ -46,20 +66,6 @@ export const select: ComponentTheme = {
         opacity: 0,
         transform: 'translateY(-0.5rem)'
       }
-    },
-
-    item: {
-      padding: 'small',
-      extend: ({ props }) => ({
-        cursor: 'pointer',
-        '&:hover': { background: 'rgba(0, 0, 0, 0.05)' },
-        ...(props.isActive
-          ? {
-              background: 'rgba(0, 0, 0, 0.05)',
-              '&:hover': { background: 'rgba(0, 0, 0, 0.1)' }
-            }
-          : {})
-      })
     }
   }
 };

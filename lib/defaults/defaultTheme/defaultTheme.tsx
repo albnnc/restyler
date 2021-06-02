@@ -17,6 +17,7 @@ import { layer } from './layer';
 import { menu } from './menu';
 import { modal } from './modal';
 import { notification } from './notification';
+import { pieChart } from './pieChart';
 import { progress } from './progress';
 import { radio } from './radio';
 import { scroll } from './scroll';
@@ -47,6 +48,7 @@ export const defaultTheme: Theme = {
   menu,
   modal,
   notification,
+  pieChart,
   progress,
   radio,
   scroll,

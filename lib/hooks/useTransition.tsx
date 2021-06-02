@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState, HTMLAttributes, RefObject } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 import { onNextFrame } from '../utils';
 
 export type TransitionState = undefined | 'enter' | 'leave';
 
 export const useTransition = <TElement extends HTMLElement>(
+  ref: RefObject<TElement>,
   isMounted?: boolean
 ) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -11,7 +12,6 @@ export const useTransition = <TElement extends HTMLElement>(
     setIsFirstRender(false);
   }, []);
 
-  const ref = useRef<TElement>(null);
   const [isReallyMounted, setIsReallyMounted] = useState(!!isMounted);
   const [transitionState, setTransitionState] = useState<TransitionState>(
     undefined
@@ -65,9 +65,6 @@ export const useTransition = <TElement extends HTMLElement>(
 
   return [isReallyMounted, transitionProps] as [
     boolean,
-    HTMLAttributes<TElement> & {
-      'data-transition': 'leave' | 'enter';
-      ref: RefObject<TElement>;
-    }
+    { 'data-transition': 'leave' | 'enter' }
   ];
 };

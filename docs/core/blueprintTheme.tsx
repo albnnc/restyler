@@ -1,9 +1,15 @@
-import { defaultTheme, filterStyleProps, ComponentTheme } from 'lib';
+import { defaultTheme, filterStyleProps, Theme } from 'lib';
 
 const blueprintColor = '#17a1f7';
 
-const createBlueprintComponentTheme = (path: string, theme: ComponentTheme) => {
+const createBlueprintTheme = (path: string, theme: Theme) => {
+  if (typeof theme !== 'object') {
+    return undefined;
+  }
   const { styleProps, ...rest } = filterStyleProps(theme);
+  if (Reflect.ownKeys(rest).length === Reflect.ownKeys(theme).length) {
+    return undefined;
+  }
   const blueprint = {
     border: blueprintColor,
     color: blueprintColor,
@@ -30,7 +36,7 @@ const createBlueprintComponentTheme = (path: string, theme: ComponentTheme) => {
   };
   Reflect.ownKeys(rest).forEach(
     (v: string) =>
-      (blueprint[v] = createBlueprintComponentTheme(`${path}.${v}`, rest[v]))
+      (blueprint[v] = createBlueprintTheme(`${path}.${v}`, rest[v]))
   );
   return blueprint;
 };
@@ -39,5 +45,5 @@ const { variables, ...components } = defaultTheme;
 export const blueprintTheme = { variables };
 Reflect.ownKeys(components).forEach(
   (v: string) =>
-    (blueprintTheme[v] = createBlueprintComponentTheme(v, components[v] ?? {}))
+    (blueprintTheme[v] = createBlueprintTheme(v, components[v] ?? {}))
 );

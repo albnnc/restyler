@@ -1,5 +1,5 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 import { Blueprint } from './Blueprint';

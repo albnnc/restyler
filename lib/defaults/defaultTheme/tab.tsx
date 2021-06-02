@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../..';
+import { Theme } from '../..';
 
-export const tab: ComponentTheme = {
+export const tab: Theme = {
   group: {
     direction: 'row'
   },

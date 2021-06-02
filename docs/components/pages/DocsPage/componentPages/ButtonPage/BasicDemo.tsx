@@ -1,9 +1,9 @@
 import { Button } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 
 export const BasicDemo = () => {
   return (
-    <>
+    <Fragment>
       <Button margin="small">Default</Button>
       <Button kind="primary" margin="small">
         Primary
@@ -23,6 +23,6 @@ export const BasicDemo = () => {
       <Button kind="primary" margin="small" disabled>
         Disabled
       </Button>
-    </>
+    </Fragment>
   );
 };

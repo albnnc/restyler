@@ -1,8 +1,8 @@
-import { ComponentTheme } from '../../models';
-import { mergeStyleProps } from '../../utils';
+import { Theme } from '../../models';
+import { mergeThemes } from '../../utils';
 import { button } from './button';
 
-export const file: ComponentTheme = {
+export const file: Theme = {
   extend: () => ({
     width: '100%',
     position: 'relative'
@@ -10,7 +10,7 @@ export const file: ComponentTheme = {
   input: {
     extend: { display: 'none' }
   },
-  label: mergeStyleProps({}, button.kinds?.primary ?? {}, {
+  label: mergeThemes({}, button.kinds?.primary ?? {}, {
     padding: { vertical: 'small', horizontal: 'medium' },
     extend: {
       lineHeight: 'calc(1.5 * 1rem)',

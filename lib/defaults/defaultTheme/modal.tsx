@@ -1,4 +1,4 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
 const createModalStyle = ({ width }) => ({
   width,
@@ -15,7 +15,7 @@ const createModalStyle = ({ width }) => ({
   }
 });
 
-export const modal: ComponentTheme = {
+export const modal: Theme = {
   radius: 'small',
   elevation: 'largest',
   background: 'white',

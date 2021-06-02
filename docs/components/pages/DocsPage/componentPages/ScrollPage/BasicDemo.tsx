@@ -1,10 +1,9 @@
 import { Box, Scroll } from 'docs/components/shared';
-import React from 'react';
 
 export const BasicDemo = () => {
   return (
     <Scroll>
-      <Box extend={{ width: '800px' }}>
+      <Box css={{ width: '800px' }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Fringilla urna
         porttitor rhoncus dolor purus non enim praesent elementum. Quam

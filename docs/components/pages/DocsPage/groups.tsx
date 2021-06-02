@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import {
   MdExtension,
   MdFeedback,
@@ -19,22 +19,24 @@ import {
   InputPage,
   ModalPage,
   NotificationPage,
+  PieChartPage,
   ProgressPage,
   ScrollPage,
   SelectPage,
+  StackPage,
   TablePage,
   TabPage
 } from './componentPages';
 import { ThemingPage } from './generalPages';
 
-const TodoComponent = () => <>TODO</>;
+const TodoComponent = () => <Fragment>TODO</Fragment>;
 
 export const groups = [
   {
     title: (
-      <>
+      <Fragment>
         <MdInfo /> General
-      </>
+      </Fragment>
     ),
     path: '/docs/general',
     items: [
@@ -57,9 +59,9 @@ export const groups = [
   },
   {
     title: (
-      <>
+      <Fragment>
         <MdViewQuilt /> Layout
-      </>
+      </Fragment>
     ),
     path: '/docs/layout',
     items: [
@@ -87,14 +89,19 @@ export const groups = [
         title: 'Scroll',
         path: '/docs/layout/scroll',
         component: ScrollPage
+      },
+      {
+        title: 'Stack',
+        path: '/docs/layout/stack',
+        component: StackPage
       }
     ]
   },
   {
     title: (
-      <>
+      <Fragment>
         <MdFontDownload /> Inputs
-      </>
+      </Fragment>
     ),
     path: '/docs/inputs',
     items: [
@@ -110,7 +117,7 @@ export const groups = [
       },
       {
         title: 'TextArea',
-        path: '/docs/inputs/textarea',
+        path: '/docs/inputs/text-area',
         component: TodoComponent
       },
       {
@@ -142,9 +149,9 @@ export const groups = [
   },
   {
     title: (
-      <>
+      <Fragment>
         <MdNavigation /> Navigation
-      </>
+      </Fragment>
     ),
     path: '/docs/navigation',
     items: [
@@ -162,9 +169,9 @@ export const groups = [
   },
   {
     title: (
-      <>
+      <Fragment>
         <MdFeedback /> Feedback
-      </>
+      </Fragment>
     ),
     path: '/docs/feedback',
     items: [
@@ -187,9 +194,9 @@ export const groups = [
   },
   {
     title: (
-      <>
+      <Fragment>
         <MdExtension /> Others
-      </>
+      </Fragment>
     ),
     path: '/docs/others',
     items: [
@@ -203,10 +210,16 @@ export const groups = [
         path: '/docs/others/table',
         component: TablePage
       },
+      // WIP
+      // {
+      //   title: 'Carousel',
+      //   path: '/docs/others/carousel',
+      //   component: CarouselPage
+      // },
       {
-        title: 'Carousel',
-        path: '/docs/others/carousel',
-        component: CarouselPage
+        title: 'Pie Chart',
+        path: '/docs/others/pie-chart',
+        component: PieChartPage
       }
     ]
   }

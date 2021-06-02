@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const container: ComponentTheme = {
+export const container: Theme = {
   padding: { horizontal: 'large' },
   direction: 'row',
   justify: 'center',

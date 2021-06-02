@@ -5,7 +5,6 @@ import {
   TableHead,
   TableRow
 } from 'docs/components/shared';
-import React from 'react';
 
 export const BasicDemo = () => {
   return (

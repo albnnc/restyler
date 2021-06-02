@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const table: ComponentTheme = {
+export const table: Theme = {
   font: 'medium',
   extend: {
     width: '100%',

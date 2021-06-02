@@ -1,5 +1,4 @@
 import { Button, FormField } from 'docs/components/shared';
-import React from 'react';
 
 export const AddonsDemo = () => (
   <FormField

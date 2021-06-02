@@ -1,20 +1,16 @@
-import { Select } from 'docs/components/shared';
-import React from 'react';
+import { Select, SelectOption } from 'docs/components/shared';
 
 export const BasicDemo = () => (
-  <Select
-    placeholder="Select value"
-    options={[
-      { name: 'One', value: 1 },
-      { name: 'Two', value: 2 },
-      { name: 'Three', value: 3 },
-      { name: 'Four', value: 4 },
-      { name: 'Five', value: 5 },
-      { name: 'Six', value: 6 },
-      { name: 'Seven', value: 7 },
-      { name: 'Eight', value: 8 },
-      { name: 'Nine', value: 9 },
-      { name: 'Ten', value: 10 }
-    ]}
-  />
+  <Select placeholder="Select value">
+    <SelectOption value={1}>One</SelectOption>
+    <SelectOption value={2}>Two</SelectOption>
+    <SelectOption value={3}>Three</SelectOption>
+    <SelectOption value={4}>Four</SelectOption>
+    <SelectOption value={5}>Five</SelectOption>
+    <SelectOption value={6}>Six</SelectOption>
+    <SelectOption value={7}>Seven</SelectOption>
+    <SelectOption value={8}>Eight</SelectOption>
+    <SelectOption value={9}>Nine</SelectOption>
+    <SelectOption value={10}>Ten</SelectOption>
+  </Select>
 );

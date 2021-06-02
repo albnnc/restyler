@@ -1,6 +1,5 @@
 import { Card, CardBody, CardFooter, CardHeader } from 'docs/components/shared';
 import { blueprintTheme } from 'docs/core';
-import React from 'react';
 
 export const Blueprint = () => {
   return (

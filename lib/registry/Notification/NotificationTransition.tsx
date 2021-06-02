@@ -14,11 +14,11 @@ export const createNotificationTransition: ComponentFactory<
 > = ({ registry }) =>
   forwardRef(({ handleClose, handleCloseEnd, isOpen, ...rest }, ref) => {
     const { Notification } = registry;
-    const [
-      isMounted,
-      { ref: transitionRef, ...transitionProps }
-    ] = useTransition<HTMLDivElement>(isOpen);
-    const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, transitionRef]);
+    const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
+    const [isMounted, transitionProps] = useTransition<HTMLDivElement>(
+      sharedRef,
+      isOpen
+    );
     const [wasMounted, setWasMounted] = useState(false);
     useEffect(() => {
       if (wasMounted && !isMounted) {

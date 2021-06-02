@@ -8,7 +8,6 @@ import {
   Image
 } from 'docs/components/shared';
 import mountains from 'docs/images/mountains.jpg';
-import React from 'react';
 
 export const ComplexDemo = () => (
   <Card>

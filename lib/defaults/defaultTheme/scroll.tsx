@@ -1,4 +1,4 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
 const createPseudoStyle = (opacity, isLeft) => ({
   content: '""',
@@ -25,7 +25,7 @@ const createPseudoStyle = (opacity, isLeft) => ({
       })
 });
 
-export const scroll: ComponentTheme = {
+export const scroll: Theme = {
   extend: ({ props }) => ({
     position: 'relative',
     overflow: 'hidden',

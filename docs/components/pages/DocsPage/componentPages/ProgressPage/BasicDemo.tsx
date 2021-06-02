@@ -1,5 +1,4 @@
 import { Box, Progress } from 'docs/components/shared';
-import React from 'react';
 
 const ranges = [
   {

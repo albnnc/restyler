@@ -34,14 +34,17 @@ import {
   createNotificationTransition,
   createOpenNotification
 } from './Notification';
+import { createPieChart } from './PieChart';
 import { createProgress } from './Progress';
 import { createRadioGroup, createRadioOption } from './Radio';
 import { createScroll } from './Scroll';
 import {
   createSelect,
-  createSelectOptions,
-  createSelectOptionsTransition
+  createSelectDrop,
+  createSelectDropTransition,
+  createSelectOption
 } from './Select';
+import { createStack } from './Stack';
 import { createTabGroup, createTabOption } from './Tab';
 import {
   createSmartTable,
@@ -89,8 +92,9 @@ const factories = {
   NotificationTransition: createNotificationTransition,
   openNotification: createOpenNotification,
 
-  SelectOptions: createSelectOptions,
-  SelectOptionsTransition: createSelectOptionsTransition,
+  SelectOption: createSelectOption,
+  SelectDrop: createSelectDrop,
+  SelectDropTransition: createSelectDropTransition,
   Select: createSelect,
 
   RadioOption: createRadioOption,
@@ -111,7 +115,10 @@ const factories = {
   Carousel: createCarousel,
 
   TabOption: createTabOption,
-  TabGroup: createTabGroup
+  TabGroup: createTabGroup,
+
+  Stack: createStack,
+  PieChart: createPieChart
 };
 
 type Factories = typeof factories;

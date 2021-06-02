@@ -1,5 +1,5 @@
 import { openModal, Button } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 
 const Opener = ({ level }) =>
   level ? (
@@ -14,7 +14,9 @@ const Opener = ({ level }) =>
       Modals left: {level}
     </Button>
   ) : (
-    <>And if you gaze for long, into an abyss, the abyss gazes also into you.</>
+    <Fragment>
+      And if you gaze for long, into an abyss, the abyss gazes also into you.
+    </Fragment>
   );
 
 export const NestedDemo = () => <Opener level={3} />;

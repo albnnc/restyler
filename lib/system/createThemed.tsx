@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import { Styled, Themed } from '../models';
-import { filterStyleProps, get, merge, mergeStyleProps } from '../utils';
+import { Theme, Styled, Themed } from '../models';
+import { filterStyleProps, get, merge, mergeThemes } from '../utils';
 import { createStyle } from './createStyle';
 
 export const createThemed = (styled: Styled, useTheme) => {
@@ -17,13 +17,13 @@ export const createThemed = (styled: Styled, useTheme) => {
       const defaultStyleProps = styleProps.theme?.defaults ?? {};
       const themeStyleProps = get(styleProps.theme, path ?? '') ?? {};
       const kindStyleProps = themeStyleProps.kinds?.[styleProps.kind] ?? {};
-      const mergedStyleProps = mergeStyleProps(
+      const mergedStyleProps = mergeThemes(
         {},
         defaultStyleProps,
         themeStyleProps,
         kindStyleProps,
         styleProps
-      );
+      ) as Theme;
       return merge(
         {},
         style,

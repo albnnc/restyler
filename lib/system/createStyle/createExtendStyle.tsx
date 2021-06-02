@@ -6,7 +6,7 @@ export const createExtendStyle = <T extends BasicStyleProps>({
   variables,
   props
 }: StyleFactoryOptions<T>): Style => {
-  const value = props.extend;
+  const value = props['extend'];
   const result = {} as Style;
   for (const item of Array.isArray(value) ? value : [value]) {
     if (typeof item === 'function') {

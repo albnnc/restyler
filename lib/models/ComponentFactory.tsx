@@ -13,7 +13,7 @@ export interface ComponentFactoryOptions {
   themed: Themed;
 }
 
-export interface ComponentFactory<TElement extends HTMLElement, TProps> {
+export interface ComponentFactory<TElement extends Element, TProps> {
   (options: ComponentFactoryOptions): ForwardRefExoticComponent<
     PropsWithoutRef<TProps> & RefAttributes<TElement>
   >;

@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const checkbox: ComponentTheme = {
+export const checkbox: Theme = {
   checker: {
     margin: { right: 'small' },
     radius: 'smaller',

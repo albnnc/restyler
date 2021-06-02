@@ -8,7 +8,7 @@ import {
   MenuItem
 } from 'docs/components/shared';
 import { capitalizeFirst } from 'lib';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import {
   useHistory,
   useRouteMatch,
@@ -27,6 +27,9 @@ export const DocsPage = () => {
     item?: string;
   }>('/docs/:group/:item?');
   const { group, item } = match?.params ?? {};
+  const title = groups
+    ?.find(v => v.path === `/docs/${group}`)
+    ?.items?.find(v => v.path === `/docs/${group}/${item}`)?.title;
 
   useEffect(() => {
     if (activeIds.length === 0) {
@@ -40,17 +43,17 @@ export const DocsPage = () => {
   }, [match?.params?.group]);
 
   return (
-    <>
+    <Fragment>
       <Navbar />
       <Container background="darkGrey" padding={{ vertical: 'larger' }}>
         <Heading kind="1" color="white" margin="none">
-          {capitalizeFirst(item)}
+          {title}
         </Heading>
       </Container>
       <Container padding={{ vertical: 'larger' }}>
         <Box margin="-1rem" direction="row" wrap="reverse">
           <Box
-            extend={{
+            css={{
               margin: '1rem',
               flex: '100 1',
               minWidth: '300px'
@@ -71,7 +74,7 @@ export const DocsPage = () => {
           </Box>
           {item && (
             <Box
-              extend={{
+              css={{
                 margin: '1rem',
                 flex: '1 0',
                 minWidth: '250px'
@@ -112,6 +115,6 @@ export const DocsPage = () => {
           )}
         </Box>
       </Container>
-    </>
+    </Fragment>
   );
 };

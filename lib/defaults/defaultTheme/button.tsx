@@ -1,4 +1,4 @@
-import { ComponentTheme, StyleProps } from '../../models';
+import { Theme, StyleProps } from '../../models';
 
 const createBasicKind = (color: string, additionalProps?: StyleProps) => ({
   padding: { vertical: 'smaller', horizontal: 'medium' },
@@ -66,7 +66,7 @@ const createArrowKind = direction => ({
   }
 });
 
-export const button: ComponentTheme = {
+export const button: Theme = {
   kinds: {
     primary: createBasicKind('primary'),
     secondary: createBasicKind('primary', {

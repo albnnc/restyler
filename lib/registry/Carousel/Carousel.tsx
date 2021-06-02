@@ -32,7 +32,13 @@ export const createCarousel: ComponentFactory<
   CarouselProps
 > = ({ themed, registry }) => {
   const { CarouselItemTransition, Button } = registry;
-  const ThemedWrap = themed('div', { path: 'carousel' });
+  const ThemedCarousel = themed('div', { path: 'carousel' });
+  const ThemedCarouselLeftButton = themed('button', {
+    path: 'carousel.leftButton'
+  });
+  const ThemedCarouselRightButton = themed('button', {
+    path: 'carousel.rightArrow'
+  });
 
   return forwardRef(
     (
@@ -75,12 +81,10 @@ export const createCarousel: ComponentFactory<
         );
 
       return (
-        <ThemedWrap ref={ref} {...rest} direction="row">
-          <Button
-            kind="arrowLeft"
+        <ThemedCarousel ref={ref} {...rest} direction="row">
+          <ThemedCarouselLeftButton
             onClick={() => handleChange('left')}
             disabled={!isInfinite && currIndex === 0}
-            padding={{ horizontal: 'small' }}
           />
           {childCollection.map((child, index) => (
             <CarouselItemTransition
@@ -94,13 +98,11 @@ export const createCarousel: ComponentFactory<
               {child}
             </CarouselItemTransition>
           ))}
-          <Button
-            kind="arrowRight"
+          <ThemedCarouselRightButton
             onClick={() => handleChange('right')}
             disabled={!isInfinite && currIndex === childCollection.length - 1}
-            padding={{ horizontal: 'small' }}
           />
-        </ThemedWrap>
+        </ThemedCarousel>
       );
     }
   );

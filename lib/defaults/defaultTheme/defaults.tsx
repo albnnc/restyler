@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const defaults: ComponentTheme = {
+export const defaults: Theme = {
   padding: 'none',
   margin: 'none',
   font: 'inherit',

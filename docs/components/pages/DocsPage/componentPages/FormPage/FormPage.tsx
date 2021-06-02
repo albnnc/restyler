@@ -1,5 +1,5 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 import { AddonsDemo } from './AddonsDemo';
 import addonsDemoCode from './AddonsDemo.tsx?raw';
 import { BasicDemo } from './BasicDemo';
@@ -9,7 +9,7 @@ import rowDemoCode from './RowDemo.tsx?raw';
 
 export const FormPage = () => {
   return (
-    <>
+    <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
         Basic
       </Heading>
@@ -32,6 +32,6 @@ export const FormPage = () => {
       <Demo code={addonsDemoCode} margin={{ vertical: 'medium' }}>
         <AddonsDemo />
       </Demo>
-    </>
+    </Fragment>
   );
 };

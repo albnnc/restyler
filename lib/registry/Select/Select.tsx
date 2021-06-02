@@ -1,53 +1,43 @@
 import React, {
+  cloneElement,
   createRef,
   forwardRef,
   useEffect,
   useState,
   HTMLAttributes,
-  InputHTMLAttributes
+  ReactElement
 } from 'react';
 import { useSharedRef } from '../../hooks';
 import { ComponentFactory, FormWidgetProps, StyleProps } from '../../models';
 import { disableScroll, openTransition } from '../../utils';
+import { SelectOptionProps } from './SelectOption';
 
 export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
     StyleProps {
-  options: {
-    name?: string;
-    value: any;
-  }[];
+  children: ReactElement<SelectOptionProps>[];
 }
 
 export const createSelect: ComponentFactory<HTMLDivElement, SelectProps> = ({
   registry,
   themed
 }) => {
-  const { SelectOptionsTransition } = registry;
+  const { SelectDropTransition } = registry;
   const ThemedSelect = themed('div', { path: 'select' });
-  const ThemedInput = themed<'input', FormWidgetProps>('input', {
-    path: 'select.input',
-    style: {
-      border: 'none',
-      background: 'transparent',
-      outline: 'none',
-      padding: 0,
-      margin: 0
-    }
-  });
 
   return forwardRef((props, ref) => {
-    const { options, value, disabled, onChange } = props;
+    const { value, disabled, onChange, children } = props;
     const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
     const [innerValue, setInnerValue] = useState(value);
     useEffect(() => {
       setInnerValue(value);
     }, [value]);
 
-    const currentOption = options.find(v => v.value === innerValue);
-    const displayValue =
-      currentOption?.name ?? currentOption?.value?.toString() ?? '';
+    const currentOption = children.find(v => v.props.value === innerValue);
+    const displayData = currentOption?.props?.children ??
+      currentOption?.props?.value ??
+      props.placeholder ?? <>&nbsp;</>;
 
     const openSelect = () => {
       if (disabled) {
@@ -59,34 +49,30 @@ export const createSelect: ComponentFactory<HTMLDivElement, SelectProps> = ({
       const width = sharedRef.current?.offsetWidth;
       openTransition({
         render: props => (
-          <SelectOptionsTransition
+          <SelectDropTransition
             ref={optionsRef}
-            options={options}
-            value={innerValue}
             style={{ position: 'fixed', top, left, width }}
-            onOptionSelect={v => {
-              setInnerValue(v.value);
-              onChange?.(v.value);
-              props.handleClose();
-            }}
             {...props}
-          />
+          >
+            {children.map(v =>
+              cloneElement(v, {
+                onClick: () => {
+                  const elementValue = v.props.value;
+                  setInnerValue(elementValue);
+                  onChange?.(elementValue);
+                  props.handleClose();
+                }
+              })
+            )}
+          </SelectDropTransition>
         ),
         onClose: () => enableScroll()
       });
     };
 
     return (
-      <ThemedSelect ref={sharedRef} {...props}>
-        <ThemedInput
-          readOnly
-          type="text"
-          value={displayValue}
-          onClick={openSelect}
-          disabled={props.disabled}
-          invalid={props.invalid}
-          required={props.required}
-        />
+      <ThemedSelect ref={sharedRef} onClick={openSelect} {...props}>
+        {displayData}
       </ThemedSelect>
     );
   });

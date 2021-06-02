@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const form: ComponentTheme = {
+export const form: Theme = {
   field: {
     direction: 'column',
 
@@ -57,7 +57,7 @@ export const form: ComponentTheme = {
   kinds: {
     vertical: {
       extend: ({ createStyle }) => ({
-        '& > *:not(:first-child)': createStyle({
+        '& > *:not(:first-of-type)': createStyle({
           margin: { top: 'medium' }
         })
       })

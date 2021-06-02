@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const global: ComponentTheme = {
+export const global: Theme = {
   padding: 'none',
   margin: 'none',
   font: 'medium',

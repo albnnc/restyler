@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const anchor: ComponentTheme = {
+export const anchor: Theme = {
   color: 'primary',
   weight: 'bold'
 };

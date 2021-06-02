@@ -1,7 +1,6 @@
 import { useTheme } from 'docs/core';
-import { css } from 'emotion';
 import { BoxProps } from 'lib';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdCode } from 'react-icons/md';
 import { Highlight } from './Highlight';
 import { Box, Button, Collapse } from './registry';
@@ -22,27 +21,22 @@ export const Demo = ({ code, contentProps, children, ...rest }: DemoProps) => {
       color="#777777"
       padding="small"
       font="small"
-      className={css`
-        position: absolute;
-        top: 7px;
-        right: 10px;
-        font-family: 'Roboto Mono', monospace;
-        &:hover {
-          color: ${theme.variables?.palette?.primary};
+      css={{
+        position: 'absolute',
+        top: '7px',
+        right: '10px',
+        fontFamily: '"Roboto Mono", monospace',
+        '&:hover': {
+          color: theme.variables?.palette?.primary
         }
-      `}
+      }}
     >
       <MdCode size="1.2rem" />
     </Button>
   );
 
   return (
-    <Box
-      {...rest}
-      className={css`
-        position: relative;
-      `}
-    >
+    <Box css={{ position: 'relative' }} {...rest}>
       {code && codeButton}
       <Box
         background="lightGrey"

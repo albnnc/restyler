@@ -15,11 +15,11 @@ export const createCarouselItemTransition: ComponentFactory<
 > = ({ registry }) =>
   forwardRef(({ handleClose, handleOpen, isOpen, ...rest }, ref) => {
     const { CarouselItem } = registry;
-    const [
-      isMounted,
-      { ref: transitionRef, ...transitionProps }
-    ] = useTransition<HTMLDivElement>(isOpen);
-    const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, transitionRef]);
+    const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
+    const [isMounted, transitionProps] = useTransition<HTMLDivElement>(
+      sharedRef,
+      isOpen
+    );
     const [wasMounted, setWasMounted] = useState(false);
     useEffect(() => {
       if (wasMounted && !isMounted) {

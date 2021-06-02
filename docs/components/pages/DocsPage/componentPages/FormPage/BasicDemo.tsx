@@ -9,15 +9,16 @@ import {
   RadioGroup,
   RadioOption,
   Select,
+  SelectOption,
   TextArea
 } from 'docs/components/shared';
 import { useFormManager } from 'lib';
-import React from 'react';
+import { Fragment } from 'react';
 
 export const BasicDemo = () => {
   const manager = useFormManager();
   return (
-    <>
+    <Fragment>
       <Form manager={manager} kind="vertical">
         <FormField required name="login" label="Login" />
         <FormField
@@ -30,7 +31,10 @@ export const BasicDemo = () => {
           <Input type="password" />
         </FormField>
         <FormField required name="authType" label="Auth type">
-          <Select options={[{ value: 'OAuth' }, { value: 'LDAP' }]} />
+          <Select>
+            <SelectOption value="auth-type-1">OAuth</SelectOption>
+            <SelectOption value="auth-type-2">LDAP</SelectOption>
+          </Select>
         </FormField>
         <FormField name="remember">
           <Checkbox>Remember me</Checkbox>
@@ -63,6 +67,6 @@ export const BasicDemo = () => {
           <code>{JSON.stringify(manager.errors, null, 2)}</code>
         </pre>
       </Box>
-    </>
+    </Fragment>
   );
 };

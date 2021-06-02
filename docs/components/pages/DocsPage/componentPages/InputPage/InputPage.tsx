@@ -1,11 +1,11 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 
 export const InputPage = () => {
   return (
-    <>
+    <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
         Basic
       </Heading>
@@ -17,6 +17,6 @@ export const InputPage = () => {
       <Demo code={basicDemoCode} margin={{ vertical: 'medium' }}>
         <BasicDemo />
       </Demo>
-    </>
+    </Fragment>
   );
 };

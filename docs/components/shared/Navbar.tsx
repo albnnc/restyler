@@ -1,19 +1,18 @@
-import React from 'react';
 import { NavAnchor, NavAnchorProps } from './NavAnchor';
 import { Box } from './registry';
 
 const StyledAnchor = (props: NavAnchorProps) => (
   <NavAnchor
-    {...props}
     weight="light"
-    color="rgba(255, 255, 255, 0.7)"
-    extend={{
+    css={{
       letterSpacing: '0.04rem',
       transition: 'color 0.1s',
+      color: 'rgba(255, 255, 255, 0.7)',
       '&:hover': {
         color: 'white'
       }
     }}
+    {...props}
   />
 );
 
@@ -26,7 +25,7 @@ export const Navbar = () => {
       align="center"
       elevation="larger"
       background="darkGrey"
-      extend={{
+      css={{
         position: 'relative',
         zIndex: 1
       }}

@@ -1,5 +1,5 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 import { OpenDemo } from './OpenDemo';
@@ -7,7 +7,7 @@ import openDemoCode from './OpenDemo.tsx?raw';
 
 export const NotificationPage = () => {
   return (
-    <>
+    <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
         Basic
       </Heading>
@@ -27,6 +27,6 @@ export const NotificationPage = () => {
       <Demo code={openDemoCode} margin={{ vertical: 'medium' }}>
         <OpenDemo />
       </Demo>
-    </>
+    </Fragment>
   );
 };

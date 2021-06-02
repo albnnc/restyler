@@ -1,4 +1,4 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
 const createTitleStyle = ({ createStyle }) => ({
   userSelect: 'none',
@@ -6,7 +6,7 @@ const createTitleStyle = ({ createStyle }) => ({
   '&:hover': createStyle({ color: 'primary' })
 });
 
-export const menu: ComponentTheme = {
+export const menu: Theme = {
   background: 'lightGrey',
   font: 'medium',
   padding: 'medium',
@@ -22,14 +22,14 @@ export const menu: ComponentTheme = {
   group: {
     items: { padding: { top: 'smaller', left: 'large' } },
     extend: ({ createStyle }) => ({
-      '&:not(:first-child)': createStyle({ margin: { top: 'smaller' } })
+      '&:not(:first-of-type)': createStyle({ margin: { top: 'smaller' } })
     }),
     title: { extend: createTitleStyle }
   },
 
   item: {
     extend: ({ createStyle }) => ({
-      '&:not(:first-child)': createStyle({ margin: { top: 'smaller' } })
+      '&:not(:first-of-type)': createStyle({ margin: { top: 'smaller' } })
     }),
     title: {
       extend: ({ createStyle, props }) => {

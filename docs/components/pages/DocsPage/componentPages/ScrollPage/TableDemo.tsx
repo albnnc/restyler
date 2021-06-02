@@ -1,10 +1,9 @@
 import { Box, Scroll, SmartTable } from 'docs/components/shared';
-import React from 'react';
 
 export const TableDemo = () => {
   return (
-    <Scroll extend={{ width: '300px' }}>
-      <Box extend={{ width: '500px' }}>
+    <Scroll css={{ width: '300px' }}>
+      <Box css={{ width: '500px' }}>
         <SmartTable
           primaryKey="x"
           data={[

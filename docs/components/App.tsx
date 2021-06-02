@@ -1,6 +1,5 @@
 import { getTheme } from 'docs/core';
 import { injectGlobal } from 'emotion';
-import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { DocsPage, LandingPage } from './pages';
 

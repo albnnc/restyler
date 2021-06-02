@@ -1,5 +1,5 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 import { Blueprint } from './Blueprint';
@@ -9,7 +9,7 @@ import complexDemoCode from './ComplexDemo.tsx?raw';
 
 export const CardPage = () => {
   return (
-    <>
+    <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
         Basic
       </Heading>
@@ -22,7 +22,7 @@ export const CardPage = () => {
       </Box>
       <Demo
         code={basicDemoCode}
-        contentProps={{ flex: '1 1 350px' }}
+        contentProps={{ flex: '0 1 400px' }}
         margin={{ vertical: 'medium' }}
       >
         <BasicDemo />
@@ -30,7 +30,7 @@ export const CardPage = () => {
       <Heading kind="2">Complex</Heading>
       <Demo
         code={complexDemoCode}
-        contentProps={{ flex: '1 1 350px' }}
+        contentProps={{ flex: '0 1 400px' }}
         margin={{ vertical: 'medium' }}
       >
         <ComplexDemo />
@@ -38,11 +38,11 @@ export const CardPage = () => {
       <Heading kind="2">Blueprint</Heading>
       <Demo
         code={blueprintCode}
-        contentProps={{ flex: '1 1 350px' }}
+        contentProps={{ flex: '0 1 400px' }}
         margin={{ vertical: 'medium' }}
       >
         <Blueprint />
       </Demo>
-    </>
+    </Fragment>
   );
 };

@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const layer: ComponentTheme = {
+export const layer: Theme = {
   kinds: {
     backdrop: {
       direction: 'row',

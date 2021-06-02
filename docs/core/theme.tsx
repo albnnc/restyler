@@ -1,6 +1,6 @@
-import { defaultTheme, mergeTheme } from 'lib';
+import { defaultTheme, mergeThemes } from 'lib';
 
-export const theme = mergeTheme({}, defaultTheme, {
+export const theme = mergeThemes({}, defaultTheme, {
   menu: {
     group: {
       title: {

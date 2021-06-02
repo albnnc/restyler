@@ -1,5 +1,4 @@
 import { openModal, Button } from 'docs/components/shared';
-import React from 'react';
 
 export const OpenDemo = () => {
   return (

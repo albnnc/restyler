@@ -1,5 +1,5 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 import { Blueprint } from './Blueprint';
@@ -7,7 +7,7 @@ import blueprintCode from './Blueprint.tsx?raw';
 
 export const AnchorPage = () => {
   return (
-    <>
+    <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
         Basic
       </Heading>
@@ -24,6 +24,6 @@ export const AnchorPage = () => {
       <Demo margin={{ vertical: 'medium' }} code={blueprintCode}>
         <Blueprint />
       </Demo>
-    </>
+    </Fragment>
   );
 };

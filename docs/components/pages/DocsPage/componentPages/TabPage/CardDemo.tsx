@@ -5,8 +5,7 @@ import {
   TabGroup,
   TabOption
 } from 'docs/components/shared';
-import { useTabManager } from 'lib/hooks';
-import React from 'react';
+import { useTabManager } from 'lib';
 
 export const CardDemo = () => {
   const manager = useTabManager('a');

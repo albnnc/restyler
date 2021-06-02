@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const notification: ComponentTheme = {
+export const notification: Theme = {
   radius: 'small',
   elevation: 'larger',
   background: 'rgba(0, 0, 0, 0.85)',

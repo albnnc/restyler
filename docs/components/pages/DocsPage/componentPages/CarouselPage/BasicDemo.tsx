@@ -1,12 +1,22 @@
 import { Carousel } from 'docs/components/shared';
-import React from 'react';
+import mountains from 'docs/images/mountains.jpg';
+import orange from 'docs/images/orange.jpg';
 
 export const BasicDemo = () => {
   return (
     <Carousel>
-      <div>1111111111111</div>
-      <div>2222222222222</div>
-      <div>3333333333333</div>
+      <div>
+        <img
+          src={mountains}
+          css={{ width: '100%', maxHeight: '100%', verticalAlign: 'middle' }}
+        />
+      </div>
+      <div>
+        <img
+          src={orange}
+          css={{ width: '100%', maxHeight: '100%', verticalAlign: 'middle' }}
+        />
+      </div>
     </Carousel>
   );
 };

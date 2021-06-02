@@ -1,5 +1,5 @@
 import { Box, Demo, Heading } from 'docs/components/shared';
-import React from 'react';
+import { Fragment } from 'react';
 import { AutoPlayDemo } from './AutoPlayDemo';
 import autoPlayDemoCode from './AutoPlayDemo.tsx?raw';
 import { BasicDemo } from './BasicDemo';
@@ -9,7 +9,7 @@ import infiniteDemoCode from './InfiniteDemo.tsx?raw';
 
 export const CarouselPage = () => {
   return (
-    <>
+    <Fragment>
       <Heading kind="2" margin={{ top: 'none' }}>
         Basic
       </Heading>
@@ -43,6 +43,6 @@ export const CarouselPage = () => {
       <Demo code={autoPlayDemoCode} margin={{ vertical: 'medium' }}>
         <AutoPlayDemo />
       </Demo>
-    </>
+    </Fragment>
   );
 };

@@ -1,4 +1,4 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
 const createColorKind = color => ({
   extend: ({ createStyle }) => ({
@@ -8,7 +8,7 @@ const createColorKind = color => ({
   })
 });
 
-export const progress: ComponentTheme = {
+export const progress: Theme = {
   extend: ({ createStyle }) => ({
     // read more about progress reset style: https://css-tricks.com/html5-progress-element/
     appearance: 'none',

@@ -1,5 +1,4 @@
 import { AnchorProps } from 'lib';
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Anchor } from './registry';
 

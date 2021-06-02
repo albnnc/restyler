@@ -1,8 +1,8 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
+import { mergeThemes } from '../../utils';
 import { input } from './input';
-import { mergeStyleProps } from 'lib/utils';
 
-export const textArea: ComponentTheme = mergeStyleProps({}, input, {
+export const textArea: Theme = mergeThemes({}, input, {
   extend: {
     display: 'block',
     resize: 'vertical'

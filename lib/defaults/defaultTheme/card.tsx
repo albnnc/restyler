@@ -1,6 +1,6 @@
-import { ComponentTheme } from '../../models';
+import { Theme } from '../../models';
 
-export const card: ComponentTheme = {
+export const card: Theme = {
   radius: 'small',
   elevation: 'smaller',
   background: 'white',

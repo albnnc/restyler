@@ -6,14 +6,13 @@ import {
   Navbar,
   NavAnchor
 } from 'docs/components/shared';
-import { css } from 'emotion';
-import React from 'react';
+import { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export const LandingPage = () => {
   const history = useHistory();
   return (
-    <>
+    <Fragment>
       <Navbar />
       <Box
         background="darkGrey"
@@ -38,15 +37,15 @@ export const LandingPage = () => {
             margin="auto"
             font="small"
             weight="light"
-            extend={{
+            onClick={() => history.push('/docs')}
+            css={{
               textTransform: 'uppercase',
               letterSpacing: '0.04rem',
-              transition: 'background 0.2s',
+              transition: 'background-color 0.2s',
               '&:hover': {
                 background: 'rgba(255, 255, 255, 0.05)'
               }
             }}
-            onClick={() => history.push('/docs')}
           >
             Discover
           </Button>
@@ -88,6 +87,6 @@ export const LandingPage = () => {
           Restyler — 2020
         </Box>
       </Container>
-    </>
+    </Fragment>
   );
 };
