@@ -65,15 +65,24 @@ export const useTransition = <TElement extends HTMLElement>(
   }, [isMounted]);
 
   useLayoutEffect(() => {
-    reflow();
-    if (stage === 'enter') {
-      setStage(undefined);
-    } else if (stage === 'leave') {
-      requestAnimationDelay(() => {
-        if (!isActiveRef.current) {
-          handlersRef.current.transitionend();
-        }
-      });
+    const react = () => {
+      reflow();
+      if (stage === 'enter') {
+        setStage(undefined);
+      } else if (stage === 'leave') {
+        requestAnimationDelay(() => {
+          if (!isActiveRef.current) {
+            handlersRef.current.transitionend();
+          }
+        });
+      }
+    };
+    if (ref.current) {
+      react();
+    } else {
+      const retry = (i: number) =>
+        requestAnimationFrame(() => (ref.current ? react() : retry(i - 1)));
+      retry(100);
     }
   }, [stage]);
 
