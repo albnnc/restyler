@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { useThemed } from '../../hooks';
 import { FormFieldValidator, FormWidgetProps, StyleProps } from '../../models';
-import { get, hash } from '../../utils';
+import { get } from '../../utils';
 import { Input, InputProps } from '../Input';
 import { FormContext } from './FormContext';
 
@@ -71,7 +71,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const ThemedFormFieldHelp = useThemed('div', { path: 'form.field.help' });
 
     const {
-      manager: { values, setValues, errors, validators, setValidators }
+      manager: { values, setValues, errors, setValidators }
     } = useContext(FormContext);
 
     useEffect(() => {
@@ -85,7 +85,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           return newFieldErrors;
         }
       }));
-    }, [required, hash(validate)]);
+    }, [required, validate]);
 
     const fieldValue = get(values, name) as string | number;
     const fieldErrors = get(errors, name) as string[] | undefined;
