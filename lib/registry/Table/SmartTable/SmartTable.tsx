@@ -13,7 +13,6 @@ import { Column } from './Column';
 import { getSorted, useSortSelections } from './utils';
 
 export interface SmartTableProps<TDatum> extends TableProps {
-  caption?: ReactNode;
   columns: Column<TDatum>[];
   data: TDatum[];
   expansion?: (datum: TDatum) => ReactNode;
@@ -28,22 +27,13 @@ type SmartTableFactory = (
 ) => ReactElement | null;
 
 export const createSmartTable: SmartTableFactory = ({ registry }) => {
-  const {
-    Table,
-    TableCell,
-    TableRow,
-    TableBody,
-    TableHead,
-    Button,
-    TableCaption
-  } = registry;
+  const { Table, TableCell, TableRow, TableBody, TableHead, Button } = registry;
   return forwardRef(
     <TDatum extends object>(
       {
         columns,
         data,
         primaryKey,
-        caption,
         expansion,
         onRowClick,
         ...rest
@@ -63,7 +53,6 @@ export const createSmartTable: SmartTableFactory = ({ registry }) => {
 
       return (
         <Table ref={ref} {...rest}>
-          {caption && <TableCaption>{caption}</TableCaption>}
           <TableHead>
             <TableRow>
               {columns.map(({ key, header, sort }, i) => {
@@ -89,43 +78,53 @@ export const createSmartTable: SmartTableFactory = ({ registry }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sorted.map((datum, rowIndex) => {
-              const primaryValue = primaryKey && get(datum, primaryKey);
-              return (
-                <Fragment key={`table-row-${primaryValue || rowIndex}`}>
-                  <TableRow
-                    onClick={() => {
-                      onRowClick?.(datum);
-                      if (expansion) {
-                        setExpansionValue(
-                          expansionValue === primaryValue
-                            ? undefined
-                            : primaryValue
-                        );
-                      }
-                    }}
-                  >
-                    {columns.map(({ key, render }, columnIndex) => (
-                      <TableCell
-                        key={`table-cell-${rowIndex}-${columnIndex}`}
-                        kind={expansion || onRowClick ? 'hoverable' : undefined}
-                      >
-                        {render
-                          ? render(get(datum, key), datum)
-                          : get(datum, key)}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  {expansion && expansionValue === primaryValue && (
-                    <TableRow>
-                      <TableCell colSpan={columns.length}>
-                        {expansion(datum) || null}
-                      </TableCell>
+            {sorted.length > 0 ? (
+              sorted.map((datum, rowIndex) => {
+                const primaryValue = primaryKey && get(datum, primaryKey);
+                return (
+                  <Fragment key={`table-row-${primaryValue || rowIndex}`}>
+                    <TableRow
+                      onClick={() => {
+                        onRowClick?.(datum);
+                        if (expansion) {
+                          setExpansionValue(
+                            expansionValue === primaryValue
+                              ? undefined
+                              : primaryValue
+                          );
+                        }
+                      }}
+                    >
+                      {columns.map(({ key, render }, columnIndex) => (
+                        <TableCell
+                          key={`table-cell-${rowIndex}-${columnIndex}`}
+                          kind={
+                            expansion || onRowClick ? 'hoverable' : undefined
+                          }
+                        >
+                          {render
+                            ? render(get(datum, key), datum)
+                            : get(datum, key)}
+                        </TableCell>
+                      ))}
                     </TableRow>
-                  )}
-                </Fragment>
-              );
-            })}
+                    {expansion && expansionValue === primaryValue && (
+                      <TableRow>
+                        <TableCell colSpan={columns.length}>
+                          {expansion(datum) || null}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Fragment>
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell kind="empty" colSpan={columns.length}>
+                  No data
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       );

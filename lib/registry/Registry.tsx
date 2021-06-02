@@ -46,7 +46,6 @@ import {
   createSmartTable,
   createTable,
   createTableBody,
-  createTableCaption,
   createTableCell,
   createTableHead,
   createTableRow
@@ -79,7 +78,6 @@ const factories = {
 
   Table: createTable,
   TableBody: createTableBody,
-  TableCaption: createTableCaption,
   TableCell: createTableCell,
   TableHead: createTableHead,
   TableRow: createTableRow,

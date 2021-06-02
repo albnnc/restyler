@@ -6,7 +6,7 @@ export const input: ComponentTheme = {
   extend: ({ createStyle, props }) => {
     const createBorderStyle = (color, focusColor) => ({
       width: '100%',
-      transition: 'all 0.2s',
+      transition: ['border 0.2s', 'box-shadow 0.2s'].join(', '),
       ...createStyle({ border: color }),
       '&:focus': {
         ...createStyle({ border: focusColor }),

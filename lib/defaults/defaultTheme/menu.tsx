@@ -4,7 +4,7 @@ const createTitleStyle = ({ createStyle }) => ({
   userSelect: 'none',
   cursor: 'pointer',
   textTransform: 'uppercase',
-  letterSpacing: '1px',
+  letterSpacing: '0.04rem',
   '&:hover': createStyle({ color: 'primary' })
 });
 

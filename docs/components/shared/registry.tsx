@@ -33,7 +33,6 @@ export const {
   TabGroup,
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableRow,

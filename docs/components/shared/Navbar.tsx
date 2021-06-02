@@ -32,7 +32,7 @@ export const Navbar = () => {
       }}
     >
       <Box direction="row">
-        <StyledAnchor to="/">UNNAMED</StyledAnchor>
+        <StyledAnchor to="/">RESTYLER</StyledAnchor>
         <StyledAnchor to="/docs" margin={{ left: 'medium' }}>
           DOCS
         </StyledAnchor>

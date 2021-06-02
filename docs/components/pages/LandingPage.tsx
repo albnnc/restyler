@@ -21,7 +21,7 @@ export const LandingPage = () => {
       >
         <Box direction="column" color="white" justify="center" align="center">
           <Heading kind="1" color="inherit" margin="none">
-            Unnamed
+            Restyler
           </Heading>
           <Box
             margin={{ top: 'small', bottom: 'large' }}
@@ -33,10 +33,14 @@ export const LandingPage = () => {
           <Button
             color="white"
             border="rgba(255, 255, 255, 0.2)"
-            padding={{ vertical: 'smaller', horizontal: 'medium' }}
+            padding={{ vertical: 'small', horizontal: 'medium' }}
             radius="none"
             margin="auto"
+            font="small"
+            weight="light"
             extend={{
+              textTransform: 'uppercase',
+              letterSpacing: '0.04rem',
               transition: 'background 0.2s',
               '&:hover': {
                 background: 'rgba(255, 255, 255, 0.05)'
@@ -81,7 +85,7 @@ export const LandingPage = () => {
         </Box>
         <Box margin={{ vertical: 'large' }} border={{ bottom: 'border' }} />
         <Box direction="row" justify="center" font="small">
-          Unnamed — 2020
+          Restyler — 2020
         </Box>
       </Container>
     </>

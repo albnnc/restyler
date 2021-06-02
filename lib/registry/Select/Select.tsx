@@ -82,7 +82,7 @@ export const createSelect: ComponentFactory<HTMLDivElement, SelectProps> = ({
           readOnly
           type="text"
           value={displayValue}
-          onFocus={openSelect}
+          onClick={openSelect}
           disabled={props.disabled}
           invalid={props.invalid}
           required={props.required}

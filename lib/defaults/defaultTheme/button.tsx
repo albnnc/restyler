@@ -6,7 +6,10 @@ const createBasicKind = color => ({
   background: 'transparent',
   color: 'strongText',
   border: { width: '1px', color: 'border' },
+  font: 'small',
   extend: ({ createStyle, props }) => ({
+    textTransform: 'uppercase',
+    letterSpacing: '0.04rem',
     transition: 'all 0.15s',
     ...(props.disabled
       ? createStyle({ color: 'border', border: { style: 'dashed' } })

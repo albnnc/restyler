@@ -1,5 +1,5 @@
-import { Box, SmartTable } from 'docs/components/shared';
-import React from 'react';
+import { Box, Button, SmartTable } from 'docs/components/shared';
+import React, { useState } from 'react';
 import { data } from './data';
 
 const columns = [
@@ -20,19 +20,27 @@ const columns = [
   }
 ];
 
-export const SmartDemo = () => (
-  <Box
-    radius="small"
-    elevation="smaller"
-    background="white"
-    extend={{ overflow: 'hidden', minWidth: '350px' }}
-  >
-    <SmartTable
-      caption="A table of persons"
-      data={data}
-      columns={columns}
-      primaryKey="id"
-      expansion={({ person }) => <Box>Hey, my name is {person}</Box>}
-    />
-  </Box>
-);
+export const SmartDemo = () => {
+  const [hasData, setHasData] = useState(true);
+  return (
+    <>
+      <Button kind="primary" onClick={() => setHasData(!hasData)}>
+        Toggle data
+      </Button>
+      <Box
+        radius="small"
+        elevation="small"
+        background="white"
+        margin={{ top: 'small' }}
+        extend={{ overflow: 'hidden', minWidth: '350px' }}
+      >
+        <SmartTable
+          data={hasData ? data : []}
+          columns={columns}
+          primaryKey="id"
+          expansion={({ person }) => <Box>Hey, my name is {person}</Box>}
+        />
+      </Box>
+    </>
+  );
+};
