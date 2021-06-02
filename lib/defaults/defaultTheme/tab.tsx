@@ -7,7 +7,7 @@ export const tab: ComponentTheme = {
 
   option: {
     padding: {
-      vertical: 'smaller',
+      vertical: 'small',
       horizontal: 'medium'
     },
     border: {
@@ -18,10 +18,8 @@ export const tab: ComponentTheme = {
     extend: ({ createStyle, props }) => ({
       cursor: 'pointer',
       transition: 'all 0.2s',
-
-      '&:not(:first-of-type)': createStyle({
-        margin: { left: 'medium' }
-      }),
+      textTransform: 'uppercase',
+      letterSpacing: '0.04rem',
 
       '&:hover': createStyle({
         color: 'primary'
