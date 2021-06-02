@@ -51,15 +51,11 @@ export const select: Theme = {
     extend: ({ props, createStyle }: ExtendOptions) =>
       props.isMultiple
         ? {
-            ...createStyle({
-              background: 'grey',
-              padding: { horizontal: 'smaller' },
-              radius: 'medium',
-              color: 'strongLightText'
-            }),
-            '& + &': {
-              marginLeft: '0.5em'
-            }
+            '& + &': createStyle({
+              padding: { left: 'small' },
+              margin: { left: 'small' },
+              border: { left: 'strongBorder' }
+            })
           }
         : {}
   },
