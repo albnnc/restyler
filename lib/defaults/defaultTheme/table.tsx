@@ -18,8 +18,11 @@ export const table: Theme = {
 
   body: {
     extend: {
-      '&:not(:first-child) td': {
+      '& td': {
         borderTop: '1px solid rgba(0, 0, 0, 0.1)'
+      },
+      '&:first-child tr:first-child td': {
+        borderTop: 'none'
       }
     }
   },
