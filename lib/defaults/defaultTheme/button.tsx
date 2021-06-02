@@ -4,7 +4,7 @@ const createBasicKind = color => ({
   padding: { vertical: 'x-small', horizontal: 'medium' },
   radius: 'small',
   background: 'transparent',
-  color: 'text-dark',
+  color: 'text-strong',
   border: { width: '1px', color: 'border' },
   extend: ({ createStyle }) => ({
     transition: 'all 0.1s',

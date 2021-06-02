@@ -4,7 +4,7 @@ export const heading: ComponentTheme = {
   margin: { top: 'small', bottom: 'x-small' },
   font: 'large',
   weight: 'light',
-  color: 'text-dark',
+  color: 'text-strong',
   kinds: {
     1: {
       margin: { top: 'large', bottom: 'small' },

@@ -1,6 +1,6 @@
 {
   "name": "restyler",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "license": "MIT",
   "main": "build/restyler.js",
   "types": "build/index.d.ts",
@@ -12,6 +12,7 @@
     "build:lib": "env-cmd -e production gulp build:lib",
     "lint": "tslint './{lib,docs}/**/*.{ts,tsx}' --fix && prettier './{lib,docs}/**/*.{ts,tsx}' --write",
     "pages": "env-cmd -e production gulp pages",
+    "release": "env-cmd -e production gulp release",
     "start:docs": "env-cmd -e development gulp start:docs",
     "start:lib": "env-cmd -e production gulp start:lib",
     "test": "jest"
@@ -42,7 +43,7 @@
     "css-loader": "^1.0.1",
     "emotion": "^10.0.27",
     "env-cmd": "^10.0.1",
-    "execa": "^4.0.0",
+    "execa": "^4.0.3",
     "file-loader": "^2.0.0",
     "fork-ts-checker-webpack-plugin": "^0.5.2",
     "gh-pages": "^3.1.0",
@@ -70,7 +71,8 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2",
-    "webpack-stream": "^5.2.1"
+    "webpack-stream": "^5.2.1",
+    "yargs": "^15.4.1"
   },
   "peerDependencies": {
     "react": "^16.13.1",
