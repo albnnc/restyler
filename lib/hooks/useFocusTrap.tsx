@@ -36,7 +36,7 @@ export const useFocusTrap = <T extends HTMLElement>(ref: RefObject<T>) => {
   });
 
   useEffect(() => {
-    if (!isOnTop) {
+    if (!isOnTop || typeof window === 'undefined') {
       return;
     }
     const listener = e => {

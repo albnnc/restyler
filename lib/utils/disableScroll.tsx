@@ -1,21 +1,13 @@
 import { RefObject } from 'react';
 
-let supportsPassive = false;
-try {
-  addEventListener(
-    'test',
-    null as any,
-    Object.defineProperty({}, 'passive', {
-      get() {
-        supportsPassive = true;
-      }
-    })
-  );
-} catch (e) {}
-
-const wheelOpt = supportsPassive ? { passive: false } : false;
-const wheelEvent =
-  'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+const getWheelEvent = () => {
+  let elem = document.getElementById('__test');
+  if (!elem) {
+    elem = document.createElement('div');
+    elem.setAttribute('id', '__test');
+  }
+  return 'onwheel' in elem ? 'wheel' : 'mousewheel';
+};
 
 let lastScroll: undefined | { x: number; y: number };
 const forceLastScroll = () => {
@@ -49,9 +41,11 @@ export const disableScroll = (options?: {
     }
   };
 
+  const wheelEvent = getWheelEvent();
+
   addEventListener('DOMMouseScroll', preventDefault);
-  addEventListener(wheelEvent, preventDefault, wheelOpt);
-  addEventListener('touchmove', preventDefault, wheelOpt);
+  addEventListener(wheelEvent, preventDefault, { passive: false });
+  addEventListener('touchmove', preventDefault, { passive: false });
   addEventListener('keydown', preventKeyScroll);
 
   return () => {

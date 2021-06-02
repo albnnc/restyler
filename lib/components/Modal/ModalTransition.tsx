@@ -48,8 +48,11 @@ export const ModalTransition = forwardRef<HTMLDivElement, ModalTransitionProps>(
     const isOnTop = useStack(modalStackId);
 
     useEffect(() => {
+      if (!isOnTop || typeof window === 'undefined') {
+        return;
+      }
       const listener = e => e.key === 'Escape' && handleClose?.();
-      isOnTop && window.addEventListener('keydown', listener);
+      window.addEventListener('keydown', listener);
       return () => {
         window.removeEventListener('keydown', listener);
       };
