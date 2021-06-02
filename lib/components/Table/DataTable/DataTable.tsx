@@ -1,30 +1,21 @@
-import React, {
-  forwardRef,
-  useMemo,
-  useState,
-  Fragment,
-  ReactNode
-} from 'react';
-import { get } from '../../../utils';
+import { SystemContext } from 'lib/components/SystemContext';
+import React, { forwardRef, useContext, useMemo } from 'react';
+import { hash } from '../../../utils';
 import { Button } from '../../Button';
-import { Table, TableProps } from '../Table';
+import { Table } from '../Table';
 import { TableBody } from '../TableBody';
 import { TableCell } from '../TableCell';
 import { TableHead } from '../TableHead';
 import { TableRow } from '../TableRow';
-import { Column } from './Column';
+import { DataRow } from './DataRow';
+import { DataTableProps } from './DataTableProps';
 import { getSorted, getSortObject, useSortSelections } from './utils';
 
-export interface DataTableProps<TDatum> extends TableProps {
-  columns: Column<TDatum>[];
-  data: TDatum[];
-  expansion?: (datum: TDatum) => ReactNode;
-  onRowClick?: (datum: TDatum) => void;
-}
-
 export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
-  ({ columns, data, expansion, onRowClick, ...rest }, ref) => {
-    const [expansionValue, setExpansionValue] = useState<any>();
+  (props, ref) => {
+    const { columns, data, expansion, onRowClick, ...rest } = props;
+    const { locale } = useContext(SystemContext);
+
     const { sortSelections, toggleSortSelection } = useSortSelections(columns);
     const sorted = useMemo(
       () =>
@@ -34,6 +25,7 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
         ),
       [data, sortSelections]
     );
+
     const primaryKey = useMemo(() => {
       const primaryColumn = columns.find(v => v.isPrimary);
       const primaryKey = primaryColumn?.key ?? columns[0]?.key;
@@ -77,46 +69,21 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
         <TableBody>
           {sorted.length > 0 ? (
             sorted.map((datum, rowIndex) => {
-              const primaryValue = primaryKey && get(datum, primaryKey);
+              const primaryValue = datum?.[primaryKey];
+              const hashValue = hash(primaryValue);
               return (
-                <Fragment key={`table-row-${rowIndex}`}>
-                  <TableRow
-                    onClick={() => {
-                      onRowClick?.(datum);
-                      if (expansion && primaryKey in datum) {
-                        setExpansionValue(
-                          expansionValue === primaryValue
-                            ? undefined
-                            : primaryValue
-                        );
-                      }
-                    }}
-                  >
-                    {columns.map(({ key, render }, columnIndex) => (
-                      <TableCell
-                        key={`table-cell-${rowIndex}-${columnIndex}`}
-                        kind={expansion || onRowClick ? 'hoverable' : undefined}
-                      >
-                        {render ? render(datum) : get(datum, key)}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  {expansion &&
-                    primaryKey in datum &&
-                    expansionValue === primaryValue && (
-                      <TableRow>
-                        <TableCell colSpan={columns.length}>
-                          {expansion(datum) || null}
-                        </TableCell>
-                      </TableRow>
-                    )}
-                </Fragment>
+                <DataRow
+                  key={`table-row-${rowIndex}-${hashValue}`}
+                  datum={datum}
+                  rowIndex={rowIndex}
+                  {...props}
+                />
               );
             })
           ) : (
             <TableRow>
               <TableCell kind="empty" colSpan={columns.length}>
-                No data
+                {locale.emptyText}
               </TableCell>
             </TableRow>
           )}
