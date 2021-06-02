@@ -2,7 +2,7 @@ import React from 'react';
 import { Anchor } from './Anchor';
 
 export default {
-  title: 'common/Anchor'
+  title: 'navigation/Anchor'
 };
 
 export const Basics = () => {
