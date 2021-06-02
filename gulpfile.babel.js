@@ -5,6 +5,7 @@ import { argv } from 'yargs';
 import ts from 'gulp-typescript';
 import { dest, series, src, task, watch } from 'gulp';
 import * as rollup from 'rollup';
+import semver from 'semver';
 import rollupConfig from './rollup.config.js';
 
 const execaOptions = { stdout: 'inherit' };
@@ -77,25 +78,27 @@ task('pages:publish', async () => {
 task('pages', series(task('build:docs'), task('pages:publish')));
 
 task('release:git', async () => {
-  const version = argv['release-version'];
-  if (!version) {
+  const { stdout: branch } = await execa.command('git branch --show-current');
+  if (branch !== 'master') {
+    throw new Error('You have to be on master branch');
+  }
+  const { type } = argv;
+  const { version } = await import('./package.json');
+  const target = semver.inc(version, type);
+  if (!target) {
     throw new Error(
-      'Specify version: `npm run release -- --release-version <version>`'
+      'Given release type is incorrect, ' +
+        'specify it via `npm run release -- --type <type>`'
     );
   }
-  await execa.command(`git flow release start ${version}`, execaOptions);
   await execa.command(
-    `npm version --no-git-tag-version ${version}`,
+    `npm version --no-git-tag-version ${target}`,
     execaOptions
   );
-  await execa.command(`git commit -am ${version}`, execaOptions);
-  await execa.command(
-    `git flow release finish ${version} -m ${version}`,
-    execaOptions
-  );
-  await execa.command(`git push origin develop`, execaOptions);
+  await execa.command(`git commit -am ${target}`, execaOptions);
+  await execa.command(`git tag ${target}`, execaOptions);
   await execa.command(`git push origin master`, execaOptions);
-  await execa.command(`git push origin ${version}`, execaOptions);
+  await execa.command(`git push origin ${target}`, execaOptions);
 });
 
 task('release:npm', async () => {

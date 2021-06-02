@@ -67,6 +67,7 @@
     "react-icons": "^4.2.0",
     "rollup": "^2.50.5",
     "rollup-plugin-terser": "^7.0.2",
+    "semver": "^5.7.1",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "^4.3.2",
     "yargs": "^17.0.1"
