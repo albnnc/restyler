@@ -4,37 +4,37 @@ import { useLoader } from './useLoader';
 import { useModal } from './useModal';
 import { useNotification } from './useNotification';
 
-export const useOperation = <TOperationOptions, TOperationResult>(
-  fn: (options?: TOperationOptions) => Promise<TOperationResult>,
+export interface OperationOptions<TOperationInput, TOperationOutput> {
+  deps: any[];
+  getNotification?: <T extends boolean>(
+    isOk: T,
+    output: T extends true ? TOperationOutput : Error
+  ) =>
+    | ReactChild
+    | boolean
+    | null
+    | undefined
+    | Omit<NotificationOptions, 'system'>;
+  getQuestion?: (input?: TOperationInput) => Omit<QuestionOptions, 'system'>;
+  loaderIds?: any[];
+}
+
+export const useOperation = <TOperationInput, TOperationOutput>(
+  fn: (input?: TOperationInput) => Promise<TOperationOutput>,
   {
     deps,
     getNotification,
     getQuestion,
     loaderIds
-  }: {
-    deps: any[];
-    getNotification?: <T extends boolean>(
-      isOk: T,
-      result: T extends true ? TOperationResult : Error
-    ) =>
-      | ReactChild
-      | boolean
-      | null
-      | undefined
-      | Omit<NotificationOptions, 'system'>;
-    getQuestion?: (
-      options?: TOperationOptions
-    ) => Omit<QuestionOptions, 'system'>;
-    loaderIds?: any[];
-  }
+  }: OperationOptions<TOperationInput, TOperationOutput>
 ) => {
   const [isLoading, load] = useLoader(loaderIds);
   const { openQuestion } = useModal();
   const { openNotification } = useNotification();
-  const operation = useCallback(async (options?: TOperationOptions): Promise<
+  const operation = useCallback(async (input?: TOperationInput): Promise<
     void
   > => {
-    const questionOptions = getQuestion?.(options);
+    const questionOptions = getQuestion?.(input);
     const shouldContinue = questionOptions
       ? await openQuestion(questionOptions)
       : true;
@@ -42,15 +42,15 @@ export const useOperation = <TOperationOptions, TOperationResult>(
       return undefined;
     }
     let isOk = true;
-    let result: TOperationResult | undefined;
+    let output: TOperationOutput | undefined;
     let error: Error | undefined;
     try {
-      result = await load(fn(options));
+      output = await load(fn(input));
     } catch (e) {
       error = e;
       isOk = false;
     }
-    const notification = getNotification?.(isOk, (error ?? result)!);
+    const notification = getNotification?.(isOk, (error ?? output)!);
     if (notification) {
       const notificationOptions: Omit<NotificationOptions, 'system'> =
         isValidElement(notification) || typeof notification !== 'object'
