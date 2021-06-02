@@ -42,9 +42,12 @@ export const createInputLikeTheme = ({
         ? createConditionalStyle({
             selector: '&:disabled',
             isForced: props.disabled,
-            style: createStyle({
-              border: { width: '1px', color, style: 'dashed' }
-            })
+            style: {
+              ...createStyle({
+                border: { width: '1px', color, style: 'dashed' }
+              }),
+              pointerEvents: 'none'
+            }
           })
         : {}),
       ...(canBeHovered
