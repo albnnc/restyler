@@ -1,6 +1,6 @@
 import {
   useCallback,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -22,8 +22,14 @@ export const useTransition = <TElement extends HTMLElement>(
     transitionstart: () => {},
     transitionend: () => {}
   });
+  const clearHandlers = useCallback(() => {
+    handlersRef.current = {
+      transitionstart: () => {},
+      transitionend: () => {}
+    };
+  }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isMounted === isReallyMounted && stage !== 'leave') {
       return;
     }
@@ -35,6 +41,7 @@ export const useTransition = <TElement extends HTMLElement>(
         setIsReallyMounted(false);
         setStage(undefined);
         handleEventListeners('removeEventListener');
+        clearHandlers();
       }
     };
     const handleEventListeners = (
@@ -46,8 +53,10 @@ export const useTransition = <TElement extends HTMLElement>(
     };
 
     if (isMounted) {
-      setStage('enter');
+      setStage(stage => (stage === undefined ? 'enter' : undefined));
       setIsReallyMounted(true);
+      handleEventListeners('removeEventListener');
+      clearHandlers();
     } else {
       setStage('leave');
       handleEventListeners('addEventListener');
@@ -55,7 +64,7 @@ export const useTransition = <TElement extends HTMLElement>(
     return () => handleEventListeners('removeEventListener');
   }, [isMounted]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!ref.current) {
       return;
     }
