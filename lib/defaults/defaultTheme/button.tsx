@@ -8,6 +8,7 @@ const createBasicKind = color => ({
   border: { width: '1px', color: 'border' },
   font: 'small',
   extend: ({ createStyle, props }) => ({
+    cursor: 'pointer',
     textTransform: 'uppercase',
     letterSpacing: '0.04rem',
     transition: 'all 0.15s',

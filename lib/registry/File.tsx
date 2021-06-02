@@ -9,11 +9,15 @@ import React, {
 } from 'react';
 import { ComponentFactory, FormWidgetProps, StyleProps } from '../models';
 
+export interface FileLabelRenderer {
+  (fileNames: string[]): ReactNode;
+}
+
 export interface FileProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps<FileList | undefined>,
     StyleProps {
-  children?: (fileNameCollection: string[]) => ReactNode | ReactNode;
+  children?: ReactNode | FileLabelRenderer;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
 }
 
@@ -21,13 +25,8 @@ export const createFile: ComponentFactory<HTMLDivElement, FileProps> = ({
   themed
 }) => {
   const ThemedFile = themed('div', { path: 'file' });
-  const ThemedFileHiddenInput = themed('input', {
-    path: 'file.hiddenInput',
-    style: { display: 'none' }
-  });
-  const ThemedFileInputLabel = themed('label', {
-    path: 'file.label'
-  });
+  const ThemedFileInput = themed('input', { path: 'file.input' });
+  const ThemedFileInputLabel = themed('label', { path: 'file.label' });
   return forwardRef(
     ({ onChange, value, inputProps, children, ...rest }, ref) => {
       const inputRef = useRef<HTMLInputElement>(null);
@@ -35,11 +34,11 @@ export const createFile: ComponentFactory<HTMLDivElement, FileProps> = ({
       useEffect(() => {
         setInnerValue(value);
       }, [value]);
-      const inputChangeHandler = (
+      const handleInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
       ) => {
         const { files } = event.target;
-        if (!files || files?.length === 0) {
+        if (!files || files.length === 0) {
           setInnerValue(undefined);
           onChange?.(undefined);
         } else {
@@ -49,10 +48,10 @@ export const createFile: ComponentFactory<HTMLDivElement, FileProps> = ({
       };
       return (
         <ThemedFile ref={ref} {...rest}>
-          <ThemedFileHiddenInput
+          <ThemedFileInput
             ref={inputRef}
             type="file"
-            onChange={inputChangeHandler}
+            onChange={handleInputChange}
             {...inputProps}
           />
           <ThemedFileInputLabel
@@ -60,7 +59,7 @@ export const createFile: ComponentFactory<HTMLDivElement, FileProps> = ({
             direction="row"
           >
             {children && typeof children === 'function'
-              ? children(
+              ? (children as FileLabelRenderer)(
                   Array(innerValue?.length ?? 0)
                     .fill(null)
                     .reduce(
