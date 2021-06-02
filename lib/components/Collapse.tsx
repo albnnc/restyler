@@ -2,12 +2,16 @@ import React, {
   forwardRef,
   useCallback,
   useContext,
-  useLayoutEffect,
   useState,
   HTMLAttributes
 } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
-import { useSharedRef, useThemed, useTransition } from '../hooks';
+import {
+  useIsomorphicLayoutEffect,
+  useSharedRef,
+  useThemed,
+  useTransition
+} from '../hooks';
 import { StyleProps } from '../models';
 import { SystemContext } from './SystemContext';
 
@@ -38,7 +42,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
       undefined
     );
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (!isOpen || contentHeight !== undefined) {
         return;
       }

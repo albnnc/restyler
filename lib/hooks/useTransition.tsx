@@ -1,12 +1,6 @@
-import {
-  useCallback,
-  useLayoutEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  RefObject
-} from 'react';
+import { useCallback, useMemo, useReducer, useRef, RefObject } from 'react';
 import { requestAnimationDelay } from '../utils';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 export type TransitionStage = undefined | 'enter' | 'leave';
 
@@ -41,7 +35,7 @@ export const useTransition = <TElement extends HTMLElement>(
     []
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (isMounted === transition.isMounted && transition.stage !== 'leave') {
       return;
     }
@@ -74,7 +68,7 @@ export const useTransition = <TElement extends HTMLElement>(
     };
   }, [isMounted]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     reflow();
     if (transition.stage === 'enter') {
       transition.stage = undefined;
