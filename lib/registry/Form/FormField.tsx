@@ -78,7 +78,6 @@ export const createFormField: ComponentFactory<
       } = useContext(FormContext);
 
       useEffect(() => {
-        console.log('setting validator for', name);
         setValidators(v => ({
           ...v,
           [name]: value => {
