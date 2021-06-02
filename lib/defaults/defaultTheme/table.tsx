@@ -12,17 +12,17 @@ export const table: Theme = {
     extend: {
       userSelect: 'none',
       textTransform: 'uppercase',
-      letterSpacing: '0.04rem'
+      letterSpacing: '0.04rem',
+      '& th, & td': {
+        borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
+      }
     }
   },
 
   body: {
     extend: {
-      '& td': {
+      '& tr:not(:first-of-type) td': {
         borderTop: '1px solid rgba(0, 0, 0, 0.1)'
-      },
-      '&:first-child tr:first-child td': {
-        borderTop: 'none'
       }
     }
   },
