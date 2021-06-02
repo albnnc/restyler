@@ -16,7 +16,7 @@ export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
     StyleProps {
-  children: ReactElement<SelectOptionProps>[];
+  children: ReactElement<SelectOptionProps> | ReactElement<SelectOptionProps>[];
 }
 
 export const createSelect: ComponentFactory<HTMLDivElement, SelectProps> = ({

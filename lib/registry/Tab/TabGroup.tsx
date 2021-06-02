@@ -15,7 +15,7 @@ export interface TabGroupProps
       'value' | 'children' | 'onChange'
     >,
     StyleProps {
-  children: ReactElement<TabOptionProps>[];
+  children: ReactElement<TabOptionProps> | ReactElement<TabOptionProps>[];
   manager?: TabManager;
   onChange?: (manager: TabManager) => void;
 }

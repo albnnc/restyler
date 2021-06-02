@@ -14,7 +14,7 @@ export interface RadioGroupProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps<string>,
     StyleProps {
-  children: ReactElement<RadioItemProps>[];
+  children: ReactElement<RadioItemProps> | ReactElement<RadioItemProps>[];
 }
 
 export const createRadioGroup: ComponentFactory<
