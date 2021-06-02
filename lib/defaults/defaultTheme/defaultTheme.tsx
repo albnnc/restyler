@@ -10,7 +10,6 @@ import { container } from './container';
 import { defaults } from './defaults';
 import { file } from './file';
 import { form } from './form';
-import { global } from './global';
 import { heading } from './heading';
 import { input } from './input';
 import { layer } from './layer';
@@ -41,7 +40,6 @@ export const defaultTheme: Theme = {
   container,
   file,
   form,
-  global,
   heading,
   input,
   layer,

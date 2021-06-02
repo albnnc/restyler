@@ -6,7 +6,7 @@ export const defaults: Theme = {
   font: 'inherit',
   color: 'inherit',
   extend: {
-    lineHeight: 1.5,
+    lineHeight: 'inherit',
     fontFamily: 'Roboto, sans-serif',
     boxSizing: 'border-box'
   }
