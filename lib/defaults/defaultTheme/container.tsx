@@ -1,7 +1,6 @@
 import { ComponentTheme } from '../../models';
 
 export const container: ComponentTheme = {
-  margin: { horizontal: 'auto' },
   padding: { horizontal: 'large' },
   direction: 'row',
   justify: 'center',
