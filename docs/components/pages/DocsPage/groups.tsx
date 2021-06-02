@@ -25,6 +25,7 @@ import {
   TablePage,
   TabPage
 } from './componentPages';
+import { ThemingPage } from './generalPages';
 
 const TodoComponent = () => <>TODO</>;
 
@@ -50,7 +51,7 @@ export const groups = [
       {
         title: 'Theming',
         path: '/docs/general/theming',
-        component: TodoComponent
+        component: ThemingPage
       }
     ]
   },

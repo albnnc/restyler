@@ -32,7 +32,7 @@ export const disableScroll = (options?: {
   addEventListener('scroll', forceLastScroll);
 
   const preventDefault = e => {
-    const filtered = e.path.filter(v => v instanceof HTMLElement);
+    const filtered = e.composedPath().filter(v => v instanceof HTMLElement);
     if (
       filtered.some(pathNode =>
         options?.allowedRefs?.some(v => v && v.current?.isSameNode(pathNode))
