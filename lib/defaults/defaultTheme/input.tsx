@@ -20,6 +20,6 @@ export const input: ComponentTheme = {
     });
     return props.invalid
       ? createBorderStyle('danger', 'danger')
-      : createBorderStyle('rgba(0, 0, 0, 0.2)', 'primary');
+      : createBorderStyle('border', 'primary');
   }
 };

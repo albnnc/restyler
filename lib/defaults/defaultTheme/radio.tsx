@@ -42,7 +42,7 @@ export const radio: ComponentTheme = {
         });
         return props.isActive
           ? createStateStyle('primary', 'primary', '0.5rem')
-          : createStateStyle('text-weak', 'white', 0);
+          : createStateStyle('border-strong', 'white', 0);
       }
     },
 

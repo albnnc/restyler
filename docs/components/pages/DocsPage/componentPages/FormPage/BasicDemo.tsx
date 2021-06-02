@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   Form,
   FormField,
   Input,
@@ -23,10 +24,13 @@ export const BasicDemo = () => {
         <FormField required name="authType" label="Auth type">
           <Select options={[{ value: 'OAuth' }, { value: 'LDAP' }]} />
         </FormField>
-        <FormField name="remember" label="Remember me">
+        <FormField name="remember">
+          <Checkbox>Remember me</Checkbox>
+        </FormField>
+        <FormField name="other" label="Other">
           <RadioGroup>
-            <RadioOption value={true}>Yes</RadioOption>
-            <RadioOption value={false}>No</RadioOption>
+            <RadioOption value={true}>A</RadioOption>
+            <RadioOption value={false}>B</RadioOption>
           </RadioGroup>
         </FormField>
         <Button type="submit" kind="primary" margin={{ top: 'medium' }}>

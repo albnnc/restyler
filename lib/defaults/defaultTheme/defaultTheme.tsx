@@ -4,6 +4,7 @@ import { box } from './box';
 import { button } from './button';
 import { card } from './card';
 import { carousel } from './carousel';
+import { checkbox } from './checkbox';
 import { collapse } from './collapse';
 import { container } from './container';
 import { defaults } from './defaults';
@@ -32,6 +33,7 @@ export const defaultTheme: Theme = {
   card,
   carousel,
   collapse,
+  checkbox,
   container,
   form,
   global,

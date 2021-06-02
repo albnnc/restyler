@@ -17,6 +17,9 @@ export const BasicDemo = () => {
       <Button kind="danger" margin="small">
         Danger
       </Button>
+      <Button kind="primary" margin="small" disabled>
+        Disabled
+      </Button>
     </>
   );
 };

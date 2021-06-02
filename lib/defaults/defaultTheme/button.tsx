@@ -6,22 +6,12 @@ const createBasicKind = color => ({
   background: 'transparent',
   color: 'text-strong',
   border: { width: '1px', color: 'border' },
-  extend: ({ createStyle }) => ({
+  extend: ({ createStyle, props }) => ({
     transition: 'all 0.1s',
-    '&:hover': createStyle({ color, border: color })
+    ...(props.disabled
+      ? createStyle({ color: 'border', border: { style: 'dashed' } })
+      : { '&:hover': createStyle({ color, border: color }) })
   })
-});
-
-const createContainedKind = color => ({
-  padding: { vertical: 'x-small', horizontal: 'medium' },
-  radius: 'small',
-  background: color,
-  color: 'white',
-  border: { width: '1px', color: 'transparent' },
-  extend: {
-    transition: 'all 0.1s',
-    '&:hover': { opacity: 0.85 }
-  }
 });
 
 const createArrowKind = direction => ({
@@ -72,10 +62,6 @@ export const button: ComponentTheme = {
     success: createBasicKind('success'),
     warning: createBasicKind('warning'),
     danger: createBasicKind('danger'),
-    'contained-primary': createContainedKind('primary'),
-    'contained-success': createContainedKind('success'),
-    'contained-warning': createContainedKind('warning'),
-    'contained-danger': createContainedKind('danger'),
     'arrow-up': createArrowKind('up'),
     'arrow-down': createArrowKind('down'),
     'arrow-left': createArrowKind('left'),

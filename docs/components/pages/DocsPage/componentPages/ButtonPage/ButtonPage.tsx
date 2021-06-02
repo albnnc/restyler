@@ -4,8 +4,6 @@ import { BasicDemo } from './BasicDemo';
 import basicDemoCode from './BasicDemo.tsx?raw';
 import { Blueprint } from './Blueprint';
 import blueprintCode from './Blueprint.tsx?raw';
-import { ContainedDemo } from './ContainedDemo';
-import containedDemoCode from './ContainedDemo.tsx?raw';
 import { OthersDemo } from './OthersDemo';
 import othersDemoCode from './OthersDemo.tsx?raw';
 
@@ -29,10 +27,6 @@ export const ButtonPage = () => {
       </Box>
       <Demo margin={{ vertical: 'medium' }} code={basicDemoCode}>
         <BasicDemo />
-      </Demo>
-      <Heading kind="2">Contained variants</Heading>
-      <Demo margin={{ vertical: 'medium' }} code={containedDemoCode}>
-        <ContainedDemo />
       </Demo>
       <Heading kind="2">Others</Heading>
       <Demo margin={{ vertical: 'medium' }} code={othersDemoCode}>

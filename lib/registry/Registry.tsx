@@ -13,6 +13,7 @@ import {
   createCarouselItem,
   createCarouselItemTransition
 } from './Carousel';
+import { createCheckbox } from './CheckBox';
 import { createCollapse } from './Collapse';
 import { createContainer } from './Container';
 import { createForm, createFormField } from './Form';
@@ -94,6 +95,7 @@ const factories = {
   RadioGroup: createRadioGroup,
 
   Input: createInput,
+  Checkbox: createCheckbox,
   FormField: createFormField,
   Form: createForm,
 
