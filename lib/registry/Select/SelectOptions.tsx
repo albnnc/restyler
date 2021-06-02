@@ -19,7 +19,12 @@ export const createSelectOptions: ComponentFactory<
   HTMLDivElement,
   SelectOptionsProps
 > = ({ themed }) => {
-  const ThemedOptions = themed('div', { path: 'select.options' });
+  const ThemedOptions = themed('div', {
+    path: 'select.options',
+    style: {
+      zIndex: 1001
+    }
+  });
   const ThemedOptionsItem = themed<'div', { isActive?: boolean }>('div', {
     path: 'select.options.item'
   });
