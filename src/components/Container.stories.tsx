@@ -5,7 +5,7 @@ export default {
   title: 'containers/Container'
 };
 
-export const Basic = () => {
+export const Basics = () => {
   const dimm = 'rgba(0, 0, 0, 0.2)';
   return (
     <Container

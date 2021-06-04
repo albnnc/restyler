@@ -13,8 +13,12 @@ export const file: Theme = {
   label: mergeThemes({}, button.kinds?.primary ?? {}, {
     padding: { vertical: 'small', horizontal: 'medium' },
     extend: {
+      display: 'block',
+      textAlign: 'center',
       lineHeight: 'calc(1.5 * 1rem)',
-      justifyContent: 'center'
+      whiteSpace: 'nowrpap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
     }
   })
 };
