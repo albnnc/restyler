@@ -12,6 +12,7 @@ import { useThemed } from '../../hooks';
 import { FormFieldValidator, FormWidgetProps, StyleProps } from '../../models';
 import { get, hash } from '../../utils';
 import { Input, InputProps } from '../Input';
+import { SystemContext } from '../SystemContext';
 import { FormContext } from './FormContext';
 
 interface FormFieldAddonProps {
@@ -71,6 +72,9 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const ThemedFormFieldHelp = useThemed('div', { path: 'form.field.help' });
 
     const {
+      locale: { requiredText }
+    } = useContext(SystemContext);
+    const {
       manager: { values, setValues, errors, setValidators }
     } = useContext(FormContext);
 
@@ -80,7 +84,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         [name]: value => {
           const newFieldErrors = validate?.(value) ?? [];
           if (required && [undefined, null, ''].includes(value)) {
-            newFieldErrors.push('Required');
+            newFieldErrors.push(requiredText);
           }
           return newFieldErrors;
         }
