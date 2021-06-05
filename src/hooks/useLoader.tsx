@@ -118,7 +118,6 @@ export const useLoader = (ids?: any[]) => {
   const load = useCallback(async <T extends unknown>(promise: Promise<T>) => {
     try {
       loaderRegistry.load(targetIds);
-      console.log('loading', targetIds);
       const r = await promise;
       loaderRegistry.unload(targetIds);
       return r;
