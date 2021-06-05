@@ -93,9 +93,8 @@ class LoaderRegistry {
   update(ids: any[] | undefined) {
     const updateDatum = datum =>
       datum?.subscriptions.forEach(fn => fn(datum.count > 0));
-    if (ids) {
-      ids.forEach(id => updateDatum(this.data.get(id)));
-    }
+    const targetIds = ids === undefined ? Array.from(this.data.keys()) : ids;
+    targetIds.forEach(id => updateDatum(this.data.get(id)));
     // Any update requires global datum to be also updated.
     updateDatum(this.globalDatum);
   }
@@ -119,6 +118,7 @@ export const useLoader = (ids?: any[]) => {
   const load = useCallback(async <T extends unknown>(promise: Promise<T>) => {
     try {
       loaderRegistry.load(targetIds);
+      console.log('loading', targetIds);
       const r = await promise;
       loaderRegistry.unload(targetIds);
       return r;
