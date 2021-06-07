@@ -2,6 +2,7 @@ import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { Global } from '@emotion/react';
+import { blueprintTheme } from './blueprintTheme';
 import {
   defaultTheme,
   Box,
@@ -10,12 +11,17 @@ import {
   isStyleProp
 } from 'src';
 
-export const system = createSystem({
+const storySystemDefaults = {
   theme: defaultTheme,
   styled: (tag: any, fn: any) =>
     styled(tag, {
       shouldForwardProp: (prop: any) => isPropValid(prop) && !isStyleProp(prop)
     })(fn) as any
+};
+const system = createSystem(storySystemDefaults);
+const blueprintSystem = createSystem({
+  ...storySystemDefaults,
+  theme: blueprintTheme
 });
 
 export const systemized = (Story, context) => {
@@ -53,4 +59,10 @@ export const centered = Story => (
   >
     <Story />
   </Box>
+);
+
+export const blueprinted = Story => (
+  <SystemContext.Provider value={blueprintSystem}>
+    <Story />
+  </SystemContext.Provider>
 );

@@ -1,9 +1,15 @@
 import React from 'react';
 import { Box } from 'src';
+import { blueprinted } from 'storybook/decorators';
 
 export default {
   title: 'containers/Box'
 };
+
+export const Blueprint = () => {
+  return <Box />;
+};
+Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   return <Box>Sample text</Box>;

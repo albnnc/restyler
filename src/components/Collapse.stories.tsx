@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { Box, Button, Collapse } from 'src';
+import { blueprinted } from 'storybook/decorators';
 
 export default {
   title: 'containers/Collapse'
 };
+
+export const Blueprint = () => {
+  return <Collapse isOpen />;
+};
+Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   const [isOpen, setIsOpen] = useState(false);
