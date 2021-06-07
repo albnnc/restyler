@@ -11,7 +11,7 @@ export const Blueprint = () => {
 };
 Blueprint.decorators = [blueprinted];
 
-export const Basics = () => {
+export const Basics = ({ isPersistent }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Box css={{ width: '200px' }}>
@@ -22,9 +22,12 @@ export const Basics = () => {
       >
         Toggle
       </Button>
-      <Collapse isOpen={isOpen}>
+      <Collapse isPersistent={isPersistent} isOpen={isOpen}>
         <Box background="primary" css={{ height: '100px' }} />
       </Collapse>
     </Box>
   );
+};
+Basics.args = {
+  isPersistent: false
 };

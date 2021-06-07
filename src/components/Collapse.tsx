@@ -42,7 +42,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
       useState<number | undefined>(undefined);
 
     useIsomorphicLayoutEffect(() => {
-      if (!isOpen || contentHeight !== undefined) {
+      if (contentHeight !== undefined || (!isPersistent && !isOpen)) {
         return;
       }
       const container = document.createElement('div');

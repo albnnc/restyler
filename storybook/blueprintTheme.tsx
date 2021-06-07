@@ -1,7 +1,6 @@
 import { defaultTheme, knownStyleProps, Theme } from 'src';
 
 const transform = (theme: Theme, path = '') => {
-  console.log('transform', path, theme);
   const key = path.split('.').pop();
   if ([...knownStyleProps, 'extend', 'defaults'].includes(key ?? '')) {
     return undefined;
