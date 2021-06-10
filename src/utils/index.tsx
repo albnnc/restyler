@@ -8,6 +8,7 @@ export * from './deepFreeze';
 export * from './disableScroll';
 export * from './filterStyleProps';
 export * from './get';
+export * from './getIndexOfMax';
 export * from './guards';
 export * from './hash';
 export * from './merge';

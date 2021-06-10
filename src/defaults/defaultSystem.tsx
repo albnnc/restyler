@@ -7,6 +7,9 @@ export const defaultSystem = {
     notificationOptions: {
       duration: 4000,
       placement: 'bottomRight'
+    },
+    transitionOptions: {
+      timeout: 1000
     }
   },
   locale: defaultLocale,
