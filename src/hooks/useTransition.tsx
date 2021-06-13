@@ -10,15 +10,15 @@ import {
   useContext
 } from 'react';
 import { getIndexOfMax } from '../utils';
-import { SystemContext } from 'src/components';
+import { SystemContext } from '../components';
 
-export interface TransitionerProps {
+export interface TransitionerProps<T = HTMLElement> {
   isVisible: boolean;
   isEntering: boolean;
-  onTransitionEnd?: TransitionEventHandler;
+  onTransitionEnd?: TransitionEventHandler<T>;
 }
 
-export type Transitioner = ComponentType<TransitionerProps>;
+export type Transitioner<T = HTMLElement> = ComponentType<TransitionerProps<T>>;
 
 export interface TransitionOptions {
   deps: any[];
@@ -26,8 +26,8 @@ export interface TransitionOptions {
   timeout?: number;
 }
 
-export const useTransition = (
-  transitioner: Transitioner,
+export const useTransition = <T extends HTMLElement = HTMLElement>(
+  transitioner: Transitioner<T>,
   options: TransitionOptions
 ) => {
   const { defaults } = useContext(SystemContext);
@@ -46,7 +46,7 @@ export const useTransition = (
         return;
       }
       const { transitionProperty, transitionDuration } = getComputedStyle(
-        target as Element
+        target as T
       );
       const properties = transitionProperty.split(',').map(v => v.trim());
       const durations = transitionDuration
@@ -74,6 +74,7 @@ export const useTransition = (
       }
     } else {
       setIsVisible(false);
+      setIsEntering(false);
       const timeoutId = setTimeout(() => setIsReallyMounted(false), timeout);
       return () => clearTimeout(timeoutId);
     }

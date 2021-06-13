@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { Global } from '@emotion/react';
@@ -8,25 +8,45 @@ import {
   Box,
   SystemContext,
   createSystem,
-  isStyleProp
+  isStyleProp,
+  System,
+  useImperativePortal
 } from 'src';
 
-const storySystemDefaults = {
+const defaultSystem = createSystem({
   theme: defaultTheme,
   styled: (tag: any, fn: any) =>
     styled(tag, {
       shouldForwardProp: (prop: any) => isPropValid(prop) && !isStyleProp(prop)
     })(fn) as any
-};
-const system = createSystem(storySystemDefaults);
+});
+
 const blueprintSystem = createSystem({
-  ...storySystemDefaults,
+  ...defaultSystem,
   theme: blueprintTheme
 });
 
-export const systemized = (Story, context) => {
+const SystemContainer = (props: { children: ReactNode; system: System }) => {
+  const [system, setSystem] = useState(props.system);
+  const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
+  const portal = useImperativePortal(mountNode);
+  useEffect(() => {
+    const { defaults, ...rest } = props.system;
+    if (!portal) {
+      return;
+    }
+    setSystem({
+      defaults: {
+        ...defaults,
+        standaloneTransitionOptions: { portal }
+      },
+      ...rest
+    });
+  }, [portal]);
   return (
     <SystemContext.Provider value={system}>
+      <div ref={setMountNode} />
+      {portal}
       <Global
         styles={{
           '*': { boxSizing: 'border-box' },
@@ -39,8 +59,16 @@ export const systemized = (Story, context) => {
           }
         }}
       />
-      <Story {...context} />
+      {props.children}
     </SystemContext.Provider>
+  );
+};
+
+export const systemized = (Story, context) => {
+  return (
+    <SystemContainer system={defaultSystem}>
+      <Story {...context} />
+    </SystemContainer>
   );
 };
 
@@ -61,8 +89,10 @@ export const centered = Story => (
   </Box>
 );
 
-export const blueprinted = Story => (
-  <SystemContext.Provider value={blueprintSystem}>
-    <Story />
-  </SystemContext.Provider>
-);
+export const blueprinted = Story => {
+  return (
+    <SystemContext.Provider value={blueprintSystem}>
+      <Story />
+    </SystemContext.Provider>
+  );
+};

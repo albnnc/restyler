@@ -1,6 +1,7 @@
 export * from './useClickOutside';
 export * from './useFocusTrap';
 export * from './useFormManager';
+export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';
 export * from './useLoader';
 export * from './useModal';
@@ -8,6 +9,7 @@ export * from './useNotification';
 export * from './useOperation';
 export * from './useSharedRef';
 export * from './useStack';
+export * from './useStandaloneTransition';
 export * from './useTabManager';
 export * from './useThemed';
 export * from './useTransition';

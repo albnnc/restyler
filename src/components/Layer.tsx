@@ -1,9 +1,10 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
-import { useThemed } from '../hooks';
+import { TransitionerProps, useThemed } from '../hooks';
 import { StyleProps } from '../models';
 
 export interface LayerProps
   extends HTMLAttributes<HTMLDivElement>,
+    Partial<TransitionerProps<HTMLDivElement>>,
     StyleProps {}
 
 export const Layer = forwardRef<HTMLDivElement, LayerProps>((props, ref) => {

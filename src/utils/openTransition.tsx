@@ -1,75 +1,47 @@
-import React, { ReactNode } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   render as renderComponentAtNode,
   unmountComponentAtNode
 } from 'react-dom';
-import { TransitionStage } from '../hooks';
+import { Transitioner, useTransition, useUpdateEffect } from '../hooks';
+import { System } from '../models';
+import { SystemContext } from '../components';
 
-export interface TransitionRendererProps {
-  handleClose: () => void;
-  handleCloseEnd: () => void;
-  isOpen: boolean;
-}
-
-export interface TransitionRenderer {
-  (props: TransitionRendererProps): ReactNode;
-}
-
-export interface TransitionOptions {
-  mountNode?: Element;
-  onClose?: () => void;
-  onCloseEnd?: () => void;
-  render?: TransitionRenderer;
-}
-
-export const openTransition = ({
-  mountNode,
-  render,
-  onClose,
-  onCloseEnd
-}: TransitionOptions) => {
+export const openTransition = (transitioner: Transitioner, system: System) => {
   const rootNode = document.body;
   const holderNode = document.createElement('div');
-  const targetNode = mountNode ?? rootNode;
-
-  let stage: TransitionStage = 'enter';
-  let isOpen = false;
-
-  const handleClose = () => {
-    onClose?.();
-    isOpen = false;
-    stage = undefined;
-    renderOnce();
+  const targetNode = rootNode; // TODO
+  const handlers = {
+    close: () => {
+      // TBD
+    },
+    unmount: () => {
+      unmountComponentAtNode(holderNode);
+      targetNode.removeChild(holderNode);
+    }
   };
-
-  const handleCloseEnd = () => {
-    unmountComponentAtNode(holderNode);
-    targetNode.removeChild(holderNode);
-    onCloseEnd?.();
+  const Component = () => {
+    const [isMounted, setIsMounted] = useState(false);
+    const transition = useTransition(transitioner, { deps: [], isMounted });
+    useEffect(() => {
+      setIsMounted(true);
+      handlers.close = () => setIsMounted(false);
+    }, []);
+    useUpdateEffect(() => {
+      !transition && handlers.unmount();
+    }, [transition]);
+    return transition;
   };
-
-  const renderOnce = () =>
-    renderComponentAtNode(
-      <>{render?.({ handleClose, handleCloseEnd, isOpen })}</>,
-      holderNode,
-      () => {
-        if (!isOpen) {
-          if (stage === 'enter') {
-            isOpen = true;
-            stage = undefined;
-            renderOnce();
-          } else if (stage === undefined) {
-            stage = 'leave';
-            renderOnce();
-          }
-        }
-      }
-    );
-
   const open = () => {
     targetNode.appendChild(holderNode);
-    renderOnce();
+    renderComponentAtNode(
+      <SystemContext.Provider value={system}>
+        <Component />
+      </SystemContext.Provider>,
+      holderNode
+    );
   };
-
+  const close = () => handlers.close();
   open();
+  return close;
 };

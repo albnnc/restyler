@@ -1,4 +1,4 @@
-import { TransitionOptions } from '../hooks';
+import { TransitionOptions, StandaloneTransitionOptions } from '../hooks';
 import { ModalOptions, QuestionOptions } from '../components';
 import { Locale } from './Locale';
 import { Styled } from './Styled';
@@ -11,6 +11,7 @@ export interface System {
     notificationOptions?: Partial<NotificationOptions>;
     questionOptions?: Partial<QuestionOptions>;
     transitionOptions?: Partial<TransitionOptions>;
+    standaloneTransitionOptions?: Partial<StandaloneTransitionOptions>;
   };
   locale: Locale;
   registry: SystemRegistry;

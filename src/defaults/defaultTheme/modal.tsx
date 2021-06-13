@@ -1,19 +1,13 @@
-import { Theme } from '../../models';
+import { ExtendOptions, Theme } from '../../models';
 
-const createModalStyle = ({ width }) => ({
-  width,
-  maxWidth: 'calc(100% - 2rem)',
-  transform: 'translateY(0)',
-  transition: 'transform 0.2s',
-
-  '&[data-transition="enter"]': {
-    transform: 'translateY(1rem)'
-  },
-
-  '&[data-transition="leave"]': {
-    transform: 'translateY(-1rem)'
-  }
-});
+const createModalStyle =
+  ({ width }) =>
+  ({ props: { isVisible, isEntering } }: ExtendOptions) => ({
+    width,
+    maxWidth: 'calc(100% - 2rem)',
+    transform: `translateY(${isVisible ? '0' : isEntering ? '1rem' : '-1rem'})`,
+    transition: 'transform 0.2s'
+  });
 
 export const modal: Theme = {
   radius: 'small',
