@@ -14,12 +14,13 @@ export const useForwardRef = <T, P>(
     | ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>,
   deps: DependencyList
 ) => {
-  return useMemo(() => {
-    console.log('CHANGED');
-    return typeof componentOrFunction === 'function'
-      ? // Actually, forwardRef result is an object,
-        // so it's safe to perform casting here.
-        forwardRef<T, P>(componentOrFunction as any)
-      : componentOrFunction;
-  }, deps);
+  return useMemo(
+    () =>
+      typeof componentOrFunction === 'function'
+        ? // Actually, forwardRef result is an object,
+          // so it's safe to perform casting here.
+          forwardRef<T, P>(componentOrFunction as any)
+        : componentOrFunction,
+    deps
+  );
 };
