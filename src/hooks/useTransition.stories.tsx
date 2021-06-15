@@ -8,19 +8,16 @@ export default {
 } as Meta;
 
 const spinAnimation = keyframes({
-  '0%': {
-    transform: 'rotate(0deg)'
-  },
-  '100%': {
-    transform: 'rotate(360deg)'
-  }
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' }
 });
 
 export const Basics = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const loader = useTransition(
-    ({ isVisible, isEntering, onTransitionEnd }) => (
+  const loader = useTransition<HTMLDivElement>(
+    ({ isVisible, isEntering }, ref) => (
       <Box
+        ref={ref}
         margin={{ left: 'medium' }}
         css={{
           position: 'absolute',
@@ -46,7 +43,6 @@ export const Basics = () => {
             animation: `${spinAnimation} 1.4s infinite linear`
           }
         }}
-        onTransitionEnd={onTransitionEnd}
       />
     ),
     {
@@ -63,7 +59,3 @@ export const Basics = () => {
     </Box>
   );
 };
-
-// !isVisible isEntering
-// isVisible !isEntering
-// !isVisible !isEntering

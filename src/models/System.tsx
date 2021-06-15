@@ -1,5 +1,9 @@
-import { TransitionOptions, StandaloneTransitionOptions } from '../hooks';
-import { ModalOptions, QuestionOptions } from '../components';
+import {
+  TransitionOptions,
+  StandaloneTransitionOptions,
+  ModalOptions,
+  QuestionOptions
+} from '../hooks';
 import { Locale } from './Locale';
 import { Styled } from './Styled';
 import { SystemRegistry } from './SystemRegistry';

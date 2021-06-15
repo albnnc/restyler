@@ -1,33 +1,33 @@
 import { isValidElement, useCallback, Fragment, ReactNode } from 'react';
-import { NotificationOptions, QuestionOptions } from '../components';
 import { useLoader } from './useLoader';
 import { useModal } from './useModal';
-import { useNotification } from './useNotification';
+import { QuestionOptions } from './useModal';
+import { NotificationOptions, useNotification } from './useNotification';
 
-export interface OperationOptions<TOperationInput, TOperationOutput> {
+export interface OperationOptions<OperationInput, OperationOutput> {
   deps: any[];
   getNotification?: <T extends boolean>(
     isOk: T,
-    output: T extends true ? TOperationOutput : Error
-  ) => ReactNode | Omit<NotificationOptions, 'system'>;
-  getQuestion?: (input?: TOperationInput) => Omit<QuestionOptions, 'system'>;
+    output: T extends true ? OperationOutput : Error
+  ) => ReactNode | NotificationOptions;
+  getQuestion?: (input?: OperationInput) => QuestionOptions;
   loaderIds?: any[];
 }
 
-export const useOperation = <TOperationInput, TOperationOutput>(
-  fn: (input?: TOperationInput) => Promise<TOperationOutput>,
+export const useOperation = <OperationInput, OperationOutput>(
+  fn: (input?: OperationInput) => Promise<OperationOutput>,
   {
     deps,
     getNotification,
     getQuestion,
     loaderIds
-  }: OperationOptions<TOperationInput, TOperationOutput>
+  }: OperationOptions<OperationInput, OperationOutput>
 ) => {
-  const [isLoading, load] = useLoader(loaderIds);
+  const [_, load] = useLoader(loaderIds);
   const { openQuestion } = useModal();
   const { openNotification } = useNotification();
   const operation = useCallback(
-    async (input?: TOperationInput): Promise<void> => {
+    async (input?: OperationInput): Promise<void> => {
       const questionOptions = getQuestion?.(input);
       const shouldContinue = questionOptions
         ? await openQuestion(questionOptions)
@@ -36,7 +36,7 @@ export const useOperation = <TOperationInput, TOperationOutput>(
         return undefined;
       }
       let isOk = true;
-      let output: TOperationOutput | undefined;
+      let output: OperationOutput | undefined;
       let error: Error | undefined;
       try {
         output = await load(fn(input));
@@ -46,12 +46,12 @@ export const useOperation = <TOperationInput, TOperationOutput>(
       }
       const notification = getNotification?.(isOk, (error ?? output)!);
       if (notification) {
-        const notificationOptions: Omit<NotificationOptions, 'system'> =
+        const notificationOptions: NotificationOptions =
           typeof notification === 'object' &&
           !isValidElement(notification) &&
           !Array.isArray(notification) &&
           (notification as any).type !== Fragment
-            ? notification
+            ? (notification as NotificationOptions)
             : {
                 kind: isOk ? 'success' : 'danger',
                 render: () => notification
@@ -60,7 +60,7 @@ export const useOperation = <TOperationInput, TOperationOutput>(
       }
       return undefined;
     },
-    deps
+    [openQuestion, openNotification, ...deps]
   );
   return operation;
 };

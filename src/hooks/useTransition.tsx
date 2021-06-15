@@ -1,70 +1,95 @@
 import {
   useMemo,
-  ComponentType,
   useState,
   useEffect,
   useLayoutEffect,
-  TransitionEventHandler,
   TransitionEvent,
   useCallback,
-  useContext
+  useContext,
+  ForwardRefExoticComponent,
+  PropsWithoutRef,
+  RefAttributes,
+  ForwardRefRenderFunction,
+  useRef
 } from 'react';
-import { getIndexOfMax } from '../utils';
+import { requestAnimationDelay } from '../utils';
 import { SystemContext } from '../components';
+import { useCleanableRef } from './useCleanableRef';
+import { useForwardRef } from './useForwardRef';
 
-export interface TransitionerProps<T = HTMLElement> {
+export interface TransitionerProps {
   isVisible: boolean;
   isEntering: boolean;
-  onTransitionEnd?: TransitionEventHandler<T>;
 }
 
-export type Transitioner<T = HTMLElement> = ComponentType<TransitionerProps<T>>;
+export type Transitioner<T, P = TransitionerProps> =
+  | ForwardRefRenderFunction<T, P>
+  | ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 
 export interface TransitionOptions {
   deps: any[];
   isMounted: boolean;
-  timeout?: number;
 }
 
-export const useTransition = <T extends HTMLElement = HTMLElement>(
+export const useTransition = <T extends HTMLElement>(
   transitioner: Transitioner<T>,
   options: TransitionOptions
 ) => {
   const { defaults } = useContext(SystemContext);
-  const { deps, isMounted, timeout } = {
-    timeout: 1000,
+  const { deps, isMounted } = {
     ...defaults?.transitionOptions,
     ...options
   };
-  const Component = useMemo(() => transitioner, deps);
+  const Component = useForwardRef(transitioner, deps);
   const [isVisible, setIsVisible] = useState(!!isMounted);
   const [isEntering, setIsEntering] = useState(false);
   const [isReallyMounted, setIsReallyMounted] = useState(!!isMounted);
-  const handleTransitionEnd = useCallback(
-    ({ target, propertyName }: TransitionEvent) => {
-      if (!target) {
-        return;
+
+  const element = useRef<T>();
+  const properties = useRef([] as string[]);
+  const reflow = useCallback(() => {
+    // Reflow should be called at the time of
+    // non-existent property transitions, so
+    // here we can reset the property registry.
+    properties.current = [];
+    // Reflowing DOM node via offset height calculation.
+    // Returning the value in order it not being removed
+    // by aggressive compilation optimizations.
+    return element.current?.offsetHeight;
+  }, []);
+  const handlers = useMemo(
+    () => ({
+      transitionrun: ({ propertyName }) => {
+        properties.current.push(propertyName);
+      },
+      transitionend: ({ propertyName }: TransitionEvent) => {
+        properties.current = properties.current.filter(v => v !== propertyName);
+        if (properties.current.length < 1) {
+          setIsReallyMounted(isMounted);
+          setIsEntering(false);
+        }
       }
-      const { transitionProperty, transitionDuration } = getComputedStyle(
-        target as T
-      );
-      const properties = transitionProperty.split(',').map(v => v.trim());
-      const durations = transitionDuration
-        .split(',')
-        .map(v => v.trim().toLocaleLowerCase())
-        .map(v =>
-          v.endsWith('ms') ? +v.replace('ms', '') : +v.replace('s', '') * 1000
-        );
-      const longestProperty = properties[getIndexOfMax(durations)];
-      if (longestProperty === propertyName) {
-        setIsReallyMounted(isMounted);
-        setIsEntering(false);
-      }
-    },
+    }),
     [isMounted]
   );
 
+  const handleBinding = useCleanableRef<T>(
+    (el: T) => {
+      element.current = el;
+      const handleAction = (action: 'add' | 'remove') =>
+        Object.keys(handlers).forEach(event => {
+          el[`${action}EventListener`](event, handlers[event]);
+        });
+      handleAction('add');
+      return () => {
+        handleAction('remove');
+      };
+    },
+    [handlers]
+  );
+
   useLayoutEffect(() => {
+    reflow();
     if (isMounted) {
       if (isReallyMounted) {
         setIsVisible(true);
@@ -75,13 +100,21 @@ export const useTransition = <T extends HTMLElement = HTMLElement>(
     } else {
       setIsVisible(false);
       setIsEntering(false);
-      const timeoutId = setTimeout(() => setIsReallyMounted(false), timeout);
-      return () => clearTimeout(timeoutId);
+      const isActual = { current: true };
+      requestAnimationDelay(() => {
+        if (properties.current.length < 1 && isActual.current) {
+          setIsReallyMounted(false);
+        }
+      });
+      return () => {
+        isActual.current = false;
+      };
     }
     return undefined;
   }, [isMounted]);
 
   useEffect(() => {
+    reflow();
     setIsVisible(isReallyMounted);
   }, [isReallyMounted]);
 
@@ -89,11 +122,11 @@ export const useTransition = <T extends HTMLElement = HTMLElement>(
     () =>
       isReallyMounted ? (
         <Component
+          ref={handleBinding}
           isVisible={isVisible}
           isEntering={isEntering}
-          onTransitionEnd={handleTransitionEnd}
         />
       ) : null,
-    [isReallyMounted, isVisible, isEntering, handleTransitionEnd, ...deps]
+    [Component, isReallyMounted, isVisible, isEntering, handleBinding]
   );
 };

@@ -7,11 +7,10 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const open = useStandaloneTransition(
-    ({ isVisible, onTransitionEnd, ...rest }) => (
+  const open = useStandaloneTransition<HTMLDivElement>(
+    ({ isVisible }, ref) => (
       <Box
-        onTransitionEnd={onTransitionEnd}
-        {...rest}
+        ref={ref}
         css={{
           position: 'fixed',
           top: '1rem',

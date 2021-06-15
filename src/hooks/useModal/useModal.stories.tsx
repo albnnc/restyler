@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import React, { useState } from 'react';
-import { Box, Button, Form, FormField, FormRow, Heading, useModal } from 'src';
+import { Box, Button, useModal } from 'src';
 
 export default {
   title: 'hooks/useModal'
@@ -13,8 +13,14 @@ export const Basics = () => {
       kind="primary"
       onClick={() => {
         openModal({
-          render: () => <>SAMPLE</>,
-          kind: 'small'
+          kind: 'small',
+          render: ({ handleClose }) => (
+            <Box>
+              <Button kind="secondary" onClick={handleClose}>
+                Close
+              </Button>
+            </Box>
+          )
         });
       }}
     >
@@ -23,24 +29,24 @@ export const Basics = () => {
   );
 };
 
-// export const Question = () => {
-//   const [answer, setAnswer] = useState<string>('');
-//   const { openQuestion } = useModal();
-//   return (
-//     <Button
-//       kind="primary"
-//       onClick={async () => {
-//         const isOk = await openQuestion({
-//           heading: 'Important question',
-//           content: 'Are you sure?'
-//         });
-//         setAnswer(isOk ? '(yes)' : '(no)');
-//       }}
-//     >
-//       Open {answer}
-//     </Button>
-//   );
-// };
+export const Question = () => {
+  const [answer, setAnswer] = useState<string>('');
+  const { openQuestion } = useModal();
+  return (
+    <Button
+      kind="primary"
+      onClick={async () => {
+        const isOk = await openQuestion({
+          heading: 'Important question',
+          content: 'Are you sure?'
+        });
+        setAnswer(isOk ? '(yes)' : '(no)');
+      }}
+    >
+      Open {answer}
+    </Button>
+  );
+};
 
 // export const WithForm = () => {
 //   const { openModal } = useModal();

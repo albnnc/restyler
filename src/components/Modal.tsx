@@ -1,10 +1,10 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
-import { TransitionerProps, useThemed } from '../../hooks';
-import { StyleProps } from '../../models';
+import { StandaloneTransitionerProps, useThemed } from '../hooks';
+import { StyleProps } from '../models';
 
 export interface ModalProps
   extends HTMLAttributes<HTMLDivElement>,
-    Partial<TransitionerProps<HTMLDivElement>>,
+    Partial<StandaloneTransitionerProps>,
     StyleProps {}
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>((props, ref) => {

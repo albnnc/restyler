@@ -7,44 +7,40 @@ import React, {
   useEffect,
   useImperativeHandle,
   useMemo,
-  useRef,
   useState
 } from 'react';
 import { SystemContext } from '../components';
+import { useForwardRef } from './useForwardRef';
 import { ImperativePortal } from './useImperativePortal';
 import {
+  Transitioner,
   TransitionerProps,
   TransitionOptions,
   useTransition
 } from './useTransition';
 import { useUpdateEffect } from './useUpdateEffect';
 
-type WrapProps<Options> = { onUnmount: () => void; options?: Options };
+type WrapProps<C> = { onUnmount: () => void; context?: C };
 type WrapHandlers = { handleClose: () => void };
 
-export interface StandaloneTransitionerProps<
-  Element extends HTMLElement = HTMLElement,
-  Options = never
-> extends TransitionerProps<Element> {
+export interface StandaloneTransitionerProps<C = never>
+  extends TransitionerProps {
   handleClose: () => void;
-  options?: Options;
+  context?: C;
 }
 
-export type StandaloneTransitioner<
-  Element extends HTMLElement = HTMLElement,
-  Options = never
-> = ComponentType<StandaloneTransitionerProps<Element, Options>>;
+export type StandaloneTransitioner<T, C = never> = Transitioner<
+  T,
+  StandaloneTransitionerProps<C>
+>;
 
 export interface StandaloneTransitionOptions
   extends Omit<TransitionOptions, 'isMounted'> {
   portal?: ImperativePortal;
 }
 
-export const useStandaloneTransition = <
-  Element extends HTMLElement = HTMLElement,
-  OpenOptions = never
->(
-  Transitioner: StandaloneTransitioner<Element, OpenOptions>,
+export const useStandaloneTransition = <T extends HTMLElement, C = never>(
+  transitioner: StandaloneTransitioner<T, C>,
   options: StandaloneTransitionOptions
 ) => {
   const { defaults } = useContext(SystemContext);
@@ -53,47 +49,40 @@ export const useStandaloneTransition = <
     ...options
   };
 
+  const Component = useForwardRef(transitioner, deps);
   const Wrap = useMemo(
     () =>
-      forwardRef<WrapHandlers, WrapProps<OpenOptions>>(
-        ({ onUnmount, options }, ref) => {
-          const [isMounted, setIsMounted] = useState(false);
-          const handleClose = useCallback(() => setIsMounted(false), []);
-          const wrapRef = useRef<HTMLDivElement>(null);
-          const reflow = useCallback(() => wrapRef.current?.offsetHeight, []);
-          const transition = useTransition(
-            props => (
-              <div ref={wrapRef}>
-                <Transitioner
-                  handleClose={handleClose}
-                  options={options}
-                  {...props}
-                />
-              </div>
-            ),
-            { deps: [], isMounted }
-          );
-          useEffect(() => {
-            reflow();
-          }, [isMounted]);
-          useEffect(() => {
-            setIsMounted(true);
-          }, []);
-          useImperativeHandle(ref, () => ({ handleClose }), []);
-          useUpdateEffect(() => {
-            reflow();
-            if (!transition) {
-              onUnmount();
-            }
-          }, [transition]);
-          return transition;
-        }
-      ),
+      forwardRef<WrapHandlers, WrapProps<C>>(({ onUnmount, context }, ref) => {
+        const [isMounted, setIsMounted] = useState(false);
+        const handleClose = useCallback(() => setIsMounted(false), []);
+        const transition = useTransition<T>(
+          (props, ref) => (
+            <Component
+              ref={ref}
+              handleClose={handleClose}
+              context={context}
+              {...props}
+            />
+          ),
+          { deps: [], isMounted }
+        );
+        useEffect(() => {}, [isMounted]);
+        useEffect(() => {
+          setIsMounted(true);
+        }, []);
+        useImperativeHandle(ref, () => ({ handleClose }), []);
+        useUpdateEffect(() => {
+          if (!transition) {
+            onUnmount();
+          }
+        }, [transition]);
+        return transition;
+      }),
     [...deps]
   );
 
   const open = useCallback(
-    (options?: OpenOptions) => {
+    (context?: C) => {
       const ref = createRef<WrapHandlers>();
       const key = Math.random();
       const child = (
@@ -101,7 +90,7 @@ export const useStandaloneTransition = <
           ref={ref}
           key={key}
           onUnmount={() => portal?.remove(child)}
-          options={options}
+          context={context}
         />
       );
       portal?.push(child);

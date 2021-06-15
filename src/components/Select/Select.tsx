@@ -1,19 +1,23 @@
 import React, {
   cloneElement,
-  createRef,
   forwardRef,
-  useContext,
   useMemo,
   useReducer,
   Children,
   HTMLAttributes,
-  ReactElement
+  ReactElement,
+  useEffect
 } from 'react';
-import { useSharedRef, useThemed, useUpdateEffect } from '../../hooks';
+import { disableScroll } from '../../utils';
+import {
+  useClickOutside,
+  useSharedRef,
+  useStandaloneTransition,
+  useThemed,
+  useUpdateEffect
+} from '../../hooks';
 import { FormWidgetProps, StyleProps } from '../../models';
-import { disableScroll, openTransition } from '../../utils';
-import { SystemContext } from '../SystemContext';
-import { SelectDropTransition } from './SelectDropTransition';
+import { SelectDrop } from './SelectDrop';
 import { SelectOptionProps } from './SelectOption';
 
 export interface SelectProps
@@ -32,7 +36,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
   );
 
   const { value, disabled, onChange, isMultiple, children } = props;
-  const system = useContext(SystemContext);
   const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
   const [innerValue, setInnerValue] = useReducer(
     (active: any, action: { isForced?: boolean; value: any }) => {
@@ -76,49 +79,50 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     ));
   }, [isMultiple, innerValue, childrenArray]);
 
-  const openSelect = () => {
-    if (disabled) {
-      return;
-    }
-    const optionsRef = createRef<HTMLDivElement>();
-    const enableScroll = disableScroll();
-    const {
-      top = 0,
-      left = 0,
-      height = 0,
-      width = 0
-    } = sharedRef.current?.getBoundingClientRect() ?? {};
-    openTransition({
-      render: props => (
-        <SystemContext.Provider value={system}>
-          <SelectDropTransition
-            ref={optionsRef}
-            style={{
-              position: 'fixed',
-              top: isMultiple ? top + height : top,
-              left,
-              width
-            }}
-            {...props}
-          >
-            {childrenArray.map(v =>
-              cloneElement(v, {
-                isMultiple: !!isMultiple,
-                onClick: () => {
-                  setInnerValue({ value: v.props.value });
-                  !isMultiple && props.handleClose();
-                }
-              })
-            )}
-          </SelectDropTransition>
-        </SystemContext.Provider>
-      ),
-      onClose: () => enableScroll()
-    });
-  };
+  const openSelect = useStandaloneTransition<HTMLDivElement>(
+    (props, ref) => {
+      const dropRef = useSharedRef<HTMLDivElement>(null, [ref]);
+      useClickOutside(dropRef, props.handleClose);
+      useEffect(() => {
+        return disableScroll();
+      }, []);
+      const {
+        top = 0,
+        left = 0,
+        height = 0,
+        width = 0
+      } = sharedRef.current?.getBoundingClientRect() ?? {};
+      if (disabled) {
+        return null;
+      }
+      return (
+        <SelectDrop
+          ref={dropRef}
+          style={{
+            position: 'fixed',
+            top: isMultiple ? top + height : top,
+            left,
+            width
+          }}
+          {...props}
+        >
+          {childrenArray.map(v =>
+            cloneElement(v, {
+              isMultiple: !!isMultiple,
+              onClick: () => {
+                setInnerValue({ value: v.props.value });
+                !isMultiple && props.handleClose();
+              }
+            })
+          )}
+        </SelectDrop>
+      );
+    },
+    { deps: [] }
+  );
 
   return (
-    <ThemedSelect ref={sharedRef} onClick={openSelect} {...props}>
+    <ThemedSelect ref={sharedRef} onClick={() => openSelect()} {...props}>
       {displayData}
     </ThemedSelect>
   );

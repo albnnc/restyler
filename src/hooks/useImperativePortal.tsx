@@ -16,12 +16,12 @@ export interface ImperativePortal extends ReactElement {
   remove: (child: ReactNode) => void;
 }
 
-export const useImperativePortal = (node?: HTMLElement | null) => {
+export const useImperativePortal = (element?: HTMLElement | null) => {
   const ref = useRef<ImperativePortal>(null);
   return useMemo(() => {
     const wrap = (
       <Fragment>
-        <Portal ref={ref} node={node} />
+        <Portal ref={ref} element={element} />
       </Fragment>
     );
     const noop = () => {};
@@ -30,13 +30,13 @@ export const useImperativePortal = (node?: HTMLElement | null) => {
       push: ref.current?.push ?? noop,
       remove: ref.current?.remove ?? noop
     } as ImperativePortal;
-  }, [node]);
+  }, [element]);
 };
 
 const Portal = forwardRef<
   Pick<ImperativePortal, 'push' | 'remove'>,
-  { node?: HTMLElement | null }
->(({ node }, ref) => {
+  { element?: HTMLElement | null }
+>(({ element }, ref) => {
   const [children, setChildren] = useState<ReactNode[]>([]);
   const push = useCallback((child: ReactNode) => {
     setChildren(children =>
@@ -47,5 +47,5 @@ const Portal = forwardRef<
     setChildren(children => children.filter(v => v !== child));
   }, []);
   useImperativeHandle(ref, () => ({ push, remove }), []);
-  return node ? createPortal(children, node) : null;
+  return element ? createPortal(children, element) : null;
 });
