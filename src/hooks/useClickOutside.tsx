@@ -2,9 +2,9 @@ import { useEffect, useRef, RefObject } from 'react';
 
 const defaultEvents = ['mousedown', 'touchstart'];
 
-export const useClickOutside = <TEvent extends Event = Event>(
+export const useClickOutside = <T extends Event = Event>(
   ref: RefObject<HTMLElement | null>,
-  onClickOutside: (event: TEvent) => void,
+  onClickOutside: (event: T) => void,
   events: string[] = defaultEvents
 ) => {
   const savedCallback = useRef(onClickOutside);

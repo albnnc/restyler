@@ -4,10 +4,10 @@ import { TableCell } from '../TableCell';
 import { TableRow, TableRowProps } from '../TableRow';
 import { Column } from './Column';
 
-interface DataRowProps<TDatum> extends TableRowProps {
-  columns: Column<TDatum>[];
-  datum: TDatum;
-  expansion?: (datum: TDatum) => ReactNode;
+interface DataRowProps<Datum> extends TableRowProps {
+  columns: Column<Datum>[];
+  datum: Datum;
+  expansion?: (datum: Datum) => ReactNode;
   rowIndex: number;
 }
 
