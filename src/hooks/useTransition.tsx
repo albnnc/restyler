@@ -1,95 +1,132 @@
-import { useCallback, useMemo, useReducer, useRef, RefObject } from 'react';
+import {
+  useMemo,
+  useState,
+  useEffect,
+  useLayoutEffect,
+  TransitionEvent,
+  useCallback,
+  useContext,
+  ForwardRefExoticComponent,
+  PropsWithoutRef,
+  RefAttributes,
+  ForwardRefRenderFunction,
+  useRef
+} from 'react';
 import { requestAnimationDelay } from '../utils';
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { SystemContext } from '../components';
+import { useCleanableRef } from './useCleanableRef';
+import { useForwardRef } from './useForwardRef';
 
-export type TransitionStage = undefined | 'enter' | 'leave';
+export interface TransitionerProps {
+  isVisible: boolean;
+  isEntering: boolean;
+}
 
-export const useTransition = <TElement extends HTMLElement>(
-  ref: RefObject<TElement>,
-  isMounted?: boolean
+export type Transitioner<T, P = TransitionerProps> =
+  | ForwardRefRenderFunction<T, P>
+  | ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
+
+export interface TransitionOptions {
+  deps: any[];
+  isMounted: boolean;
+}
+
+export const useTransition = <T extends HTMLElement>(
+  transitioner: Transitioner<T>,
+  options: TransitionOptions
 ) => {
-  const reflow = useCallback(() => ref.current?.offsetHeight, []);
-  const [_, rerender] = useReducer(() => Symbol(), Symbol());
+  const { defaults } = useContext(SystemContext);
+  const { deps, isMounted } = {
+    ...defaults?.transitionOptions,
+    ...options
+  };
+  const Component = useForwardRef(transitioner, deps);
+  const [isVisible, setIsVisible] = useState(!!isMounted);
+  const [isEntering, setIsEntering] = useState(false);
+  const [isReallyMounted, setIsReallyMounted] = useState(!!isMounted);
 
-  const transition = useRef({
-    stage: undefined as TransitionStage,
-    isAnimating: false,
-    isMounted: !!isMounted,
-    handlers: undefined as
-      | undefined
-      | {
-          id: any;
-          transitionend: () => void;
-          transitionstart: () => void;
+  const element = useRef<T>();
+  const properties = useRef([] as string[]);
+  const reflow = useCallback(() => {
+    // Reflow should be called at the time of
+    // non-existent property transitions, so
+    // here we can reset the property registry.
+    properties.current = [];
+    // Reflowing DOM node via offset height calculation.
+    // Returning the value in order it not being removed
+    // by aggressive compilation optimizations.
+    return element.current?.offsetHeight;
+  }, []);
+  const handlers = useMemo(
+    () => ({
+      transitionrun: ({ propertyName }) => {
+        properties.current.push(propertyName);
+      },
+      transitionend: ({ propertyName }: TransitionEvent) => {
+        properties.current = properties.current.filter(v => v !== propertyName);
+        if (properties.current.length < 1) {
+          setIsReallyMounted(isMounted);
+          setIsEntering(false);
         }
-  }).current;
-
-  const handleEventListeners = useCallback(
-    (action: 'add' | 'remove', handlers: typeof transition['handlers']) => {
-      Object.entries(handlers ?? {}).forEach(([event, fn]) => {
-        if (typeof fn === 'function') {
-          ref.current?.[`${action}EventListener`](event, fn);
-        }
-      });
-    },
-    []
+      }
+    }),
+    [isMounted]
   );
 
-  useIsomorphicLayoutEffect(() => {
-    if (isMounted === transition.isMounted && transition.stage !== 'leave') {
-      return;
-    }
-    transition.isAnimating = false;
-    const handlers = (transition.handlers = {
-      id: Symbol(),
-      transitionstart: () => (transition.isAnimating = true),
-      transitionend: () => {
-        if (!ref.current) {
-          return;
-        }
-        handleEventListeners('remove', handlers);
-        transition.isMounted = transition.stage !== 'leave';
-        transition.isAnimating = false;
-        transition.stage = undefined;
-        rerender();
-      }
-    });
+  const handleBinding = useCleanableRef<T>(
+    (el: T) => {
+      element.current = el;
+      const handleAction = (action: 'add' | 'remove') =>
+        Object.keys(handlers).forEach(event => {
+          el[`${action}EventListener`](event, handlers[event]);
+        });
+      handleAction('add');
+      return () => {
+        handleAction('remove');
+      };
+    },
+    [handlers]
+  );
+
+  useLayoutEffect(() => {
+    reflow();
     if (isMounted) {
-      transition.stage = transition.stage === undefined ? 'enter' : undefined;
-      transition.isMounted = true;
-      handleEventListeners('remove', handlers);
+      if (isReallyMounted) {
+        setIsVisible(true);
+      } else {
+        setIsReallyMounted(true);
+        setIsEntering(true);
+      }
     } else {
-      transition.stage = 'leave';
-      handleEventListeners('add', handlers);
+      setIsVisible(false);
+      setIsEntering(false);
+      const isActual = { current: true };
+      requestAnimationDelay(() => {
+        if (properties.current.length < 1 && isActual.current) {
+          setIsReallyMounted(false);
+        }
+      });
+      return () => {
+        isActual.current = false;
+      };
     }
-    rerender();
-    return () => {
-      handleEventListeners('remove', handlers);
-    };
+    return undefined;
   }, [isMounted]);
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     reflow();
-    if (transition.stage === 'enter') {
-      transition.stage = undefined;
-      rerender();
-    } else if (transition.stage === 'leave') {
-      // Waiting a little bit and checking if animation
-      // has started. If not, one has to force end transition,
-      // but only after checking the handler relevance.
-      const targetId = transition.handlers?.id ?? Symbol();
-      requestAnimationDelay(() => {
-        if (!transition.isAnimating && transition.handlers?.id === targetId) {
-          transition.handlers?.transitionend();
-        }
-      });
-    }
-  }, [transition.stage]);
+    setIsVisible(isReallyMounted);
+  }, [isReallyMounted]);
 
-  const transitionProps = useMemo(
-    () => ({ 'data-transition': transition.stage }),
-    [transition.stage]
+  return useMemo(
+    () =>
+      isReallyMounted ? (
+        <Component
+          ref={handleBinding}
+          isVisible={isVisible}
+          isEntering={isEntering}
+        />
+      ) : null,
+    [Component, isReallyMounted, isVisible, isEntering, handleBinding]
   );
-
-  return [transition.isMounted, transitionProps] as const;
 };

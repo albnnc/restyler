@@ -62,19 +62,13 @@ export const select: Theme = {
     radius: 'small',
     elevation: 'medium',
 
-    extend: {
+    extend: ({ props: { isVisible } }: ExtendOptions) => ({
       minWidth: '200px',
       maxHeight: '300px',
       overflowY: 'auto',
-
-      opacity: 1,
-      transform: 'translateY(0)',
-      transition: 'all 0.2s',
-
-      '&[data-transition]': {
-        opacity: 0,
-        transform: 'translateY(-0.5rem)'
-      }
-    }
+      opacity: isVisible ? 1 : 0,
+      transform: `translateY(${isVisible ? '0' : '-0.5rem'})`,
+      transition: 'all 0.2s'
+    })
   }
 };

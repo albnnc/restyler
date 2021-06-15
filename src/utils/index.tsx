@@ -13,7 +13,6 @@ export * from './hash';
 export * from './merge';
 export * from './mergeThemes';
 export * from './mergeThemes';
-export * from './openTransition';
 export * from './pick';
 export * from './requestAnimationDelay';
 export * from './set';

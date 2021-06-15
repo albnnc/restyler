@@ -1,9 +1,9 @@
 // tslint:disable:member-ordering
-export interface FormWidgetProps<TValue = any> {
+export interface FormWidgetProps<Value = any> {
   disabled?: boolean;
   invalid?: boolean;
   required?: boolean;
 
-  value?: TValue;
-  onChange?: (value: TValue) => void;
+  value?: Value;
+  onChange?: (value: Value) => void;
 }

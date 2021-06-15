@@ -7,7 +7,7 @@ export const notification: Theme = {
   padding: 'medium',
   color: 'white',
   margin: 'medium',
-  extend: ({}) => {
+  extend: ({ props: { isVisible, isEntering } }) => {
     return {
       width: '400px',
       transition: [
@@ -16,18 +16,10 @@ export const notification: Theme = {
         'top 0.3s ease',
         'bottom 0.3s ease'
       ].join(', '),
-      opacity: 1,
-      transform: 'translate(0)',
-
-      '&[data-transition="enter"]': {
-        opacity: 0,
-        transform: 'translate(0.7rem)'
-      },
-
-      '&[data-transition="leave"]': {
-        opacity: 0,
-        transform: 'translate(-0.7rem)'
-      }
+      opacity: isVisible ? 1 : 0,
+      transform: `translateY(${
+        isVisible ? '0' : isEntering ? '0.7rem' : '-0.7rem'
+      })`
     };
   },
   kinds: {

@@ -3,7 +3,6 @@ import { anchor } from './anchor';
 import { box } from './box';
 import { button } from './button';
 import { card } from './card';
-import { carousel } from './carousel';
 import { checkbox } from './checkbox';
 import { collapse } from './collapse';
 import { container } from './container';
@@ -34,7 +33,6 @@ export const defaultTheme: Theme = {
   box,
   button,
   card,
-  carousel,
   checkbox,
   collapse,
   container,

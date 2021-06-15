@@ -2,9 +2,9 @@ import { Style } from './Style';
 import { BasicStyleProps } from './StyleProps';
 import { Variables } from './Variables';
 
-export interface ExtendOptions<TProps = any> {
+export interface ExtendOptions<Props = any> {
   createStyle: (props: BasicStyleProps) => Style;
-  props: TProps;
+  props: Props;
 }
 
 export interface ExtendFn {
