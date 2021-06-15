@@ -7,6 +7,7 @@ import React, {
   useMemo,
   useContext
 } from 'react';
+import { hash } from '../utils';
 import { Notification, NotificationProps, SystemContext } from '../components';
 import { useSharedRef } from './useSharedRef';
 import {
@@ -42,12 +43,28 @@ export const useNotification = () => {
     HTMLDivElement,
     NotificationOptions
   >(
-    ({ context, ...transitionProps }, ref) => {
-      const { placement, duration, render, ...notificationProps } = {
-        ...defaults?.notificationOptions,
-        ...context
-      };
+    ({ context, handleClose: handleCurrentClose, ...rest }, ref) => {
+      const options = useMemo(
+        () => ({
+          ...defaults?.notificationOptions,
+          ...context
+        }),
+        [context]
+      );
+      const { placement, duration, render, onClose } = options;
+      const props = useMemo(
+        () => ({
+          handleClose: () => {
+            handleCurrentClose();
+            onClose?.();
+          },
+          ...rest
+        }),
+        [handleCurrentClose, hash(rest), onClose]
+      );
+      const { handleClose } = props;
       const id = useMemo(() => Symbol(), []);
+      const [_, update] = useReducer(v => v + 1, 0);
       const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
       const getNotificationIndex = useCallback(() => {
         const i = notifications.findIndex(v => v.id === id);
@@ -56,12 +73,11 @@ export const useNotification = () => {
         // thus we can predict its index as the length of array.
         return i === -1 ? notifications.length : i;
       }, []);
-      const [_, update] = useReducer(v => v + 1, 0);
       useEffect(() => {
         const notification = {
           id,
           ref: sharedRef,
-          props: transitionProps,
+          props,
           update
         };
         if (getNotificationIndex() === -1) {
@@ -69,10 +85,15 @@ export const useNotification = () => {
         } else {
           notifications[getNotificationIndex()] = notification;
         }
+        return () => {
+          // One needs to update other notifications on unmount
+          // for them to keep the order without gaps.
+          notifications.forEach(v => v.update());
+        };
       }, []);
       useEffect(() => {
         if (duration) {
-          const timeoutId = setTimeout(transitionProps.handleClose, duration);
+          const timeoutId = setTimeout(handleClose, duration);
           return () => clearTimeout(timeoutId);
         }
         return undefined;
@@ -109,13 +130,8 @@ export const useNotification = () => {
         [stickProperty]: 0
       } as const;
       return (
-        <Notification
-          ref={sharedRef}
-          style={style}
-          {...notificationProps}
-          {...transitionProps}
-        >
-          {render?.(transitionProps)}
+        <Notification ref={sharedRef} style={style} {...props} {...options}>
+          {render?.(props)}
         </Notification>
       );
     },

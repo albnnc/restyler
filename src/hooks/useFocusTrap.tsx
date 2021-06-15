@@ -4,10 +4,12 @@ import { useStack } from './useStack';
 export const useFocusTrap = <T extends HTMLElement>(ref: RefObject<T>) => {
   const isOnTop = useStack(ref);
 
-  const [firstFocusable, setFirstFocusable] =
-    useState<HTMLElement | undefined>(undefined);
-  const [lastFocusable, setLastFocusable] =
-    useState<HTMLElement | undefined>(undefined);
+  const [firstFocusable, setFirstFocusable] = useState<HTMLElement | undefined>(
+    undefined
+  );
+  const [lastFocusable, setLastFocusable] = useState<HTMLElement | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const el = ref.current;

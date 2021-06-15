@@ -1,3 +1,4 @@
 export * from './useModal';
-export * from './useModalOpener';
-export * from './useQuestionOpener';
+
+export { ModalOptions, ModalRendererProps } from './useModalOpener';
+export { QuestionOptions, QuestionRendererProps } from './useQuestionOpener';
