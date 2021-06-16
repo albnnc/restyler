@@ -2,12 +2,16 @@ import React, {
   forwardRef,
   useContext,
   HTMLAttributes,
-  ReactNode
+  ReactNode,
+  useMemo,
+  Children,
+  isValidElement
 } from 'react';
 import { useThemed } from '../../hooks';
 import { StyleProps } from '../../models';
 import { Collapse } from '../Collapse';
 import { MenuContext } from './MenuContext';
+import { hash } from 'src/utils';
 
 export interface MenuGroupProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
@@ -23,6 +27,14 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
     });
     const MenuGroupItems = useThemed('div', { path: 'menu.group.items' });
     const ThemedMenuGroup = useThemed('div', { path: 'menu.group' });
+    const content = useMemo(
+      () => <MenuGroupItems>{children}</MenuGroupItems>,
+      [
+        Children.map(children, v =>
+          isValidElement(v) ? v.key ?? v.props.id ?? hash(v.props) : v
+        )?.join()
+      ]
+    );
     const { activeIds, onGroupClick } = useContext(MenuContext);
     return (
       <ThemedMenuGroup ref={ref} {...rest}>
@@ -32,9 +44,7 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
         >
           {title}
         </MenuGroupTitle>
-        <Collapse isOpen={activeIds.includes(id)}>
-          <MenuGroupItems>{children}</MenuGroupItems>
-        </Collapse>
+        <Collapse isOpen={activeIds.includes(id)}>{content}</Collapse>
       </ThemedMenuGroup>
     );
   }
