@@ -9,9 +9,9 @@ import React, {
 } from 'react';
 import { useThemed } from '../../hooks';
 import { StyleProps } from '../../models';
+import { hash } from '../../utils';
 import { Collapse } from '../Collapse';
 import { MenuContext } from './MenuContext';
-import { hash } from 'src/utils';
 
 export interface MenuGroupProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
