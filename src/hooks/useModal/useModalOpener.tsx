@@ -1,8 +1,9 @@
 import React, { ReactNode, useCallback, useMemo } from 'react';
 import { Layer, Modal, ModalProps } from '../../components';
 import { useClickOutside } from '../useClickOutside';
+import { useFocusTrap } from '../useFocusTrap';
 import { useSharedRef } from '../useSharedRef';
-import { useStack } from '../useStack';
+import { interactiveStackId, useStack } from '../useStack';
 import {
   StandaloneTransitionerProps,
   useStandaloneTransition
@@ -15,8 +16,6 @@ export interface ModalOptions extends Omit<ModalProps, 'children'> {
   onClose?: () => void;
   render: (props: StandaloneTransitionerProps) => ReactNode;
 }
-
-export const modalStackId = Symbol();
 
 export const useModalOpener = () =>
   useStandaloneTransition<HTMLDivElement, ModalOptions>(
@@ -39,7 +38,7 @@ export const useModalOpener = () =>
             []
           );
           const sharedRed = useSharedRef<HTMLDivElement>(null, [ref]);
-          const isOnTop = useStack(modalStackId);
+          const isOnTop = useStack(interactiveStackId);
           useClickOutside(sharedRed, () => isOnTop && handleClose());
           return (
             <Modal ref={sharedRed} {...modalProps} {...modalTransitionProps}>
@@ -52,8 +51,10 @@ export const useModalOpener = () =>
           isMounted: layerTransitionProps.isVisible
         }
       );
+      const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
+      useFocusTrap(sharedRef);
       return (
-        <Layer ref={ref} kind="backdrop" {...layerTransitionProps}>
+        <Layer ref={sharedRef} kind="backdrop" {...layerTransitionProps}>
           {modalTransition}
         </Layer>
       );

@@ -39,3 +39,5 @@ export const useStack = (id: any) => {
 
   return isOnTop;
 };
+
+export const interactiveStackId = Symbol();

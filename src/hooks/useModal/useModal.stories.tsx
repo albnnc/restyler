@@ -1,6 +1,16 @@
 import { Meta } from '@storybook/react';
 import React, { useState } from 'react';
-import { Box, Button, useModal } from 'src';
+import {
+  Box,
+  Button,
+  Form,
+  FormField,
+  FormRow,
+  Heading,
+  Select,
+  SelectOption,
+  useModal
+} from 'src';
 
 export default {
   title: 'hooks/useModal'
@@ -48,31 +58,36 @@ export const Question = () => {
   );
 };
 
-// export const WithForm = () => {
-//   const { openModal } = useModal();
-//   return (
-//     <Button
-//       kind="primary"
-//       onClick={() =>
-//         openModal({
-//           render: ({ handleClose }) => (
-//             <Form onSubmit={handleClose}>
-//               <Heading kind="4">Let's leave feedback</Heading>
-//               <FormRow margin={{ top: 'medium' }}>
-//                 <FormField name="username" label="Username" />
-//                 <FormField name="email" label="Email" />
-//               </FormRow>
-//               <Box direction="row" justify="end" margin={{ top: 'medium' }}>
-//                 <Button type="submit" kind="primary">
-//                   Submit
-//                 </Button>
-//               </Box>
-//             </Form>
-//           )
-//         })
-//       }
-//     >
-//       Open
-//     </Button>
-//   );
-// };
+export const WithForm = () => {
+  const { openModal } = useModal();
+  return (
+    <Button
+      kind="primary"
+      onClick={() =>
+        openModal({
+          render: ({ handleClose }) => (
+            <Form onSubmit={handleClose}>
+              <Heading kind="4">Let's leave feedback</Heading>
+              <FormRow margin={{ top: 'medium' }}>
+                <FormField name="username" label="Username">
+                  <Select>
+                    <SelectOption value="admin" />
+                    <SelectOption value="guest" />
+                  </Select>
+                </FormField>
+                <FormField name="email" label="Email" />
+              </FormRow>
+              <Box direction="row" justify="end" margin={{ top: 'medium' }}>
+                <Button type="submit" kind="primary">
+                  Submit
+                </Button>
+              </Box>
+            </Form>
+          )
+        })
+      }
+    >
+      Open
+    </Button>
+  );
+};

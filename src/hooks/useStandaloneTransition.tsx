@@ -1,5 +1,4 @@
 import React, {
-  ComponentType,
   createRef,
   forwardRef,
   useCallback,

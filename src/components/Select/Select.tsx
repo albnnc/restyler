@@ -10,8 +10,10 @@ import React, {
 } from 'react';
 import { disableScroll } from '../../utils';
 import {
+  interactiveStackId,
   useClickOutside,
   useSharedRef,
+  useStack,
   useStandaloneTransition,
   useThemed,
   useUpdateEffect
@@ -83,6 +85,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     (props, ref) => {
       const dropRef = useSharedRef<HTMLDivElement>(null, [ref]);
       useClickOutside(dropRef, props.handleClose);
+      useStack(interactiveStackId);
       useEffect(() => {
         return disableScroll();
       }, []);
