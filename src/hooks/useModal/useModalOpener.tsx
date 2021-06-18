@@ -1,4 +1,5 @@
-import React, { ReactNode, useCallback, useMemo } from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo } from 'react';
+import { disableScroll } from '../../utils';
 import { Layer, Modal, ModalProps } from '../../components';
 import { useClickOutside } from '../useClickOutside';
 import { useFocusTrap } from '../useFocusTrap';
@@ -53,6 +54,9 @@ export const useModalOpener = () =>
       );
       const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
       useFocusTrap(sharedRef);
+      useEffect(() => {
+        return disableScroll();
+      }, []);
       return (
         <Layer ref={sharedRef} kind="backdrop" {...layerTransitionProps}>
           {modalTransition}
