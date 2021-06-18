@@ -59,10 +59,16 @@ export const useTransition = <T extends HTMLElement>(
   }, []);
   const handlers = useMemo(
     () => ({
-      transitionrun: ({ propertyName }) => {
+      transitionrun: ({ target, propertyName }) => {
+        if (target !== element.current) {
+          return;
+        }
         properties.current.push(propertyName);
       },
-      transitionend: ({ propertyName }: TransitionEvent) => {
+      transitionend: ({ target, propertyName }: TransitionEvent) => {
+        if (target !== element.current) {
+          return;
+        }
         properties.current = properties.current.filter(v => v !== propertyName);
         if (properties.current.length < 1) {
           setIsReallyMounted(isMounted);
