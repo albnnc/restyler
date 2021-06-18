@@ -58,11 +58,11 @@ task('start:docs', async () => {
 
 task('lint', async () => {
   await execa.command(
-    'npx eslint ./{src,storybook}/**/*.{js,jsx,ts,tsx} --fix',
+    'npx eslint ./{src,storybook}/**/*.{ts,tsx} --fix',
     execaOptions
   );
   await execa.command(
-    'npx prettier ./{src,storybook}/**/*.{js,jsx,ts,tsx} --write',
+    'npx prettier ./{src,storybook}/**/*.{ts,tsx} --write',
     execaOptions
   );
 });
