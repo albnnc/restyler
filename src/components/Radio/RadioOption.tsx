@@ -1,20 +1,28 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
 import { StyleProps } from '../../models';
-import { RadioItemProps } from './RadioItemProps';
 
 export interface RadioOptionProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, keyof RadioItemProps>,
-    RadioItemProps,
-    StyleProps {}
+  extends HTMLAttributes<HTMLDivElement>,
+    StyleProps {
+  isActive?: boolean;
+  onClick?: () => void;
+  value?: any;
+}
 
 export const RadioOption = forwardRef<HTMLDivElement, RadioOptionProps>(
   ({ children, isActive, value, onClick, ...rest }, ref) => {
     const ThemedRadioOption = useThemed('div', { path: 'radio.option' });
-    const ThemedRadioOptionChecker = useThemed<'span', RadioItemProps>('span', {
+    const ThemedRadioOptionChecker = useThemed<
+      'span',
+      Pick<RadioOptionProps, 'isActive' | 'value'>
+    >('span', {
       path: 'radio.option.checker'
     });
-    const ThemedRadioOptionLabel = useThemed<'label', RadioItemProps>('label', {
+    const ThemedRadioOptionLabel = useThemed<
+      'label',
+      Pick<RadioOptionProps, 'isActive' | 'value'>
+    >('label', {
       path: 'radio.option.label'
     });
     return (
@@ -27,3 +35,5 @@ export const RadioOption = forwardRef<HTMLDivElement, RadioOptionProps>(
     );
   }
 );
+
+RadioOption.displayName = 'RadioOption';

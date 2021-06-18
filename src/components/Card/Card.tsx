@@ -8,3 +8,5 @@ export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
   const ThemedCard = useThemed('div', { path: 'card' });
   return <ThemedCard ref={ref} {...props} />;
 });
+
+Card.displayName = 'Card';

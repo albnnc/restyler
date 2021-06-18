@@ -12,3 +12,5 @@ export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
     return <ThemedTableBody ref={ref} {...props} />;
   }
 );
+
+TableBody.displayName = 'TableBody';

@@ -17,3 +17,5 @@ export const FormRow = forwardRef<HTMLDivElement, FormRowProps>(
     );
   }
 );
+
+FormRow.displayName = 'CardHeader';

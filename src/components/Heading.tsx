@@ -14,3 +14,5 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
     return <ThemedHeading ref={ref} {...props} />;
   }
 );
+
+Heading.displayName = 'Heading';

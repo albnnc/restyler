@@ -122,3 +122,5 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     );
   }
 );
+
+Scroll.displayName = 'Scroll';

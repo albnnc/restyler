@@ -12,3 +12,5 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
     return <ThemedCardFooter ref={ref} {...props} />;
   }
 );
+
+CardFooter.displayName = 'CardFooter';

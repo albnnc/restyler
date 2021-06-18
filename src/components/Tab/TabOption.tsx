@@ -17,3 +17,5 @@ export const TabOption = forwardRef<HTMLDivElement, TabOptionProps>(
     return <ThemedTabOption ref={ref} {...props} />;
   }
 );
+
+TabOption.displayName = 'TabOption';

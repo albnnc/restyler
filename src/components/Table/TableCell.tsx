@@ -15,3 +15,5 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
     return <ThemedTableCell ref={ref} {...(props as any)} />;
   }
 );
+
+TableCell.displayName = 'TableCell';

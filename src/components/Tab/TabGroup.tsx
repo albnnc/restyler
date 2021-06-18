@@ -48,3 +48,5 @@ export const TabGroup = forwardRef<HTMLDivElement, TabGroupProps>(
     );
   }
 );
+
+TabGroup.displayName = 'TabGroup';

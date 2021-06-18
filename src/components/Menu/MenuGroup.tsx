@@ -49,3 +49,5 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
     );
   }
 );
+
+MenuGroup.displayName = 'MenuGroup';

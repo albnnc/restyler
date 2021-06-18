@@ -64,3 +64,5 @@ export const DataRow = ({
     ]
   );
 };
+
+DataRow.displayName = 'DataRow';

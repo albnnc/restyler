@@ -8,3 +8,5 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
   const ThemedBox = useThemed('div', { path: 'box' });
   return <ThemedBox ref={ref} {...props} />;
 });
+
+Box.displayName = 'Box';

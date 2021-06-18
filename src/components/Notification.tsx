@@ -13,3 +13,5 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
     return <ThemedNotification ref={ref} {...props} />;
   }
 );
+
+Notification.displayName = 'Notification';

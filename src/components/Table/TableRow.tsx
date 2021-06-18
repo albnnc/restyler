@@ -12,3 +12,5 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
     return <ThemedTableRow ref={ref} {...props} />;
   }
 );
+
+TableRow.displayName = 'TableRow';

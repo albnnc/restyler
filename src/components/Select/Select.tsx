@@ -130,3 +130,5 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     </ThemedSelect>
   );
 });
+
+Select.displayName = 'Select';

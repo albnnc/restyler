@@ -90,3 +90,5 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
     );
   }
 );
+
+DataTable.displayName = 'DataTable';

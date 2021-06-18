@@ -16,3 +16,5 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
   });
   return <ThemedImage ref={ref} {...props} />;
 });
+
+Image.displayName = 'Image';

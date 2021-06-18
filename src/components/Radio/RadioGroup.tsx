@@ -9,13 +9,13 @@ import React, {
 } from 'react';
 import { useThemed } from '../../hooks';
 import { FormWidgetProps, StyleProps } from '../../models';
-import { RadioItemProps } from './RadioItemProps';
+import { RadioOptionProps } from './RadioOption';
 
 export interface RadioGroupProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps<string>,
     StyleProps {
-  children: ReactElement<RadioItemProps> | ReactElement<RadioItemProps>[];
+  children: ReactElement<RadioOptionProps> | ReactElement<RadioOptionProps>[];
 }
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
@@ -31,7 +31,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
 
     const childrenWithProps = Children.map(
       children,
-      (child: ReactElement<RadioItemProps>) => {
+      (child: ReactElement<RadioOptionProps>) => {
         return cloneElement(child, {
           isActive: innerValue === child.props.value,
           onClick: () => {
@@ -49,3 +49,5 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     );
   }
 );
+
+RadioGroup.displayName = 'RadioGroup';

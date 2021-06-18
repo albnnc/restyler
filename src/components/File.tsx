@@ -78,3 +78,5 @@ const getLabel = (files: FileList | undefined) => {
   }
   return `${files.item(0)?.name}`;
 };
+
+File.displayName = 'File';

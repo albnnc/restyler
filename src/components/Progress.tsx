@@ -12,3 +12,5 @@ export const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
     return <ThemedProgress ref={ref} {...props} />;
   }
 );
+
+Progress.displayName = 'Progress';

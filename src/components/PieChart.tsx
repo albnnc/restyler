@@ -110,3 +110,5 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
     );
   }
 );
+
+PieChart.displayName = 'PieChart';

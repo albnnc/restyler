@@ -24,3 +24,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return <ThemedButton ref={ref} type={type ?? 'button'} {...rest} />;
   }
 );
+
+Button.displayName = 'Button';

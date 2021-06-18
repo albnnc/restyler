@@ -12,3 +12,5 @@ export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
     return <ThemedCardBody ref={ref} {...props} />;
   }
 );
+
+CardBody.displayName = 'CardBody';

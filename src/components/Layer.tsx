@@ -21,3 +21,5 @@ export const Layer = forwardRef<HTMLDivElement, LayerProps>((props, ref) => {
   });
   return <ThemedLayer ref={ref} {...props} />;
 });
+
+Layer.displayName = 'Layer';

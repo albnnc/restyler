@@ -10,3 +10,5 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
   const ThemedTable = useThemed('table', { path: 'table' });
   return <ThemedTable ref={ref} {...props} />;
 });
+
+Table.displayName = 'Table';

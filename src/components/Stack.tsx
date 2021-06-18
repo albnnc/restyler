@@ -66,3 +66,5 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(
     );
   }
 );
+
+Stack.displayName = 'Stack';

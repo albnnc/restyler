@@ -17,3 +17,5 @@ export const SelectDrop = forwardRef<HTMLDivElement, SelectDropProps>(
     return <ThemedSelectDrop ref={ref} {...props} />;
   }
 );
+
+SelectDrop.displayName = 'SelectDrop';

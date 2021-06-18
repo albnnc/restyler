@@ -7,6 +7,7 @@ import React, {
 import { SystemContext } from '../components';
 import { Style, StyleProps, Theme } from '../models';
 import {
+  capitalizeFirst,
   createStyle,
   filterStyleProps,
   get,
@@ -30,7 +31,12 @@ export const useThemed = <
     return registry[token];
   }
 
-  const ThemedComponent = styled<Tag, StyleProps & ExtraProps>(tag, props => {
+  const displayName = path
+    .split('.')
+    .map(v => capitalizeFirst(v))
+    .join('');
+
+  const StyledComponent = styled<Tag, StyleProps & ExtraProps>(tag, props => {
     const { styleProps, ...rest } = filterStyleProps(props);
     const defaultStyleProps = styleProps.theme?.defaults ?? {};
     const themeStyleProps = get(styleProps.theme, path ?? '') ?? {};
@@ -51,12 +57,15 @@ export const useThemed = <
       })
     );
   });
+  StyledComponent.displayName = 'Styled' + displayName;
 
-  // TODO: remove `any`
-  registry[token] = forwardRef<Tag, any>((props, ref) => {
+  const ThemedComponent = forwardRef<Tag, any>((props, ref) => {
     const { theme } = useContext(SystemContext);
-    return <ThemedComponent ref={ref} theme={theme} {...props} />;
+    return <StyledComponent ref={ref} theme={theme} {...props} />;
   });
+  ThemedComponent.displayName = 'Themed' + displayName;
+
+  registry[token] = ThemedComponent;
 
   return registry[token];
 };

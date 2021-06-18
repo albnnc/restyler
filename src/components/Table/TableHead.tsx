@@ -12,3 +12,5 @@ export const TableHead = forwardRef<HTMLTableSectionElement, TableHeadProps>(
     return <ThemedTableHead ref={ref} {...props} />;
   }
 );
+
+TableHead.displayName = 'TableHead';
