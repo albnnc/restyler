@@ -19,8 +19,14 @@ import {
 } from './useTransition';
 import { useUpdateEffect } from './useUpdateEffect';
 
-type WrapProps<C> = { onUnmount: () => void; context?: C };
-type WrapHandlers = { handleClose: () => void };
+interface WrapProps<C> {
+  onUnmount: () => void;
+  context?: C;
+}
+
+interface WrapHandlers {
+  handleClose: () => void;
+}
 
 export interface StandaloneTransitionerProps<C = never>
   extends TransitionerProps {

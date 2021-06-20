@@ -2,7 +2,7 @@ type ClassNameArg =
   | string
   | boolean
   | { [key: string]: boolean }
-  | Array<ClassNameArg>
+  | ClassNameArg[]
   | null
   | void;
 

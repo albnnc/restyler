@@ -7,7 +7,7 @@ type InputRef<T> =
 
 export function useSharedRef<T>(
   initialValue: T | null,
-  refsToShare: Array<InputRef<T>>
+  refsToShare: InputRef<T>[]
 ): RefObject<T>;
 
 /**
@@ -20,7 +20,7 @@ export function useSharedRef<T>(
  */
 export function useSharedRef<T>(
   initialValue: T,
-  refsToShare: Array<InputRef<T>>
+  refsToShare: InputRef<T>[]
 ): RefObject<T> {
   // actual ref that will hold the value
   const innerRef = useRef<T>(initialValue);
