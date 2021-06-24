@@ -7,5 +7,5 @@ export interface DataTableProps<Datum> extends TableProps {
   columns: Column<Datum>[];
   data: Datum[];
   expansion?: (datum: Datum) => ReactNode;
-  getRowProps?: (datum: Datum) => DataRowProps<Datum>;
+  getRowProps?: (datum: Datum) => Partial<DataRowProps<Datum>>;
 }
