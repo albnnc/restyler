@@ -4,7 +4,7 @@ import { TableCell } from '../TableCell';
 import { TableRow, TableRowProps } from '../TableRow';
 import { Column } from './Column';
 
-interface DataRowProps<Datum> extends TableRowProps {
+export interface DataRowProps<Datum> extends TableRowProps {
   columns: Column<Datum>[];
   datum: Datum;
   expansion?: (datum: Datum) => ReactNode;

@@ -16,7 +16,7 @@ export const file: Theme = {
       display: 'block',
       textAlign: 'center',
       lineHeight: 'calc(1.5 * 1rem)',
-      whiteSpace: 'nowrpap',
+      whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis'
     }
