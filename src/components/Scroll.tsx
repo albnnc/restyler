@@ -3,7 +3,8 @@ import React, {
   useEffect,
   useRef,
   useState,
-  HTMLAttributes
+  HTMLAttributes,
+  useCallback
 } from 'react';
 import { useThemed } from '../hooks';
 import { StyleProps } from '../models';
@@ -65,49 +66,73 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
       if (!containerRef.current) {
         return;
       }
-      // @ts-ignore
-      // https://github.com/Microsoft/TypeScript/issues/28502
       const resizeObserver = new ResizeObserver(updateOffsets);
       resizeObserver.observe(containerRef.current);
       updateOffsets();
     }, [containerRef.current]);
 
-    return (
-      <ThemedScroll {...scrollOptions} ref={ref} {...rest}>
-        <ThemedScrollContainer
-          ref={containerRef}
-          onClickCapture={e => {
+    const getHandlers = useCallback(
+      (names: { [key: string]: string }, getX: (e: any) => number) => {
+        const noopName = 'noop';
+        const handlers = {
+          [names.onCapture ?? noopName]: e => {
             if (holder.isMoving) {
               e.stopPropagation();
             }
             holder.isMoving = false;
-          }}
-          onMouseDown={e => {
+          },
+          [names.onStart ?? noopName]: e => {
             if (!containerRef.current) {
               return;
             }
-            holder.isMouseDown = true;
-            holder.startX = e.pageX - containerRef.current.offsetLeft;
+            holder.isActive = true;
+            holder.startX = getX(e) - containerRef.current.offsetLeft;
             holder.scrollLeft = containerRef.current.scrollLeft;
-          }}
-          onMouseLeave={() => {
-            holder.isMouseDown = false;
-          }}
-          onMouseUp={e => {
-            holder.isMouseDown = false;
-          }}
-          onMouseMove={e => {
-            if (!containerRef.current || !holder.isMouseDown) {
+          },
+          [names.onStop ?? noopName]: () => (holder.isActive = false),
+          [names.onLeave ?? noopName]: () => (holder.isActive = false),
+          [names.onMove ?? noopName]: e => {
+            if (!containerRef.current || !holder.isActive) {
               return;
             }
             e.preventDefault();
-            const x = e.pageX - containerRef.current.offsetLeft;
+            const x = getX(e) - containerRef.current.offsetLeft;
             const walk = (transformDelta ?? (v => v))(x - holder.startX);
             const scrollLeft = holder.scrollLeft - walk;
             containerRef.current.scrollLeft = scrollLeft;
             updateOffsets();
             holder.isMoving = true;
-          }}
+          }
+        };
+        delete handlers[noopName];
+        return handlers;
+      },
+      []
+    );
+
+    return (
+      <ThemedScroll {...scrollOptions} ref={ref} {...rest}>
+        <ThemedScrollContainer
+          ref={containerRef}
+          {...getHandlers(
+            {
+              onCapture: 'onClickCapture',
+              onStart: 'onMouseDown',
+              onStop: 'onMouseUp',
+              onLeave: 'onMouseLeave',
+              onMove: 'onMouseMove'
+            },
+            e => e?.pageX ?? 0
+          )}
+          {...getHandlers(
+            {
+              onCapture: 'onGotPointerCapture',
+              onStart: 'onTouchStart',
+              onStop: 'onTouchEnd',
+              onMove: 'onTouchMove'
+            },
+            e => e?.touches?.[0]?.pageX ?? 0
+          )}
           {...scrollOptions}
           {...containerProps}
         >
@@ -122,5 +147,3 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     );
   }
 );
-
-Scroll.displayName = 'Scroll';

@@ -26,6 +26,9 @@ const createPseudoStyle = (opacity, isLeft) => ({
 });
 
 export const scroll: Theme = {
+  container: {
+    content: {}
+  },
   extend: ({ props }) => ({
     position: 'relative',
     overflow: 'hidden',
