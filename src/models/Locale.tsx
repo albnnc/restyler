@@ -1,6 +1,6 @@
 export interface Locale {
-  cancelText: string;
-  confirmText: string;
-  emptyText: string;
-  requiredText: string;
+  ok: string;
+  cancel: string;
+  empty: string;
+  required: string;
 }

@@ -71,9 +71,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     });
     const ThemedFormFieldHelp = useThemed('div', { path: 'form.field.help' });
 
-    const {
-      locale: { requiredText }
-    } = useContext(SystemContext);
+    const { locale } = useContext(SystemContext);
     const {
       manager: { values, setValues, errors, setValidators }
     } = useContext(FormContext);
@@ -84,7 +82,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         [name]: value => {
           const newFieldErrors = validate?.(value) ?? [];
           if (required && [undefined, null, ''].includes(value)) {
-            newFieldErrors.push(requiredText);
+            newFieldErrors.push(locale.required);
           }
           return newFieldErrors;
         }

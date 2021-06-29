@@ -28,21 +28,16 @@ export const Basics = () => {
     }
   );
   const [close, setClose] = useState<() => void>();
+  const openAndUpdate = () => {
+    const close = open();
+    setClose(() => () => {
+      close();
+      setClose(undefined);
+    });
+  };
   return (
     <Box css={{ position: 'relative' }}>
-      <Button
-        kind="primary"
-        onClick={
-          close ??
-          (() => {
-            const close = open();
-            setClose(() => () => {
-              close();
-              setClose(undefined);
-            });
-          })
-        }
-      >
+      <Button kind="primary" onClick={close ?? openAndUpdate}>
         Toggle
       </Button>
     </Box>

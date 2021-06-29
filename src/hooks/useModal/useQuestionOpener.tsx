@@ -13,8 +13,8 @@ export interface QuestionRendererProps
 }
 
 export interface QuestionOptions extends Omit<ModalOptions, 'render'> {
+  okText?: string;
   cancelText?: string;
-  confirmText?: string;
   content?: ReactNode;
   heading?: ReactNode;
   render?: (props: QuestionRendererProps) => ReactNode;
@@ -26,21 +26,21 @@ export const useQuestionOpener = () => {
   const renderDefaults = useCallback(
     (
       { handleClose }: QuestionRendererProps,
-      { cancelText, confirmText, content, heading }: QuestionOptions
+      { cancelText, okText, content, heading }: QuestionOptions
     ) => (
       <Fragment>
         {heading && <Heading>{heading}</Heading>}
         {content && <Box margin={{ top: 'medium' }}>{content}</Box>}
         <Box direction="row" justify="end" margin={{ top: 'medium' }}>
           <Button kind="secondary" onClick={() => handleClose(false)}>
-            {cancelText ?? locale.cancelText}
+            {cancelText ?? locale.cancel}
           </Button>
           <Button
             kind="primary"
             margin={{ left: 'small' }}
             onClick={() => handleClose(true)}
           >
-            {confirmText ?? locale.confirmText}
+            {okText ?? locale.ok}
           </Button>
         </Box>
       </Fragment>
