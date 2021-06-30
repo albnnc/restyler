@@ -11,6 +11,7 @@ export * from './Heading';
 export * from './Image';
 export * from './Input';
 export * from './Layer';
+export * from './Masonry';
 export * from './Menu';
 export * from './Modal';
 export * from './Notification';
