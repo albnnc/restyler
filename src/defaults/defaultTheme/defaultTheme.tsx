@@ -12,6 +12,7 @@ import { form } from './form';
 import { heading } from './heading';
 import { input } from './input';
 import { layer } from './layer';
+import { masonry } from './masonry';
 import { menu } from './menu';
 import { modal } from './modal';
 import { notification } from './notification';
@@ -41,6 +42,7 @@ export const defaultTheme: Theme = {
   heading,
   input,
   layer,
+  masonry,
   menu,
   modal,
   notification,

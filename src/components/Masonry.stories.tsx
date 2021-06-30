@@ -7,42 +7,26 @@ export default {
 };
 
 export const Blueprint = () => {
-  return <Masonry />;
+  return <Masonry columns={{ count: 1 }} />;
 };
 Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
+  const heights = [100, 200, 300, 100, 250, 100, 120, 110];
   return (
     <Masonry
-      template="repeat(3, 200px)"
+      columns={{
+        minWidth: '200px',
+        getProps: () => ({ gap: '5px' })
+      }}
       gap="5px"
-      css={{ width: '500px' }}
-      columnProps={{ gap: '5px' }}
+      css={{ width: '100%', maxWidth: '700px' }}
     >
-      <Box background="lightGrey" css={{ height: '100px' }}>
-        1
-      </Box>
-      <Box background="lightGrey" css={{ height: '200px' }}>
-        2
-      </Box>
-      <Box background="lightGrey" css={{ height: '300px' }}>
-        3
-      </Box>
-      <Box background="lightGrey" css={{ height: '100px' }}>
-        4
-      </Box>
-      <Box background="lightGrey" css={{ height: '250px' }}>
-        5
-      </Box>
-      <Box background="lightGrey" css={{ height: '100px' }}>
-        6
-      </Box>
-      <Box background="lightGrey" css={{ height: '120px' }}>
-        7
-      </Box>
-      <Box background="lightGrey" css={{ height: '100px' }}>
-        8
-      </Box>
+      {heights.map((v, i) => (
+        <Box key={i} background="rgba(0, 0, 0, 0.2)" css={{ height: `${v}px` }}>
+          {i + 1}
+        </Box>
+      ))}
     </Masonry>
   );
 };
