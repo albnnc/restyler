@@ -1,15 +1,10 @@
 import React from 'react';
 import { Box, Scroll } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'containers/Scroll'
 };
-
-export const Blueprint = () => {
-  return <Scroll>A</Scroll>;
-};
-Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   return (
@@ -39,3 +34,5 @@ export const Basics = () => {
     </Scroll>
   );
 };
+
+export const Blueprint = createBlueprint('scroll');

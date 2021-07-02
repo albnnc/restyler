@@ -1,20 +1,11 @@
 import { Meta } from '@storybook/react';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { File } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'forms/File'
 } as Meta;
-
-export const Blueprint = () => {
-  return (
-    <File>
-      <Fragment />
-    </File>
-  );
-};
-Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   return (
@@ -23,3 +14,5 @@ export const Basics = () => {
     </File>
   );
 };
+
+export const Blueprint = createBlueprint('file');

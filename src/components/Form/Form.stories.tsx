@@ -1,15 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Button, Form, FormField } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'forms/Form'
 };
-
-export const Blueprint = () => {
-  return <Form />;
-};
-Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   return (
@@ -21,3 +16,7 @@ export const Basics = () => {
     </Form>
   );
 };
+
+export const Blueprint = createBlueprint('form', {
+  exclude: /form\.field\..+/
+});

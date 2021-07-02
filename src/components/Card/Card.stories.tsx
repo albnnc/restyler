@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 import { Card, CardBody, CardFooter, CardHeader } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'containers/Card',
@@ -9,18 +9,6 @@ export default {
     backgrounds: { default: 'lightGrey' }
   }
 } as Meta;
-
-export const Blueprint = () => {
-  return (
-    <Card>
-      <CardHeader />
-      <CardBody />
-      <CardFooter />
-    </Card>
-  );
-};
-Blueprint.decorators = [blueprinted];
-Blueprint.parameters = { backgrounds: { default: 'white' } };
 
 export const Basics = () => {
   return <Card>Lorem ipsum</Card>;
@@ -35,3 +23,5 @@ export const ContentParts = () => {
     </Card>
   );
 };
+
+export const Blueprint = createBlueprint('card');

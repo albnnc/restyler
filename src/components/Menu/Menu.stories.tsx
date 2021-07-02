@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/react';
 import React, { useReducer } from 'react';
 import { Menu, MenuGroup, MenuItem } from 'src';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'navigation/Menu'
@@ -42,3 +43,5 @@ export const Basics = () => {
     </Menu>
   );
 };
+
+export const Blueprint = createBlueprint('menu');

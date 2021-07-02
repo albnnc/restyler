@@ -1,15 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { Box, Button, Collapse } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'containers/Collapse'
 };
-
-export const Blueprint = () => {
-  return <Collapse isOpen />;
-};
-Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,3 +25,5 @@ export const Basics = () => {
     </Box>
   );
 };
+
+export const Blueprint = createBlueprint('collapse');

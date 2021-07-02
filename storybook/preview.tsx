@@ -7,6 +7,10 @@ export const parameters = {
   backgrounds: {
     values: [
       {
+        name: 'white',
+        value: palette.white
+      },
+      {
         name: 'grey',
         value: palette.grey
       },

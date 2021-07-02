@@ -1,15 +1,10 @@
 import React from 'react';
 import { Box } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'containers/Box'
 };
-
-export const Blueprint = () => {
-  return <Box />;
-};
-Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   return <Box>Sample text</Box>;
@@ -30,3 +25,5 @@ export const Flexbox = () => {
     </Box>
   );
 };
+
+export const Blueprint = createBlueprint('box');

@@ -1,16 +1,7 @@
-import React, { Fragment } from 'react';
-import { FormField } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'forms/FormField'
 };
 
-export const Blueprint = () => {
-  return (
-    <FormField name="_" label="_" help="_">
-      <Fragment />
-    </FormField>
-  );
-};
-Blueprint.decorators = [blueprinted];
+export const Blueprint = createBlueprint('form.field');

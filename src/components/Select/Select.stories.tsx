@@ -1,20 +1,11 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 import { Select, SelectOption } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'forms/Select'
 } as Meta;
-
-export const Blueprint = () => {
-  return (
-    <Select>
-      <SelectOption value="_" />
-    </Select>
-  );
-};
-Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   return (
@@ -25,3 +16,5 @@ export const Basics = () => {
     </Select>
   );
 };
+
+export const Blueprint = createBlueprint('select');

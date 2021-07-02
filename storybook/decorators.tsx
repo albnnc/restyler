@@ -2,7 +2,6 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { Global } from '@emotion/react';
-import { blueprintTheme } from './blueprintTheme';
 import {
   defaultTheme,
   Box,
@@ -13,17 +12,12 @@ import {
   useImperativePortal
 } from 'src';
 
-const defaultSystem = createSystem({
+const system = createSystem({
   theme: defaultTheme,
   styled: (tag: any, fn: any) =>
     styled(tag, {
       shouldForwardProp: (prop: any) => isPropValid(prop) && !isStyleProp(prop)
     })(fn) as any
-});
-
-const blueprintSystem = createSystem({
-  ...defaultSystem,
-  theme: blueprintTheme
 });
 
 const SystemContainer = (props: { children: ReactNode; system: System }) => {
@@ -66,7 +60,7 @@ const SystemContainer = (props: { children: ReactNode; system: System }) => {
 
 export const systemized = (Story, context) => {
   return (
-    <SystemContainer system={defaultSystem}>
+    <SystemContainer system={system}>
       <Story {...context} />
     </SystemContainer>
   );
@@ -88,11 +82,3 @@ export const centered = Story => (
     <Story />
   </Box>
 );
-
-export const blueprinted = Story => {
-  return (
-    <SystemContext.Provider value={blueprintSystem}>
-      <Story />
-    </SystemContext.Provider>
-  );
-};

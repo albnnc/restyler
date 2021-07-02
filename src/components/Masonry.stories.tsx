@@ -1,15 +1,10 @@
 import React from 'react';
 import { Box, Masonry } from 'src';
-import { blueprinted } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'containers/Masonry'
 };
-
-export const Blueprint = () => {
-  return <Masonry columns={{ count: 1 }} />;
-};
-Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   const heights = [100, 200, 300, 100, 250, 100, 120, 110];
@@ -30,3 +25,5 @@ export const Basics = () => {
     </Masonry>
   );
 };
+
+export const Blueprint = createBlueprint('masonry');
