@@ -36,8 +36,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     'span',
     { path: 'select.selection' }
   );
+  const ThemedSelectPlaceholder = useThemed<'span'>('span', {
+    path: 'select.placeholder'
+  });
 
-  const { value, disabled, onChange, isMultiple, children } = props;
+  const { children, isMultiple, placeholder, value, disabled, onChange } =
+    props;
   const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
   const [innerValue, setInnerValue] = useReducer(
     (active: any, action: { isForced?: boolean; value: any }) => {
@@ -64,7 +68,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
 
   const childrenArray = useMemo(
     () => Children.toArray(children) as ReactElement<SelectOptionProps>[],
-    [children]
+    [
+      Children.map(
+        children,
+        (v: ReactElement<SelectOptionProps>) => v.props.value ?? v.key
+      ).join()
+    ]
   );
 
   const displayData = useMemo(() => {
@@ -72,7 +81,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
       isMultiple ? innerValue.includes(value) : innerValue === value
     );
     if (activeOptions.length < 1) {
-      return <>&nbsp;</>;
+      return placeholder ? (
+        <ThemedSelectPlaceholder>{placeholder}</ThemedSelectPlaceholder>
+      ) : (
+        <>&nbsp;</>
+      );
     }
     return activeOptions.map(({ props: { children, value } }) => (
       <ThemedSelectSelection key={value} isMultiple={isMultiple}>
@@ -121,7 +134,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
         </SelectDrop>
       );
     },
-    { deps: [] }
+    { deps: [childrenArray] }
   );
 
   return (

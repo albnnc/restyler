@@ -18,7 +18,7 @@ Blueprint.decorators = [blueprinted];
 
 export const Basics = () => {
   return (
-    <Select css={{ width: '300px' }}>
+    <Select placeholder="Select value" css={{ width: '300px' }}>
       <SelectOption value="a">A</SelectOption>
       <SelectOption value="b">B</SelectOption>
       <SelectOption value="c">C</SelectOption>

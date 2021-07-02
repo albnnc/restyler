@@ -57,11 +57,14 @@ export const select: Theme = {
     })
   },
 
+  placeholder: {
+    color: 'weakText'
+  },
+
   drop: {
     background: 'white',
     radius: 'small',
     elevation: 'medium',
-
     extend: ({ props: { isVisible } }: ExtendOptions) => ({
       minWidth: '200px',
       maxHeight: '300px',
