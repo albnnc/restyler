@@ -1,6 +1,7 @@
 export * from './useClickOutside';
 export * from './useFocusTrap';
 export * from './useFormManager';
+export * from './useGrid';
 export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';
 export * from './useLoader';

@@ -4,22 +4,23 @@ import React, {
   HTMLAttributes,
   ReactElement,
   useContext,
-  useReducer,
   useState
 } from 'react';
-import { useIsomorphicLayoutEffect, useSharedRef, useThemed } from '../hooks';
+import {
+  GridAxisOptions,
+  useGrid,
+  useIsomorphicLayoutEffect,
+  useSharedRef,
+  useThemed
+} from '../hooks';
 import { StyleProps } from '../models';
 import { SystemContext } from './SystemContext';
-import { useCleanableRef } from 'src/hooks/useCleanableRef';
-import { measureChildren, Measurements } from 'src/utils';
+import { BoxMeasurements, measureChildren } from 'src/utils';
 
 export interface MasonryProps
   extends HTMLAttributes<HTMLDivElement>,
     StyleProps {
-  columns: {
-    count?: number;
-    minWidth?: string;
-    template?: string;
+  columns: GridAxisOptions & {
     getProps?: (options: {
       index: number;
       children: ReactElement[];
@@ -34,7 +35,9 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
 
     const system = useContext(SystemContext);
     const childrenArray = Children.toArray(children) as ReactElement[];
-    const [measurements, setMeasurements] = useState<Measurements[]>([]);
+    const [measurements, setMeasurements] = useState<
+      BoxMeasurements[] | undefined
+    >();
     useIsomorphicLayoutEffect(() => {
       measureChildren(
         <SystemContext.Provider value={system}>
@@ -43,47 +46,31 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
       ).then(setMeasurements);
     }, [childrenArray.map(v => v.key).join()]);
 
-    const [layout, updateLayout] = useReducer(
-      (prev: { [key: string]: number }, el: HTMLDivElement) => {
-        const changes = {} as typeof prev;
-        const style = getComputedStyle(el);
-        const template = style.getPropertyValue('grid-template-columns');
-        changes.xCount = template.split(' ').length || 1;
-        changes.xGap = parseFloat(style.getPropertyValue('gap')) || 0;
-        if (el.firstChild) {
-          const childStyle = getComputedStyle(el.firstChild as Element);
-          changes.yGap = parseFloat(childStyle.getPropertyValue('gap')) || 0;
-        }
-        return Object.keys(changes).some(k => changes[k] !== prev[k])
-          ? { ...prev, ...changes }
-          : prev;
-      },
-      {
-        xCount: 1,
-        xGap: 0,
-        yGap: 0
+    const { style, columnsCount, childGaps, handleElement } = useGrid<
+      HTMLDivElement,
+      { childGaps: number[] | undefined }
+    >({
+      columns,
+      getExtras: element => {
+        const children = Array.from(element?.childNodes ?? []);
+        const childGaps = children.map((v: HTMLElement) =>
+          parseFloat(getComputedStyle(v).getPropertyValue('gap'))
+        );
+        return { childGaps };
       }
-    );
-    const handleElement = useCleanableRef<HTMLDivElement>(el => {
-      updateLayout(el);
-      const observer = new ResizeObserver(entries => {
-        if (entries.some(v => v.target === el)) {
-          updateLayout(el);
-        }
-      });
-      observer.observe(el);
-      return () => observer.disconnect();
-    }, []);
+    });
     const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, handleElement]);
+    const isMeasured = !!(measurements && columnsCount && childGaps);
 
-    const columnHeights = new Array(layout.xCount).fill(0);
+    const columnHeights = new Array(columnsCount).fill(0);
     const columnElements = childrenArray
       .reduce((columns, child, i) => {
         const targetIndex = columnHeights.indexOf(Math.min(...columnHeights));
         columns[targetIndex].push(child);
         const { height = 1, margin: { top = 0, bottom = 0 } = {} } =
-          measurements[i] ?? {};
-        columnHeights[targetIndex] += height + top + bottom + layout.yGap;
+          measurements?.[i] ?? {};
+        const gap = childGaps?.[targetIndex] ?? 0;
+        columnHeights[targetIndex] += height + top + bottom + gap;
         return columns;
       }, columnHeights.map(() => []) as ReactElement[][])
       .map((v, i) => (
@@ -92,21 +79,12 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
           style={{ display: 'flex', flexDirection: 'column' }}
           {...columns.getProps?.({ index: i, children: v })}
         >
-          {v}
+          {isMeasured && v}
         </ThemedMasonryColumn>
       ));
-    const gridTemplateColumns = columns.count
-      ? `repeat(${columns.count}, 1fr)`
-      : columns.minWidth
-      ? `repeat(auto-fit, minmax(${columns.minWidth}, 1fr))`
-      : columns.template;
 
     return (
-      <ThemedMasonry
-        ref={sharedRef}
-        style={{ display: 'grid', gridTemplateColumns }}
-        {...rest}
-      >
+      <ThemedMasonry ref={sharedRef} style={style} {...rest}>
         {columnElements}
       </ThemedMasonry>
     );

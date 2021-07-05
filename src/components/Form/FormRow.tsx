@@ -7,15 +7,10 @@ export interface FormRowProps
     StyleProps {}
 
 export const FormRow = forwardRef<HTMLDivElement, FormRowProps>(
-  ({ children, ...rest }, ref) => {
+  (props, ref) => {
     const ThemedFormRow = useThemed('div', { path: 'form.row' });
-    const ThemedFormRowContent = useThemed('div', { path: 'form.row.content' });
-    return (
-      <ThemedFormRow ref={ref} {...rest}>
-        <ThemedFormRowContent>{children}</ThemedFormRowContent>
-      </ThemedFormRow>
-    );
+    return <ThemedFormRow ref={ref} {...props} />;
   }
 );
 
-FormRow.displayName = 'CardHeader';
+FormRow.displayName = 'FormRow';

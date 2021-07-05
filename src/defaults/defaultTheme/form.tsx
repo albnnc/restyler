@@ -35,22 +35,11 @@ export const form: Theme = {
     }
   },
 
-  row: {
-    content: {
-      direction: 'row',
-      wrap: true,
-      extend: ({ props }) => {
-        const mediumMargin = props.theme.variables?.margin?.medium ?? 0;
-        const mediumMarginHalf = `calc(${mediumMargin} / 2)`;
-        const mediumMarginNegativeHalf = `calc(${mediumMargin} / -2)`;
-        return {
-          margin: mediumMarginNegativeHalf,
-          '& > div': {
-            flex: '1 0 200px',
-            margin: mediumMarginHalf
-          }
-        };
-      }
+  grid: {
+    gap: 'medium',
+    extend: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))'
     }
   },
 
