@@ -2,7 +2,6 @@ import {
   useMemo,
   useState,
   useEffect,
-  useLayoutEffect,
   TransitionEvent,
   useCallback,
   useContext,
@@ -16,6 +15,7 @@ import { requestAnimationDelay } from '../utils';
 import { SystemContext } from '../components';
 import { useCleanableRef } from './useCleanableRef';
 import { useForwardRef } from './useForwardRef';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 export interface TransitionerProps {
   isVisible: boolean;
@@ -94,7 +94,7 @@ export const useTransition = <T extends HTMLElement>(
     [handlers]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     reflow();
     if (isMounted) {
       if (isReallyMounted) {
