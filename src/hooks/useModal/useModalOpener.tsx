@@ -15,7 +15,7 @@ export interface ModalRendererProps extends StandaloneTransitionerProps {}
 
 export interface ModalOptions extends Omit<ModalProps, 'children'> {
   onClose?: () => void;
-  render: (props: StandaloneTransitionerProps) => ReactNode;
+  render: (props: ModalRendererProps) => ReactNode;
 }
 
 export const useModalOpener = () =>
