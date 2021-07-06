@@ -7,7 +7,7 @@ export default {
   title: 'hooks/useOperation'
 } as Meta;
 
-export const Question = () => {
+export const Basics = () => {
   const handleClick = useOperation(
     async (shouldFail?: boolean) => {
       await delay(1000);

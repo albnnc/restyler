@@ -7,7 +7,6 @@ export * from './filterStyleProps';
 export * from './get';
 export * from './guards';
 export * from './hash';
-export * from './measureChildren';
 export * from './merge';
 export * from './mergeThemes';
 export * from './mergeThemes';

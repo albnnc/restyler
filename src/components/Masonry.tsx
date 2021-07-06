@@ -3,19 +3,17 @@ import React, {
   forwardRef,
   HTMLAttributes,
   ReactElement,
-  useContext,
   useState
 } from 'react';
 import {
   GridAxisOptions,
   useGrid,
   useIsomorphicLayoutEffect,
+  useMeter,
   useSharedRef,
   useThemed
 } from '../hooks';
 import { StyleProps } from '../models';
-import { BoxMeasurements, measureChildren } from '../utils';
-import { SystemContext } from './SystemContext';
 
 export interface MasonryProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -33,18 +31,24 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
     const ThemedMasonry = useThemed('div', { path: 'masonry' });
     const ThemedMasonryColumn = useThemed('div', { path: 'masonry.column' });
 
-    const system = useContext(SystemContext);
     const childrenArray = Children.toArray(children) as ReactElement[];
-    const [measurements, setMeasurements] = useState<
-      BoxMeasurements[] | undefined
-    >();
+    const [heights, setHeights] = useState<number[] | undefined>();
+    const measureChildren = useMeter(
+      container =>
+        Array.from(container.childNodes).map((v: HTMLElement) => {
+          const style = getComputedStyle(v);
+          return (
+            v.offsetHeight +
+            parseFloat(style.getPropertyValue('margin-top')) +
+            parseFloat(style.getPropertyValue('margin-bottom'))
+          );
+        }),
+      { deps: [] }
+    );
     useIsomorphicLayoutEffect(() => {
-      measureChildren(
-        <SystemContext.Provider value={system}>
-          {children}
-        </SystemContext.Provider>
-      ).then(setMeasurements);
-    }, [childrenArray.map(v => v.key).join()]);
+      // FIXME: `setHeights` might be called after component unmount.
+      measureChildren?.(children).then(setHeights);
+    }, [measureChildren, childrenArray.map(v => v.key).join()]);
 
     const { style, columnsCount, childGaps, handleElement } = useGrid<
       HTMLDivElement,
@@ -60,17 +64,16 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
       }
     });
     const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, handleElement]);
-    const isMeasured = !!(measurements && columnsCount && childGaps);
+    const isMeasured = !!(heights && columnsCount && childGaps);
 
     const columnHeights = new Array(columnsCount).fill(0);
     const columnElements = childrenArray
       .reduce((columns, child, i) => {
         const targetIndex = columnHeights.indexOf(Math.min(...columnHeights));
         columns[targetIndex].push(child);
-        const { height = 1, margin: { top = 0, bottom = 0 } = {} } =
-          measurements?.[i] ?? {};
+        const height = heights?.[i] ?? 1;
         const gap = childGaps?.[targetIndex] ?? 0;
-        columnHeights[targetIndex] += height + top + bottom + gap;
+        columnHeights[targetIndex] += height + gap;
         return columns;
       }, columnHeights.map(() => []) as ReactElement[][])
       .map((v, i) => (

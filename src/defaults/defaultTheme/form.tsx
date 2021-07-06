@@ -41,15 +41,5 @@ export const form: Theme = {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))'
     }
-  },
-
-  kinds: {
-    vertical: {
-      extend: ({ createStyle }) => ({
-        '& > *:not(:first-of-type)': createStyle({
-          margin: { top: 'medium' }
-        })
-      })
-    }
   }
 };

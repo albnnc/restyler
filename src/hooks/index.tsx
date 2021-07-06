@@ -5,6 +5,7 @@ export * from './useGrid';
 export * from './useImperativePortal';
 export * from './useIsomorphicLayoutEffect';
 export * from './useLoader';
+export * from './useMeter';
 export * from './useModal';
 export * from './useNotification';
 export * from './useOperation';

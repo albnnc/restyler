@@ -1,4 +1,5 @@
 import {
+  MeterOptions,
   TransitionOptions,
   StandaloneTransitionOptions,
   ModalOptions,
@@ -16,6 +17,7 @@ export interface System {
     questionOptions?: Partial<QuestionOptions>;
     transitionOptions?: Partial<TransitionOptions>;
     standaloneTransitionOptions?: Partial<StandaloneTransitionOptions>;
+    meterOptions?: Partial<MeterOptions>;
   };
   locale: Locale;
   registry: SystemRegistry;

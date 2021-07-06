@@ -6,7 +6,7 @@ export default {
   title: 'hooks/useNotification'
 } as Meta;
 
-export const Question = () => {
+export const Basics = () => {
   const { openNotification } = useNotification();
   return (
     <Button

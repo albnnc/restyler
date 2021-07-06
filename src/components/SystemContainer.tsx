@@ -33,9 +33,12 @@ export const SystemContainer = forwardRef<HTMLDivElement, SystemContainerProps>(
     const portal = useImperativePortal(portalNode);
 
     useEffect(() => {
-      const portalPath = 'defaults.standaloneTransitionOptions.portal';
+      const portalPaths = [
+        'defaults.standaloneTransitionOptions.portal',
+        'defaults.meterOptions.portal'
+      ];
       const next = { ...system };
-      set(next, portalPath, portal);
+      portalPaths.forEach(v => set(next, v, portal));
       setSystem(next);
     }, [portal]);
 

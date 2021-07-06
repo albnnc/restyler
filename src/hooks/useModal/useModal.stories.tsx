@@ -5,7 +5,7 @@ import {
   Button,
   Form,
   FormField,
-  FormRow,
+  FormGrid,
   Heading,
   Select,
   SelectOption,
@@ -68,7 +68,7 @@ export const WithForm = () => {
           render: ({ handleClose }) => (
             <Form onSubmit={handleClose}>
               <Heading kind="4">Let's leave feedback</Heading>
-              <FormRow margin={{ top: 'medium' }}>
+              <FormGrid margin={{ top: 'medium' }}>
                 <FormField name="username" label="Username">
                   <Select>
                     <SelectOption value="admin" />
@@ -76,7 +76,7 @@ export const WithForm = () => {
                   </Select>
                 </FormField>
                 <FormField name="email" label="Email" />
-              </FormRow>
+              </FormGrid>
               <Box direction="row" justify="end" margin={{ top: 'medium' }}>
                 <Button type="submit" kind="primary">
                   Submit

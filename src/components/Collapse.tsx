@@ -1,15 +1,14 @@
-import React, { forwardRef, useContext, useState, HTMLAttributes } from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import React, { forwardRef, useState, HTMLAttributes } from 'react';
 import {
   TransitionerProps,
   useIsomorphicLayoutEffect,
+  useMeter,
   useSharedRef,
   useThemed,
   useTransition
 } from '../hooks';
 import { hash } from '../utils';
 import { StyleProps } from '../models';
-import { SystemContext } from './SystemContext';
 
 export interface CollapseProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -28,11 +27,12 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
       }
     );
 
-    const system = useContext(SystemContext);
     const [contentHeight, setContentHeight] = useState<number | undefined>(
       forcedContentHeight
     );
-
+    const measureHeight = useMeter(container => container.offsetHeight, {
+      deps: []
+    });
     useIsomorphicLayoutEffect(() => {
       if (contentHeight !== undefined) {
         return;
@@ -41,27 +41,12 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
         setContentHeight(forcedContentHeight);
         return;
       }
-      const container = document.createElement('div');
-      document.body.appendChild(container);
-      render(
-        <SystemContext.Provider value={system}>
-          {children}
-        </SystemContext.Provider>,
-        container,
-        () => {
-          setContentHeight(container.offsetHeight);
-          unmountComponentAtNode(container);
-          document.body.removeChild(container);
-        }
-      );
-    }, [children]);
+      measureHeight?.(children).then(setContentHeight);
+    }, [children, measureHeight]);
 
     return useTransition<HTMLDivElement>(
       (props, innerRef) => {
         const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, innerRef]);
-        if (contentHeight === undefined) {
-          return null;
-        }
         return (
           <ThemedColapse
             ref={sharedRef}
