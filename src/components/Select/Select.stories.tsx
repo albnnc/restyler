@@ -17,4 +17,14 @@ export const Basics = () => {
   );
 };
 
+export const MultipleOptions = () => {
+  return (
+    <Select isMultiple placeholder="Select values" css={{ width: '300px' }}>
+      <SelectOption value="a">A</SelectOption>
+      <SelectOption value="b">B</SelectOption>
+      <SelectOption value="c">C</SelectOption>
+    </Select>
+  );
+};
+
 export const Blueprint = createBlueprint('select');

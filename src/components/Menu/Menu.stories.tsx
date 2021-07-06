@@ -37,6 +37,7 @@ export const Basics = () => {
         <MenuItem id="item-21">Item 21</MenuItem>
         <MenuItem id="item-22">Item 22</MenuItem>
         <MenuItem id="item-23">Item 23</MenuItem>
+        <MenuItem id="item-23">Item 24</MenuItem>
       </MenuGroup>
       <MenuItem id="item-3">Item 3</MenuItem>
       <MenuItem id="item-4">Item 4</MenuItem>

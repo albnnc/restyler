@@ -21,6 +21,7 @@ export * from './Radio';
 export * from './Scroll';
 export * from './Select';
 export * from './Stack';
+export * from './SystemContainer';
 export * from './SystemContext';
 export * from './Tab';
 export * from './Table';

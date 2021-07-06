@@ -2,7 +2,6 @@ export * from './capitalizeFirst';
 export * from './clone';
 export * from './createSideMap';
 export * from './createStyle';
-export * from './createSystem';
 export * from './disableScroll';
 export * from './filterStyleProps';
 export * from './get';

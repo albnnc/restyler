@@ -15,17 +15,14 @@ npm install --save restyler
 After Restyler is installed, one needs to provide it the style adapter. The following code sample demonstrates [emotion](https://emotion.sh) integration:
 
 ```jsx
-const system = createSystem({
-  theme: defaultTheme,
-  styled: (tag, fn) =>
-    styled(tag, {
-      shouldForwardProp: prop => isPropValid(prop) && !isStyleProp(prop)
-    })(fn)
-});
+const styledAdapter = styled: (tag, fn) =>
+  styled(tag, {
+    shouldForwardProp: prop => isPropValid(prop) && !isStyleProp(prop)
+  })(fn);
 
 export default App = () => {
   return (
-    <SystemContext.Provider value={system}>{/* ... */}</SystemContext.Provider>
+    <SystemContainer styled={styledAdapter}>{/* ... */}</SystemContainer>
   );
 };
 ```

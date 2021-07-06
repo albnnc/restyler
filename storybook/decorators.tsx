@@ -1,66 +1,26 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
-import styled from '@emotion/styled';
+import { default as emotionStyled } from '@emotion/styled';
 import { Global } from '@emotion/react';
-import {
-  defaultTheme,
-  Box,
-  SystemContext,
-  createSystem,
-  isStyleProp,
-  System,
-  useImperativePortal
-} from 'src';
+import { Box, isStyleProp, SystemContainer } from 'src';
 
-const system = createSystem({
-  theme: defaultTheme,
-  styled: (tag: any, fn: any) =>
-    styled(tag, {
-      shouldForwardProp: (prop: any) => isPropValid(prop) && !isStyleProp(prop)
-    })(fn) as any
-});
-
-const SystemContainer = (props: { children: ReactNode; system: System }) => {
-  const [system, setSystem] = useState(props.system);
-  const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
-  const portal = useImperativePortal(mountNode);
-  useEffect(() => {
-    const { defaults, ...rest } = props.system;
-    if (!portal) {
-      return;
-    }
-    setSystem({
-      defaults: {
-        ...defaults,
-        standaloneTransitionOptions: { portal }
-      },
-      ...rest
-    });
-  }, [portal]);
-  return (
-    <SystemContext.Provider value={system}>
-      <div ref={setMountNode} />
-      {portal}
-      <Global
-        styles={{
-          '*': { boxSizing: 'border-box' },
-          'html, body, #root': {
-            margin: '0 !important',
-            padding: '0 !important',
-            lineHeight: 1.5,
-            minHeight: '100%',
-            color: system.theme.variables?.palette?.text
-          }
-        }}
-      />
-      {props.children}
-    </SystemContext.Provider>
-  );
-};
+const styled = (tag: any, fn: any) =>
+  emotionStyled(tag, {
+    shouldForwardProp: (prop: any) => isPropValid(prop) && !isStyleProp(prop)
+  })(fn) as any;
 
 export const systemized = (Story, context) => {
   return (
-    <SystemContainer system={system}>
+    <SystemContainer styled={styled}>
+      <Global
+        styles={{
+          'html, body, #root': {
+            margin: '0 !important',
+            padding: '0 !important',
+            minHeight: '100%'
+          }
+        }}
+      />
       <Story {...context} />
     </SystemContainer>
   );

@@ -11,6 +11,7 @@ import {
   createStyle,
   filterStyleProps,
   get,
+  hash,
   merge,
   mergeThemes
 } from '../utils';

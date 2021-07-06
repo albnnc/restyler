@@ -21,6 +21,7 @@ import { progress } from './progress';
 import { radio } from './radio';
 import { scroll } from './scroll';
 import { select } from './select';
+import { systemContainer } from './systemContainer';
 import { tab } from './tab';
 import { table } from './table';
 import { textArea } from './textArea';
@@ -51,6 +52,7 @@ export const defaultTheme: Theme = {
   radio,
   scroll,
   select,
+  systemContainer,
   tab,
   table,
   textArea
