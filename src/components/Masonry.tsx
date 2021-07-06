@@ -14,8 +14,8 @@ import {
   useThemed
 } from '../hooks';
 import { StyleProps } from '../models';
+import { BoxMeasurements, measureChildren } from '../utils';
 import { SystemContext } from './SystemContext';
-import { BoxMeasurements, measureChildren } from 'src/utils';
 
 export interface MasonryProps
   extends HTMLAttributes<HTMLDivElement>,
