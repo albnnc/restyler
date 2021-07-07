@@ -4,9 +4,10 @@ import { StyleProps } from '../models';
 
 export interface PieChartDatum {
   color: string;
+  value: number;
+  onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
-  value: number;
 }
 
 export interface PieChartProps
@@ -50,13 +51,13 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
 
     let segments = [] as ReactNode[];
 
-    // equal to rotate(-90deg),
-    // we want pie chart to begin from the top
+    // Equals to rotate(-90deg),
+    // we want pie chart to begin from the top.
     let ratioOffset = -0.25;
 
     if (totalValue) {
       for (let i in data) {
-        const { color, value, onMouseEnter, onMouseLeave } = data[i];
+        const { color, value, onClick, onMouseEnter, onMouseLeave } = data[i];
         if (value < 1) {
           continue;
         }
@@ -70,8 +71,6 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
         segments.push(
           <ThemedPieChartSegment
             key={`segment-${i}-${value}-${color}`}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
             fill={'none'}
             cx={circleX}
             cy={circleY}
@@ -80,6 +79,9 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
             strokeWidth={strokeWidth}
             strokeDashoffset={dashOffset}
             strokeDasharray={`${dashLength} ${totalLength - dashLength}`}
+            onClick={onClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
           />
         );
         ratioOffset += ratioDelta + ratioGap;
