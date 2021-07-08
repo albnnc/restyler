@@ -27,4 +27,12 @@ export const MultipleOptions = () => {
   );
 };
 
+export const Empty = () => {
+  return (
+    <Select placeholder="Select value" css={{ width: '300px' }}>
+      {[]}
+    </Select>
+  );
+};
+
 export const Blueprint = createBlueprint('select');

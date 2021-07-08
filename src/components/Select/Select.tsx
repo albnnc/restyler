@@ -6,7 +6,8 @@ import React, {
   Children,
   HTMLAttributes,
   ReactElement,
-  useEffect
+  useEffect,
+  useContext
 } from 'react';
 import { disableScroll } from '../../utils';
 import {
@@ -19,8 +20,9 @@ import {
   useUpdateEffect
 } from '../../hooks';
 import { FormWidgetProps, StyleProps } from '../../models';
+import { SystemContext } from '../SystemContext';
 import { SelectDrop } from './SelectDrop';
-import { SelectOptionProps } from './SelectOption';
+import { SelectOption, SelectOptionProps } from './SelectOption';
 
 export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
@@ -42,6 +44,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
 
   const { children, isMultiple, placeholder, value, disabled, onChange } =
     props;
+  const { locale } = useContext(SystemContext);
   const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
   const [innerValue, setInnerValue] = useReducer(
     (active: any, action: { isForced?: boolean; value: any }) => {
@@ -108,9 +111,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
         height = 0,
         width = 0
       } = sharedRef.current?.getBoundingClientRect() ?? {};
-      if (disabled) {
-        return null;
-      }
       return (
         <SelectDrop
           ref={dropRef}
@@ -122,14 +122,20 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
           }}
           {...props}
         >
-          {childrenArray.map(v =>
-            cloneElement(v, {
-              isMultiple: !!isMultiple,
-              onClick: () => {
-                setInnerValue({ value: v.props.value });
-                !isMultiple && props.handleClose();
-              }
-            })
+          {childrenArray.length > 0 ? (
+            childrenArray.map(v =>
+              cloneElement(v, {
+                isMultiple: !!isMultiple,
+                onClick: () => {
+                  setInnerValue({ value: v.props.value });
+                  !isMultiple && props.handleClose();
+                }
+              })
+            )
+          ) : (
+            <SelectOption value={undefined} kind="empty">
+              {locale.empty}
+            </SelectOption>
           )}
         </SelectDrop>
       );
@@ -138,7 +144,16 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
   );
 
   return (
-    <ThemedSelect ref={sharedRef} onClick={() => openSelect()} {...props}>
+    <ThemedSelect
+      ref={sharedRef}
+      onClick={() => {
+        if (disabled) {
+          return;
+        }
+        openSelect();
+      }}
+      {...props}
+    >
       {displayData}
     </ThemedSelect>
   );

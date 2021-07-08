@@ -44,7 +44,16 @@ export const select: Theme = {
             '&:hover': { background: 'rgba(0, 0, 0, 0.1)' }
           }
         : {})
-    })
+    }),
+    kinds: {
+      empty: {
+        color: 'weakText',
+        extend: {
+          userSelect: 'none',
+          cursor: 'not-allowed'
+        }
+      }
+    }
   },
 
   selection: {
