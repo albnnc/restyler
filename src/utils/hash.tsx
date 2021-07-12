@@ -53,6 +53,6 @@ const toString = value => {
   return Object.prototype.toString.call(value);
 };
 
-export const hash = value => {
+export const hash = (value: any): string => {
   return foldValue(0, value, '', []).toString(16).padStart(8, '0');
 };

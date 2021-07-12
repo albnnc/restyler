@@ -9,7 +9,7 @@ import React, {
   useEffect,
   useContext
 } from 'react';
-import { disableScroll } from '../../utils';
+import { disableScroll, getChildrenKey } from '../../utils';
 import {
   interactiveStackId,
   useClickOutside,
@@ -71,12 +71,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
 
   const childrenArray = useMemo(
     () => Children.toArray(children) as ReactElement<SelectOptionProps>[],
-    [
-      Children.map(
-        children,
-        (v: ReactElement<SelectOptionProps>) => v.props.value ?? v.key
-      ).join()
-    ]
+    [getChildrenKey(children, { pivots: ['value'] })]
   );
 
   const displayData = useMemo(() => {

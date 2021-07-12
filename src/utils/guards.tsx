@@ -5,6 +5,7 @@ export function isString(v): v is string {
 }
 
 export const isObject = (v): v is object => typeof v === 'object' && v;
+
 export const isFunction = (v): v is Function => typeof v === 'function';
 
 export const isBasicBorder = (value?: any): value is BasicBorder => {

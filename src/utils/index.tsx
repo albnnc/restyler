@@ -5,6 +5,7 @@ export * from './createStyle';
 export * from './disableScroll';
 export * from './filterStyleProps';
 export * from './get';
+export * from './getChildrenKey';
 export * from './guards';
 export * from './hash';
 export * from './merge';

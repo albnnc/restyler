@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { useThemed } from '../../hooks';
 import { StyleProps } from '../../models';
-import { hash } from '../../utils';
+import { getChildrenKey, hash } from '../../utils';
 import { Collapse } from '../Collapse';
 import { MenuContext } from './MenuContext';
 
@@ -29,11 +29,7 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
     const ThemedMenuGroup = useThemed('div', { path: 'menu.group' });
     const content = useMemo(
       () => <MenuGroupItems>{children}</MenuGroupItems>,
-      [
-        Children.map(children, v =>
-          isValidElement(v) ? v.key ?? v.props.id ?? hash(v.props) : v
-        )?.join()
-      ]
+      [getChildrenKey(children, { pivots: ['id'] })]
     );
     const { activeIds, onGroupClick } = useContext(MenuContext);
     return (
