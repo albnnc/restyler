@@ -1,5 +1,4 @@
 import React, {
-  cloneElement,
   forwardRef,
   useMemo,
   useReducer,
@@ -7,12 +6,15 @@ import React, {
   HTMLAttributes,
   ReactElement,
   useEffect,
-  useContext
+  useContext,
+  useState,
+  useCallback
 } from 'react';
 import { disableScroll, getChildrenKey } from '../../utils';
 import {
   interactiveStackId,
   useClickOutside,
+  useImperativePortal,
   useSharedRef,
   useStack,
   useStandaloneTransition,
@@ -23,6 +25,7 @@ import { FormWidgetProps, StyleProps } from '../../models';
 import { SystemContext } from '../SystemContext';
 import { SelectDrop } from './SelectDrop';
 import { SelectOption, SelectOptionProps } from './SelectOption';
+import { SelectContext } from './SelectContext';
 
 export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
@@ -44,8 +47,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
 
   const { children, isMultiple, placeholder, value, disabled, onChange } =
     props;
-  const { locale } = useContext(SystemContext);
+  const { defaults: { standaloneTransitionOptions = {} } = {}, locale } =
+    useContext(SystemContext);
   const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
+  const portal = useImperativePortal(
+    standaloneTransitionOptions.portal ?? null
+  );
   const [innerValue, setInnerValue] = useReducer(
     (active: any, action: { isForced?: boolean; value: any }) => {
       if (action.isForced || !isMultiple) {
@@ -109,24 +116,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
       return (
         <SelectDrop
           ref={dropRef}
-          style={{
-            position: 'fixed',
-            top: isMultiple ? top + height : top,
-            left,
-            width
-          }}
+          style={{ position: 'fixed', top: top + height, left, width }}
           {...props}
         >
           {childrenArray.length > 0 ? (
-            childrenArray.map(v =>
-              cloneElement(v, {
-                isMultiple: !!isMultiple,
-                onClick: () => {
-                  setInnerValue({ value: v.props.value });
-                  !isMultiple && props.handleClose();
-                }
-              })
-            )
+            childrenArray
           ) : (
             <SelectOption value={undefined} kind="empty">
               {locale.empty}
@@ -135,21 +129,39 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
         </SelectDrop>
       );
     },
-    { deps: [childrenArray] }
+    { deps: [childrenArray], portal }
   );
 
+  const [handleClose, setHandleClose] = useState<(() => void) | undefined>();
+  const handleClick = useCallback(() => {
+    if (disabled) {
+      return;
+    }
+    if (handleClose) {
+      handleClose();
+    } else {
+      const close = openSelect();
+      setHandleClose(() => () => {
+        close();
+        setHandleClose(undefined);
+      });
+    }
+  }, [disabled, handleClose]);
+
   return (
-    <ThemedSelect
-      ref={sharedRef}
-      onClick={() => {
-        if (disabled) {
-          return;
-        }
-        openSelect();
-      }}
-      {...props}
-    >
-      {displayData}
+    <ThemedSelect ref={sharedRef} onClick={handleClick} {...props}>
+      <SelectContext.Provider
+        value={{
+          value: innerValue,
+          setValue: setInnerValue,
+          isMultiple: !!isMultiple,
+          isOpen: !!handleClose,
+          handleClose
+        }}
+      >
+        {portal}
+        {displayData}
+      </SelectContext.Provider>
     </ThemedSelect>
   );
 });

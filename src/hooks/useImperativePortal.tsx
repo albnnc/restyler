@@ -1,51 +1,85 @@
 import React, {
   forwardRef,
   Fragment,
+  MutableRefObject,
   ReactElement,
   ReactNode,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
+  useReducer,
   useRef,
   useState
 } from 'react';
 import { createPortal } from 'react-dom';
 
 export interface ImperativePortal extends ReactElement {
+  set: (children: ReactNode[]) => void;
   push: (child: ReactNode) => void;
   remove: (child: ReactNode) => void;
 }
 
-export const useImperativePortal = (element?: HTMLElement | null) => {
-  const ref = useRef<ImperativePortal>(null);
-  return useMemo(() => {
-    const wrap = (
-      <Fragment>
-        <Portal ref={ref} element={element} />
-      </Fragment>
-    );
-    const noop = () => {};
-    return {
-      ...wrap,
-      push: ref.current?.push ?? noop,
-      remove: ref.current?.remove ?? noop
-    } as ImperativePortal;
-  }, [element]);
+export const useImperativePortal = (
+  target: HTMLElement | ImperativePortal | null
+) => {
+  const [element, setElement] = useState<HTMLElement | null>(
+    target instanceof HTMLElement ? target : null
+  );
+  useEffect(() => {
+    if (target === element) {
+      return;
+    }
+    if (target instanceof HTMLElement || target === null) {
+      setElement(target);
+      return;
+    }
+    const key = Math.random();
+    const container = <div key={key} ref={v => setElement(v)} />;
+    target.push(container);
+    return () => target.remove(container);
+  }, [target]);
+  const portalRef = useRef<{ update: () => void }>(null);
+  const childrenRef = useRef<ReactNode[]>([]);
+  const set = useCallback((children: ReactNode[]) => {
+    childrenRef.current = children;
+    portalRef.current?.update();
+  }, []);
+  const push = useCallback(
+    (child: ReactNode) => set(childrenRef.current.concat([child])),
+    []
+  );
+  const remove = useCallback(
+    (child: ReactNode) => set(childrenRef.current.filter(v => v !== child)),
+    []
+  );
+  return useMemo(
+    () =>
+      ({
+        ...(
+          <Fragment>
+            <UpdatablePortal
+              ref={portalRef}
+              childrenRef={childrenRef}
+              element={element}
+            />
+          </Fragment>
+        ),
+        set,
+        push,
+        remove
+      } as ImperativePortal),
+    [element]
+  );
 };
 
-const Portal = forwardRef<
-  Pick<ImperativePortal, 'push' | 'remove'>,
-  { element?: HTMLElement | null }
->(({ element }, ref) => {
-  const [children, setChildren] = useState<ReactNode[]>([]);
-  const push = useCallback((child: ReactNode) => {
-    setChildren(children =>
-      children.includes(child) ? children : children.concat([child])
-    );
-  }, []);
-  const remove = useCallback((child: ReactNode) => {
-    setChildren(children => children.filter(v => v !== child));
-  }, []);
-  useImperativeHandle(ref, () => ({ push, remove }), []);
-  return element ? createPortal(children, element) : null;
+const UpdatablePortal = forwardRef<
+  { update: () => void },
+  { childrenRef: MutableRefObject<ReactNode>; element?: HTMLElement | null }
+>(({ childrenRef, element }, ref) => {
+  const [_, update] = useReducer(v => v + 1, 0);
+  useImperativeHandle(ref, () => ({ update }), []);
+  return element
+    ? createPortal(<Fragment>{childrenRef.current}</Fragment>, element)
+    : null;
 });

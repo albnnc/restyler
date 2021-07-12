@@ -49,7 +49,7 @@ export const useStandaloneTransition = <T extends HTMLElement, C = never>(
   options: StandaloneTransitionOptions
 ) => {
   const { defaults } = useContext(SystemContext);
-  const { deps, portal } = {
+  const { deps, portal: { push = () => {}, remove = () => {} } = {} } = {
     ...defaults?.standaloneTransitionOptions,
     ...options
   };
@@ -94,16 +94,16 @@ export const useStandaloneTransition = <T extends HTMLElement, C = never>(
         <Wrap
           ref={ref}
           key={key}
-          onUnmount={() => portal?.remove(child)}
+          onUnmount={() => remove(child)}
           context={context}
         />
       );
-      portal?.push(child);
+      push(child);
       return () => {
         ref.current?.handleClose();
       };
     },
-    [portal, ...deps]
+    [push, remove, ...deps]
   );
 
   return open;

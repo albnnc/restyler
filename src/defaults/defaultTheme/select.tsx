@@ -2,6 +2,8 @@ import { ExtendOptions, Theme } from '../../models';
 import { mergeThemes } from '../../utils';
 import { createInputLikeTheme } from './input';
 
+const markMargin = '1em';
+
 export const select: Theme = {
   ...mergeThemes(
     {},
@@ -13,37 +15,55 @@ export const select: Theme = {
     }),
     {
       extend: ({ props }) => ({
-        lineHeight: 'calc(1.5 * 1rem)',
-        width: '100%',
         position: 'relative',
+        width: '100%',
+        lineHeight: 'calc(1.5 * 1rem)',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        paddingRight: `calc(${markMargin} * 2)`,
         '&:after': {
           display: 'block',
           content: '""',
           position: 'absolute',
-          right: '0.7rem',
+          right: markMargin,
           top: '50%',
-          transform: 'translateY(-50%)',
+          transform: 'translate(50%, -50%)',
           width: 0,
           height: 0,
           borderLeft: '5px solid transparent',
           borderRight: '5px solid transparent',
-          borderTop: `5px solid ${props.theme.variables?.palette?.['text']}`
+          borderTop: `5px solid ${props.theme.variables?.palette?.text}`
         }
       })
     }
   ),
 
   option: {
-    padding: 'small',
-    extend: ({ props }) => ({
+    extend: ({
+      props: {
+        isActive,
+        theme: { variables: { padding = {} } = {} }
+      }
+    }: ExtendOptions) => ({
+      position: 'relative',
       cursor: 'pointer',
+      padding: padding.small,
+      paddingRight: isActive ? `calc(${markMargin} * 2)` : padding.small,
       '&:hover': { background: 'rgba(0, 0, 0, 0.05)' },
-      ...(props.isActive
-        ? {
-            background: 'rgba(0, 0, 0, 0.05)',
-            '&:hover': { background: 'rgba(0, 0, 0, 0.1)' }
-          }
-        : {})
+      '&::after': {
+        content: '""',
+        display: 'block',
+        position: 'absolute',
+        width: '0.3em',
+        height: '0.3em',
+        borderRadius: '100vw',
+        top: '50%',
+        right: isActive ? markMargin : `calc(${markMargin} / 2)`,
+        transform: 'translate(50%, -50%)',
+        transition: 'all 0.15s',
+        background: isActive ? 'currentColor' : 'transparent'
+      }
     }),
     kinds: {
       empty: {
