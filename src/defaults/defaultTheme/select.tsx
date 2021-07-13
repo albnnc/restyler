@@ -70,7 +70,10 @@ export const select: Theme = {
         color: 'weakText',
         extend: {
           userSelect: 'none',
-          cursor: 'not-allowed'
+          cursor: 'not-allowed',
+          '&::after': {
+            display: 'none'
+          }
         }
       }
     }
