@@ -35,9 +35,10 @@ export const useMeter = <T extends unknown>(
             }}
             style={{
               position: 'fixed',
-              top: '100vw',
-              left: '100vh',
-              visibility: 'hidden'
+              top: 0,
+              left: 0,
+              visibility: 'hidden',
+              pointerEvents: 'none'
             }}
           >
             {children}
