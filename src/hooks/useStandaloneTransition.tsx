@@ -49,7 +49,7 @@ export const useStandaloneTransition = <T extends HTMLElement, C = never>(
   options: StandaloneTransitionOptions
 ) => {
   const { defaults } = useContext(SystemContext);
-  const { deps, portal: { push = () => {}, remove = () => {} } = {} } = {
+  const { deps, portal: { push = undefined, remove = undefined } = {} } = {
     ...defaults?.standaloneTransitionOptions,
     ...options
   };
@@ -88,6 +88,9 @@ export const useStandaloneTransition = <T extends HTMLElement, C = never>(
 
   const open = useCallback(
     (context?: C) => {
+      if (!push || !remove) {
+        return () => {};
+      }
       const ref = createRef<WrapHandlers>();
       const key = Math.random();
       const child = (

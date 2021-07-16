@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useContext, useMemo } from 'react';
+import React, { ReactNode, useContext, useMemo } from 'react';
 import { SystemContext } from '../components';
 import { ImperativePortal } from './useImperativePortal';
 
@@ -12,12 +12,12 @@ export const useMeter = <T extends unknown>(
   options: MeterOptions
 ) => {
   const { defaults } = useContext(SystemContext);
-  const { deps, portal } = {
+  const { deps, portal: { push = undefined, remove = undefined } = {} } = {
     ...defaults?.meterOptions,
     ...options
   };
   return useMemo(() => {
-    if (!portal) {
+    if (!push || !remove) {
       return undefined;
     }
     return (children?: ReactNode) =>
@@ -31,7 +31,7 @@ export const useMeter = <T extends unknown>(
                 return;
               }
               resolve(extract?.(container));
-              portal.remove(wrap);
+              remove(wrap);
             }}
             style={{
               position: 'fixed',
@@ -44,7 +44,7 @@ export const useMeter = <T extends unknown>(
             {children}
           </div>
         );
-        portal.push(wrap);
+        push(wrap);
       });
-  }, [portal, ...(deps ?? [])]);
+  }, [push, remove, ...(deps ?? [])]);
 };

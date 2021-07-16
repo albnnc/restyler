@@ -18,11 +18,12 @@ export const useClickOutside = <T extends Event = Event>(
       const { current: el } = ref;
       el && !el.contains(event.target) && savedCallback.current(event);
     };
-    for (const eventName of events) {
-      document.addEventListener(eventName, handler);
+    const names = events.slice();
+    for (const name of names) {
+      document.addEventListener(name, handler);
     }
     return () => {
-      for (const eventName of events) {
+      for (const eventName of names) {
         document.removeEventListener(eventName, handler);
       }
     };
