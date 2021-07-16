@@ -3,7 +3,6 @@ import { useStack } from './useStack';
 
 export const useFocusTrap = <T extends HTMLElement>(ref: RefObject<T>) => {
   const isOnTop = useStack(ref);
-
   const [firstFocusable, setFirstFocusable] = useState<HTMLElement | undefined>(
     undefined
   );
@@ -26,11 +25,7 @@ export const useFocusTrap = <T extends HTMLElement>(ref: RefObject<T>) => {
     if (!hasActiveElement || el.contains(document.activeElement)) {
       return;
     }
-    if (!first || !last) {
-      (document.activeElement as HTMLElement)?.blur();
-    } else {
-      first.focus();
-    }
+    (document.activeElement as HTMLElement)?.blur();
     // One needs to update focusables on each component
     // rerender, so we don't specify deps.
   });
@@ -45,13 +40,11 @@ export const useFocusTrap = <T extends HTMLElement>(ref: RefObject<T>) => {
       }
       const hasActiveElement =
         document.activeElement && document.activeElement !== document.body;
-      if (!hasActiveElement) {
+      if (!hasActiveElement || document.activeElement === lastFocusable) {
+        firstFocusable?.focus();
         e.preventDefault();
       } else if (e.shiftKey && document.activeElement === firstFocusable) {
         lastFocusable?.focus();
-        e.preventDefault();
-      } else if (document.activeElement === lastFocusable) {
-        firstFocusable?.focus();
         e.preventDefault();
       }
     };
