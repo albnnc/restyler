@@ -18,7 +18,7 @@ const createBasicKind = (color: string, additionalProps?: StyleProps) => ({
             color: 'weakText',
             border: { color: 'border', style: 'dashed' }
           })
-        : { '&:hover': createStyle({ color, border: color }) })
+        : { '&:hover, &:focus': createStyle({ color, border: color }) })
     }),
     ({ createStyle }) => createStyle(additionalProps ?? {})
   ]
