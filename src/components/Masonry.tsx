@@ -1,19 +1,8 @@
-import React, {
-  Children,
-  forwardRef,
-  HTMLAttributes,
-  ReactElement,
-  useState
-} from 'react';
-import {
-  GridAxisOptions,
-  useGrid,
-  useIsomorphicLayoutEffect,
-  useMeter,
-  useSharedRef,
-  useThemed
-} from '../hooks';
+import React, { Children, forwardRef, HTMLAttributes, useMemo } from 'react';
+import { createPortal } from 'react-dom';
+import { GridAxisOptions, useGrid, useSharedRef, useThemed } from '../hooks';
 import { StyleProps } from '../models';
+import { getChildrenKey } from 'src/utils';
 
 export interface MasonryProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -21,7 +10,6 @@ export interface MasonryProps
   columns: GridAxisOptions & {
     getProps?: (options: {
       index: number;
-      children: ReactElement[];
     }) => Omit<HTMLAttributes<HTMLDivElement>, 'children'> & StyleProps;
   };
 }
@@ -31,64 +19,64 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
     const ThemedMasonry = useThemed('div', { path: 'masonry' });
     const ThemedMasonryColumn = useThemed('div', { path: 'masonry.column' });
 
-    const childrenArray = Children.toArray(children) as ReactElement[];
-    const [heights, setHeights] = useState<number[] | undefined>();
-    const measureChildren = useMeter(
-      container =>
-        Array.from(container.childNodes).map((v: HTMLElement) => {
-          const style = getComputedStyle(v);
-          return (
-            v.offsetHeight +
-            parseFloat(style.getPropertyValue('margin-top')) +
-            parseFloat(style.getPropertyValue('margin-bottom'))
-          );
-        }),
-      { deps: [] }
-    );
-    useIsomorphicLayoutEffect(() => {
-      // FIXME: `setHeights` might be called after component unmount.
-      measureChildren?.(children).then(setHeights);
-    }, [measureChildren, childrenArray.map(v => v.key).join()]);
-
-    const { style, columnsCount, childGaps, handleElement } = useGrid<
-      HTMLDivElement,
-      { childGaps: number[] | undefined }
-    >({
-      columns,
-      getExtras: element => {
-        const children = Array.from(element?.childNodes ?? []);
-        const childGaps = children.map((v: HTMLElement) =>
-          parseFloat(getComputedStyle(v).getPropertyValue('gap'))
-        );
-        return { childGaps };
-      }
+    const { style, columnsCount, handleElement } = useGrid<HTMLDivElement>({
+      columns
     });
     const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, handleElement]);
-    const isMeasured = !!(heights && columnsCount && childGaps);
+    const entries = useMemo(
+      () =>
+        Children.map(children, (v, i) => {
+          const container = document.createElement('div');
+          const portal = createPortal(v, container, i.toString());
+          return { container, portal };
+        }) ?? [],
+      [getChildrenKey(children)]
+    );
 
-    const columnHeights = new Array(columnsCount).fill(0);
-    const columnElements = childrenArray
-      .reduce((columns, child, i) => {
-        const targetIndex = columnHeights.indexOf(Math.min(...columnHeights));
-        columns[targetIndex].push(child);
-        const height = heights?.[i] ?? 1;
-        const gap = childGaps?.[targetIndex] ?? 0;
-        columnHeights[targetIndex] += height + gap;
-        return columns;
-      }, columnHeights.map(() => []) as ReactElement[][])
-      .map((v, i) => (
+    const columnChildren = useMemo(() => {
+      if (!columnsCount) {
+        return [];
+      }
+      let mountedCount = 0;
+      const elements = new Array(columnsCount).fill(
+        null as HTMLDivElement | null
+      );
+      return elements.map((_, i) => (
         <ThemedMasonryColumn
           key={i}
+          ref={(element: HTMLDivElement | null) => {
+            if (element) {
+              elements[i] = element;
+              if (++mountedCount === columnsCount) {
+                const heights = new Array(elements.length).fill(0);
+                entries.forEach(({ container }) => {
+                  const targetIndex = heights.indexOf(Math.min(...heights));
+                  elements[targetIndex]!.appendChild(container);
+                  heights[targetIndex] = elements[targetIndex]!.offsetHeight;
+                });
+              }
+            } else {
+              elements.forEach(v => {
+                while (v && v.firstChild) {
+                  v.removeChild(v.firstChild);
+                }
+              });
+            }
+          }}
           style={{ display: 'flex', flexDirection: 'column' }}
-          {...columns.getProps?.({ index: i, children: v })}
-        >
-          {isMeasured && v}
-        </ThemedMasonryColumn>
+          {...columns.getProps?.({ index: i })}
+        />
       ));
+    }, [columns, columnsCount, entries]);
 
     return (
-      <ThemedMasonry ref={sharedRef} style={style} {...rest}>
-        {columnElements}
+      <ThemedMasonry
+        ref={sharedRef}
+        style={{ ...style, alignItems: 'start' }}
+        {...rest}
+      >
+        {entries.map(v => v.portal)}
+        {columnChildren}
       </ThemedMasonry>
     );
   }
