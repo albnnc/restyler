@@ -29,9 +29,11 @@ export const Basics = () => {
           transform: `translateY(${
             isVisible ? '-50%' : isEntering ? '-100%' : '0'
           })`,
-          transition: 'opacity 0.5s, transform 0.5s',
-          boxSizing: 'content-box',
-          '&::after': {
+          transition: 'opacity 0.5s, transform 0.5s'
+        }}
+      >
+        <Box
+          css={{
             content: '""',
             display: 'block',
             boxSizing: 'border-box',
@@ -41,9 +43,9 @@ export const Basics = () => {
             border: '3px solid rgba(0, 0, 0, 0.3)',
             borderTopColor: 'rgba(0, 0, 0, 0.7)',
             animation: `${spinAnimation} 1.4s infinite linear`
-          }
-        }}
-      />
+          }}
+        />
+      </Box>
     ),
     {
       deps: [],
