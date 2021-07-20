@@ -2,7 +2,7 @@ import React, { Children, forwardRef, HTMLAttributes, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { GridAxisOptions, useGrid, useSharedRef, useThemed } from '../hooks';
 import { StyleProps } from '../models';
-import { getChildrenKey } from 'src/utils';
+import { getChildrenKey } from '../utils';
 
 export interface MasonryProps
   extends HTMLAttributes<HTMLDivElement>,
