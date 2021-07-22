@@ -5,7 +5,10 @@ export const collapse: Theme = {
     return {
       transition: 'height 0.2s ease, opacity 0.2s',
       ...(isOpen
-        ? { opacity: 1, height: contentHeight ? contentHeight + 'px' : 'unset' }
+        ? {
+            opacity: 1,
+            height: contentHeight === undefined ? 'unset' : contentHeight + 'px'
+          }
         : { opacity: 0, height: 0 })
     };
   }
