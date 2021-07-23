@@ -73,7 +73,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
   }, [innerValue]);
 
   useUpdateEffect(() => {
-    setInnerValue({ value: innerValue, isForced: true });
+    setInnerValue({ value, isForced: true });
   }, [value]);
 
   const childrenArray = useMemo(
