@@ -22,7 +22,7 @@ export const select: Theme = {
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         paddingRight: `calc(${markMargin} * 2)`,
-        '&:after': {
+        '&::after': {
           display: 'block',
           content: '""',
           position: 'absolute',
