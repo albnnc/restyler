@@ -5,7 +5,6 @@ export const form: Theme = {
     direction: 'column',
 
     label: {
-      margin: { bottom: 'small' },
       extend: ({ createStyle, props }) => ({
         ...(props.required
           ? {
@@ -19,7 +18,8 @@ export const form: Theme = {
     },
 
     control: {
-      direction: 'row'
+      direction: 'row',
+      margin: { top: 'small' }
     },
 
     help: {
