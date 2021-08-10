@@ -1,4 +1,4 @@
-import { ExtendOptions, Theme } from '../../models';
+import { StyleFnOptions, Theme } from '../../models';
 import { mergeThemes } from '../../utils';
 import { createInputLikeTheme } from './input';
 
@@ -45,7 +45,7 @@ export const select: Theme = {
         isActive,
         theme: { variables: { padding = {} } = {} }
       }
-    }: ExtendOptions) => ({
+    }: StyleFnOptions) => ({
       position: 'relative',
       cursor: 'pointer',
       padding: padding.small,
@@ -80,7 +80,7 @@ export const select: Theme = {
   },
 
   selection: {
-    extend: ({ createStyle }: ExtendOptions) => ({
+    extend: ({ createStyle }: StyleFnOptions) => ({
       '& + &': createStyle({
         padding: { left: 'small' },
         margin: { left: 'small' },
@@ -97,7 +97,7 @@ export const select: Theme = {
     background: 'white',
     radius: 'small',
     elevation: 'medium',
-    extend: ({ props: { isVisible } }: ExtendOptions) => ({
+    extend: ({ props: { isVisible } }: StyleFnOptions) => ({
       minWidth: '200px',
       maxHeight: '300px',
       overflowY: 'auto',

@@ -1,7 +1,7 @@
-import { ExtendOptions, Theme } from '../../models';
+import { StyleFnOptions, Theme } from '../../models';
 
 export const collapse: Theme = {
-  extend: ({ props: { isOpen, contentHeight } }: ExtendOptions) => {
+  extend: ({ props: { isOpen, contentHeight } }: StyleFnOptions) => {
     return {
       transition: 'height 0.2s ease, opacity 0.2s',
       ...(isOpen

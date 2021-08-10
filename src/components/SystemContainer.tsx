@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes, useEffect, useState } from 'react';
+import React, { forwardRef, HTMLAttributes, useEffect, useState } from 'react';
 import { set } from '../utils';
 import { useImperativePortal, useThemed } from '../hooks';
 import { PartiallyRequired, StyleProps, System } from '../models';

@@ -1,8 +1,8 @@
-import { ExtendOptions, Theme } from '../../models';
+import { StyleFnOptions, Theme } from '../../models';
 
 const createModalStyle =
   ({ width }) =>
-  ({ props: { isVisible, isEntering } }: ExtendOptions) => ({
+  ({ props: { isVisible, isEntering } }: StyleFnOptions) => ({
     width,
     maxWidth: 'calc(100% - 2rem)',
     transform: `translateY(${isVisible ? '0' : isEntering ? '1rem' : '-1rem'})`,

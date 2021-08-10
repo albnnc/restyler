@@ -5,16 +5,26 @@ import React, {
   ForwardRefExoticComponent
 } from 'react';
 import { SystemContext } from '../components';
-import { Style, StyleProps, Theme } from '../models';
-import {
-  capitalizeFirst,
-  createStyle,
-  filterStyleProps,
-  get,
-  hash,
-  merge,
-  mergeThemes
-} from '../utils';
+import { Style, Theme } from '../models';
+import { capitalizeFirst, get, merge, mergeThemes } from '../utils';
+
+const createStyle = (theme: Theme, props: any) => {
+  const { style } = theme;
+  const result = {} as Style;
+  for (const item of Array.isArray(style) ? style : [style]) {
+    if (typeof item === 'function') {
+      merge(result, item(props));
+    } else if (typeof item === 'object') {
+      merge(result, item);
+    }
+  }
+  return result;
+};
+
+interface StyleProps {
+  theme?: Theme;
+  kind?: string;
+}
 
 export const useThemed = <
   Tag extends keyof JSX.IntrinsicElements,
@@ -25,7 +35,7 @@ export const useThemed = <
 ): ForwardRefExoticComponent<
   ComponentPropsWithRef<Tag> & StyleProps & ExtraProps
 > => {
-  const { path, style } = options;
+  const { path, style: forcedStyle } = options;
   const { styled, registry } = useContext(SystemContext);
   const token = `${tag}.${path}`;
   if (registry[token]) {
@@ -38,25 +48,16 @@ export const useThemed = <
     .join('');
 
   const StyledComponent = styled<Tag, StyleProps & ExtraProps>(tag, props => {
-    const { styleProps, ...rest } = filterStyleProps(props);
-    const defaultStyleProps = styleProps.theme?.defaults ?? {};
-    const themeStyleProps = get(styleProps.theme, path ?? '') ?? {};
-    const kindStyleProps = themeStyleProps.kinds?.[styleProps.kind] ?? {};
-    const mergedStyleProps = mergeThemes(
+    const { theme, kind } = props;
+    const { kinds, ...componentTheme } = get(theme ?? {}, path ?? '') ?? {};
+    const componentKindTheme = kinds?.[kind ?? ''] ?? {};
+    const mergedTheme = mergeThemes(
       {},
-      defaultStyleProps,
-      themeStyleProps,
-      kindStyleProps,
-      styleProps
+      theme?.defaults ?? {},
+      componentTheme,
+      componentKindTheme
     ) as Theme;
-    return merge(
-      {},
-      style,
-      createStyle({
-        variables: styleProps.theme.variables,
-        props: { ...mergedStyleProps, ...rest }
-      })
-    );
+    return merge({}, forcedStyle, createStyle(mergedTheme, props));
   });
   StyledComponent.displayName = 'Styled' + displayName;
 
