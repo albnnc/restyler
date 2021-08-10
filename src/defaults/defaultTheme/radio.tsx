@@ -2,20 +2,18 @@ import { Theme } from '../../models';
 
 export const radio: Theme = {
   option: {
-    extend: {
-      '& + &': {
-        marginTop: '0.2rem'
-      }
+    style: {
+      '& + &': { marginTop: 2 }
     },
 
     checker: {
-      margin: { right: 'small' },
-      radius: '100vw',
-      background: 'white',
-
-      extend: ({ createStyle, props }) => {
+      style: ({ isActive }) => {
         const createStateStyle = (borderColor, checkerColor, checkerSize) => ({
-          ...createStyle({ border: { color: borderColor } }),
+          border: '1px solid',
+          borderColor,
+          marginRight: 2,
+          borderRadius: '100vw',
+          backgroundColor: 'white',
           position: 'relative',
           display: 'inline-block',
           width: '1rem',
@@ -23,11 +21,7 @@ export const radio: Theme = {
           verticalAlign: 'middle',
           cursor: 'pointer',
           transition: 'all 0.2s',
-
-          // fix vertical alignment
-          marginBottom: '3px',
-
-          '&:after': {
+          '&::after': {
             content: '""',
             position: 'absolute',
             top: '50%',
@@ -37,17 +31,17 @@ export const radio: Theme = {
             height: checkerSize,
             borderRadius: '100vw',
             transition: 'all 0.2s',
-            ...createStyle({ background: checkerColor })
+            backgroundColor: checkerColor
           }
         });
-        return props.isActive
+        return isActive
           ? createStateStyle('primary', 'primary', '0.5rem')
           : createStateStyle('strongBorder', 'white', 0);
       }
     },
 
     label: {
-      extend: { cursor: 'pointer' }
+      style: { cursor: 'pointer' }
     }
   },
 

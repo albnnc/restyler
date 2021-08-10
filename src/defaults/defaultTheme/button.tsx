@@ -1,23 +1,17 @@
-import { StyleProps, Theme } from '../../models';
+import { Style, Theme } from '../../models';
 
-const createBasicKind = (color: string, additionalProps?: StyleProps) => ({
-  // padding: { vertical: 'smaller', horizontal: 'medium' },
-  // radius: 'small',
-  // background: 'transparent',
-  // color: 'strongText',
-  // border: { width: '1px', color: 'border' },
-  // font: 'small',
+const createBasicKind = (color: string, extras?: Style) => ({
   style: [
     props => ({
-      fontFamily: 'body',
-      border: '1px solid black',
+      paddingX: 3,
+      paddingY: 2,
+      borderRadius: 2,
+      border: '1px solid',
       borderColor: 'border',
-      background: 'transparent',
+      backgroundColor: 'transparent',
       color: 'strongText',
-      fontSize: 'small',
-      px: 3,
-      py: 2,
-      borderRadius: 'medium',
+      fontSize: 2,
+      fontFamily: 'body',
       cursor: 'pointer',
       textTransform: 'uppercase',
       letterSpacing: '0.04rem',
@@ -28,65 +22,17 @@ const createBasicKind = (color: string, additionalProps?: StyleProps) => ({
             borderStyle: 'dashed'
           }
         : { '&:hover, &:focus': { color, borderColor: color } })
-    })
-    // ({ createStyle }) => createStyle(additionalProps ?? {})
+    }),
+    ...(extras ? [extras] : [])
   ]
 });
-
-// const createArrowKind = direction => ({
-//   extend: {
-//     background: 'transparent',
-//     border: 'none',
-//     color: 'inherit',
-//     cursor: 'pointer',
-//     font: 'inherit',
-//     outline: 'none',
-//     padding: 0,
-//     display: 'inline-block',
-//     verticalAlign: 'middle',
-//     '&::after': {
-//       display: 'block',
-//       content: '""',
-//       width: 0,
-//       height: 0,
-//       ...{
-//         up: {
-//           borderBottom: '5px solid currentColor',
-//           borderLeft: '5px solid transparent',
-//           borderRight: '5px solid transparent'
-//         },
-//         down: {
-//           borderTop: '5px solid currentColor',
-//           borderLeft: '5px solid transparent',
-//           borderRight: '5px solid transparent'
-//         },
-//         left: {
-//           borderRight: '5px solid currentColor',
-//           borderTop: '5px solid transparent',
-//           borderBottom: '5px solid transparent'
-//         },
-//         right: {
-//           borderLeft: '5px solid currentColor',
-//           borderTop: '5px solid transparent',
-//           borderBottom: '5px solid transparent'
-//         }
-//       }[direction]
-//     }
-//   }
-// });
 
 export const button: Theme = {
   kinds: {
     primary: createBasicKind('primary'),
-    secondary: createBasicKind('primary', {
-      border: { color: 'border', style: 'dashed' }
-    }),
+    secondary: createBasicKind('primary', { borderStyle: 'dashed' }),
     success: createBasicKind('success'),
     warning: createBasicKind('warning'),
     danger: createBasicKind('danger')
-    // arrowUp: createArrowKind('up'),
-    // arrowDown: createArrowKind('down'),
-    // arrowLeft: createArrowKind('left'),
-    // arrowRight: createArrowKind('right')
   }
 };

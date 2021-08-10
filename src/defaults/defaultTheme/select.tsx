@@ -1,4 +1,4 @@
-import { StyleFnOptions, Theme } from '../../models';
+import { Theme } from '../../models';
 import { mergeThemes } from '../../utils';
 import { createInputLikeTheme } from './input';
 
@@ -14,7 +14,7 @@ export const select: Theme = {
       canBeInvalid: true
     }),
     {
-      extend: ({ props }) => ({
+      style: {
         position: 'relative',
         width: '100%',
         lineHeight: 'calc(1.5 * 1rem)',
@@ -33,23 +33,19 @@ export const select: Theme = {
           height: 0,
           borderLeft: '5px solid transparent',
           borderRight: '5px solid transparent',
-          borderTop: `5px solid ${props.theme.variables?.palette?.text}`
+          borderTop: `5px solid`,
+          borderTopColor: 'text'
         }
-      })
+      }
     }
   ),
 
   option: {
-    extend: ({
-      props: {
-        isActive,
-        theme: { variables: { padding = {} } = {} }
-      }
-    }: StyleFnOptions) => ({
+    style: ({ isActive }) => ({
       position: 'relative',
       cursor: 'pointer',
-      padding: padding.small,
-      paddingRight: isActive ? `calc(${markMargin} * 2)` : padding.small,
+      padding: 2,
+      paddingRight: isActive ? `calc(${markMargin} * 2)` : 2,
       '&:hover': { background: 'rgba(0, 0, 0, 0.05)' },
       '&::after': {
         content: '""',
@@ -67,37 +63,38 @@ export const select: Theme = {
     }),
     kinds: {
       empty: {
-        color: 'weakText',
-        extend: {
+        style: {
+          color: 'weakText',
           userSelect: 'none',
           cursor: 'not-allowed',
-          '&::after': {
-            display: 'none'
-          }
+          '&::after': { display: 'none' }
         }
       }
     }
   },
 
   selection: {
-    extend: ({ createStyle }: StyleFnOptions) => ({
-      '& + &': createStyle({
-        padding: { left: 'small' },
-        margin: { left: 'small' },
-        border: { left: 'strongBorder' }
-      })
-    })
+    style: {
+      '& + &': {
+        pl: 2,
+        ml: 2,
+        borderLeft: '1px solid',
+        borderLeftColor: 'strongBorder'
+      }
+    }
   },
 
   placeholder: {
-    color: 'weakText'
+    style: {
+      color: 'weakText'
+    }
   },
 
   drop: {
-    background: 'white',
-    radius: 'small',
-    elevation: 'medium',
-    extend: ({ props: { isVisible } }: StyleFnOptions) => ({
+    style: ({ isVisible }) => ({
+      backgroundColor: 'white',
+      borderRadius: 2,
+      boxShadow: 3,
       minWidth: '200px',
       maxHeight: '300px',
       overflowY: 'auto',

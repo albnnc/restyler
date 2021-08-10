@@ -1,23 +1,30 @@
-import { StyleFnOptions, Theme } from '../../models';
+import { Theme } from '../../models';
 
-const createModalStyle =
-  ({ width }) =>
-  ({ props: { isVisible, isEntering } }: StyleFnOptions) => ({
-    width,
+export const modal: Theme = {
+  style: ({ isVisible, isEntering }) => ({
+    borderRadius: 2,
+    boxShadow: 4,
+    backgroundColor: 'white',
+    width: '550px',
     maxWidth: 'calc(100% - 2rem)',
     transform: `translateY(${isVisible ? '0' : isEntering ? '1rem' : '-1rem'})`,
     transition: 'transform 0.2s'
-  });
-
-export const modal: Theme = {
-  radius: 'small',
-  elevation: 'largest',
-  background: 'white',
-  padding: 'medium',
-  extend: createModalStyle({ width: '550px' }),
+  }),
   kinds: {
-    small: { extend: createModalStyle({ width: '450px' }) },
-    large: { extend: createModalStyle({ width: '650px' }) },
-    question: { extend: createModalStyle({ width: '400px' }) }
+    small: { style: { width: '450px' } },
+    large: { style: { width: '650px' } },
+    question: { style: { width: '400px' } }
+  },
+  header: { style: { px: 3, pt: 3, '&:last-of-type': { pb: 3 } } },
+  body: { style: { px: 3, pt: 3, '&:last-of-type': { pb: 3 } } },
+  footer: {
+    style: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      gap: 2,
+      px: 3,
+      pt: 3,
+      '&:last-of-type': { pb: 3 }
+    }
   }
 };

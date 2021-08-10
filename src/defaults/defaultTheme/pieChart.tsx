@@ -2,11 +2,9 @@ import { Theme } from '../../models';
 
 export const pieChart: Theme = {
   segment: {
-    extend: {
-      transition: 'opacity 0.2s',
-      '&:hover': {
-        opacity: 0.8
-      }
+    style: {
+      transition: 'opacity 0.2s linear',
+      '&:hover': { opacity: 0.8 }
     }
   }
 };

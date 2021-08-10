@@ -1,10 +1,12 @@
 import { Theme } from '../../models';
 
 export const container: Theme = {
-  direction: 'row',
-  justify: 'center',
+  style: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
   content: {
-    extend: {
+    style: {
       width: '80%',
       maxWidth: '1024px',
       '@media screen and (max-width: 500px)': {

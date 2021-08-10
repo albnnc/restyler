@@ -2,37 +2,20 @@ import { Theme } from '../..';
 
 export const tab: Theme = {
   group: {
-    direction: 'row'
+    style: { display: 'flex' }
   },
-
   option: {
-    padding: {
-      vertical: 'small',
-      horizontal: 'medium'
-    },
-    border: {
-      bottom: { width: '2px', color: 'transparent' }
-    },
-    color: 'text',
-
-    extend: ({ createStyle, props }) => ({
+    style: ({ isActive }) => ({
+      paddingY: 2,
+      paddingX: 3,
+      borderBottom: '2px solid transparent',
+      color: 'text',
       cursor: 'pointer',
       transition: 'all 0.2s',
       textTransform: 'uppercase',
       letterSpacing: '0.04rem',
-
-      '&:hover': createStyle({
-        color: 'primary'
-      }),
-
-      ...(props.isActive
-        ? createStyle({
-            color: 'primary',
-            border: {
-              bottom: { width: '2px', color: 'primary' }
-            }
-          })
-        : {})
+      '&:hover': { color: 'primary' },
+      ...(isActive ? { color: 'primary', borderBottomColor: 'primary' } : {})
     })
   }
 };

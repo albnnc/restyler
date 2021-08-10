@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, HTMLAttributes, useCallback } from 'react';
 import { useThemed } from '../hooks';
 import { FormWidgetProps, StyleProps } from '../models';
 
@@ -8,7 +8,7 @@ export interface CheckboxProps
     StyleProps {}
 
 export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
-  (props, ref) => {
+  ({ children, value, onChange, ...rest }, ref) => {
     const ThemedCheckbox = useThemed('div', { path: 'checkbox' });
     const ThemedCheckboxChecker = useThemed<'span', CheckboxProps>('span', {
       path: 'checkbox.checker'
@@ -16,14 +16,13 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
     const ThemedCheckboxLabel = useThemed<'label', CheckboxProps>('label', {
       path: 'checkbox.label'
     });
-    const { children, value, onChange, ...rest } = props;
-    const onClick = () => {
+    const handleClick = useCallback(() => {
       onChange?.(!value);
-    };
+    }, [onChange]);
     return (
       <ThemedCheckbox ref={ref} {...rest}>
-        <ThemedCheckboxChecker value={value} onClick={onClick} />
-        <ThemedCheckboxLabel value={value} onClick={onClick}>
+        <ThemedCheckboxChecker value={value} onClick={handleClick} />
+        <ThemedCheckboxLabel value={value} onClick={handleClick}>
           {children}
         </ThemedCheckboxLabel>
       </ThemedCheckbox>

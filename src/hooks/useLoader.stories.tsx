@@ -1,4 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+/** @jsx jsx */
+import { jsx } from '@theme-ui/core';
+import { useCallback, useMemo } from 'react';
 import { Box, Button, ButtonProps, useLoader } from 'src';
 import { delay } from 'storybook/utils';
 
@@ -42,15 +44,15 @@ export const SharedLoaders = () => {
 
   const [isLoading, _] = useLoader([sharedLoaderId]);
   return (
-    <Box direction="column">
+    <Box>
       <AnotherComponent />
       <Box
-        margin={{ top: 'medium' }}
-        padding="medium"
-        radius="small"
-        border={{
-          color: isLoading ? 'warning' : 'success',
-          style: 'dashed'
+        sx={{
+          mt: 2,
+          p: 3,
+          borderRadius: 2,
+          border: '1px dashed',
+          borderColor: isLoading ? 'warning' : 'success'
         }}
       >
         {isLoading ? 'Loading' : 'Idling'}
@@ -81,7 +83,7 @@ export const CompoundLoaders = () => {
   const c = useMemo(() => Symbol(), []);
 
   return (
-    <Box direction="row" css={{ gap: '0.5rem' }}>
+    <Box sx={{ display: 'flex', gap: 2 }}>
       <Loadable ids={[a]}>A</Loadable>
       <Loadable ids={[b]}>B</Loadable>
       <Loadable ids={[c]}>C</Loadable>

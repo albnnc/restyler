@@ -1,14 +1,15 @@
 import { Theme } from '../../models';
 
 export const checkbox: Theme = {
+  style: { cursor: 'pointer' },
   checker: {
-    margin: { right: 'small' },
-    radius: 'smaller',
-    background: 'white',
-
-    extend: ({ createStyle, props }) => {
+    style: ({ value }) => {
       const createStateStyle = (borderColor, checkerColor, checkerSize) => ({
-        ...createStyle({ border: borderColor }),
+        marginRight: 2,
+        borderRadius: 1,
+        background: 'white',
+        border: '1px solid',
+        borderColor,
         position: 'relative',
         display: 'inline-block',
         width: '1rem',
@@ -17,7 +18,7 @@ export const checkbox: Theme = {
         cursor: 'pointer',
         transition: 'all 0.2s',
 
-        // fix vertical alignment
+        // Fixing vertical alignment.
         marginBottom: '3px',
 
         '&:after': {
@@ -29,16 +30,14 @@ export const checkbox: Theme = {
           width: checkerSize,
           height: checkerSize,
           transition: 'all 0.2s',
-          ...createStyle({ redius: 'smaller', background: checkerColor })
+          radius: 1,
+          backgroundColor: checkerColor
         }
       });
-      return props.value
+      return value
         ? createStateStyle('primary', 'primary', '0.5rem')
         : createStateStyle('strongBorder', 'white', 0);
     }
   },
-
-  label: {
-    extend: { cursor: 'pointer' }
-  }
+  label: {}
 };

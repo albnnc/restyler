@@ -2,44 +2,36 @@ import { Theme } from '../../models';
 
 export const form: Theme = {
   field: {
-    direction: 'column',
+    style: {
+      display: 'flex',
+      flexDirection: 'column'
+    },
 
     label: {
-      extend: ({ createStyle, props }) => ({
-        ...(props.required
-          ? {
-              '&:after': {
-                content: '" *"',
-                ...createStyle({ color: 'danger' })
-              }
-            }
-          : {})
-      })
+      style: ({ required }) =>
+        required ? { '&:after': { content: '" *"', color: 'danger' } } : {}
     },
 
     control: {
-      direction: 'row',
-      margin: { top: 'small' }
+      style: { display: 'flex', marginTop: 2 }
     },
 
     help: {
-      color: 'weakText',
-      margin: { top: 'smaller' }
+      style: { color: 'weakText', marginTop: 1 }
     },
 
     errors: {
       item: {
-        color: 'danger',
-        margin: { top: 'smaller' }
+        style: { color: 'danger', marginTop: 1 }
       }
     }
   },
 
   grid: {
-    gap: 'medium',
-    extend: {
+    style: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))'
+      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+      gap: 3
     }
   }
 };

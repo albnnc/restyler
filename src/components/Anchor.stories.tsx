@@ -3,7 +3,7 @@ import { Anchor } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'navigation/Anchor'
+  title: 'Navigation/Anchor'
 };
 
 export const Basics = () => {

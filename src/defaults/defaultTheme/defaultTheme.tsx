@@ -25,7 +25,6 @@ import { systemContainer } from './systemContainer';
 import { tab } from './tab';
 import { table } from './table';
 import { textArea } from './textArea';
-import { variables } from './variables';
 
 export const defaultTheme: Theme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
@@ -34,15 +33,8 @@ export const defaultTheme: Theme = {
     heading: 'inherit',
     monospace: 'Menlo, monospace'
   },
-  fontSizes: {
-    smallest: '10px',
-    smaller: '12px',
-    small: '14px',
-    medium: '16px',
-    large: '20px',
-    larger: '34px',
-    largest: '42px'
-  },
+  fontSizes: [10, 12, 14, 16, 20, 26, 42, 48, 56],
+  radii: [0, 2, 4, 8],
   fontWeights: {
     light: 300,
     normal: 400,
@@ -69,46 +61,61 @@ export const defaultTheme: Theme = {
     weakText: 'rgba(0, 0, 0, 0.4)',
     strongText: 'rgba(0, 0, 0, 0.9)',
 
-    lightText: 'rgba(255, 255, 255, 0.7)',
-    weakLightText: 'rgba(255, 255, 255, 0.4)',
-    strongLightText: 'rgba(255, 255, 255, 0.9)',
-
     border: 'rgba(0, 0, 0, 0.15)',
     weakBorder: 'rgba(0, 0, 0, 0.1)',
     strongBorder: 'rgba(0, 0, 0, 0.2)'
   },
-  radii: {
-    small: '2px',
-    medium: '4px',
-    large: '8px'
-  },
+  shadows: [
+    'none',
+    '0px 2px 1px -1px rgba(0, 0, 0, 0.12), ' +
+      '0px 1px 1px 0px rgba(0, 0, 0, 0.12), ' +
+      '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
+    '0px 3px 1px -2px rgba(0, 0, 0, 0.12), ' +
+      '0px 2px 2px 0px rgba(0, 0, 0, 0.12), ' +
+      '0px 1px 5px 0px rgba(0, 0, 0, 0.12)',
+    '0px 3px 3px -2px rgba(0, 0, 0, 0.12), ' +
+      '0px 3px 4px 0px rgba(0, 0, 0, 0.12), ' +
+      '0px 1px 8px 0px rgba(0, 0, 0, 0.12)',
+    '0px 2px 4px -1px rgba(0, 0, 0, 0.12), ' +
+      '0px 4px 5px 0px rgba(0, 0, 0, 0.12), ' +
+      '0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+    '0px 3px 5px -1px rgba(0, 0, 0, 0.12), ' +
+      '0px 6px 10px 0px rgba(0, 0, 0, 0.12), ' +
+      '0px 1px 18px 0px rgba(0, 0, 0, 0.12)',
+    '0px 5px 5px -3px rgba(0, 0, 0, 0.12), ' +
+      '0px 8px 10px 1px rgba(0, 0, 0, 0.12), ' +
+      '0px 3px 14px 2px rgba(0, 0, 0, 0.12)',
+    '0px 6px 6px -3px rgba(0, 0, 0, 0.12), ' +
+      '0px 10px 14px 1px rgba(0, 0, 0, 0.12), ' +
+      '0px 4px 18px 3px rgba(0, 0, 0, 0.12)'
+  ],
 
-  defaults,
-  variables,
-
-  anchor,
-  box,
-  button,
-  card,
-  checkbox,
-  collapse,
-  container,
-  file,
-  form,
-  heading,
-  input,
-  layer,
-  masonry,
-  menu,
-  modal,
-  notification,
-  pieChart,
-  progress,
-  radio,
-  scroll,
-  select,
-  systemContainer,
-  tab,
-  table,
-  textArea
+  components: {
+    defaults,
+    anchor,
+    box,
+    button,
+    card,
+    checkbox,
+    collapse,
+    container,
+    file,
+    form,
+    heading,
+    input,
+    layer,
+    masonry,
+    menu,
+    modal,
+    notification,
+    pieChart,
+    progress,
+    radio,
+    scroll,
+    select,
+    systemContainer,
+    tab,
+    table,
+    textArea
+  }
 };

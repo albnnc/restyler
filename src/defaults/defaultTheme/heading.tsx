@@ -1,26 +1,20 @@
 import { Theme } from '../../models';
 
 export const heading: Theme = {
-  margin: { top: 'small', bottom: 'smaller' },
-  font: 'large',
-  weight: 'light',
-  color: 'strongText',
+  style: {
+    marginTop: 2,
+    marginBottom: 1,
+    fontSize: 5,
+    fontWeight: 'light',
+    lineHeight: 'heading',
+    color: 'strongText'
+  },
   kinds: {
-    1: {
-      margin: { top: 'large', bottom: 'small' },
-      font: '56px'
-    },
-    2: {
-      margin: { top: 'large', bottom: 'small' },
-      font: 'largest'
-    },
-    3: {
-      margin: { top: 'medium', bottom: 'small' },
-      font: 'larger'
-    },
-    4: {
-      margin: { top: 'small', bottom: 'smaller' },
-      font: 'large'
-    }
+    1: { style: { mt: 3, mb: 2, fontSize: 8 } },
+    2: { style: { mt: 3, mb: 2, fontSize: 7 } },
+    3: { style: { mt: 3, mb: 2, fontSize: 6 } },
+    4: { style: { mt: 2, mb: 1, fontSize: 5 } },
+    5: { style: { mt: 2, mb: 1, fontSize: 4 } },
+    6: { style: { mt: 2, mb: 1, fontSize: 3 } }
   }
 };

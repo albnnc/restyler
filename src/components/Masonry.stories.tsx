@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useReducer, useRef } from 'react';
+/** @jsx jsx */
+import { jsx } from '@theme-ui/core';
+import { useCallback, useEffect, useReducer, useRef } from 'react';
 import { Box, Button, Masonry } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'containers/Masonry'
+  title: 'Containers/Masonry'
 };
 
 export const Basics = () => {
@@ -22,7 +24,7 @@ export const Basics = () => {
       update();
     }, []);
     return (
-      <Box background="rgba(0, 0, 0, 0.2)" css={{ height: `${height}px` }}>
+      <Box sx={{ height: `${height}px`, bg: 'rgba(0, 0, 0, 0.2)' }}>
         <Box>#{index}</Box>
         <Box>Times mounted: {mountsCounts[index]}</Box>
         <Box>Times rendered: {rendersCounts[index]}</Box>
@@ -31,17 +33,17 @@ export const Basics = () => {
   }, []);
 
   return (
-    <Box direction="column">
-      <Button kind="primary" margin={{ bottom: 'medium' }} onClick={toggle}>
+    <Box>
+      <Button kind="primary" sx={{ mb: 3 }} onClick={toggle}>
         Toggle
       </Button>
       <Masonry
-        columns={{
-          count: columnsCount,
-          getProps: () => ({ gap: '5px' })
+        columns={{ count: columnsCount }}
+        sx={{
+          width: '600px',
+          maxWidth: '700px',
+          '&, & > *': { gap: '5px' }
         }}
-        gap="5px"
-        css={{ width: '600px', maxWidth: '700px' }}
       >
         {heights.map((v, i) => (
           <Component key={i} index={i} height={v} />

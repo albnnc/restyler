@@ -5,26 +5,14 @@ import React, {
   ForwardRefExoticComponent
 } from 'react';
 import { SystemContext } from '../components';
-import { Style, Theme } from '../models';
-import { capitalizeFirst, get, merge, mergeThemes } from '../utils';
-
-const createStyle = (theme: Theme, props: any) => {
-  const { style } = theme;
-  const result = {} as Style;
-  for (const item of Array.isArray(style) ? style : [style]) {
-    if (typeof item === 'function') {
-      merge(result, item(props));
-    } else if (typeof item === 'object') {
-      merge(result, item);
-    }
-  }
-  return result;
-};
-
-interface StyleProps {
-  theme?: Theme;
-  kind?: string;
-}
+import { Style, StyleProps, Theme } from '../models';
+import {
+  capitalizeFirst,
+  createStyle,
+  get,
+  merge,
+  mergeThemes
+} from '../utils';
 
 export const useThemed = <
   Tag extends keyof JSX.IntrinsicElements,
@@ -49,7 +37,8 @@ export const useThemed = <
 
   const StyledComponent = styled<Tag, StyleProps & ExtraProps>(tag, props => {
     const { theme, kind } = props;
-    const { kinds, ...componentTheme } = get(theme ?? {}, path ?? '') ?? {};
+    const { kinds, ...componentTheme } =
+      get(theme?.components ?? {}, path ?? '') ?? {};
     const componentKindTheme = kinds?.[kind ?? ''] ?? {};
     const mergedTheme = mergeThemes(
       {},

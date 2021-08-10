@@ -1,11 +1,11 @@
 import { Theme } from '../../models';
 
 export const defaults: Theme = {
-  padding: 'none',
-  margin: 'none',
-  font: 'inherit',
-  color: 'inherit',
-  extend: {
+  style: {
+    padding: 0,
+    margin: 0,
+    font: 'inherit',
+    color: 'inherit',
     lineHeight: 'inherit',
     fontFamily: 'inherit',
     boxSizing: 'border-box'

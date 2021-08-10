@@ -50,10 +50,7 @@ export const File = forwardRef<HTMLDivElement, FileProps>(
           onChange={handleInputChange}
           {...inputProps}
         />
-        <ThemedFileInputLabel
-          onClick={() => inputRef.current?.click()}
-          direction="row"
-        >
+        <ThemedFileInputLabel onClick={() => inputRef.current?.click()}>
           {children && typeof children === 'function'
             ? (children as FileLabelRenderer)(
                 Array(innerValue?.length ?? 0)

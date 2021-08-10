@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@theme-ui/core';
 import { keyframes } from '@emotion/react';
 import { Meta } from '@storybook/react';
 import React, { useState } from 'react';
@@ -18,8 +20,8 @@ export const Basics = () => {
     ({ isVisible, isEntering }, ref) => (
       <Box
         ref={ref}
-        margin={{ left: 'medium' }}
-        css={{
+        sx={{
+          marginLeft: 3,
           position: 'absolute',
           right: '-2rem',
           top: '50%',
@@ -33,7 +35,7 @@ export const Basics = () => {
         }}
       >
         <Box
-          css={{
+          sx={{
             content: '""',
             display: 'block',
             boxSizing: 'border-box',

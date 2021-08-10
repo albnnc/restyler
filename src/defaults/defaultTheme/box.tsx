@@ -1,5 +1,5 @@
 export const box = {
-  extend: {
+  style: {
     minWidth: 0
   }
 };

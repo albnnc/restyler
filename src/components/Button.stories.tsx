@@ -1,17 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@theme-ui/core';
 import { Button } from 'src';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'naviagtion/Button'
+  title: 'General/Button'
 };
 
 export const Basics = () => {
-  return (
-    <Button kind="primary" sx={{ mb: 3 }}>
-      Click Me
-    </Button>
-  );
+  return <Button kind="primary">Action</Button>;
 };
 
-// export const Blueprint = createBlueprint('button');
+export const Blueprint = createBlueprint('button');

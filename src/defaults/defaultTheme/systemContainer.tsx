@@ -1,9 +1,9 @@
 import { Theme } from '../..';
 
 export const systemContainer: Theme = {
-  color: 'text',
-  font: 'medium',
-  extend: {
+  style: {
+    color: 'text',
+    fontSize: 'medium',
     boxSizing: 'border-box',
     minHeight: '100%',
     lineHeight: 1.5,

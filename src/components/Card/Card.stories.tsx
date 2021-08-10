@@ -4,7 +4,7 @@ import { Card, CardBody, CardFooter, CardHeader } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'containers/Card',
+  title: 'Containers/Card',
   parameters: {
     backgrounds: { default: 'lightGrey' }
   }

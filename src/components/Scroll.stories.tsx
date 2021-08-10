@@ -1,15 +1,16 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx } from '@theme-ui/core';
 import { Box, Scroll } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'containers/Scroll'
+  title: 'Containers/Scroll'
 };
 
 export const Basics = () => {
   return (
-    <Scroll css={{ width: '500px' }}>
-      <Box css={{ width: '700px' }}>
+    <Scroll sx={{ maxWidth: '500px' }}>
+      <Box sx={{ width: '700px' }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent auctor
         sollicitudin enim non lacinia. Quisque ultricies est et neque
         pellentesque, a blandit massa ultricies. Pellentesque porta malesuada

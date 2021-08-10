@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/react';
+import { jsx } from '@theme-ui/core';
 import { ReactNode, useContext } from 'react';
-import { Box, get, knownStyleProps, SystemContext, Theme } from 'src';
+import { Box, get, SystemContext, Theme } from 'src';
 
 export const delay = (t: number) =>
   new Promise(resolve => {
@@ -12,7 +12,7 @@ export const delay = (t: number) =>
 
 export const createBlueprint = (
   path: string,
-  options: { exclude?: RegExp } = {}
+  options: { exclude?: RegExp; muted?: RegExp } = {}
 ) =>
   Object.assign(
     () => {
@@ -20,31 +20,32 @@ export const createBlueprint = (
       const getBlueprint = (theme: Theme, path = ''): ReactNode => {
         const key = path.split('.').pop();
         if (
-          [
-            ...knownStyleProps,
-            'variables',
-            'extend',
-            'defaults',
-            'kinds'
-          ].includes(key ?? '') ||
+          ['defaults', 'kinds', 'style'].includes(key ?? '') ||
           (options.exclude && options.exclude.test(path))
         ) {
           return null;
         }
+        const isMuted = options.muted && options.muted.test(path);
         const target = key ? theme[key] : theme;
         return (
           <Box
             key={path}
-            background="rgba(123, 176, 255, 0.5)"
-            border="rgba(14, 75, 167, 0.6)"
-            padding={{ horizontal: '10px', bottom: '10px', top: '30px' }}
-            direction="column"
-            css={{
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
               gap: '10px',
-              position: 'relative',
-              boxSizing: 'border-box',
+              padding: '10px',
+              paddingTop: '30px',
               minWidth: '300px',
               minHeight: '50px',
+              border: isMuted
+                ? '1px solid rgba(0, 0, 0, 0.3)'
+                : '1px solid rgba(14, 75, 167, 0.6)',
+              backgroundColor: isMuted
+                ? 'rgba(0, 0, 0, 0.05)'
+                : 'rgba(123, 176, 255, 0.5)',
+              position: 'relative',
+              boxSizing: 'border-box',
               fontSize: 0,
               '&::-webkit-file-upload-button': {
                 visibility: 'hidden'
@@ -57,7 +58,9 @@ export const createBlueprint = (
                 left: '5px',
                 fontSize: '14px',
                 fontFamily: 'monospace',
-                color: 'rgba(10, 44, 95, 0.781)'
+                color: isMuted
+                  ? 'rgba(0, 0, 0, 0.8)'
+                  : 'rgba(10, 44, 95, 0.781)'
               }
             }}
           >
@@ -68,8 +71,8 @@ export const createBlueprint = (
         );
       };
       const base = path.includes('.')
-        ? get(system.theme, path.split('.').slice(0, -1).join('.'))
-        : system.theme;
+        ? get(system.theme.components, path.split('.').slice(0, -1).join('.'))
+        : system.theme.components;
       return getBlueprint(base, path);
     },
     {
