@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { jsx } from '@theme-ui/core';
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { Box, Button, useOperation } from 'src';
 import { delay } from 'storybook/utils';
 

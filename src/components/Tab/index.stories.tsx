@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { jsx } from '@theme-ui/core';
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { TabGroup, TabOption, useTabManager } from 'src';
 import { createBlueprint } from 'storybook/utils';
 

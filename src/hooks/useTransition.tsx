@@ -11,8 +11,8 @@ import React, {
   ForwardRefRenderFunction,
   useRef
 } from 'react';
-import { requestAnimationDelay } from '../utils';
 import { SystemContext } from '../components';
+import { requestAnimationDelay } from '../utils';
 import { useCleanableRef } from './useCleanableRef';
 import { useForwardRef } from './useForwardRef';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';

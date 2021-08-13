@@ -1,8 +1,8 @@
 /** @jsx jsx */
-import { jsx, ThemeProvider } from '@theme-ui/core';
-import { Global } from '@emotion/react';
-import { forwardRef } from 'react';
 import isPropValid from '@emotion/is-prop-valid';
+import { Global } from '@emotion/react';
+import { jsx, ThemeProvider } from '@theme-ui/core';
+import { forwardRef } from 'react';
 import { Box, defaultTheme, SystemContainer } from 'src';
 
 const styled = (Tag: any, fn: Function) =>

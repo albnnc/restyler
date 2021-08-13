@@ -88,7 +88,24 @@
     "@typescript-eslint/no-base-to-string": ["error"],
     "import/no-cycle": ["error"],
     "import/no-unresolved": ["error"],
-    "import/order": ["error"]
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        },
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object"
+        ]
+      }
+    ]
   },
   "settings": {
     "import/resolver": "eslint-import-resolver-typescript"

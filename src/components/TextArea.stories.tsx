@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import { jsx } from '@theme-ui/core';
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
-import { createBlueprint } from 'storybook/utils';
 import { TextArea } from 'src';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'Forms/TextArea'

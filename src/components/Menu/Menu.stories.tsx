@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { jsx } from '@theme-ui/core';
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { useReducer } from 'react';
 import { Menu, MenuGroup, MenuItem } from 'src';
 import { createBlueprint } from 'storybook/utils';

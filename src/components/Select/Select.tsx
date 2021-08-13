@@ -10,7 +10,6 @@ import React, {
   useState,
   useCallback
 } from 'react';
-import { disableScroll, getChildrenKey } from '../../utils';
 import {
   interactiveStackId,
   useClickOutside,
@@ -22,10 +21,11 @@ import {
   useUpdateEffect
 } from '../../hooks';
 import { FormWidgetProps, StyleProps } from '../../models';
+import { disableScroll, getChildrenKey } from '../../utils';
 import { SystemContext } from '../SystemContext';
+import { SelectContext } from './SelectContext';
 import { SelectDrop } from './SelectDrop';
 import { SelectOption, SelectOptionProps } from './SelectOption';
-import { SelectContext } from './SelectContext';
 
 export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,

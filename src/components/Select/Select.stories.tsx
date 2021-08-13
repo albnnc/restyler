@@ -1,10 +1,10 @@
 /** @jsx jsx */
-import { jsx } from '@theme-ui/core';
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { useReducer } from 'react';
 import { Box, Button, Select, SelectOption } from 'src';
-import { createBlueprint } from 'storybook/utils';
 import { compact } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'Forms/Select',

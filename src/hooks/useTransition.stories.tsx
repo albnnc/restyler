@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import { jsx } from '@theme-ui/core';
 import { keyframes } from '@emotion/react';
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { useState } from 'react';
 import { Box, Button, useTransition } from 'src';
 

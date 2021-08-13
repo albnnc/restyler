@@ -7,8 +7,8 @@ import {
   useThemed,
   useTransition
 } from '../hooks';
-import { hash } from '../utils';
 import { StyleProps } from '../models';
+import { hash } from '../utils';
 
 export interface CollapseProps
   extends HTMLAttributes<HTMLDivElement>,

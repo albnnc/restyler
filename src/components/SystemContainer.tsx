@@ -1,8 +1,8 @@
 import React, { forwardRef, HTMLAttributes, useEffect, useState } from 'react';
-import { set } from '../utils';
+import { defaultSystem } from '../defaults';
 import { useImperativePortal, useThemed } from '../hooks';
 import { PartiallyRequired, StyleProps, System } from '../models';
-import { defaultSystem } from '../defaults';
+import { set } from '../utils';
 import { SystemContext } from './SystemContext';
 
 export type SystemOptions = PartiallyRequired<System, 'styled'>;

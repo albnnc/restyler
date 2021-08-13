@@ -7,8 +7,8 @@ import React, {
   useMemo,
   useContext
 } from 'react';
-import { hash } from '../utils';
 import { Notification, NotificationProps, SystemContext } from '../components';
+import { hash } from '../utils';
 import { useSharedRef } from './useSharedRef';
 import {
   StandaloneTransitionerProps,

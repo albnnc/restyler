@@ -1,5 +1,5 @@
-import { centered, systemized } from './decorators';
 import { defaultTheme } from 'src';
+import { centered, systemized } from './decorators';
 
 const { colors = {} } = defaultTheme;
 export const parameters = {

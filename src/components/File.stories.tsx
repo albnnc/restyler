@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import { jsx } from '@theme-ui/core';
 import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { File } from 'src';
-import { createBlueprint } from 'storybook/utils';
 import { compact } from 'storybook/decorators';
+import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'Forms/File',
