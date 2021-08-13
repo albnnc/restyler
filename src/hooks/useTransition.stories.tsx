@@ -2,7 +2,7 @@
 import { jsx } from '@theme-ui/core';
 import { keyframes } from '@emotion/react';
 import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, useTransition } from 'src';
 
 export default {

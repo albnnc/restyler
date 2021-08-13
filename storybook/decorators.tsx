@@ -5,14 +5,14 @@ import { forwardRef } from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import { Box, defaultTheme, SystemContainer } from 'src';
 
-const styled = (Tag: any, fn: any) =>
-  forwardRef((props, ref) => {
+const styled = (Tag: any, fn: Function) =>
+  forwardRef((props: any, ref: any) => {
     const { theme, kind, ...rest } = props as any;
     const validProps = Object.keys(rest).reduce(
       (p, k) => (isPropValid(k) ? { ...p, [k]: rest[k] } : p),
-      {}
+      { sx: fn(props) }
     );
-    return <Tag ref={ref} sx={fn(props)} {...validProps} />;
+    return <Tag ref={ref} {...validProps} />;
   }) as any;
 
 export const systemized = (Story, context) => {
@@ -40,9 +40,19 @@ export const centered = Story => (
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: '100vh'
+      minHeight: '100vh',
+      paddingX: 3
     }}
   >
     <Story />
   </Box>
 );
+
+export const compact =
+  (maxWidth = '500px') =>
+  Story =>
+    (
+      <Box sx={{ width: '100%', maxWidth }}>
+        <Story />
+      </Box>
+    );

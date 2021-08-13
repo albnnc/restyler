@@ -1,11 +1,12 @@
 /** @jsx jsx */
+import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Box, Scroll } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'Containers/Scroll'
-};
+} as Meta;
 
 export const Basics = () => {
   return (

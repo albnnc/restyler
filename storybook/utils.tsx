@@ -34,9 +34,11 @@ export const createBlueprint = (
               display: 'flex',
               flexDirection: 'column',
               gap: '10px',
+              margin: '0 auto',
               padding: '10px',
               paddingTop: '30px',
-              minWidth: '300px',
+              width: '100%',
+              maxWidth: '400px',
               minHeight: '50px',
               border: isMuted
                 ? '1px solid rgba(0, 0, 0, 0.3)'

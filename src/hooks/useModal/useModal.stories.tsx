@@ -3,7 +3,6 @@ import { jsx } from '@theme-ui/core';
 import { Meta } from '@storybook/react';
 import { useState } from 'react';
 import {
-  Box,
   Button,
   Form,
   FormField,

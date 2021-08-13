@@ -1,11 +1,12 @@
 /** @jsx jsx */
+import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Box, Heading } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'General/Heading'
-};
+} as Meta;
 
 export const Basics = () => {
   return (

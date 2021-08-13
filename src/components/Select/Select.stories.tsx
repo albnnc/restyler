@@ -4,14 +4,16 @@ import { Meta } from '@storybook/react';
 import { useReducer } from 'react';
 import { Box, Button, Select, SelectOption } from 'src';
 import { createBlueprint } from 'storybook/utils';
+import { compact } from 'storybook/decorators';
 
 export default {
-  title: 'Forms/Select'
+  title: 'Forms/Select',
+  decorators: [compact('300px')]
 } as Meta;
 
 export const Basics = () => {
   return (
-    <Select placeholder="Select value" sx={{ width: '300px' }}>
+    <Select placeholder="Select value">
       <SelectOption value="a">A</SelectOption>
       <SelectOption value="b">B</SelectOption>
       <SelectOption value="c">C</SelectOption>
@@ -21,7 +23,7 @@ export const Basics = () => {
 
 export const MultipleOptions = () => {
   return (
-    <Select isMultiple placeholder="Select values" sx={{ width: '300px' }}>
+    <Select isMultiple placeholder="Select values">
       <SelectOption value="a">A</SelectOption>
       <SelectOption value="b">B</SelectOption>
       <SelectOption value="c">C</SelectOption>
@@ -36,7 +38,7 @@ export const Controlled = () => {
       <Button kind="primary" sx={{ mb: 3 }} onClick={toggle}>
         Toggle
       </Button>
-      <Select value={value} sx={{ width: '300px' }}>
+      <Select value={value}>
         <SelectOption value={0}>A</SelectOption>
         <SelectOption value={1}>B</SelectOption>
         <SelectOption value={2}>C</SelectOption>
@@ -46,11 +48,7 @@ export const Controlled = () => {
 };
 
 export const Empty = () => {
-  return (
-    <Select placeholder="Select value" sx={{ width: '300px' }}>
-      {[]}
-    </Select>
-  );
+  return <Select placeholder="Select value">{[]}</Select>;
 };
 
 export const Blueprint = createBlueprint('select');

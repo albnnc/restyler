@@ -15,9 +15,6 @@ export const mergeThemes = (...args: Theme[]): Theme => {
         (v, i) => (hashes[i] = hash(v)) !== hashes[i - 1]
       );
     }
-
-    // The rest `variables` and `kinds` properties
-    // should also be merged as plain objects.
     return undefined;
   });
 };

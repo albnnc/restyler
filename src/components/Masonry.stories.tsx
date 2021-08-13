@@ -1,12 +1,15 @@
 /** @jsx jsx */
+import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useCallback, useEffect, useReducer, useRef } from 'react';
 import { Box, Button, Masonry } from 'src';
+import { compact } from 'storybook/decorators';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'Containers/Masonry'
-};
+  title: 'Containers/Masonry',
+  decorators: [compact('700px')]
+} as Meta;
 
 export const Basics = () => {
   const [columnsCount, toggle] = useReducer(v => (v === 2 ? 3 : 2), 3);
@@ -34,16 +37,12 @@ export const Basics = () => {
 
   return (
     <Box>
-      <Button kind="primary" sx={{ mb: 3 }} onClick={toggle}>
+      <Button kind="primary" onClick={toggle} sx={{ mb: 3 }}>
         Toggle
       </Button>
       <Masonry
         columns={{ count: columnsCount }}
-        sx={{
-          width: '600px',
-          maxWidth: '700px',
-          '&, & > *': { gap: '5px' }
-        }}
+        sx={{ '&, & > *': { gap: '5px' } }}
       >
         {heights.map((v, i) => (
           <Component key={i} index={i} height={v} />

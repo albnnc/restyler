@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useCallback, useMemo } from 'react';
 import { Box, Button, ButtonProps, useLoader } from 'src';
@@ -6,7 +7,7 @@ import { delay } from 'storybook/utils';
 
 export default {
   title: 'hooks/useLoader'
-};
+} as Meta;
 
 export const Basics = () => {
   const loaderId = useMemo(() => Symbol(), []);

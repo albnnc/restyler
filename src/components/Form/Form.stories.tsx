@@ -1,11 +1,14 @@
 /** @jsx jsx */
+import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { Button, Form, FormField } from 'src';
+import { compact } from 'storybook/decorators';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'Forms/Form'
-};
+  title: 'Forms/Form',
+  decorators: [compact()]
+} as Meta;
 
 export const Basics = () => {
   return (

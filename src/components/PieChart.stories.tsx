@@ -1,11 +1,12 @@
 /** @jsx jsx */
+import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { PieChart } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
   title: 'Data/PieChart'
-};
+} as Meta;
 
 export const Basics = () => {
   return (
