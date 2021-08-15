@@ -8,19 +8,19 @@ import React, {
   ReactElement
 } from 'react';
 import { useThemed } from '../../hooks';
-import { FormWidgetProps, StyleProps } from '../../models';
+import { FormWidgetProps, ThemeProps } from '../../models';
 import { RadioOptionProps } from './RadioOption';
 
 export interface RadioGroupProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps<string>,
-    StyleProps {
+    ThemeProps {
   children: ReactElement<RadioOptionProps> | ReactElement<RadioOptionProps>[];
 }
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   ({ children, onChange, value, ...rest }, ref) => {
-    const ThemedRadioGroup = useThemed('div', { path: 'radio.group' });
+    const ThemedRadioGroup = useThemed('div', 'radio.group');
 
     const [innerValue, setInnerValue] = useState(value);
     useEffect(() => {
@@ -49,5 +49,3 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     );
   }
 );
-
-RadioGroup.displayName = 'RadioGroup';

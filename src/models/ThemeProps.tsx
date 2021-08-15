@@ -1,6 +1,6 @@
 import { Theme } from './Theme';
 
-export interface StyleProps {
+export interface ThemeProps {
   theme?: Theme;
   kind?: string;
 }

@@ -20,7 +20,7 @@ import {
   useThemed,
   useUpdateEffect
 } from '../../hooks';
-import { FormWidgetProps, StyleProps } from '../../models';
+import { FormWidgetProps, ThemeProps } from '../../models';
 import { disableScroll, getChildrenKey } from '../../utils';
 import { SystemContext } from '../SystemContext';
 import { SelectContext } from './SelectContext';
@@ -30,20 +30,21 @@ import { SelectOption, SelectOptionProps } from './SelectOption';
 export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
-    StyleProps {
+    ThemeProps {
   children: ReactElement<SelectOptionProps> | ReactElement<SelectOptionProps>[];
   isMultiple?: boolean;
 }
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
-  const ThemedSelect = useThemed('div', { path: 'select' });
+  const ThemedSelect = useThemed('div', 'select');
+  const ThemedSelectPlaceholder = useThemed<'span'>(
+    'span',
+    'select.placeholder'
+  );
   const ThemedSelectSelection = useThemed<'span', { isMultiple?: boolean }>(
     'span',
-    { path: 'select.selection' }
+    'select.selection'
   );
-  const ThemedSelectPlaceholder = useThemed<'span'>('span', {
-    path: 'select.placeholder'
-  });
 
   const { children, isMultiple, placeholder, value, disabled, onChange } =
     props;
@@ -165,5 +166,3 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     </ThemedSelect>
   );
 });
-
-Select.displayName = 'Select';

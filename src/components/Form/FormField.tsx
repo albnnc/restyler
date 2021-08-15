@@ -9,7 +9,7 @@ import React, {
   ReactNode
 } from 'react';
 import { useThemed } from '../../hooks';
-import { FormFieldValidator, FormWidgetProps, StyleProps } from '../../models';
+import { FormFieldValidator, FormWidgetProps, ThemeProps } from '../../models';
 import { get, hash } from '../../utils';
 import { Input, InputProps } from '../Input';
 import { SystemContext } from '../SystemContext';
@@ -27,7 +27,7 @@ export interface FormFieldProps
     >,
     FormWidgetProps,
     FormFieldAddonProps,
-    StyleProps {
+    ThemeProps {
   children?: ReactElement<{
     name?: string;
     onChange?: FormEventHandler<HTMLElement>;
@@ -56,20 +56,15 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     },
     ref
   ) => {
-    const ThemedFormField = useThemed('div', { path: 'form.field' });
-    const ThemedFormFieldControl = useThemed('div', {
-      path: 'form.field.control'
-    });
-    const ThemedFormFieldErrors = useThemed('div', {
-      path: 'form.field.errors'
-    });
-    const ThemedFormFieldErrorsItem = useThemed('div', {
-      path: 'form.field.errors.item'
-    });
-    const ThemedFormFieldLabel = useThemed('label', {
-      path: 'form.field.label'
-    });
-    const ThemedFormFieldHelp = useThemed('div', { path: 'form.field.help' });
+    const ThemedFormField = useThemed('div', 'form.field');
+    const ThemedFormFieldControl = useThemed('div', 'form.field.control');
+    const ThemedFormFieldErrors = useThemed('div', 'form.field.errors');
+    const ThemedFormFieldErrorsItem = useThemed(
+      'div',
+      'form.field.errors.item'
+    );
+    const ThemedFormFieldLabel = useThemed('label', 'form.field.label');
+    const ThemedFormFieldHelp = useThemed('div', 'form.field.help');
 
     const { locale } = useContext(SystemContext);
     const {

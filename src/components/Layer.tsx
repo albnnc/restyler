@@ -1,24 +1,14 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { StandaloneTransitionerProps, useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface LayerProps
   extends HTMLAttributes<HTMLDivElement>,
     Partial<StandaloneTransitionerProps<HTMLDivElement>>,
-    StyleProps {}
+    ThemeProps {}
 
 export const Layer = forwardRef<HTMLDivElement, LayerProps>((props, ref) => {
-  const ThemedLayer = useThemed('div', {
-    path: 'layer',
-    style: {
-      position: 'fixed',
-      zIndex: '1000',
-      top: '0',
-      left: '0',
-      width: '100vw',
-      height: '100vh'
-    }
-  });
+  const ThemedLayer = useThemed('div', 'layer');
   return <ThemedLayer ref={ref} {...props} />;
 });
 

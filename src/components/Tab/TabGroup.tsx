@@ -6,7 +6,7 @@ import React, {
   ReactElement
 } from 'react';
 import { useTabManager, useThemed } from '../../hooks';
-import { StyleProps, TabManager } from '../../models';
+import { ThemeProps, TabManager } from '../../models';
 import { TabOptionProps } from './TabOption';
 
 export interface TabGroupProps
@@ -14,7 +14,7 @@ export interface TabGroupProps
       HTMLAttributes<HTMLDivElement>,
       'value' | 'children' | 'onChange'
     >,
-    StyleProps {
+    ThemeProps {
   children: ReactElement<TabOptionProps> | ReactElement<TabOptionProps>[];
   manager?: TabManager;
   onChange?: (manager: TabManager) => void;
@@ -22,7 +22,7 @@ export interface TabGroupProps
 
 export const TabGroup = forwardRef<HTMLDivElement, TabGroupProps>(
   ({ children, manager, onChange, ...rest }, ref) => {
-    const ThemedTabGroup = useThemed('div', { path: 'tab.group' });
+    const ThemedTabGroup = useThemed('div', 'tab.group');
 
     const defaultTabId = children[0]?.props?.id;
     const innerManager = useTabManager(defaultTabId);

@@ -69,6 +69,9 @@ export const createInputLikeTheme = ({
     style: props => ({
       padding: 2,
       borderRadius: 2,
+      border: 'none',
+      background: 'transparent',
+      outline: 'none',
       ...createBasicStyle(),
       ...(canBeInvalid && props.invalid
         ? createBorderStyle({

@@ -1,6 +1,6 @@
-import { Style, Theme } from '../../models';
+import { Theme } from '../../models';
 
-const createBasicKind = (color: string, extras?: Style) => ({
+const createBasicKind = (color: string, extras?: any) => ({
   style: [
     props => ({
       paddingX: 3,
@@ -15,6 +15,7 @@ const createBasicKind = (color: string, extras?: Style) => ({
       cursor: 'pointer',
       textTransform: 'uppercase',
       letterSpacing: '0.04rem',
+      outline: 'none',
       transition: 'all 0.15s',
       ...(props.disabled
         ? {

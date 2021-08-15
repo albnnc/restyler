@@ -7,7 +7,7 @@ import React, {
   useCallback
 } from 'react';
 import { useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 
 interface ScrollOptions {
   hasLeftOffset: boolean;
@@ -16,9 +16,9 @@ interface ScrollOptions {
 
 export interface ScrollProps
   extends HTMLAttributes<HTMLDivElement>,
-    StyleProps {
-  containerContentProps?: HTMLAttributes<HTMLDivElement> & StyleProps;
-  containerProps?: HTMLAttributes<HTMLDivElement> & StyleProps;
+    ThemeProps {
+  containerContentProps?: HTMLAttributes<HTMLDivElement> & ThemeProps;
+  containerProps?: HTMLAttributes<HTMLDivElement> & ThemeProps;
   transformDelta?: (v: number) => number;
 }
 
@@ -33,16 +33,14 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     },
     ref
   ) => {
-    const ThemedScroll = useThemed<'div', ScrollOptions>('div', {
-      path: 'scroll'
-    });
-    const ThemedScrollContainer = useThemed<'div', ScrollOptions>('div', {
-      path: 'scroll.container',
-      style: { overflow: 'hidden' }
-    });
+    const ThemedScroll = useThemed<'div', ScrollOptions>('div', 'scroll');
+    const ThemedScrollContainer = useThemed<'div', ScrollOptions>(
+      'div',
+      'scroll.container'
+    );
     const ThemedScrollContainerContent = useThemed<'div', ScrollOptions>(
       'div',
-      { path: 'scroll.container.content' }
+      'scroll.container.content'
     );
 
     const containerRef = useRef<HTMLDivElement>(null);
@@ -114,6 +112,7 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
       <ThemedScroll {...scrollOptions} ref={ref} {...rest}>
         <ThemedScrollContainer
           ref={containerRef}
+          style={{ overflow: 'hidden' }}
           {...getHandlers(
             {
               onCapture: 'onClickCapture',

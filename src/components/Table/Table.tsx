@@ -1,13 +1,13 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { StyleProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface TableProps
   extends HTMLAttributes<HTMLTableElement>,
-    StyleProps {}
+    ThemeProps {}
 
 export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
-  const ThemedTable = useThemed('table', { path: 'table' });
+  const ThemedTable = useThemed('table', 'table');
   return <ThemedTable ref={ref} {...props} />;
 });
 

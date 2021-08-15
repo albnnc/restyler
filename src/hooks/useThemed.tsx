@@ -5,7 +5,7 @@ import React, {
   ForwardRefExoticComponent
 } from 'react';
 import { SystemContext } from '../components';
-import { Style, StyleProps, Theme } from '../models';
+import { ThemeProps, Theme } from '../models';
 import {
   capitalizeFirst,
   createStyle,
@@ -19,13 +19,12 @@ export const useThemed = <
   ExtraProps = {}
 >(
   tag: Tag,
-  options: { path: string; style?: Style }
+  path: string
 ): ForwardRefExoticComponent<
-  ComponentPropsWithRef<Tag> & StyleProps & ExtraProps
+  ComponentPropsWithRef<Tag> & ThemeProps & ExtraProps
 > => {
-  const { path, style: forcedStyle } = options;
   const { styled, registry } = useContext(SystemContext);
-  const token = `${tag}.${path}`;
+  const token = `${tag}:${path}`;
   if (registry[token]) {
     return registry[token];
   }
@@ -35,7 +34,7 @@ export const useThemed = <
     .map(v => capitalizeFirst(v))
     .join('');
 
-  const StyledComponent = styled<Tag, StyleProps & ExtraProps>(tag, props => {
+  const StyledComponent = styled<Tag, ThemeProps & ExtraProps>(tag, props => {
     const { theme, kind } = props;
     const { kinds, ...componentTheme } =
       get(theme?.components ?? {}, path ?? '') ?? {};
@@ -46,11 +45,11 @@ export const useThemed = <
       componentTheme,
       componentKindTheme
     ) as Theme;
-    return merge({}, forcedStyle, createStyle(mergedTheme, props));
+    return merge({}, createStyle(mergedTheme, props)); // FIXME
   });
   StyledComponent.displayName = 'Styled' + displayName;
 
-  const ThemedComponent = forwardRef<Tag, any>((props, ref) => {
+  const ThemedComponent = forwardRef<any, any>((props, ref) => {
     const { theme } = useContext(SystemContext);
     return <StyledComponent ref={ref} theme={theme} {...props} />;
   });

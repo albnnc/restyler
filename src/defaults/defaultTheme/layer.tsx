@@ -4,6 +4,12 @@ export const layer: Theme = {
   kinds: {
     backdrop: {
       style: ({ isVisible }) => ({
+        position: 'fixed',
+        zIndex: '1000',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        height: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

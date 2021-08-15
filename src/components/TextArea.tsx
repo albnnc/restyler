@@ -1,27 +1,18 @@
 import React, { forwardRef, TextareaHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { FormWidgetProps, StyleProps } from '../models';
+import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface TextAreaProps
   extends Omit<
       TextareaHTMLAttributes<HTMLTextAreaElement>,
-      keyof FormWidgetProps | keyof StyleProps
+      keyof FormWidgetProps | keyof ThemeProps
     >,
     FormWidgetProps<string>,
-    StyleProps {}
+    ThemeProps {}
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ wrap, value, onChange, ...rest }, ref) => {
-    const ThemedTextArea = useThemed('textarea', {
-      path: 'textArea',
-      style: {
-        border: 'none',
-        background: 'transparent',
-        outline: 'none',
-        padding: 0,
-        margin: 0
-      }
-    });
+    const ThemedTextArea = useThemed('textarea', 'textArea');
     return (
       <ThemedTextArea
         ref={ref}

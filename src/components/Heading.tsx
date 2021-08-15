@@ -1,15 +1,15 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 export interface HeadingProps
   extends HTMLAttributes<HTMLHeadingElement>,
-    StyleProps {}
+    ThemeProps {}
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   (props, ref) => {
     const ThemedHeading = useThemed(
       `h${+(props.kind ?? 1)}` as keyof JSX.IntrinsicElements,
-      { path: 'heading' }
+      'heading'
     );
     return <ThemedHeading ref={ref} {...props} />;
   }

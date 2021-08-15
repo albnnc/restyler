@@ -8,25 +8,26 @@ import React, {
   isValidElement
 } from 'react';
 import { useThemed } from '../../hooks';
-import { StyleProps } from '../../models';
+import { ThemeProps } from '../../models';
 import { getChildrenKey, hash } from '../../utils';
 import { Collapse } from '../Collapse';
 import { MenuContext } from './MenuContext';
 
 export interface MenuGroupProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
-    StyleProps {
+    ThemeProps {
   id: string;
   title: ReactNode;
 }
 
 export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
   ({ id, title, children, ...rest }, ref) => {
-    const MenuGroupTitle = useThemed<'div', { isActive: boolean }>('div', {
-      path: 'menu.group.title'
-    });
-    const MenuGroupItems = useThemed('div', { path: 'menu.group.items' });
-    const ThemedMenuGroup = useThemed('div', { path: 'menu.group' });
+    const MenuGroupTitle = useThemed<'div', { isActive: boolean }>(
+      'div',
+      'menu.group.title'
+    );
+    const MenuGroupItems = useThemed('div', 'menu.group.items');
+    const ThemedMenuGroup = useThemed('div', 'menu.group');
     const content = useMemo(
       () => <MenuGroupItems>{children}</MenuGroupItems>,
       [getChildrenKey(children, { pivots: ['id'] })]

@@ -1,7 +1,7 @@
 import React, { forwardRef, HTMLAttributes, useEffect, useState } from 'react';
 import { defaultSystem } from '../defaults';
 import { useImperativePortal, useThemed } from '../hooks';
-import { PartiallyRequired, StyleProps, System } from '../models';
+import { PartiallyRequired, ThemeProps, System } from '../models';
 import { set } from '../utils';
 import { SystemContext } from './SystemContext';
 
@@ -9,7 +9,7 @@ export type SystemOptions = PartiallyRequired<System, 'styled'>;
 
 export interface SystemContainerProps
   extends HTMLAttributes<HTMLDivElement>,
-    StyleProps,
+    ThemeProps,
     SystemOptions {}
 
 export const SystemContainer = forwardRef<HTMLDivElement, SystemContainerProps>(
@@ -58,9 +58,9 @@ SystemContainer.displayName = 'SystemContainer';
 
 const SystemContainerContextGrabber = forwardRef<
   HTMLDivElement,
-  HTMLAttributes<HTMLDivElement> & StyleProps
+  HTMLAttributes<HTMLDivElement> & ThemeProps
 >((props, ref) => {
-  const ThemedSystemContainer = useThemed('div', { path: 'systemContainer' });
+  const ThemedSystemContainer = useThemed('div', 'systemContainer');
   return <ThemedSystemContainer ref={ref} {...props} />;
 });
 

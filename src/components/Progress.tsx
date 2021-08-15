@@ -1,14 +1,14 @@
 import React, { forwardRef, ProgressHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface ProgressProps
   extends ProgressHTMLAttributes<HTMLProgressElement>,
-    StyleProps {}
+    ThemeProps {}
 
 export const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
   (props, ref) => {
-    const ThemedProgress = useThemed('progress', { path: 'progress' });
+    const ThemedProgress = useThemed('progress', 'progress');
     return <ThemedProgress ref={ref} {...props} />;
   }
 );

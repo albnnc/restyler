@@ -92,6 +92,7 @@ export const select: Theme = {
 
   drop: {
     style: ({ isVisible }) => ({
+      zIndex: 1001,
       backgroundColor: 'white',
       borderRadius: 2,
       boxShadow: 3,

@@ -1,19 +1,20 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { StyleProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface TabOptionProps
   extends HTMLAttributes<HTMLDivElement>,
-    StyleProps {
+    ThemeProps {
   id: string;
   isActive?: boolean;
 }
 
 export const TabOption = forwardRef<HTMLDivElement, TabOptionProps>(
   (props, ref) => {
-    const ThemedTabOption = useThemed<'div', TabOptionProps>('div', {
-      path: 'tab.option'
-    });
+    const ThemedTabOption = useThemed<'div', TabOptionProps>(
+      'div',
+      'tab.option'
+    );
     return <ThemedTabOption ref={ref} {...props} />;
   }
 );

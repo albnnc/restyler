@@ -7,25 +7,22 @@ import {
   useThemed,
   useTransition
 } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 import { hash } from '../utils';
 
 export interface CollapseProps
   extends HTMLAttributes<HTMLDivElement>,
-    StyleProps {
+    ThemeProps {
   contentHeight?: number;
   isOpen?: boolean;
 }
 
 export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
   ({ contentHeight: forcedContentHeight, isOpen, children, ...rest }, ref) => {
-    const ThemedColapse = useThemed<'div', CollapseProps & TransitionerProps>(
+    const ThemedColapse = useThemed<
       'div',
-      {
-        path: 'collapse',
-        style: { overflow: 'hidden' }
-      }
-    );
+      Pick<CollapseProps, 'contentHeight' | 'isOpen'>
+    >('div', 'collapse');
 
     const [contentHeight, setContentHeight] = useState<number | undefined>(
       forcedContentHeight
@@ -45,14 +42,13 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
     }, [children, measureHeight]);
 
     return useTransition<HTMLDivElement>(
-      (props, innerRef) => {
+      ({ isVisible }, innerRef) => {
         const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, innerRef]);
         return (
           <ThemedColapse
             ref={sharedRef}
             contentHeight={contentHeight}
-            isOpen={props.isVisible}
-            {...props}
+            isOpen={isVisible}
             {...rest}
           >
             {children}

@@ -1,11 +1,11 @@
 import React, { forwardRef, HTMLAttributes, useContext } from 'react';
 import { useThemed } from '../../hooks';
-import { StyleProps } from '../../models';
+import { ThemeProps } from '../../models';
 import { SelectContext } from './SelectContext';
 
 export interface SelectOptionProps
   extends HTMLAttributes<HTMLDivElement>,
-    StyleProps {
+    ThemeProps {
   value: any;
 }
 
@@ -18,9 +18,7 @@ export const SelectOption = forwardRef<HTMLDivElement, SelectOptionProps>(
         isActive: boolean;
         isMultiple: boolean;
       }
-    >('div', {
-      path: 'select.option'
-    });
+    >('div', 'select.option');
     const {
       isMultiple,
       value: selectValue,

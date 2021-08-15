@@ -1,11 +1,11 @@
 import React, { forwardRef, useEffect, HTMLAttributes } from 'react';
 import { useFormManager, useThemed } from '../../hooks';
-import { FormManager, StyleProps } from '../../models';
+import { FormManager, ThemeProps } from '../../models';
 import { FormContext } from './FormContext';
 
 export interface FormProps
   extends Omit<HTMLAttributes<HTMLFormElement>, 'onChange' | 'onSubmit'>,
-    StyleProps {
+    ThemeProps {
   manager?: FormManager;
   onChange?: (manager: FormManager) => void;
   onSubmit?: (manager: FormManager) => void;
@@ -14,7 +14,7 @@ export interface FormProps
 
 export const Form = forwardRef<HTMLFormElement, FormProps>(
   ({ manager, onChange, onSubmit, shouldLiveValidate, ...rest }, ref) => {
-    const ThemedForm = useThemed('form', { path: 'form' });
+    const ThemedForm = useThemed('form', 'form');
     const innerManager = useFormManager();
     const targetManager = manager ?? innerManager;
     const { values, errors, setErrors, validators } = targetManager;

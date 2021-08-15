@@ -28,7 +28,7 @@ export const Basics = () => {
       activeIds={activeIds}
       onGroupClick={id => handle({ id, target: 'group' })}
       onItemClick={id => handle({ id, target: 'item' })}
-      sx={{ maxWidth: '250px' }}
+      sx={{ width: '100%', maxWidth: '250px' }}
     >
       <MenuGroup id="group-1" title="Group 1">
         <MenuItem id="item-11">Item 11</MenuItem>
