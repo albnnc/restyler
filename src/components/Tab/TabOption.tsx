@@ -11,10 +11,10 @@ export interface TabOptionProps
 
 export const TabOption = forwardRef<HTMLDivElement, TabOptionProps>(
   (props, ref) => {
-    const ThemedTabOption = useThemed<'div', TabOptionProps>(
+    const ThemedTabOption = useThemed<
       'div',
-      'tab.option'
-    );
+      Pick<TabOptionProps, 'id' | 'isActive'>
+    >('div', 'tab.option');
     return <ThemedTabOption ref={ref} {...props} />;
   }
 );

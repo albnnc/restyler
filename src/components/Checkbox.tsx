@@ -8,23 +8,18 @@ export interface CheckboxProps
     ThemeProps {}
 
 export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
-  ({ children, value, onChange, ...rest }, ref) => {
-    const ThemedCheckbox = useThemed('div', 'checkbox');
-    const ThemedCheckboxChecker = useThemed<'span', FormWidgetProps>(
-      'span',
-      'checkbox.checker'
-    );
-    const ThemedCheckboxLabel = useThemed<'label', FormWidgetProps>(
-      'label',
-      'checkbox.label'
-    );
+  ({ children, value, placeholder, disabled, onChange, ...rest }, ref) => {
+    const ThemedCheckbox = useTyped('div', 'checkbox');
+    const ThemedCheckboxChecker = useTyped('span', 'checkbox.checker');
+    const ThemedCheckboxLabel = useTyped('label', 'checkbox.label');
+    const themedProps = { value, placeholder, disabled };
     const handleClick = useCallback(() => {
       onChange?.(!value);
     }, [onChange]);
     return (
-      <ThemedCheckbox ref={ref} {...rest}>
-        <ThemedCheckboxChecker value={value} onClick={handleClick} />
-        <ThemedCheckboxLabel value={value} onClick={handleClick}>
+      <ThemedCheckbox ref={ref} {...themedProps} {...rest}>
+        <ThemedCheckboxChecker onClick={handleClick} {...themedProps} />
+        <ThemedCheckboxLabel onClick={handleClick} {...themedProps}>
           {children}
         </ThemedCheckboxLabel>
       </ThemedCheckbox>
@@ -33,3 +28,12 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
 );
 
 Checkbox.displayName = 'Checkbox';
+
+const useTyped = <T extends keyof JSX.IntrinsicElements>(
+  tag: T,
+  path: string
+) =>
+  useThemed<T, Pick<CheckboxProps, 'value' | 'placeholder' | 'disabled'>>(
+    tag,
+    path
+  );

@@ -1,6 +1,5 @@
 import React, { forwardRef, useState, HTMLAttributes } from 'react';
 import {
-  TransitionerProps,
   useIsomorphicLayoutEffect,
   useMeter,
   useSharedRef,
@@ -23,7 +22,6 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
       'div',
       Pick<CollapseProps, 'contentHeight' | 'isOpen'>
     >('div', 'collapse');
-
     const [contentHeight, setContentHeight] = useState<number | undefined>(
       forcedContentHeight
     );
@@ -40,7 +38,6 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
       }
       measureHeight?.(children).then(setContentHeight);
     }, [children, measureHeight]);
-
     return useTransition<HTMLDivElement>(
       ({ isVisible }, innerRef) => {
         const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, innerRef]);

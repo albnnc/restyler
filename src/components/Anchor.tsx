@@ -2,10 +2,6 @@ import React, { forwardRef, AnchorHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
 import { ThemeProps } from '../models';
 
-const isModifiedEvent = e => {
-  return !!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey);
-};
-
 export interface AnchorProps
   extends AnchorHTMLAttributes<HTMLAnchorElement>,
     ThemeProps {
@@ -45,3 +41,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
 );
 
 Anchor.displayName = 'Anchor';
+
+const isModifiedEvent = e => {
+  return !!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey);
+};

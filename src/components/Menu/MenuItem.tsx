@@ -11,14 +11,8 @@ export interface MenuItemProps
 
 export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
   ({ id, onClick, children, ...rest }, ref) => {
-    const ThemedMenuItemTitle = useThemed<'div', { isActive: boolean }>(
-      'div',
-      'menu.item.title'
-    );
-    const ThemedMenuItem = useThemed<'div', { isActive: boolean }>(
-      'div',
-      'menu.item'
-    );
+    const ThemedMenuItemTitle = useTyped('menu.item.title');
+    const ThemedMenuItem = useTyped('menu.item');
     const { activeIds, onItemClick } = useContext(MenuContext);
     const isActive = activeIds.includes(id);
     return (
@@ -39,3 +33,6 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 );
 
 MenuItem.displayName = 'MenuItem';
+
+const useTyped = (path: string) =>
+  useThemed<'div', { isActive: boolean }>('div', path);

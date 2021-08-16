@@ -21,14 +21,12 @@ export interface RadioGroupProps
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   ({ children, onChange, value, ...rest }, ref) => {
     const ThemedRadioGroup = useThemed('div', 'radio.group');
-
     const [innerValue, setInnerValue] = useState(value);
     useEffect(() => {
       if (value !== innerValue) {
         setInnerValue(value);
       }
     }, [value]);
-
     const childrenWithProps = Children.map(
       children,
       (child: ReactElement<RadioOptionProps>) => {
@@ -41,7 +39,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         });
       }
     );
-
     return (
       <ThemedRadioGroup ref={ref} {...rest}>
         {childrenWithProps}
