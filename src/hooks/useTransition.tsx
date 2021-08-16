@@ -129,8 +129,8 @@ export const useTransition = <T extends HTMLElement>(
       isReallyMounted ? (
         <Component
           ref={handleBinding}
-          isVisible={isVisible}
           isEntering={isEntering}
+          isVisible={isVisible}
         />
       ) : null,
     [Component, isReallyMounted, isVisible, isEntering, handleBinding]

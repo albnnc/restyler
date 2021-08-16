@@ -23,7 +23,7 @@ export const Basics = () => {
     );
   }, []);
   return (
-    <Button kind="primary" onClick={addTask} disabled={isLoading}>
+    <Button disabled={isLoading} kind="primary" onClick={addTask}>
       Add Task
     </Button>
   );
@@ -69,8 +69,8 @@ export const CompoundLoaders = () => {
       const handleClick = useCallback(() => load(delay(2000)), []);
       return (
         <Button
-          kind="primary"
           disabled={isLoading}
+          kind="primary"
           onClick={handleClick}
           {...rest}
         />

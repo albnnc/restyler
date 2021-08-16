@@ -4,7 +4,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": ["@typescript-eslint", "import", "react"],
   "rules": {
     "@typescript-eslint/adjacent-overload-signatures": ["error"],
     "@typescript-eslint/array-type": ["error"],
@@ -104,6 +104,15 @@
           "index",
           "object"
         ]
+      }
+    ],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "ignoreCase": true,
+        "reservedFirst": true,
+        "shorthandFirst": true
       }
     ]
   },

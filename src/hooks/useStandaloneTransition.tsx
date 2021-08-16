@@ -64,8 +64,8 @@ export const useStandaloneTransition = <T extends HTMLElement, C = never>(
           (props, ref) => (
             <Component
               ref={ref}
-              handleClose={handleClose}
               context={context}
+              handleClose={handleClose}
               {...props}
             />
           ),
@@ -95,10 +95,10 @@ export const useStandaloneTransition = <T extends HTMLElement, C = never>(
       const key = Math.random();
       const child = (
         <Wrap
-          ref={ref}
           key={key}
-          onUnmount={() => remove(child)}
+          ref={ref}
           context={context}
+          onUnmount={() => remove(child)}
         />
       );
       push(child);

@@ -13,9 +13,9 @@ export const Basics = () => {
   const [value, setValue] = useState('');
   return (
     <TextArea
+      sx={{ maxWidth: '300px' }}
       value={value}
       onChange={v => setValue(v)}
-      sx={{ maxWidth: '300px' }}
     />
   );
 };

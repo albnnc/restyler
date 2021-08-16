@@ -75,20 +75,20 @@ export const WithForm = () => {
               </ModalHeader>
               <ModalBody>
                 <FormGrid>
-                  <FormField name="username" label="Username">
+                  <FormField label="Username" name="username">
                     <Select>
                       <SelectOption value="admin" />
                       <SelectOption value="guest" />
                     </Select>
                   </FormField>
-                  <FormField name="email" label="Email" />
+                  <FormField label="Email" name="email" />
                 </FormGrid>
               </ModalBody>
               <ModalFooter>
-                <Button type="submit" kind="secondary" onClick={handleClose}>
+                <Button kind="secondary" type="submit" onClick={handleClose}>
                   Cancel
                 </Button>
-                <Button type="submit" kind="primary">
+                <Button kind="primary" type="submit">
                   Submit
                 </Button>
               </ModalFooter>

@@ -13,10 +13,10 @@ export default {
 export const Basics = () => (
   <Form>
     <FormGrid>
-      <FormField name="a" label="a" />
-      <FormField name="b" label="b" />
-      <FormField name="c" label="c" />
-      <FormField name="d" label="d" />
+      <FormField label="a" name="a" />
+      <FormField label="b" name="b" />
+      <FormField label="c" name="c" />
+      <FormField label="d" name="d" />
     </FormGrid>
     <Button kind="primary" sx={{ mt: 3 }}>
       Submit

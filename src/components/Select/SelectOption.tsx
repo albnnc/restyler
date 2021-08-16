@@ -28,11 +28,11 @@ export const SelectOption = forwardRef<HTMLDivElement, SelectOptionProps>(
     return (
       <ThemedOption
         ref={ref}
-        value={value}
         isActive={
           isMultiple ? selectValue.includes(value) : value === selectValue
         }
         isMultiple={isMultiple}
+        value={value}
         onClick={e => {
           setSelectValue({ value });
           !isMultiple && handleClose?.();

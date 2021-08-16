@@ -63,14 +63,14 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
         segments.push(
           <ThemedPieChartSegment
             key={`segment-${i}-${value}-${color}`}
-            fill={'none'}
             cx={circleX}
             cy={circleY}
+            fill={'none'}
             r={circleRadius}
             stroke={color}
-            strokeWidth={strokeWidth}
-            strokeDashoffset={dashOffset}
             strokeDasharray={`${dashLength} ${totalLength - dashLength}`}
+            strokeDashoffset={dashOffset}
+            strokeWidth={strokeWidth}
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
@@ -82,13 +82,13 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
       segments.push(
         <ThemedPieChartSegment
           key={`segment`}
-          fill={'none'}
           cx={circleX}
           cy={circleY}
+          fill={'none'}
           r={circleRadius}
           stroke={'rgba(0, 0, 0, 0.1)'}
-          strokeWidth={strokeWidth}
           strokeDasharray={`100 0`}
+          strokeWidth={strokeWidth}
         />
       );
     }

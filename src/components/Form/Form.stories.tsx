@@ -13,8 +13,8 @@ export default {
 export const Basics = () => {
   return (
     <Form>
-      <FormField required name="username" label="Username" />
-      <Button type="submit" kind="primary" sx={{ mt: 3 }}>
+      <FormField required label="Username" name="username" />
+      <Button kind="primary" sx={{ mt: 3 }} type="submit">
         Submit
       </Button>
     </Form>

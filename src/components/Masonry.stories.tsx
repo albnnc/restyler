@@ -37,7 +37,7 @@ export const Basics = () => {
 
   return (
     <Box>
-      <Button kind="primary" onClick={toggle} sx={{ mb: 3 }}>
+      <Button kind="primary" sx={{ mb: 3 }} onClick={toggle}>
         Toggle
       </Button>
       <Masonry
@@ -45,7 +45,7 @@ export const Basics = () => {
         sx={{ '&, & > *': { gap: '5px' } }}
       >
         {heights.map((v, i) => (
-          <Component key={i} index={i} height={v} />
+          <Component key={i} height={v} index={i} />
         ))}
       </Masonry>
     </Box>

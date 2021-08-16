@@ -72,7 +72,7 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
             })
           ) : (
             <TableRow>
-              <TableCell kind="empty" colSpan={columns.length}>
+              <TableCell colSpan={columns.length} kind="empty">
                 {locale.empty}
               </TableCell>
             </TableRow>

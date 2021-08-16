@@ -11,14 +11,14 @@ export default {
 export const Basics = () => {
   return (
     <PieChart
-      sx={{ width: '200px', height: '200px' }}
       angleGap={0.1}
-      radiusGap={0.7}
       data={[
         { value: 1, color: 'grey' },
         { value: 2, color: 'rebeccapurple' },
         { value: 3, color: 'green' }
       ]}
+      radiusGap={0.7}
+      sx={{ width: '200px', height: '200px' }}
     />
   );
 };
