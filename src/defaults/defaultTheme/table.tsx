@@ -1,18 +1,18 @@
 import { Theme } from '../../models';
 
 export const table: Theme = {
-  font: 'medium',
-  extend: {
+  style: {
     width: '100%',
-    borderSpacing: 0
+    borderSpacing: 0,
+    fontSize: 3
   },
 
   head: {
-    background: 'rgba(0, 0, 0, 0.05)',
-    extend: {
+    style: {
+      background: 'rgba(0, 0, 0, 0.05)',
       userSelect: 'none',
       textTransform: 'uppercase',
-      letterSpacing: '0.04rem',
+      letterSpacing: '0.04em',
       '& th, & td': {
         borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
       }
@@ -20,7 +20,7 @@ export const table: Theme = {
   },
 
   body: {
-    extend: {
+    style: {
       '& tr:not(:first-of-type) td': {
         borderTop: '1px solid rgba(0, 0, 0, 0.1)'
       }
@@ -28,14 +28,14 @@ export const table: Theme = {
   },
 
   row: {
-    extend: {
+    style: {
       '&:hover': { background: 'rgba(0, 0, 0, 0.03)' }
     }
   },
 
   cell: {
-    padding: 'medium',
-    extend: {
+    style: {
+      padding: 3,
       minWidth: '50px',
       textAlign: 'left',
       '&:last-of-type:not(:first-of-type)': {
@@ -43,10 +43,12 @@ export const table: Theme = {
       }
     },
     kinds: {
-      hoverable: { extend: { cursor: 'pointer' } },
+      hoverable: {
+        style: { cursor: 'pointer' }
+      },
       empty: {
-        color: 'weakText',
-        extend: {
+        style: {
+          color: 'weakText',
           textAlign: 'center',
           textTransform: 'uppercase',
           letterSpacing: '0.04rem'
@@ -56,9 +58,10 @@ export const table: Theme = {
   },
 
   caption: {
-    padding: { horizontal: 'medium', vertical: 'small' },
-    color: 'white',
-    extend: {
+    style: {
+      paddingX: 3,
+      paddingY: 2,
+      color: 'white',
       textAlign: 'left',
       fontWeight: 400
     }

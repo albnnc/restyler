@@ -10,7 +10,7 @@ import { Styled } from './Styled';
 import { SystemRegistry } from './SystemRegistry';
 import { Theme } from './Theme';
 
-export interface System {
+export interface System<T = any> {
   defaults?: {
     modalOptions?: Partial<ModalOptions>;
     notificationOptions?: Partial<NotificationOptions>;
@@ -21,6 +21,6 @@ export interface System {
   };
   locale: Locale;
   registry: SystemRegistry;
-  styled: Styled;
-  theme: Theme;
+  styled: Styled<T>;
+  theme: Theme<T>;
 }

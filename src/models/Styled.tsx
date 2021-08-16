@@ -1,9 +1,8 @@
 import { ComponentPropsWithRef, ForwardRefExoticComponent } from 'react';
-import { Style } from './Style';
 
-export interface Styled {
+export interface Styled<T = any> {
   <Tag extends keyof JSX.IntrinsicElements, ExtraProps = {}>(
     tag: Tag,
-    fn: (props: JSX.IntrinsicElements[Tag] & ExtraProps) => Style
+    fn: (props: JSX.IntrinsicElements[Tag] & ExtraProps) => T
   ): ForwardRefExoticComponent<ComponentPropsWithRef<Tag> & ExtraProps>;
 }
