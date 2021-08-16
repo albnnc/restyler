@@ -131,6 +131,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           {child}
           {suffix}
         </ThemedFormFieldControl>
+        {help && <ThemedFormFieldHelp>{help}</ThemedFormFieldHelp>}
         {(fieldErrors?.length ?? 0) > 0 && (
           <ThemedFormFieldErrors>
             {fieldErrors?.map(v => (
@@ -138,7 +139,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             ))}
           </ThemedFormFieldErrors>
         )}
-        {help && <ThemedFormFieldHelp>{help}</ThemedFormFieldHelp>}
       </ThemedFormField>
     );
   }

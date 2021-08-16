@@ -16,9 +16,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
         ref={ref}
         onClick={event => {
           try {
-            if (onClick) {
-              onClick(event);
-            }
+            onClick?.(event);
           } catch (e) {
             event.preventDefault();
             throw e;
