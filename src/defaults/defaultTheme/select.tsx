@@ -1,11 +1,11 @@
-import { Theme } from '../../models';
-import { mergeThemes } from '../../utils';
+import { BasicTheme } from '../../models';
+import { mergeBasicThemes } from '../../utils';
 import { createInputLikeTheme } from './input';
 
 const markMargin = '1em';
 
-export const select: Theme = {
-  ...mergeThemes(
+export const select: BasicTheme = {
+  ...mergeBasicThemes(
     {},
     createInputLikeTheme({
       canBeDisabled: true,
@@ -40,68 +40,70 @@ export const select: Theme = {
     }
   ),
 
-  option: {
-    style: ({ isActive }) => ({
-      position: 'relative',
-      cursor: 'pointer',
-      padding: 2,
-      paddingRight: isActive ? `calc(${markMargin} * 2)` : 2,
-      '&:hover': { background: 'rgba(0, 0, 0, 0.05)' },
-      '&::after': {
-        content: '""',
-        display: 'block',
-        position: 'absolute',
-        width: '0.3em',
-        height: '0.3em',
-        borderRadius: '100vw',
-        top: '50%',
-        right: isActive ? markMargin : `calc(${markMargin} / 2)`,
-        transform: 'translate(50%, -50%)',
-        transition: 'all 0.15s',
-        background: isActive ? 'currentColor' : 'transparent'
-      }
-    }),
-    kinds: {
-      empty: {
-        style: {
-          color: 'weakText',
-          userSelect: 'none',
-          cursor: 'not-allowed',
-          '&::after': { display: 'none' }
+  components: {
+    option: {
+      style: ({ isActive }) => ({
+        position: 'relative',
+        cursor: 'pointer',
+        padding: 2,
+        paddingRight: isActive ? `calc(${markMargin} * 2)` : 2,
+        '&:hover': { background: 'rgba(0, 0, 0, 0.05)' },
+        '&::after': {
+          content: '""',
+          display: 'block',
+          position: 'absolute',
+          width: '0.3em',
+          height: '0.3em',
+          borderRadius: '100vw',
+          top: '50%',
+          right: isActive ? markMargin : `calc(${markMargin} / 2)`,
+          transform: 'translate(50%, -50%)',
+          transition: 'all 0.15s',
+          background: isActive ? 'currentColor' : 'transparent'
+        }
+      }),
+      kinds: {
+        empty: {
+          style: {
+            color: 'weakText',
+            userSelect: 'none',
+            cursor: 'not-allowed',
+            '&::after': { display: 'none' }
+          }
         }
       }
-    }
-  },
+    },
 
-  selection: {
-    style: {
-      '& + &': {
-        pl: 2,
-        ml: 2,
-        borderLeft: '1px solid',
-        borderLeftColor: 'strongBorder'
+    selection: {
+      style: {
+        '& + &': {
+          pl: 2,
+          ml: 2,
+          borderLeft: '1px solid',
+          borderLeftColor: 'strongBorder'
+        }
       }
-    }
-  },
+    },
 
-  placeholder: {
-    style: {
-      color: 'weakText'
-    }
-  },
+    placeholder: {
+      style: {
+        color: 'weakText'
+      }
+    },
 
-  drop: {
-    style: ({ isVisible }) => ({
-      zIndex: 1001,
-      backgroundColor: 'white',
-      borderRadius: 2,
-      boxShadow: 3,
-      minWidth: '200px',
-      maxHeight: '300px',
-      overflowY: 'auto',
-      opacity: isVisible ? 1 : 0,
-      transform: `translateY(${isVisible ? '0' : '-0.5rem'})`,
-      transition: 'all 0.2s'
-    })
+    drop: {
+      style: ({ isVisible }) => ({
+        zIndex: 1001,
+        backgroundColor: 'white',
+        borderRadius: 2,
+        boxShadow: 3,
+        minWidth: '200px',
+        maxHeight: '300px',
+        overflowY: 'auto',
+        opacity: isVisible ? 1 : 0,
+        transform: `translateY(${isVisible ? '0' : '-0.5rem'})`,
+        transition: 'all 0.2s'
+      })
+    }
   }
 };

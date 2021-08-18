@@ -1,4 +1,4 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
 export interface CreateInputLikeThemeOptions {
   canBeDisabled?: boolean;
@@ -88,7 +88,7 @@ export const createInputLikeTheme = ({
   };
 };
 
-export const input: Theme = createInputLikeTheme({
+export const input: BasicTheme = createInputLikeTheme({
   canBeDisabled: true,
   canBeFocused: true,
   canBeHovered: false,

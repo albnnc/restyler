@@ -1,4 +1,4 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
 const createPseudoStyle = (opacity, isLeft) => ({
   content: '""',
@@ -25,7 +25,7 @@ const createPseudoStyle = (opacity, isLeft) => ({
       })
 });
 
-export const scroll: Theme = {
+export const scroll: BasicTheme = {
   style: ({ hasLeftOffset, hasRightOffset }) => ({
     position: 'relative',
     overflow: 'hidden',
@@ -36,7 +36,11 @@ export const scroll: Theme = {
     ...(hasRightOffset ? { '&::after': createPseudoStyle(1, false) } : {}),
     ...(hasLeftOffset || hasRightOffset ? { cursor: 'grab' } : {})
   }),
-  container: {
-    content: {}
+  components: {
+    container: {
+      components: {
+        content: {}
+      }
+    }
   }
 };

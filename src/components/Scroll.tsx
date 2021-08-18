@@ -6,16 +6,16 @@ import React, {
   HTMLAttributes,
   useCallback
 } from 'react';
-import { useThemed } from '../hooks';
-import { ThemeProps } from '../models';
+import { ThemedOptions, useThemed } from '../hooks';
+import { ThemedProps } from '../models';
 
 export interface ScrollProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemeProps {
+    ThemedProps {
   hasLeftOffset: boolean;
   hasRightOffset: boolean;
-  containerContentProps?: HTMLAttributes<HTMLDivElement> & ThemeProps;
-  containerProps?: HTMLAttributes<HTMLDivElement> & ThemeProps;
+  containerContentProps?: HTMLAttributes<HTMLDivElement> & ThemedProps;
+  containerProps?: HTMLAttributes<HTMLDivElement> & ThemedProps;
   transformDelta?: (v: number) => number;
 }
 
@@ -30,12 +30,11 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     },
     ref
   ) => {
-    const ThemedScroll = useTyped('div', 'scroll');
-    const ThemedScrollContainer = useTyped('div', 'scroll.container');
-    const ThemedScrollContainerContent = useTyped(
-      'div',
-      'scroll.container.content'
-    );
+    const ThemedScroll = useTyped('div', { key: 'scroll' });
+    const ThemedScrollContainer = useTyped('div', { key: 'scroll.container' });
+    const ThemedScrollContainerContent = useTyped('div', {
+      key: 'scroll.container.content'
+    });
 
     const containerRef = useRef<HTMLDivElement>(null);
     const [holder] = useState({} as any);
@@ -141,11 +140,11 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
   }
 );
 
-const useTyped = <T extends keyof JSX.IntrinsicElements>(
-  tag: T,
-  path: string
+const useTyped = <Tag extends keyof JSX.IntrinsicElements>(
+  tag: Tag,
+  options: ThemedOptions
 ) =>
-  useThemed<T, Pick<ScrollProps, 'hasLeftOffset' | 'hasRightOffset'>>(
+  useThemed<Tag, Pick<ScrollProps, 'hasLeftOffset' | 'hasRightOffset'>>(
     tag,
-    path
+    options
   );

@@ -1,3 +1,4 @@
+export * from './BasicTheme';
 export * from './FormFieldValidator';
 export * from './FormManager';
 export * from './FormWidgetProps';
@@ -7,5 +8,4 @@ export * from './Styled';
 export * from './System';
 export * from './SystemRegistry';
 export * from './TabManager';
-export * from './Theme';
-export * from './ThemeProps';
+export * from './ThemedProps';

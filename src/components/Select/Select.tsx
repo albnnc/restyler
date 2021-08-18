@@ -13,6 +13,7 @@ import React, {
 } from 'react';
 import {
   interactiveStackId,
+  ThemedOptions,
   useClickOutside,
   useImperativePortal,
   useSharedRef,
@@ -21,7 +22,7 @@ import {
   useThemed,
   useUpdateEffect
 } from '../../hooks';
-import { FormWidgetProps, ThemeProps } from '../../models';
+import { FormWidgetProps, ThemedProps } from '../../models';
 import { disableScroll, getChildrenKey } from '../../utils';
 import { SystemContext } from '../SystemContext';
 import { SelectContext } from './SelectContext';
@@ -31,16 +32,20 @@ import { SelectOption, SelectOptionProps } from './SelectOption';
 export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
-    ThemeProps {
+    ThemedProps {
   children: ReactElement<SelectOptionProps> | ReactElement<SelectOptionProps>[];
   isMultiple?: boolean;
 }
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
   ({ children, isMultiple, value, placeholder, disabled, onChange }, ref) => {
-    const ThemedSelect = useTyped('div', 'select');
-    const ThemedSelectPlaceholder = useTyped('span', 'select.placeholder');
-    const ThemedSelectSelection = useTyped('span', 'select.selection');
+    const ThemedSelect = useTyped('div', { key: 'select' });
+    const ThemedSelectPlaceholder = useTyped('span', {
+      key: 'select.placeholder'
+    });
+    const ThemedSelectSelection = useTyped('span', {
+      key: 'select.selection'
+    });
     const themedProps = useMemo(
       () => ({ isMultiple, value, placeholder, disabled }),
       [isMultiple, value, placeholder, disabled]
@@ -170,11 +175,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
   }
 );
 
-const useTyped = <T extends keyof JSX.IntrinsicElements>(
-  tag: T,
-  path: string
+const useTyped = <Tag extends keyof JSX.IntrinsicElements>(
+  tag: Tag,
+  options: ThemedOptions
 ) =>
   useThemed<
-    T,
+    Tag,
     Pick<SelectProps, 'isMultiple' | 'value' | 'placeholder' | 'disabled'>
-  >(tag, path);
+  >(tag, options);

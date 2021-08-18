@@ -6,12 +6,12 @@ import {
   useThemed,
   useTransition
 } from '../hooks';
-import { ThemeProps } from '../models';
+import { ThemedProps } from '../models';
 import { hash } from '../utils';
 
 export interface CollapseProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemeProps {
+    ThemedProps {
   contentHeight?: number;
   isOpen?: boolean;
 }
@@ -21,7 +21,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
     const ThemedColapse = useThemed<
       'div',
       Pick<CollapseProps, 'contentHeight' | 'isOpen'>
-    >('div', 'collapse');
+    >('div', { key: 'collapse' });
     const [contentHeight, setContentHeight] = useState<number | undefined>(
       forcedContentHeight
     );

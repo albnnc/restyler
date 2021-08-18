@@ -1,10 +1,10 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
 const createColorKind = color => ({
   style: { '&::-webkit-progress-value': { backgroundColor: color } }
 });
 
-export const progress: Theme = {
+export const progress: BasicTheme = {
   style: {
     // More about resetting progress style:
     // https://css-tricks.com/html5p-rogress-element/

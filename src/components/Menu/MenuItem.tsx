@@ -1,11 +1,11 @@
 import React, { forwardRef, useContext, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemeProps } from '../../models';
+import { ThemedProps } from '../../models';
 import { MenuContext } from './MenuContext';
 
 export interface MenuItemProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemeProps {
+    ThemedProps {
   id: string;
 }
 
@@ -34,5 +34,5 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
 MenuItem.displayName = 'MenuItem';
 
-const useTyped = (path: string) =>
-  useThemed<'div', { isActive: boolean }>('div', path);
+const useTyped = (key: string) =>
+  useThemed<'div', { isActive: boolean }>('div', { key });

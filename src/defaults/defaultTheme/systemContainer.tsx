@@ -1,6 +1,6 @@
-import { Theme } from '../..';
+import { BasicTheme } from '../..';
 
-export const systemContainer: Theme = {
+export const systemContainer: BasicTheme = {
   style: {
     color: 'text',
     fontSize: 'medium',

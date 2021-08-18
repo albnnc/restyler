@@ -1,11 +1,13 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemeProps } from '../../models';
+import { ThemedProps } from '../../models';
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement>, ThemeProps {}
+export interface CardProps
+  extends HTMLAttributes<HTMLDivElement>,
+    ThemedProps {}
 
 export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
-  const ThemedCard = useThemed('div', 'card');
+  const ThemedCard = useThemed('div', { key: 'body' });
   return <ThemedCard ref={ref} {...props} />;
 });
 

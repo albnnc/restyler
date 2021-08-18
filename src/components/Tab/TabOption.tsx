@@ -1,10 +1,10 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemeProps } from '../../models';
+import { ThemedProps } from '../../models';
 
 export interface TabOptionProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemeProps {
+    ThemedProps {
   id: string;
   isActive?: boolean;
 }
@@ -14,7 +14,7 @@ export const TabOption = forwardRef<HTMLDivElement, TabOptionProps>(
     const ThemedTabOption = useThemed<
       'div',
       Pick<TabOptionProps, 'id' | 'isActive'>
-    >('div', 'tab.option');
+    >('div', { key: 'tab.option' });
     return <ThemedTabOption ref={ref} {...props} />;
   }
 );

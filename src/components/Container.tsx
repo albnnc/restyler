@@ -1,17 +1,19 @@
 import React, { AllHTMLAttributes, forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { ThemeProps } from '../models';
+import { ThemedProps } from '../models';
 
 export interface ContainerProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemeProps {
-  contentProps?: AllHTMLAttributes<HTMLDivElement> & ThemeProps;
+    ThemedProps {
+  contentProps?: AllHTMLAttributes<HTMLDivElement> & ThemedProps;
 }
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   ({ contentProps, children, ...rest }, ref) => {
-    const ThemedContainerContent = useThemed('div', 'container.content');
-    const ThemedContainer = useThemed('div', 'container');
+    const ThemedContainer = useThemed('div', { key: 'container' });
+    const ThemedContainerContent = useThemed('div', {
+      key: 'container.content'
+    });
     return (
       <ThemedContainer ref={ref} {...rest}>
         <ThemedContainerContent {...contentProps}>

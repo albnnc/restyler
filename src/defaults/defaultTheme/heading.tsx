@@ -1,6 +1,6 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const heading: Theme = {
+export const heading: BasicTheme = {
   style: {
     marginTop: 2,
     marginBottom: 1,

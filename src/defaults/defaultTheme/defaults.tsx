@@ -1,6 +1,6 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const defaults: Theme = {
+export const defaults: BasicTheme = {
   style: {
     padding: 0,
     margin: 0,

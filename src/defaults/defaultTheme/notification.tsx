@@ -1,6 +1,6 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const notification: Theme = {
+export const notification: BasicTheme = {
   style: ({ isVisible, isEntering }) => {
     return {
       margin: 3,

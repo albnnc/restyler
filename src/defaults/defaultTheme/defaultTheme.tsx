@@ -1,4 +1,4 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 import { anchor } from './anchor';
 import { box } from './box';
 import { button } from './button';
@@ -26,7 +26,7 @@ import { tab } from './tab';
 import { table } from './table';
 import { textArea } from './textArea';
 
-export const defaultTheme: Theme = {
+export const defaultTheme: BasicTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
     body: 'Roboto, "Helvetica Neue", sans-serif',

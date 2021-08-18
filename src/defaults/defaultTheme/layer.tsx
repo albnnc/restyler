@@ -1,6 +1,6 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const layer: Theme = {
+export const layer: BasicTheme = {
   kinds: {
     backdrop: {
       style: ({ isVisible }) => ({

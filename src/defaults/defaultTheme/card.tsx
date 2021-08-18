@@ -1,6 +1,6 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const card: Theme = {
+export const card: BasicTheme = {
   style: {
     borderRadius: 2,
     boxShadow: 2,
@@ -9,7 +9,9 @@ export const card: Theme = {
   kinds: {
     body: { style: { p: 3 } }
   },
-  body: { style: { p: 3 } },
-  header: { style: { px: 3, pt: 3 } },
-  footer: { style: { px: 3, pb: 3 } }
+  components: {
+    body: { style: { p: 3 } },
+    header: { style: { px: 3, pt: 3 } },
+    footer: { style: { px: 3, pb: 3 } }
+  }
 };

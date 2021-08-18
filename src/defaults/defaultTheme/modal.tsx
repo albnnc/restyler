@@ -1,6 +1,6 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const modal: Theme = {
+export const modal: BasicTheme = {
   style: ({ isVisible, isEntering }) => ({
     borderRadius: 2,
     boxShadow: 4,
@@ -15,16 +15,18 @@ export const modal: Theme = {
     large: { style: { width: '650px' } },
     question: { style: { width: '400px' } }
   },
-  header: { style: { px: 3, pt: 3, '&:last-of-type': { pb: 3 } } },
-  body: { style: { px: 3, pt: 3, '&:last-of-type': { pb: 3 } } },
-  footer: {
-    style: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      gap: 2,
-      px: 3,
-      pt: 3,
-      '&:last-of-type': { pb: 3 }
+  components: {
+    header: { style: { px: 3, pt: 3, '&:last-of-type': { pb: 3 } } },
+    body: { style: { px: 3, pt: 3, '&:last-of-type': { pb: 3 } } },
+    footer: {
+      style: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        gap: 2,
+        px: 3,
+        pt: 3,
+        '&:last-of-type': { pb: 3 }
+      }
     }
   }
 };

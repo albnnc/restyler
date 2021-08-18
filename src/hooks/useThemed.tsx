@@ -5,48 +5,43 @@ import React, {
   ForwardRefExoticComponent
 } from 'react';
 import { SystemContext } from '../components';
-import { ThemeProps, Theme } from '../models';
-import {
-  capitalizeFirst,
-  createStyle,
-  get,
-  merge,
-  mergeThemes
-} from '../utils';
+import { ThemedProps } from '../models';
+import { capitalizeFirst } from '../utils';
+
+export interface ThemedOptions {
+  key: string;
+  getStyle?: <Props extends ThemedProps>(props: Props, target: string) => any;
+}
 
 export const useThemed = <
   Tag extends keyof JSX.IntrinsicElements,
   ExtraProps = {}
 >(
   tag: Tag,
-  path: string
+  options: ThemedOptions
 ): ForwardRefExoticComponent<
-  ComponentPropsWithRef<Tag> & ThemeProps & ExtraProps
+  ComponentPropsWithRef<Tag> & ThemedProps & ExtraProps
 > => {
-  const { styled, registry } = useContext(SystemContext);
-  const token = `${tag}:${path}`;
+  const { defaults, registry, styled } = useContext(SystemContext);
+  const { key = 'unknown', getStyle } = {
+    ...defaults?.themedOptions,
+    ...options
+  };
+
+  const token = `${tag}:${key}`;
   if (registry[token]) {
     return registry[token];
   }
 
-  const displayName = path
+  const displayName = key
     .split('.')
     .map(v => capitalizeFirst(v))
     .join('');
 
-  const StyledComponent = styled<Tag, ThemeProps & ExtraProps>(tag, props => {
-    const { theme, kind } = props;
-    const { kinds, ...componentTheme } =
-      get(theme?.components ?? {}, path ?? '') ?? {};
-    const componentKindTheme = kinds?.[kind ?? ''] ?? {};
-    const mergedTheme = mergeThemes(
-      {},
-      theme?.defaults ?? {},
-      componentTheme,
-      componentKindTheme
-    ) as Theme;
-    return merge({}, createStyle(mergedTheme, props)); // FIXME
-  });
+  const StyledComponent = styled<Tag, ThemedProps & ExtraProps>(
+    tag as Tag,
+    props => getStyle?.(props, key)
+  );
   StyledComponent.displayName = 'Styled' + displayName;
 
   const ThemedComponent = forwardRef<any, any>((props, ref) => {

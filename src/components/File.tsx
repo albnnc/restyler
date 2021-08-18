@@ -8,7 +8,7 @@ import React, {
   ReactNode
 } from 'react';
 import { useThemed } from '../hooks';
-import { FormWidgetProps, ThemeProps } from '../models';
+import { FormWidgetProps, ThemedProps } from '../models';
 
 export interface FileLabelRenderer {
   (fileNames: string[]): ReactNode;
@@ -17,16 +17,16 @@ export interface FileLabelRenderer {
 export interface FileProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps<FileList | undefined>,
-    ThemeProps {
+    ThemedProps {
   children?: ReactNode | FileLabelRenderer;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
 }
 
 export const File = forwardRef<HTMLDivElement, FileProps>(
   ({ onChange, value, inputProps, children, ...rest }, ref) => {
-    const ThemedFile = useThemed('div', 'file');
-    const ThemedFileInput = useThemed('input', 'file.input');
-    const ThemedFileInputLabel = useThemed('label', 'file.label');
+    const ThemedFile = useThemed('div', { key: 'file' });
+    const ThemedFileInput = useThemed('input', { key: 'file.input' });
+    const ThemedFileInputLabel = useThemed('label', { key: 'file.label' });
     const inputRef = useRef<HTMLInputElement>(null);
     const [innerValue, setInnerValue] = useState(value);
     useEffect(() => {
