@@ -9,7 +9,7 @@ export interface NotificationProps
 
 export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
   (props, ref) => {
-    const ThemedNotification = useThemed('div', { key: 'notification' });
+    const ThemedNotification = useThemed('div', { id: 'notification' });
     return <ThemedNotification ref={ref} {...props} />;
   }
 );

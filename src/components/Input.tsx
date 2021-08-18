@@ -9,7 +9,7 @@ export interface InputProps
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ value, onChange, ...rest }, ref) => {
-    const ThemedInput = useThemed('input', { key: 'input' });
+    const ThemedInput = useThemed('input', { id: 'input' });
     return (
       <ThemedInput
         ref={ref}

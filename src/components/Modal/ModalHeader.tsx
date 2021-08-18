@@ -9,7 +9,7 @@ export interface ModalHeaderProps
 
 export const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
   (props, ref) => {
-    const ThemedModalHeader = useThemed('div', { key: 'modal.header' });
+    const ThemedModalHeader = useThemed('div', { id: 'modal.header' });
     return <ThemedModalHeader ref={ref} {...props} />;
   }
 );

@@ -24,9 +24,9 @@ export interface FileProps
 
 export const File = forwardRef<HTMLDivElement, FileProps>(
   ({ onChange, value, inputProps, children, ...rest }, ref) => {
-    const ThemedFile = useThemed('div', { key: 'file' });
-    const ThemedFileInput = useThemed('input', { key: 'file.input' });
-    const ThemedFileInputLabel = useThemed('label', { key: 'file.label' });
+    const ThemedFile = useThemed('div', { id: 'file' });
+    const ThemedFileInput = useThemed('input', { id: 'file.input' });
+    const ThemedFileInputLabel = useThemed('label', { id: 'file.label' });
     const inputRef = useRef<HTMLInputElement>(null);
     const [innerValue, setInnerValue] = useState(value);
     useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { forwardRef, HTMLAttributes, useCallback } from 'react';
-import { ThemedOptions, useThemed } from '../hooks';
+import { useThemedFactory } from '../hooks';
 import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface CheckboxProps
@@ -9,17 +9,23 @@ export interface CheckboxProps
 
 export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
   ({ children, value, placeholder, disabled, onChange, ...rest }, ref) => {
-    const ThemedCheckbox = useTyped('div', { key: 'checkbox' });
-    const ThemedCheckboxChecker = useTyped('span', { key: 'checkbox.checker' });
-    const ThemedCheckboxLabel = useTyped('label', { key: 'checkbox.label' });
-    const themedProps = { value, placeholder, disabled };
+    const useThemed =
+      useThemedFactory<
+        Pick<CheckboxProps, 'value' | 'placeholder' | 'disabled'>
+      >();
+    const ThemedCheckbox = useThemed('div', { id: 'checkbox' });
+    const ThemedCheckboxChecker = useThemed('span', {
+      id: 'checkbox.checker'
+    });
+    const ThemedCheckboxLabel = useThemed('label', { id: 'checkbox.label' });
+    const extraProps = { value, placeholder, disabled };
     const handleClick = useCallback(() => {
       onChange?.(!value);
     }, [onChange]);
     return (
-      <ThemedCheckbox ref={ref} {...themedProps} {...rest}>
-        <ThemedCheckboxChecker onClick={handleClick} {...themedProps} />
-        <ThemedCheckboxLabel onClick={handleClick} {...themedProps}>
+      <ThemedCheckbox ref={ref} {...extraProps} {...rest}>
+        <ThemedCheckboxChecker onClick={handleClick} {...extraProps} />
+        <ThemedCheckboxLabel onClick={handleClick} {...extraProps}>
           {children}
         </ThemedCheckboxLabel>
       </ThemedCheckbox>
@@ -28,12 +34,3 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
 );
 
 Checkbox.displayName = 'Checkbox';
-
-const useTyped = <Tag extends keyof JSX.IntrinsicElements>(
-  tag: Tag,
-  options: ThemedOptions
-) =>
-  useThemed<Tag, Pick<CheckboxProps, 'value' | 'placeholder' | 'disabled'>>(
-    tag,
-    options
-  );

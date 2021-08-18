@@ -8,7 +8,7 @@ export interface TableCellProps
 
 export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
   (props, ref) => {
-    const ThemedTableCell = useThemed('td', { key: 'table.cell' });
+    const ThemedTableCell = useThemed('td', { id: 'table.cell' });
     return <ThemedTableCell ref={ref} {...(props as any)} />;
   }
 );

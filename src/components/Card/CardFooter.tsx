@@ -8,7 +8,7 @@ export interface CardFooterProps
 
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   (props, ref) => {
-    const ThemedCardFooter = useThemed('div', { key: 'card.footer' });
+    const ThemedCardFooter = useThemed('div', { id: 'card.footer' });
     return <ThemedCardFooter ref={ref} {...props} />;
   }
 );

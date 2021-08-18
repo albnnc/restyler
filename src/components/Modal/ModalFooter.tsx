@@ -9,7 +9,7 @@ export interface ModalFooterProps
 
 export const ModalFooter = forwardRef<HTMLDivElement, ModalFooterProps>(
   (props, ref) => {
-    const ThemedModalFooter = useThemed('div', { key: 'modal.footer' });
+    const ThemedModalFooter = useThemed('div', { id: 'modal.footer' });
     return <ThemedModalFooter ref={ref} {...props} />;
   }
 );

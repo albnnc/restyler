@@ -13,13 +13,12 @@ import React, {
 } from 'react';
 import {
   interactiveStackId,
-  ThemedOptions,
   useClickOutside,
   useImperativePortal,
   useSharedRef,
   useStack,
   useStandaloneTransition,
-  useThemed,
+  useThemedFactory,
   useUpdateEffect
 } from '../../hooks';
 import { FormWidgetProps, ThemeProps } from '../../models';
@@ -39,14 +38,18 @@ export interface SelectProps
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
   ({ children, isMultiple, value, placeholder, disabled, onChange }, ref) => {
-    const ThemedSelect = useTyped('div', { key: 'select' });
-    const ThemedSelectPlaceholder = useTyped('span', {
-      key: 'select.placeholder'
+    const useThemed =
+      useThemedFactory<
+        Pick<SelectProps, 'isMultiple' | 'value' | 'placeholder' | 'disabled'>
+      >();
+    const ThemedSelect = useThemed('div', { id: 'select' });
+    const ThemedSelectPlaceholder = useThemed('span', {
+      id: 'select.placeholder'
     });
-    const ThemedSelectSelection = useTyped('span', {
-      key: 'select.selection'
+    const ThemedSelectSelection = useThemed('span', {
+      id: 'select.selection'
     });
-    const themedProps = useMemo(
+    const extraProps = useMemo(
       () => ({ isMultiple, value, placeholder, disabled }),
       [isMultiple, value, placeholder, disabled]
     );
@@ -93,7 +96,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       );
       if (activeOptions.length < 1) {
         return placeholder ? (
-          <ThemedSelectPlaceholder {...themedProps}>
+          <ThemedSelectPlaceholder {...extraProps}>
             {placeholder}
           </ThemedSelectPlaceholder>
         ) : (
@@ -101,11 +104,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         );
       }
       return activeOptions.map(({ props: { children, value } }) => (
-        <ThemedSelectSelection key={value} {...themedProps}>
+        <ThemedSelectSelection key={value} {...extraProps}>
           {children ?? value}
         </ThemedSelectSelection>
       ));
-    }, [themedProps, innerValue, childrenArray]);
+    }, [extraProps, innerValue, childrenArray]);
 
     const openSelect = useStandaloneTransition<HTMLDivElement>(
       (props, ref) => {
@@ -157,7 +160,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     }, [disabled, handleClose]);
 
     return (
-      <ThemedSelect ref={sharedRef} onClick={handleClick} {...themedProps}>
+      <ThemedSelect ref={sharedRef} onClick={handleClick} {...extraProps}>
         <SelectContext.Provider
           value={{
             value: innerValue,
@@ -174,12 +177,3 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     );
   }
 );
-
-const useTyped = <Tag extends keyof JSX.IntrinsicElements>(
-  tag: Tag,
-  options: ThemedOptions
-) =>
-  useThemed<
-    Tag,
-    Pick<SelectProps, 'isMultiple' | 'value' | 'placeholder' | 'disabled'>
-  >(tag, options);

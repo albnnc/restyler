@@ -9,13 +9,13 @@ import { ThemeProps } from '../models';
 import { capitalizeFirst } from '../utils';
 
 export interface ThemedOptions {
-  key: string;
+  id: string;
   getStyle?: <Props extends ThemeProps>(props: Props, key: string) => any;
 }
 
 export const useThemed = <
   Tag extends keyof JSX.IntrinsicElements,
-  ExtraProps = {}
+  ExtraProps extends {} = {}
 >(
   tag: Tag,
   options: ThemedOptions
@@ -23,24 +23,24 @@ export const useThemed = <
   ComponentPropsWithRef<Tag> & ThemeProps & ExtraProps
 > => {
   const { defaults, registry, styled } = useContext(SystemContext);
-  const { key = 'unknown', getStyle } = {
+  const { id = 'unknown', getStyle } = {
     ...defaults?.themedOptions,
     ...options
   };
 
-  const token = `${tag}:${key}`;
+  const token = `${tag}:${id}`;
   if (registry[token]) {
     return registry[token];
   }
 
-  const displayName = key
+  const displayName = id
     .split('.')
     .map(v => capitalizeFirst(v))
     .join('');
 
   const StyledComponent = styled<Tag, ThemeProps & ExtraProps>(
     tag as Tag,
-    props => getStyle?.(props, key)
+    props => getStyle?.(props, id)
   );
   StyledComponent.displayName = 'Styled' + displayName;
 
@@ -54,3 +54,11 @@ export const useThemed = <
 
   return registry[token];
 };
+
+export const useThemedFactory =
+  <DefaultExtraProps extends {}>(defaults?: Partial<ThemedOptions>) =>
+  <Tag extends keyof JSX.IntrinsicElements, ExtraProps = DefaultExtraProps>(
+    tag: Tag,
+    options: ThemedOptions
+  ) =>
+    useThemed<Tag, ExtraProps>(tag, { ...defaults, ...options });

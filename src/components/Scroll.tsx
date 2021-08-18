@@ -6,14 +6,12 @@ import React, {
   HTMLAttributes,
   useCallback
 } from 'react';
-import { ThemedOptions, useThemed } from '../hooks';
+import { ThemedOptions, useThemed, useThemedFactory } from '../hooks';
 import { ThemeProps } from '../models';
 
 export interface ScrollProps
   extends HTMLAttributes<HTMLDivElement>,
     ThemeProps {
-  hasLeftOffset: boolean;
-  hasRightOffset: boolean;
   containerContentProps?: HTMLAttributes<HTMLDivElement> & ThemeProps;
   containerProps?: HTMLAttributes<HTMLDivElement> & ThemeProps;
   transformDelta?: (v: number) => number;
@@ -30,17 +28,21 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     },
     ref
   ) => {
-    const ThemedScroll = useTyped('div', { key: 'scroll' });
-    const ThemedScrollContainer = useTyped('div', { key: 'scroll.container' });
-    const ThemedScrollContainerContent = useTyped('div', {
-      key: 'scroll.container.content'
+    const useThemed = useThemedFactory<{
+      hasLeftOffset?: boolean;
+      hasRightOffset?: boolean;
+    }>();
+    const ThemedScroll = useThemed('div', { id: 'scroll' });
+    const ThemedScrollContainer = useThemed('div', { id: 'scroll.container' });
+    const ThemedScrollContainerContent = useThemed('div', {
+      id: 'scroll.container.content'
     });
 
     const containerRef = useRef<HTMLDivElement>(null);
     const [holder] = useState({} as any);
     const [hasLeftOffset, setHasLeftOffset] = useState(false);
     const [hasRightOffset, setHasRightOffset] = useState(false);
-    const themedProps = { hasLeftOffset, hasRightOffset };
+    const extraProps = { hasLeftOffset, hasRightOffset };
 
     const updateOffsets = () => {
       if (!containerRef.current) {
@@ -102,7 +104,7 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     );
 
     return (
-      <ThemedScroll ref={ref} {...themedProps} {...rest}>
+      <ThemedScroll ref={ref} {...extraProps} {...rest}>
         <ThemedScrollContainer
           ref={containerRef}
           style={{ overflow: 'hidden' }}
@@ -125,11 +127,11 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
             },
             e => e?.touches?.[0]?.pageX ?? 0
           )}
-          {...themedProps}
+          {...extraProps}
           {...containerProps}
         >
           <ThemedScrollContainerContent
-            {...themedProps}
+            {...extraProps}
             {...containerContentProps}
           >
             {children}
@@ -139,12 +141,3 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     );
   }
 );
-
-const useTyped = <Tag extends keyof JSX.IntrinsicElements>(
-  tag: Tag,
-  options: ThemedOptions
-) =>
-  useThemed<Tag, Pick<ScrollProps, 'hasLeftOffset' | 'hasRightOffset'>>(
-    tag,
-    options
-  );

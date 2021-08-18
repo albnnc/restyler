@@ -24,8 +24,8 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(
     { anchor, guidingChild = 0, interactiveChild = 0, children, ...rest },
     ref
   ) => {
-    const ThemedStack = useThemed('div', { key: 'stack' });
-    const ThemedStackLayer = useThemed('div', { key: 'stack.layer' });
+    const ThemedStack = useThemed('div', { id: 'stack' });
+    const ThemedStackLayer = useThemed('div', { id: 'stack.layer' });
     const anchorStyle = useMemo(
       () => ({
         position: 'absolute',

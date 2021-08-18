@@ -1,5 +1,5 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
-import { ThemedOptions, useThemed } from '../../hooks';
+import { useThemedFactory } from '../../hooks';
 import { ThemeProps } from '../../models';
 
 export interface RadioOptionProps
@@ -12,20 +12,20 @@ export interface RadioOptionProps
 
 export const RadioOption = forwardRef<HTMLDivElement, RadioOptionProps>(
   ({ children, isActive, value, onClick, ...rest }, ref) => {
-    const ThemedRadioOption = useTyped('div', {
-      key: 'radio.option'
+    const useThemed =
+      useThemedFactory<Pick<RadioOptionProps, 'isActive' | 'value'>>();
+    const ThemedRadioOption = useThemed('div', { id: 'radio.option' });
+    const ThemedRadioOptionChecker = useThemed('span', {
+      id: 'radio.option.checker'
     });
-    const ThemedRadioOptionChecker = useTyped('span', {
-      key: 'radio.option.checker'
+    const ThemedRadioOptionLabel = useThemed('label', {
+      id: 'radio.option.label'
     });
-    const ThemedRadioOptionLabel = useTyped('label', {
-      key: 'radio.option.label'
-    });
-    const themedProps = { isActive, value };
+    const extraProps = { isActive, value };
     return (
-      <ThemedRadioOption ref={ref} {...rest} {...themedProps}>
-        <ThemedRadioOptionChecker onClick={onClick} {...themedProps} />
-        <ThemedRadioOptionLabel onClick={onClick} {...themedProps}>
+      <ThemedRadioOption ref={ref} {...rest} {...extraProps}>
+        <ThemedRadioOptionChecker onClick={onClick} {...extraProps} />
+        <ThemedRadioOptionLabel onClick={onClick} {...extraProps}>
           {children}
         </ThemedRadioOptionLabel>
       </ThemedRadioOption>
@@ -34,8 +34,3 @@ export const RadioOption = forwardRef<HTMLDivElement, RadioOptionProps>(
 );
 
 RadioOption.displayName = 'RadioOption';
-
-const useTyped = <Tag extends keyof JSX.IntrinsicElements>(
-  tag: Tag,
-  options: ThemedOptions
-) => useThemed<Tag, Pick<RadioOptionProps, 'isActive' | 'value'>>(tag, options);

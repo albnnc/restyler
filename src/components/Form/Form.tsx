@@ -19,7 +19,7 @@ export interface FormProps
 
 export const Form = forwardRef<HTMLFormElement, FormProps>(
   ({ manager, onChange, onSubmit, shouldLiveValidate, ...rest }, ref) => {
-    const ThemedForm = useThemed('form', { key: 'form' });
+    const ThemedForm = useThemed('form', { id: 'form' });
 
     const innerManager = useFormManager();
     const targetManager = manager ?? innerManager;

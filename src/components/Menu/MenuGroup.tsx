@@ -3,13 +3,11 @@ import React, {
   useContext,
   HTMLAttributes,
   ReactNode,
-  useMemo,
-  Children,
-  isValidElement
+  useMemo
 } from 'react';
-import { useThemed } from '../../hooks';
+import { useThemedFactory } from '../../hooks';
 import { ThemeProps } from '../../models';
-import { getChildrenKey, hash } from '../../utils';
+import { getChildrenKey } from '../../utils';
 import { Collapse } from '../Collapse';
 import { MenuContext } from './MenuContext';
 
@@ -22,29 +20,24 @@ export interface MenuGroupProps
 
 export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
   ({ id, title, children, ...rest }, ref) => {
-    const MenuGroupTitle = useThemed<'div', { isActive: boolean }>('div', {
-      key: 'menu.group.title'
-    });
-    const MenuGroupItems = useThemed('div', {
-      key: 'menu.group.items'
-    });
-    const ThemedMenuGroup = useThemed('div', {
-      key: 'menu.group'
-    });
-    const content = useMemo(
-      () => <MenuGroupItems>{children}</MenuGroupItems>,
-      [getChildrenKey(children, { pivots: ['id'] })]
-    );
+    const useThemed = useThemedFactory<{ isActive: boolean }>();
+    const MenuGroupTitle = useThemed('div', { id: 'menu.group.title' });
+    const MenuGroupItems = useThemed('div', { id: 'menu.group.items' });
+    const ThemedMenuGroup = useThemed('div', { id: 'menu.group' });
     const { activeIds, onGroupClick } = useContext(MenuContext);
+    const isActive = useMemo(() => activeIds.includes(id), [activeIds]);
+    // Need to be memoized since content memoization depends on extraProps.
+    const extraProps = useMemo(() => ({ isActive }), [isActive]);
+    const content = useMemo(
+      () => <MenuGroupItems {...extraProps}>{children}</MenuGroupItems>,
+      [extraProps, getChildrenKey(children, { pivots: ['id'] })]
+    );
     return (
-      <ThemedMenuGroup ref={ref} {...rest}>
-        <MenuGroupTitle
-          isActive={activeIds.includes(id)}
-          onClick={() => onGroupClick(id)}
-        >
+      <ThemedMenuGroup ref={ref} {...extraProps} {...rest}>
+        <MenuGroupTitle onClick={() => onGroupClick(id)} {...extraProps}>
           {title}
         </MenuGroupTitle>
-        <Collapse isOpen={activeIds.includes(id)}>{content}</Collapse>
+        <Collapse isOpen={isActive}>{content}</Collapse>
       </ThemedMenuGroup>
     );
   }

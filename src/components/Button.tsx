@@ -8,7 +8,7 @@ export interface ButtonProps
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ type, ...rest }, ref) => {
-    const ThemedButton = useThemed('button', { key: 'button' });
+    const ThemedButton = useThemed('button', { id: 'button' });
     return <ThemedButton ref={ref} type={type ?? 'button'} {...rest} />;
   }
 );

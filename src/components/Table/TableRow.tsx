@@ -8,7 +8,7 @@ export interface TableRowProps
 
 export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
   (props, ref) => {
-    const ThemedTableRow = useThemed('tr', { key: 'table.row' });
+    const ThemedTableRow = useThemed('tr', { id: 'table.row' });
     return <ThemedTableRow ref={ref} {...props} />;
   }
 );

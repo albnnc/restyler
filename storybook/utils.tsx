@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@theme-ui/core';
 import { ReactNode, useContext } from 'react';
-import { Box, get, SystemContext, Theme } from 'src';
+import { Box, get, SystemContext } from 'src';
 
 export const delay = (t: number) =>
   new Promise(resolve => {
@@ -11,25 +11,26 @@ export const delay = (t: number) =>
   });
 
 export const createBlueprint = (
-  path: string,
+  id: string,
   options: { exclude?: RegExp; muted?: RegExp } = {}
 ) =>
   Object.assign(
     () => {
-      const system = useContext(SystemContext);
-      const getBlueprint = (theme: Theme, path = ''): ReactNode => {
-        const key = path.split('.').pop();
+      const { theme } = useContext(SystemContext);
+      const getBlueprint = (id = ''): ReactNode => {
+        const current = id.split('.').pop();
         if (
-          ['defaults', 'kinds', 'style'].includes(key ?? '') ||
-          (options.exclude && options.exclude.test(path))
+          ['style', 'kinds', 'components'].includes(current ?? '') ||
+          (options.exclude && options.exclude.test(id))
         ) {
           return null;
         }
-        const isMuted = options.muted && options.muted.test(path);
-        const target = key ? theme[key] : theme;
+        const isMuted = options.muted && options.muted.test(id);
+        const target =
+          get(theme, 'components.' + id.split('.').join('.components.')) ?? {};
         return (
           <Box
-            key={path}
+            key={id}
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -53,7 +54,7 @@ export const createBlueprint = (
                 visibility: 'hidden'
               },
               '&::before': {
-                content: `"${path}"`,
+                content: `"${id}"`,
                 display: 'block',
                 position: 'absolute',
                 top: '2px',
@@ -66,16 +67,13 @@ export const createBlueprint = (
               }
             }}
           >
-            {Object.keys(target).map(v =>
-              getBlueprint(target, path ? `${path}.${v}` : v)
+            {Object.keys(target.components ?? {}).map(v =>
+              getBlueprint(id ? `${id}.${v}` : v)
             )}
           </Box>
         );
       };
-      const base = path.includes('.')
-        ? get(system.theme.components, path.split('.').slice(0, -1).join('.'))
-        : system.theme.components;
-      return getBlueprint(base, path);
+      return getBlueprint(id);
     },
     {
       parameters: { backgrounds: { default: 'white' } }

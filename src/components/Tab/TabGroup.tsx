@@ -22,7 +22,7 @@ export interface TabGroupProps
 
 export const TabGroup = forwardRef<HTMLDivElement, TabGroupProps>(
   ({ children, manager, onChange, ...rest }, ref) => {
-    const ThemedTabGroup = useThemed('div', { key: 'tab.group' });
+    const ThemedTabGroup = useThemed('div', { id: 'tab.group' });
     const defaultTabId = children[0]?.props?.id;
     const innerManager = useTabManager(defaultTabId);
     const targetManager = manager ?? innerManager;

@@ -7,7 +7,7 @@ export interface ImageProps
     ThemeProps {}
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
-  const ThemedImage = useThemed('img', { key: 'image' });
+  const ThemedImage = useThemed('img', { id: 'image' });
   return <ThemedImage ref={ref} {...props} />;
 });
 

@@ -1,5 +1,5 @@
-import React, { forwardRef, useContext, HTMLAttributes } from 'react';
-import { useThemed } from '../../hooks';
+import React, { forwardRef, useContext, HTMLAttributes, useMemo } from 'react';
+import { useThemedFactory } from '../../hooks';
 import { ThemeProps } from '../../models';
 import { MenuContext } from './MenuContext';
 
@@ -11,18 +11,20 @@ export interface MenuItemProps
 
 export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
   ({ id, onClick, children, ...rest }, ref) => {
-    const ThemedMenuItemTitle = useTyped('menu.item.title');
-    const ThemedMenuItem = useTyped('menu.item');
+    const useThemed = useThemedFactory<{ isActive: boolean }>();
+    const ThemedMenuItemTitle = useThemed('div', { id: 'menu.item.title' });
+    const ThemedMenuItem = useThemed('div', { id: 'menu.item' });
     const { activeIds, onItemClick } = useContext(MenuContext);
-    const isActive = activeIds.includes(id);
+    const isActive = useMemo(() => activeIds.includes(id), [activeIds]);
+    const extraProps = { isActive };
     return (
-      <ThemedMenuItem ref={ref} isActive={isActive}>
+      <ThemedMenuItem ref={ref} {...extraProps}>
         <ThemedMenuItemTitle
-          isActive={isActive}
           onClick={e => {
             onItemClick(id);
             onClick?.(e);
           }}
+          {...extraProps}
           {...rest}
         >
           {children}
@@ -33,6 +35,3 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 );
 
 MenuItem.displayName = 'MenuItem';
-
-const useTyped = (key: string) =>
-  useThemed<'div', { isActive: boolean }>('div', { key });

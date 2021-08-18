@@ -10,7 +10,7 @@ export interface FormGridProps
 
 export const FormGrid = forwardRef<HTMLDivElement, FormGridProps>(
   ({ columns, ...rest }, ref) => {
-    const ThemedFormGrid = useThemed('div', { key: 'form.grid' });
+    const ThemedFormGrid = useThemed('div', { id: 'form.grid' });
     const { style } = useGrid({ columns });
     return <ThemedFormGrid ref={ref} style={style} {...rest} />;
   }

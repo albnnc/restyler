@@ -3,7 +3,7 @@ import {
   useIsomorphicLayoutEffect,
   useMeter,
   useSharedRef,
-  useThemed,
+  useThemedFactory,
   useTransition
 } from '../hooks';
 import { ThemeProps } from '../models';
@@ -18,10 +18,9 @@ export interface CollapseProps
 
 export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
   ({ contentHeight: forcedContentHeight, isOpen, children, ...rest }, ref) => {
-    const ThemedColapse = useThemed<
-      'div',
-      Pick<CollapseProps, 'contentHeight' | 'isOpen'>
-    >('div', { key: 'collapse' });
+    const useThemed =
+      useThemedFactory<Pick<CollapseProps, 'contentHeight' | 'isOpen'>>();
+    const ThemedColapse = useThemed<'div'>('div', { id: 'collapse' });
     const [contentHeight, setContentHeight] = useState<number | undefined>(
       forcedContentHeight
     );
