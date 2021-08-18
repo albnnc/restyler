@@ -1,6 +1,5 @@
 export * from './capitalizeFirst';
 export * from './clone';
-export * from './createStyle';
 export * from './disableScroll';
 export * from './get';
 export * from './getBasicStyle';

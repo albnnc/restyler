@@ -8,7 +8,6 @@ const createBasicKind = (color: string, extras?: any): BasicTheme => ({
     border: '1px solid',
     borderColor: 'border',
     backgroundColor: 'transparent',
-    color: 'strongText',
     fontSize: 2,
     fontFamily: 'body',
     cursor: 'pointer',
@@ -21,7 +20,12 @@ const createBasicKind = (color: string, extras?: any): BasicTheme => ({
           color: 'weakText',
           borderStyle: 'dashed'
         }
-      : { '&:hover, &:focus': { color, borderColor: color } }),
+      : {
+          '&:hover, &:focus': {
+            color,
+            borderColor: color
+          }
+        }),
     ...extras
   })
 });
