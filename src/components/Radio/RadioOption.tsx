@@ -1,10 +1,10 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { ThemedOptions, useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface RadioOptionProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {
+    ThemeProps {
   isActive?: boolean;
   onClick?: () => void;
   value?: any;

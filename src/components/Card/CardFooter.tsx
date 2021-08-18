@@ -1,10 +1,10 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface CardFooterProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   (props, ref) => {

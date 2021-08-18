@@ -1,6 +1,6 @@
 import React, { forwardRef, ReactNode, SVGProps } from 'react';
 import { useThemed } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface PieChartDatum {
   color: string;
@@ -11,8 +11,8 @@ export interface PieChartDatum {
 }
 
 export interface PieChartProps
-  extends Omit<SVGProps<SVGSVGElement>, 'ref' | keyof ThemedProps>,
-    ThemedProps {
+  extends Omit<SVGProps<SVGSVGElement>, 'ref' | keyof ThemeProps>,
+    ThemeProps {
   angleGap?: number;
   data: PieChartDatum[];
   radiusGap?: number;

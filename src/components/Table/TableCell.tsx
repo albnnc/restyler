@@ -1,10 +1,10 @@
 import React, { forwardRef, TdHTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface TableCellProps
   extends Omit<TdHTMLAttributes<HTMLTableCellElement>, 'align'>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
   (props, ref) => {

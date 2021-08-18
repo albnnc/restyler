@@ -1,8 +1,8 @@
-import { BasicTheme, ThemedProps } from '../models';
+import { BasicTheme, ThemeProps } from '../models';
 import { get } from './get';
 import { merge } from './merge';
 
-export const getBasicStyle = <Props extends ThemedProps<BasicTheme>>(
+export const getBasicStyle = <Props extends ThemeProps<BasicTheme>>(
   props: Props,
   key: string
 ) => {

@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo, Children, HTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 
 export type StackAnchor =
   | 'center'
@@ -13,9 +13,7 @@ export type StackAnchor =
   | 'bottomLeft'
   | 'bottomRight';
 
-export interface StackProps
-  extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {
+export interface StackProps extends HTMLAttributes<HTMLDivElement>, ThemeProps {
   anchor?: StackAnchor;
   guidingChild?: number;
   interactiveChild?: number;

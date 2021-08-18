@@ -1,11 +1,11 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { StandaloneTransitionerProps, useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface ModalProps
   extends HTMLAttributes<HTMLDivElement>,
     Partial<StandaloneTransitionerProps>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>((props, ref) => {
   const ThemedModal = useThemed('div', { key: 'modal' });

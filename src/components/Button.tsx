@@ -1,10 +1,10 @@
 import React, { forwardRef, ButtonHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ type, ...rest }, ref) => {

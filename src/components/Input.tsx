@@ -1,11 +1,11 @@
 import React, { forwardRef, InputHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { FormWidgetProps, ThemedProps } from '../models';
+import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
     FormWidgetProps<string>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ value, onChange, ...rest }, ref) => {

@@ -9,7 +9,7 @@ import React, {
   ReactNode
 } from 'react';
 import { useThemed } from '../../hooks';
-import { FormFieldValidator, FormWidgetProps, ThemedProps } from '../../models';
+import { FormFieldValidator, FormWidgetProps, ThemeProps } from '../../models';
 import { get, hash } from '../../utils';
 import { Input, InputProps } from '../Input';
 import { SystemContext } from '../SystemContext';
@@ -27,7 +27,7 @@ export interface FormFieldProps
     >,
     FormWidgetProps,
     FormFieldAddonProps,
-    ThemedProps {
+    ThemeProps {
   children?: ReactElement<{
     name?: string;
     onChange?: FormEventHandler<HTMLElement>;

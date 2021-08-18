@@ -1,12 +1,12 @@
 import React, { Children, forwardRef, HTMLAttributes, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { GridAxisOptions, useGrid, useSharedRef, useThemed } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 import { getChildrenKey } from '../utils';
 
 export interface MasonryProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {
+    ThemeProps {
   columns: GridAxisOptions & {
     getProps?: (options: {
       index: number;

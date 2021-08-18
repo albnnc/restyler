@@ -1,10 +1,10 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { GridAxisOptions, useGrid, useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface FormGridProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {
+    ThemeProps {
   columns?: GridAxisOptions;
 }
 

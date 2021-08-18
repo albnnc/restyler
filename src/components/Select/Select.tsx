@@ -22,7 +22,7 @@ import {
   useThemed,
   useUpdateEffect
 } from '../../hooks';
-import { FormWidgetProps, ThemedProps } from '../../models';
+import { FormWidgetProps, ThemeProps } from '../../models';
 import { disableScroll, getChildrenKey } from '../../utils';
 import { SystemContext } from '../SystemContext';
 import { SelectContext } from './SelectContext';
@@ -32,7 +32,7 @@ import { SelectOption, SelectOptionProps } from './SelectOption';
 export interface SelectProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
-    ThemedProps {
+    ThemeProps {
   children: ReactElement<SelectOptionProps> | ReactElement<SelectOptionProps>[];
   isMultiple?: boolean;
 }

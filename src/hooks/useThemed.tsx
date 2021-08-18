@@ -5,12 +5,12 @@ import React, {
   ForwardRefExoticComponent
 } from 'react';
 import { SystemContext } from '../components';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 import { capitalizeFirst } from '../utils';
 
 export interface ThemedOptions {
   key: string;
-  getStyle?: <Props extends ThemedProps>(props: Props, target: string) => any;
+  getStyle?: <Props extends ThemeProps>(props: Props, key: string) => any;
 }
 
 export const useThemed = <
@@ -20,7 +20,7 @@ export const useThemed = <
   tag: Tag,
   options: ThemedOptions
 ): ForwardRefExoticComponent<
-  ComponentPropsWithRef<Tag> & ThemedProps & ExtraProps
+  ComponentPropsWithRef<Tag> & ThemeProps & ExtraProps
 > => {
   const { defaults, registry, styled } = useContext(SystemContext);
   const { key = 'unknown', getStyle } = {
@@ -38,7 +38,7 @@ export const useThemed = <
     .map(v => capitalizeFirst(v))
     .join('');
 
-  const StyledComponent = styled<Tag, ThemedProps & ExtraProps>(
+  const StyledComponent = styled<Tag, ThemeProps & ExtraProps>(
     tag as Tag,
     props => getStyle?.(props, key)
   );

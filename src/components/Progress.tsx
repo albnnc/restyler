@@ -1,10 +1,10 @@
 import React, { forwardRef, ProgressHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface ProgressProps
   extends ProgressHTMLAttributes<HTMLProgressElement>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
   (props, ref) => {

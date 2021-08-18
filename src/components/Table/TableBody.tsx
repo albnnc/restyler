@@ -1,10 +1,10 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface TableBodyProps
   extends HTMLAttributes<HTMLTableSectionElement>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
   (props, ref) => {

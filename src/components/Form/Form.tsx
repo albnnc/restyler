@@ -5,12 +5,12 @@ import React, {
   useCallback
 } from 'react';
 import { useFormManager, useThemed } from '../../hooks';
-import { FormManager, ThemedProps } from '../../models';
+import { FormManager, ThemeProps } from '../../models';
 import { FormContext } from './FormContext';
 
 export interface FormProps
   extends Omit<HTMLAttributes<HTMLFormElement>, 'onChange' | 'onSubmit'>,
-    ThemedProps {
+    ThemeProps {
   manager?: FormManager;
   onChange?: (manager: FormManager) => void;
   onSubmit?: (manager: FormManager) => void;

@@ -1,9 +1,9 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 export interface HeadingProps
   extends HTMLAttributes<HTMLHeadingElement>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   (props, ref) => {

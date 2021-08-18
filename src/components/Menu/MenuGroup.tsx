@@ -8,14 +8,14 @@ import React, {
   isValidElement
 } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 import { getChildrenKey, hash } from '../../utils';
 import { Collapse } from '../Collapse';
 import { MenuContext } from './MenuContext';
 
 export interface MenuGroupProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
-    ThemedProps {
+    ThemeProps {
   id: string;
   title: ReactNode;
 }

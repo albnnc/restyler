@@ -7,15 +7,15 @@ import React, {
   useCallback
 } from 'react';
 import { ThemedOptions, useThemed } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface ScrollProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {
+    ThemeProps {
   hasLeftOffset: boolean;
   hasRightOffset: boolean;
-  containerContentProps?: HTMLAttributes<HTMLDivElement> & ThemedProps;
-  containerProps?: HTMLAttributes<HTMLDivElement> & ThemedProps;
+  containerContentProps?: HTMLAttributes<HTMLDivElement> & ThemeProps;
+  containerProps?: HTMLAttributes<HTMLDivElement> & ThemeProps;
   transformDelta?: (v: number) => number;
 }
 

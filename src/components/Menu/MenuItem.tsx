@@ -1,11 +1,11 @@
 import React, { forwardRef, useContext, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 import { MenuContext } from './MenuContext';
 
 export interface MenuItemProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {
+    ThemeProps {
   id: string;
 }
 

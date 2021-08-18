@@ -1,10 +1,10 @@
 import React, { forwardRef, AnchorHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface AnchorProps
   extends AnchorHTMLAttributes<HTMLAnchorElement>,
-    ThemedProps {
+    ThemeProps {
   navigate?: () => void;
 }
 

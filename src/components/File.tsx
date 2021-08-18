@@ -8,7 +8,7 @@ import React, {
   ReactNode
 } from 'react';
 import { useThemed } from '../hooks';
-import { FormWidgetProps, ThemedProps } from '../models';
+import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface FileLabelRenderer {
   (fileNames: string[]): ReactNode;
@@ -17,7 +17,7 @@ export interface FileLabelRenderer {
 export interface FileProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps<FileList | undefined>,
-    ThemedProps {
+    ThemeProps {
   children?: ReactNode | FileLabelRenderer;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
 }

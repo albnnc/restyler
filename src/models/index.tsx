@@ -8,4 +8,4 @@ export * from './Styled';
 export * from './System';
 export * from './SystemRegistry';
 export * from './TabManager';
-export * from './ThemedProps';
+export * from './ThemeProps';

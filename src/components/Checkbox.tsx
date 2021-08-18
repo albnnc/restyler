@@ -1,11 +1,11 @@
 import React, { forwardRef, HTMLAttributes, useCallback } from 'react';
 import { ThemedOptions, useThemed } from '../hooks';
-import { FormWidgetProps, ThemedProps } from '../models';
+import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface CheckboxProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
-    ThemedProps {}
+    ThemeProps {}
 
 export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
   ({ children, value, placeholder, disabled, onChange, ...rest }, ref) => {

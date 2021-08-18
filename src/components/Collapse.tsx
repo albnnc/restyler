@@ -6,12 +6,12 @@ import {
   useThemed,
   useTransition
 } from '../hooks';
-import { ThemedProps } from '../models';
+import { ThemeProps } from '../models';
 import { hash } from '../utils';
 
 export interface CollapseProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {
+    ThemeProps {
   contentHeight?: number;
   isOpen?: boolean;
 }

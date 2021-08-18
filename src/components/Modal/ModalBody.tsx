@@ -1,11 +1,11 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { StandaloneTransitionerProps, useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface ModalBodyProps
   extends HTMLAttributes<HTMLDivElement>,
     Partial<StandaloneTransitionerProps>,
-    ThemedProps {}
+    ThemeProps {}
 
 export const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(
   (props, ref) => {

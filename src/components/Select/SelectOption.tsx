@@ -1,11 +1,11 @@
 import React, { forwardRef, HTMLAttributes, useContext } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 import { SelectContext } from './SelectContext';
 
 export interface SelectOptionProps
   extends HTMLAttributes<HTMLDivElement>,
-    ThemedProps {
+    ThemeProps {
   value: any;
 }
 

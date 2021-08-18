@@ -1,9 +1,9 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { ThemedProps } from '../../models';
+import { ThemeProps } from '../../models';
 import { menuContextDefaults, MenuContext } from './MenuContext';
 
-export interface MenuProps extends HTMLAttributes<HTMLDivElement>, ThemedProps {
+export interface MenuProps extends HTMLAttributes<HTMLDivElement>, ThemeProps {
   activeIds?: string[];
   onGroupClick?: (id: string) => void;
   onItemClick?: (id: string) => void;
