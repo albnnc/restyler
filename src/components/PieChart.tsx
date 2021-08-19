@@ -20,10 +20,8 @@ export interface PieChartProps
 
 export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
   ({ data, radiusGap = 0, angleGap = 0, ...rest }, ref) => {
-    const ThemedPieChart = useThemed('svg', { id: 'pieChart' });
-    const ThemedPieChartSegment = useThemed('circle', {
-      id: 'pieChart.segment'
-    });
+    const ThemedPieChart = useThemed('svg', 'pieChart');
+    const ThemedPieChartSegment = useThemed('circle', 'pieChart.segment');
 
     const totalCount = data.reduce(
       (prev, curr) => prev + (curr.value > 0 ? 1 : 0),

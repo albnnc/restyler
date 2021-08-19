@@ -8,7 +8,7 @@ export interface TableHeadProps
 
 export const TableHead = forwardRef<HTMLTableSectionElement, TableHeadProps>(
   (props, ref) => {
-    const ThemedTableHead = useThemed('thead', { id: 'table.head' });
+    const ThemedTableHead = useThemed('thead', 'table.head');
     return <ThemedTableHead ref={ref} {...props} />;
   }
 );

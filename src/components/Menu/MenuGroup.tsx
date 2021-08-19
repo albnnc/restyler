@@ -21,9 +21,9 @@ export interface MenuGroupProps
 export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
   ({ id, title, children, ...rest }, ref) => {
     const useThemed = useThemedFactory<{ isActive: boolean }>();
-    const MenuGroupTitle = useThemed('div', { id: 'menu.group.title' });
-    const MenuGroupItems = useThemed('div', { id: 'menu.group.items' });
-    const ThemedMenuGroup = useThemed('div', { id: 'menu.group' });
+    const MenuGroupTitle = useThemed('div', 'menu.group.title');
+    const MenuGroupItems = useThemed('div', 'menu.group.items');
+    const ThemedMenuGroup = useThemed('div', 'menu.group');
     const { activeIds, onGroupClick } = useContext(MenuContext);
     const isActive = useMemo(() => activeIds.includes(id), [activeIds]);
     // Need to be memoized since content memoization depends on extraProps.

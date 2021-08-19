@@ -8,7 +8,7 @@ export interface CardBodyProps
 
 export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
   (props, ref) => {
-    const ThemedCardBody = useThemed('div', { id: 'card.body' });
+    const ThemedCardBody = useThemed('div', 'card.body');
     return <ThemedCardBody ref={ref} {...props} />;
   }
 );

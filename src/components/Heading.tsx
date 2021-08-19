@@ -9,7 +9,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   (props, ref) => {
     const ThemedHeading = useThemed(
       `h${+(props.kind ?? 1)}` as keyof JSX.IntrinsicElements,
-      { id: 'heading' }
+      'heading'
     );
     return <ThemedHeading ref={ref} {...props} />;
   }

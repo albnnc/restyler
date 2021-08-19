@@ -8,7 +8,7 @@ export interface CardHeaderProps
 
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   (props, ref) => {
-    const ThemedCardHeader = useThemed('div', { id: 'card.header' });
+    const ThemedCardHeader = useThemed('div', 'card.header');
     return <ThemedCardHeader ref={ref} {...props} />;
   }
 );

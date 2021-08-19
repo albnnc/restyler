@@ -8,7 +8,7 @@ export interface LayerProps
     ThemeProps {}
 
 export const Layer = forwardRef<HTMLDivElement, LayerProps>((props, ref) => {
-  const ThemedLayer = useThemed('div', { id: 'layer' });
+  const ThemedLayer = useThemed('div', 'layer');
   return <ThemedLayer ref={ref} {...props} />;
 });
 

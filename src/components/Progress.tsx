@@ -8,7 +8,7 @@ export interface ProgressProps
 
 export const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
   (props, ref) => {
-    const ThemedProgress = useThemed('progress', { id: 'progress' });
+    const ThemedProgress = useThemed('progress', 'progress');
     return <ThemedProgress ref={ref} {...props} />;
   }
 );

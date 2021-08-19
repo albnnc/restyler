@@ -42,13 +42,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       useThemedFactory<
         Pick<SelectProps, 'isMultiple' | 'value' | 'placeholder' | 'disabled'>
       >();
-    const ThemedSelect = useThemed('div', { id: 'select' });
-    const ThemedSelectPlaceholder = useThemed('span', {
-      id: 'select.placeholder'
-    });
-    const ThemedSelectSelection = useThemed('span', {
-      id: 'select.selection'
-    });
+    const ThemedSelect = useThemed('div', 'select');
+    const ThemedSelectPlaceholder = useThemed('span', 'select.placeholder');
+    const ThemedSelectSelection = useThemed('span', 'select.selection');
     const extraProps = useMemo(
       () => ({ isMultiple, value, placeholder, disabled }),
       [isMultiple, value, placeholder, disabled]

@@ -9,7 +9,6 @@ import { ThemeProps } from '../models';
 import { capitalizeFirst } from '../utils';
 
 export interface ThemedOptions {
-  id: string;
   getStyle?: <Props extends ThemeProps>(props: Props, key: string) => any;
 }
 
@@ -17,12 +16,13 @@ export const useThemedFactory =
   <ExtraProps extends {} = {}>(defaultOptions?: ThemedOptions) =>
   <Tag extends keyof JSX.IntrinsicElements>(
     tag: Tag,
-    options: ThemedOptions
+    id: string,
+    options?: ThemedOptions
   ): ForwardRefExoticComponent<
     ComponentPropsWithRef<Tag> & ThemeProps & ExtraProps
   > => {
     const { defaults, registry, styled } = useContext(SystemContext);
-    const { id = 'unknown', getStyle } = {
+    const { getStyle } = {
       ...defaults?.themedOptions,
       ...defaultOptions,
       ...options
@@ -57,5 +57,6 @@ export const useThemedFactory =
 
 export const useThemed = <Tag extends keyof JSX.IntrinsicElements>(
   tag: Tag,
-  options: ThemedOptions
-) => useThemedFactory()<Tag>(tag, options);
+  id: string,
+  options?: ThemedOptions
+) => useThemedFactory()<Tag>(tag, id, options);

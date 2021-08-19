@@ -10,7 +10,7 @@ export interface AnchorProps
 
 export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
   ({ navigate, onClick, ...rest }, ref) => {
-    const ThemedAnchor = useThemed('a', { id: 'anchor' });
+    const ThemedAnchor = useThemed('a', 'anchor');
     return (
       <ThemedAnchor
         ref={ref}

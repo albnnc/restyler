@@ -6,7 +6,7 @@ import React, {
   HTMLAttributes,
   useCallback
 } from 'react';
-import { ThemedOptions, useThemed, useThemedFactory } from '../hooks';
+import { useThemedFactory } from '../hooks';
 import { ThemeProps } from '../models';
 
 export interface ScrollProps
@@ -32,11 +32,12 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
       hasLeftOffset?: boolean;
       hasRightOffset?: boolean;
     }>();
-    const ThemedScroll = useThemed('div', { id: 'scroll' });
-    const ThemedScrollContainer = useThemed('div', { id: 'scroll.container' });
-    const ThemedScrollContainerContent = useThemed('div', {
-      id: 'scroll.container.content'
-    });
+    const ThemedScroll = useThemed('div', 'scroll');
+    const ThemedScrollContainer = useThemed('div', 'scroll.container');
+    const ThemedScrollContainerContent = useThemed(
+      'div',
+      'scroll.container.content'
+    );
 
     const containerRef = useRef<HTMLDivElement>(null);
     const [holder] = useState({} as any);
@@ -141,3 +142,5 @@ export const Scroll = forwardRef<HTMLDivElement, ScrollProps>(
     );
   }
 );
+
+Scroll.displayName = 'Scroll';

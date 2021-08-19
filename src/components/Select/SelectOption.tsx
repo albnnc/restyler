@@ -16,7 +16,7 @@ export const SelectOption = forwardRef<HTMLDivElement, SelectOptionProps>(
       isActive: boolean;
       isMultiple: boolean;
     }>();
-    const ThemedOption = useThemed('div', { id: 'select.option' });
+    const ThemedOption = useThemed('div', 'select.option');
     const {
       isMultiple,
       value: selectValue,

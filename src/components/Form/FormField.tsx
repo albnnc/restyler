@@ -56,24 +56,15 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     },
     ref
   ) => {
-    const ThemedFormField = useThemed('div', {
-      id: 'form.field'
-    });
-    const ThemedFormFieldControl = useThemed('div', {
-      id: 'form.field.control'
-    });
-    const ThemedFormFieldErrors = useThemed('div', {
-      id: 'form.field.errors'
-    });
-    const ThemedFormFieldErrorsItem = useThemed('div', {
-      id: 'form.field.errors.item'
-    });
-    const ThemedFormFieldLabel = useThemed('label', {
-      id: 'form.field.label'
-    });
-    const ThemedFormFieldHelp = useThemed('div', {
-      id: 'form.field.help'
-    });
+    const ThemedFormField = useThemed('div', 'form.field');
+    const ThemedFormFieldControl = useThemed('div', 'form.field.control');
+    const ThemedFormFieldErrors = useThemed('div', 'form.field.errors');
+    const ThemedFormFieldErrorsItem = useThemed(
+      'div',
+      'form.field.errors.item'
+    );
+    const ThemedFormFieldLabel = useThemed('label', 'form.field.label');
+    const ThemedFormFieldHelp = useThemed('div', 'form.field.help');
 
     const { locale } = useContext(SystemContext);
     const {

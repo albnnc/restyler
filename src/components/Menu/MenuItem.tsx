@@ -12,8 +12,8 @@ export interface MenuItemProps
 export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
   ({ id, onClick, children, ...rest }, ref) => {
     const useThemed = useThemedFactory<{ isActive: boolean }>();
-    const ThemedMenuItemTitle = useThemed('div', { id: 'menu.item.title' });
-    const ThemedMenuItem = useThemed('div', { id: 'menu.item' });
+    const ThemedMenuItemTitle = useThemed('div', 'menu.item.title');
+    const ThemedMenuItem = useThemed('div', 'menu.item');
     const { activeIds, onItemClick } = useContext(MenuContext);
     const isActive = useMemo(() => activeIds.includes(id), [activeIds]);
     const extraProps = { isActive };

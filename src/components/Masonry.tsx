@@ -16,8 +16,8 @@ export interface MasonryProps
 
 export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
   ({ columns, children, ...rest }, ref) => {
-    const ThemedMasonry = useThemed('div', { id: 'masonry' });
-    const ThemedMasonryColumn = useThemed('div', { id: 'masonry.column' });
+    const ThemedMasonry = useThemed('div', 'masonry');
+    const ThemedMasonryColumn = useThemed('div', 'masonry.column');
 
     const { style, columnsCount, handleElement } = useGrid<HTMLDivElement>({
       columns

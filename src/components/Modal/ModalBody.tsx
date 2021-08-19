@@ -9,7 +9,7 @@ export interface ModalBodyProps
 
 export const ModalBody = forwardRef<HTMLDivElement, ModalBodyProps>(
   (props, ref) => {
-    const ThemedModalBody = useThemed('div', { id: 'modal.body' });
+    const ThemedModalBody = useThemed('div', 'modal.body');
     return <ThemedModalBody ref={ref} {...props} />;
   }
 );

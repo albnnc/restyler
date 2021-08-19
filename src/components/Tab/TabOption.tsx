@@ -13,7 +13,7 @@ export const TabOption = forwardRef<HTMLDivElement, TabOptionProps>(
   (props, ref) => {
     const useThemed =
       useThemedFactory<Pick<TabOptionProps, 'id' | 'isActive'>>();
-    const ThemedTabOption = useThemed('div', { id: 'tab.option' });
+    const ThemedTabOption = useThemed('div', 'tab.option');
     return <ThemedTabOption ref={ref} {...props} />;
   }
 );

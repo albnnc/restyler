@@ -8,7 +8,7 @@ export interface TableBodyProps
 
 export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
   (props, ref) => {
-    const ThemedTableBody = useThemed('tbody', { id: 'table.body' });
+    const ThemedTableBody = useThemed('tbody', 'table.body');
     return <ThemedTableBody ref={ref} {...props} />;
   }
 );

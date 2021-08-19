@@ -20,7 +20,7 @@ export interface RadioGroupProps
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   ({ children, onChange, value, ...rest }, ref) => {
-    const ThemedRadioGroup = useThemed('div', { id: 'radio.group' });
+    const ThemedRadioGroup = useThemed('div', 'radio.group');
     const [innerValue, setInnerValue] = useState(value);
     useEffect(() => {
       if (value !== innerValue) {

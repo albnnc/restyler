@@ -20,7 +20,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
   ({ contentHeight: forcedContentHeight, isOpen, children, ...rest }, ref) => {
     const useThemed =
       useThemedFactory<Pick<CollapseProps, 'contentHeight' | 'isOpen'>>();
-    const ThemedColapse = useThemed<'div'>('div', { id: 'collapse' });
+    const ThemedColapse = useThemed('div', 'collapse');
     const [contentHeight, setContentHeight] = useState<number | undefined>(
       forcedContentHeight
     );

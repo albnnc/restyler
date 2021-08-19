@@ -10,10 +10,8 @@ export interface ContainerProps
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   ({ contentProps, children, ...rest }, ref) => {
-    const ThemedContainer = useThemed('div', { id: 'container' });
-    const ThemedContainerContent = useThemed('div', {
-      id: 'container.content'
-    });
+    const ThemedContainer = useThemed('div', 'container');
+    const ThemedContainerContent = useThemed('div', 'container.content');
     return (
       <ThemedContainer ref={ref} {...rest}>
         <ThemedContainerContent {...contentProps}>

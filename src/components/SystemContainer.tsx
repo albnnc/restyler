@@ -60,7 +60,7 @@ const SystemContainerContextGrabber = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLDivElement> & ThemeProps
 >((props, ref) => {
-  const ThemedSystemContainer = useThemed('div', { id: 'systemContainer' });
+  const ThemedSystemContainer = useThemed('div', 'systemContainer');
   return <ThemedSystemContainer ref={ref} {...props} />;
 });
 

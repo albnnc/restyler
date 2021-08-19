@@ -7,7 +7,7 @@ export interface TableProps
     ThemeProps {}
 
 export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
-  const ThemedTable = useThemed('table', { id: 'table' });
+  const ThemedTable = useThemed('table', 'table');
   return <ThemedTable ref={ref} {...props} />;
 });
 

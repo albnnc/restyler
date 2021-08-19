@@ -44,6 +44,7 @@ export const useNotification = () => {
     NotificationOptions
   >(
     ({ context, handleClose: handleCurrentClose, ...rest }, ref) => {
+      console.log(notifications);
       const options = useMemo(
         () => ({
           ...defaults?.notificationOptions,
@@ -80,12 +81,10 @@ export const useNotification = () => {
           props,
           update
         };
-        if (getNotificationIndex() === -1) {
-          notifications.push(notification);
-        } else {
-          notifications[getNotificationIndex()] = notification;
-        }
+        notifications[getNotificationIndex()] = notification;
         return () => {
+          const index = getNotificationIndex();
+          index >= 0 && notifications.splice(index, 1);
           // One needs to update other notifications on unmount
           // for them to keep the order without gaps.
           notifications.forEach(v => v.update());
@@ -99,6 +98,7 @@ export const useNotification = () => {
         return undefined;
       }, []);
       const index = getNotificationIndex();
+      // TODO: One has to filter notifications by the placement.
       const offset = notifications.slice(0, index).reduce((prev, curr) => {
         const element = curr.ref.current;
         if (!element) {

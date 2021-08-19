@@ -8,6 +8,6 @@ export interface ModalProps
     ThemeProps {}
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>((props, ref) => {
-  const ThemedModal = useThemed('div', { id: 'modal' });
+  const ThemedModal = useThemed('div', 'modal');
   return <ThemedModal ref={ref} {...props} />;
 });

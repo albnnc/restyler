@@ -13,11 +13,9 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       useThemedFactory<
         Pick<CheckboxProps, 'value' | 'placeholder' | 'disabled'>
       >();
-    const ThemedCheckbox = useThemed('div', { id: 'checkbox' });
-    const ThemedCheckboxChecker = useThemed('span', {
-      id: 'checkbox.checker'
-    });
-    const ThemedCheckboxLabel = useThemed('label', { id: 'checkbox.label' });
+    const ThemedCheckbox = useThemed('div', 'checkbox');
+    const ThemedCheckboxChecker = useThemed('span', 'checkbox.checker');
+    const ThemedCheckboxLabel = useThemed('label', 'checkbox.label');
     const extraProps = { value, placeholder, disabled };
     const handleClick = useCallback(() => {
       onChange?.(!value);

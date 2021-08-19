@@ -11,7 +11,7 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement>, ThemeProps {
 
 export const Menu = forwardRef<HTMLDivElement, MenuProps>(
   ({ onGroupClick, onItemClick, activeIds, ...rest }, ref) => {
-    const ThemedMenu = useThemed('div', { id: 'menu' });
+    const ThemedMenu = useThemed('div', 'menu');
     return (
       <MenuContext.Provider
         value={{

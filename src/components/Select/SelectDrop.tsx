@@ -8,7 +8,7 @@ export interface SelectDropProps
 
 export const SelectDrop = forwardRef<HTMLDivElement, SelectDropProps>(
   (props, ref) => {
-    const ThemedSelectDrop = useThemed('div', { id: 'select.drop' });
+    const ThemedSelectDrop = useThemed('div', 'select.drop');
     return <ThemedSelectDrop ref={ref} {...props} />;
   }
 );

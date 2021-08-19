@@ -14,13 +14,9 @@ export const RadioOption = forwardRef<HTMLDivElement, RadioOptionProps>(
   ({ children, isActive, value, onClick, ...rest }, ref) => {
     const useThemed =
       useThemedFactory<Pick<RadioOptionProps, 'isActive' | 'value'>>();
-    const ThemedRadioOption = useThemed('div', { id: 'radio.option' });
-    const ThemedRadioOptionChecker = useThemed('span', {
-      id: 'radio.option.checker'
-    });
-    const ThemedRadioOptionLabel = useThemed('label', {
-      id: 'radio.option.label'
-    });
+    const ThemedRadioOption = useThemed('div', 'radio.option');
+    const ThemedRadioOptionChecker = useThemed('span', 'radio.option.checker');
+    const ThemedRadioOptionLabel = useThemed('label', 'radio.option.label');
     const extraProps = { isActive, value };
     return (
       <ThemedRadioOption ref={ref} {...rest} {...extraProps}>
