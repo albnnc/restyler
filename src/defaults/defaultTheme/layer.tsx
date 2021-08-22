@@ -1,13 +1,19 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const layer: Theme = {
+export const layer: BasicTheme = {
   kinds: {
     backdrop: {
-      direction: 'row',
-      justify: 'center',
-      align: 'center',
-      background: 'rgba(0, 0, 0, 0.7)',
-      extend: ({ props: { isVisible } }) => ({
+      style: ({ isVisible }) => ({
+        position: 'fixed',
+        zIndex: '1000',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         opacity: isVisible ? 1 : 0,
         transition: 'opacity 0.2s'
       })

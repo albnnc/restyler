@@ -1,24 +1,20 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
 const createColorKind = color => ({
-  extend: ({ createStyle }) => ({
-    '&::-webkit-progress-value': createStyle({
-      background: color
-    })
-  })
+  style: { '&::-webkit-progress-value': { backgroundColor: color } }
 });
 
-export const progress: Theme = {
-  extend: ({ createStyle }) => ({
-    // more about resetting progress style:
-    // https://css-tricks.com/html5-progress-element/
+export const progress: BasicTheme = {
+  style: {
+    // More about resetting progress style:
+    // https://css-tricks.com/html5p-rogress-element/
     appearance: 'none',
     height: '4px',
     '&::-webkit-progress-bar': {
       background: 'rgba(0, 0, 0, 0.1)',
       overflow: 'hidden'
     }
-  }),
+  },
   kinds: {
     primary: createColorKind('primary'),
     success: createColorKind('success'),

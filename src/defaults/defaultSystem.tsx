@@ -1,4 +1,5 @@
 import { System } from '../models';
+import { getBasicStyle } from '../utils';
 import { defaultLocale } from './defaultLocale';
 import { defaultTheme } from './defaultTheme';
 
@@ -7,6 +8,9 @@ export const defaultSystem = {
     notificationOptions: {
       duration: 4000,
       placement: 'bottomRight'
+    },
+    themedOptions: {
+      getStyle: getBasicStyle
     }
   },
   locale: defaultLocale,

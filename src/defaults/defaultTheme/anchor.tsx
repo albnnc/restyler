@@ -1,6 +1,9 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const anchor: Theme = {
-  color: 'primary',
-  weight: 'bold'
+export const anchor: BasicTheme = {
+  style: {
+    color: 'primary',
+    weight: 'bold',
+    cursor: 'pointer'
+  }
 };

@@ -1,38 +1,23 @@
-import { Theme } from '../..';
+import { BasicTheme } from '../..';
 
-export const tab: Theme = {
-  group: {
-    direction: 'row'
-  },
-
-  option: {
-    padding: {
-      vertical: 'small',
-      horizontal: 'medium'
+export const tab: BasicTheme = {
+  components: {
+    group: {
+      style: { display: 'flex' }
     },
-    border: {
-      bottom: { width: '2px', color: 'transparent' }
-    },
-    color: 'text',
-
-    extend: ({ createStyle, props }) => ({
-      cursor: 'pointer',
-      transition: 'all 0.2s',
-      textTransform: 'uppercase',
-      letterSpacing: '0.04rem',
-
-      '&:hover': createStyle({
-        color: 'primary'
-      }),
-
-      ...(props.isActive
-        ? createStyle({
-            color: 'primary',
-            border: {
-              bottom: { width: '2px', color: 'primary' }
-            }
-          })
-        : {})
-    })
+    option: {
+      style: ({ isActive }) => ({
+        paddingY: 2,
+        paddingX: 3,
+        borderBottom: '2px solid transparent',
+        color: 'text',
+        cursor: 'pointer',
+        transition: 'all 0.2s',
+        textTransform: 'uppercase',
+        letterSpacing: '0.04rem',
+        '&:hover': { color: 'primary' },
+        ...(isActive ? { color: 'primary', borderBottomColor: 'primary' } : {})
+      })
+    }
   }
 };

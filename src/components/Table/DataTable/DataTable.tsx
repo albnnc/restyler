@@ -1,6 +1,5 @@
 import React, { forwardRef, useContext, useMemo } from 'react';
 import { hash } from '../../../utils';
-import { Button } from '../../Button';
 import { SystemContext } from '../../SystemContext';
 import { Table } from '../Table';
 import { TableBody } from '../TableBody';
@@ -48,15 +47,8 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
                   onClick={() => sort && toggleSortSelection(key)}
                 >
                   {header}
-                  {sortSelection && (
-                    <Button
-                      kind={
-                        'arrow' +
-                        (sortSelection.direction === 'asc' ? 'Up' : 'Down')
-                      }
-                      margin={{ left: 'small' }}
-                    />
-                  )}
+                  {sortSelection &&
+                    (sortSelection.direction === 'asc' ? '▲' : '▼')}
                 </TableCell>
               );
             })}
@@ -80,7 +72,7 @@ export const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
             })
           ) : (
             <TableRow>
-              <TableCell kind="empty" colSpan={columns.length}>
+              <TableCell colSpan={columns.length} kind="empty">
                 {locale.empty}
               </TableCell>
             </TableRow>

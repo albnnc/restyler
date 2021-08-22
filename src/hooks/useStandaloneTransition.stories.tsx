@@ -1,5 +1,7 @@
+/** @jsx jsx */
 import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { jsx } from '@theme-ui/core';
+import { useState } from 'react';
 import { Box, Button, useStandaloneTransition } from 'src';
 
 export default {
@@ -11,12 +13,12 @@ export const Basics = () => {
     ({ isVisible }, ref) => (
       <Box
         ref={ref}
-        css={{
+        sx={{
           position: 'fixed',
-          top: '1rem',
-          right: '1rem',
-          width: '3rem',
-          height: '3rem',
+          top: '20px',
+          right: '20px',
+          width: '50px',
+          height: '50px',
           background: 'red',
           opacity: isVisible ? 1 : 0,
           transition: 'opacity 0.5s'
@@ -36,10 +38,8 @@ export const Basics = () => {
     });
   };
   return (
-    <Box css={{ position: 'relative' }}>
-      <Button kind="primary" onClick={close ?? openAndUpdate}>
-        Toggle
-      </Button>
-    </Box>
+    <Button kind="primary" onClick={close ?? openAndUpdate}>
+      Toggle
+    </Button>
   );
 };

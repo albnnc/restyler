@@ -1,11 +1,16 @@
-import React, { forwardRef, useEffect, HTMLAttributes } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  HTMLAttributes,
+  useCallback
+} from 'react';
 import { useFormManager, useThemed } from '../../hooks';
-import { FormManager, StyleProps } from '../../models';
+import { FormManager, ThemeProps } from '../../models';
 import { FormContext } from './FormContext';
 
 export interface FormProps
   extends Omit<HTMLAttributes<HTMLFormElement>, 'onChange' | 'onSubmit'>,
-    StyleProps {
+    ThemeProps {
   manager?: FormManager;
   onChange?: (manager: FormManager) => void;
   onSubmit?: (manager: FormManager) => void;
@@ -14,12 +19,13 @@ export interface FormProps
 
 export const Form = forwardRef<HTMLFormElement, FormProps>(
   ({ manager, onChange, onSubmit, shouldLiveValidate, ...rest }, ref) => {
-    const ThemedForm = useThemed('form', { path: 'form' });
+    const ThemedForm = useThemed('form', 'form');
+
     const innerManager = useFormManager();
     const targetManager = manager ?? innerManager;
     const { values, errors, setErrors, validators } = targetManager;
 
-    const validate = () => {
+    const validate = useCallback(() => {
       const newErrors = {} as any;
       Reflect.ownKeys(validators).forEach((name: string) => {
         const newFieldErrors = validators[name](values[name]);
@@ -29,7 +35,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
       });
       const hasNewErrors = Reflect.ownKeys(newErrors).length > 0;
       return [newErrors, hasNewErrors] as const;
-    };
+    }, [values, validators]);
 
     useEffect(() => {
       if (shouldLiveValidate) {
@@ -39,7 +45,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
         }
       }
       onChange?.(targetManager);
-    }, [values]);
+    }, [validate, shouldLiveValidate]);
 
     useEffect(() => {
       onChange?.(targetManager);

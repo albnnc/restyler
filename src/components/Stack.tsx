@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo, Children, HTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 
 export type StackAnchor =
   | 'center'
@@ -13,7 +13,7 @@ export type StackAnchor =
   | 'bottomLeft'
   | 'bottomRight';
 
-export interface StackProps extends HTMLAttributes<HTMLDivElement>, StyleProps {
+export interface StackProps extends HTMLAttributes<HTMLDivElement>, ThemeProps {
   anchor?: StackAnchor;
   guidingChild?: number;
   interactiveChild?: number;
@@ -24,11 +24,8 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(
     { anchor, guidingChild = 0, interactiveChild = 0, children, ...rest },
     ref
   ) => {
-    const ThemedStack = useThemed('div', {
-      path: 'stack',
-      style: { position: 'relative' }
-    });
-    const ThemedStackLayer = useThemed('div', { path: 'stack.layer' });
+    const ThemedStack = useThemed('div', 'stack');
+    const ThemedStackLayer = useThemed('div', 'stack.layer');
     const anchorStyle = useMemo(
       () => ({
         position: 'absolute',
@@ -51,7 +48,7 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(
       [anchor]
     );
     return (
-      <ThemedStack ref={ref} {...rest}>
+      <ThemedStack ref={ref} style={{ position: 'relative' }} {...rest}>
         {Children.map(children, (v, i) => (
           <ThemedStackLayer
             style={{

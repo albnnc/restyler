@@ -1,5 +1,6 @@
+/** @jsx jsx */
 import { Meta } from '@storybook/react';
-import React from 'react';
+import { jsx } from '@theme-ui/core';
 import { Box, Button, useOperation } from 'src';
 import { delay } from 'storybook/utils';
 
@@ -25,15 +26,11 @@ export const Basics = () => {
     }
   );
   return (
-    <Box direction="row">
+    <Box sx={{ display: 'flex', gap: 2 }}>
       <Button kind="success" onClick={() => handleClick()}>
         Success
       </Button>
-      <Button
-        kind="danger"
-        margin={{ left: 'small' }}
-        onClick={() => handleClick(true)}
-      >
+      <Button kind="danger" onClick={() => handleClick(true)}>
         Failure
       </Button>
     </Box>

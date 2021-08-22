@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/react';
+import { jsx } from '@theme-ui/core';
 import { ReactNode, useContext } from 'react';
-import { Box, get, knownStyleProps, SystemContext, Theme } from 'src';
+import { Box, get, SystemContext } from 'src';
 
 export const delay = (t: number) =>
   new Promise(resolve => {
@@ -11,66 +11,69 @@ export const delay = (t: number) =>
   });
 
 export const createBlueprint = (
-  path: string,
-  options: { exclude?: RegExp } = {}
+  id: string,
+  options: { exclude?: RegExp; muted?: RegExp } = {}
 ) =>
   Object.assign(
     () => {
-      const system = useContext(SystemContext);
-      const getBlueprint = (theme: Theme, path = ''): ReactNode => {
-        const key = path.split('.').pop();
+      const { theme } = useContext(SystemContext);
+      const getBlueprint = (id = ''): ReactNode => {
+        const current = id.split('.').pop();
         if (
-          [
-            ...knownStyleProps,
-            'variables',
-            'extend',
-            'defaults',
-            'kinds'
-          ].includes(key ?? '') ||
-          (options.exclude && options.exclude.test(path))
+          ['style', 'kinds', 'components'].includes(current ?? '') ||
+          (options.exclude && options.exclude.test(id))
         ) {
           return null;
         }
-        const target = key ? theme[key] : theme;
+        const isMuted = options.muted && options.muted.test(id);
+        const target =
+          get(theme, 'components.' + id.split('.').join('.components.')) ?? {};
         return (
           <Box
-            key={path}
-            background="rgba(123, 176, 255, 0.5)"
-            border="rgba(14, 75, 167, 0.6)"
-            padding={{ horizontal: '10px', bottom: '10px', top: '30px' }}
-            direction="column"
-            css={{
+            key={id}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
               gap: '10px',
+              margin: '0 auto',
+              padding: '10px',
+              paddingTop: '30px',
+              width: '100%',
+              maxWidth: '400px',
+              minHeight: '50px',
+              border: isMuted
+                ? '1px solid rgba(0, 0, 0, 0.3)'
+                : '1px solid rgba(14, 75, 167, 0.6)',
+              backgroundColor: isMuted
+                ? 'rgba(0, 0, 0, 0.05)'
+                : 'rgba(123, 176, 255, 0.5)',
               position: 'relative',
               boxSizing: 'border-box',
-              minWidth: '300px',
-              minHeight: '50px',
               fontSize: 0,
               '&::-webkit-file-upload-button': {
                 visibility: 'hidden'
               },
               '&::before': {
-                content: `"${path}"`,
+                content: `"${id}"`,
                 display: 'block',
                 position: 'absolute',
                 top: '2px',
                 left: '5px',
                 fontSize: '14px',
                 fontFamily: 'monospace',
-                color: 'rgba(10, 44, 95, 0.781)'
+                color: isMuted
+                  ? 'rgba(0, 0, 0, 0.8)'
+                  : 'rgba(10, 44, 95, 0.781)'
               }
             }}
           >
-            {Object.keys(target).map(v =>
-              getBlueprint(target, path ? `${path}.${v}` : v)
+            {Object.keys(target.components ?? {}).map(v =>
+              getBlueprint(id ? `${id}.${v}` : v)
             )}
           </Box>
         );
       };
-      const base = path.includes('.')
-        ? get(system.theme, path.split('.').slice(0, -1).join('.'))
-        : system.theme;
-      return getBlueprint(base, path);
+      return getBlueprint(id);
     },
     {
       parameters: { backgrounds: { default: 'white' } }

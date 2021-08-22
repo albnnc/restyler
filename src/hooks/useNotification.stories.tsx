@@ -1,5 +1,6 @@
+/** @jsx jsx */
 import { Meta } from '@storybook/react';
-import React from 'react';
+import { jsx } from '@theme-ui/core';
 import { Button, useNotification } from 'src';
 
 export default {
@@ -15,7 +16,7 @@ export const Basics = () => {
         openNotification({
           kind: 'success',
           duration: 500,
-          render: () => 'QWERTY'
+          render: () => 'Lorem ipsum dolor sit amet'
         })
       }
     >

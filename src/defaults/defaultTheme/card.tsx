@@ -1,17 +1,17 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const card: Theme = {
-  radius: 'small',
-  elevation: 'smaller',
-  background: 'white',
+export const card: BasicTheme = {
+  style: {
+    borderRadius: 2,
+    boxShadow: 2,
+    backgroundColor: 'white'
+  },
   kinds: {
-    body: { padding: 'medium' }
+    body: { style: { p: 3 } }
   },
-  body: { padding: 'medium' },
-  header: {
-    padding: { top: 'medium', horizontal: 'medium' }
-  },
-  footer: {
-    padding: { bottom: 'medium', horizontal: 'medium' }
+  components: {
+    body: { style: { p: 3 } },
+    header: { style: { px: 3, pt: 3 } },
+    footer: { style: { px: 3, pb: 3 } }
   }
 };

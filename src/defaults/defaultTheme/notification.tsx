@@ -1,18 +1,19 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const notification: Theme = {
-  radius: 'small',
-  elevation: 'larger',
-  background: 'rgba(0, 0, 0, 0.85)',
-  padding: 'medium',
-  color: 'white',
-  margin: 'medium',
-  extend: ({ props: { isVisible, isEntering } }) => {
+export const notification: BasicTheme = {
+  style: ({ isVisible, isEntering }) => {
     return {
+      margin: 3,
+      padding: 3,
+      borderRadius: 2,
       width: '400px',
+      maxWidth: '80vw',
+      boxShadow: 3,
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
+      color: 'white',
       transition: [
-        'opacity 0.2s',
-        'transform 0.2s',
+        'opacity 0.2s linear',
+        'transform 0.2s linear',
         'top 0.3s ease',
         'bottom 0.3s ease'
       ].join(', '),
@@ -23,9 +24,29 @@ export const notification: Theme = {
     };
   },
   kinds: {
-    primary: { border: { left: { width: '4px', color: 'primary' } } },
-    success: { border: { left: { width: '4px', color: 'success' } } },
-    warning: { border: { left: { width: '4px', color: 'warning' } } },
-    danger: { border: { left: { width: '4px', color: 'danger' } } }
+    primary: {
+      style: {
+        borderLeft: '4px solid',
+        borderLeftColor: 'primary'
+      }
+    },
+    success: {
+      style: {
+        borderLeft: '4px solid',
+        borderLeftColor: 'success'
+      }
+    },
+    warning: {
+      style: {
+        borderLeft: '4px solid',
+        borderLeftColor: 'warning'
+      }
+    },
+    danger: {
+      style: {
+        borderLeft: '4px solid',
+        borderLeftColor: 'danger'
+      }
+    }
   }
 };

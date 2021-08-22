@@ -1,23 +1,23 @@
 import React, { Children, forwardRef, HTMLAttributes, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { GridAxisOptions, useGrid, useSharedRef, useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 import { getChildrenKey } from '../utils';
 
 export interface MasonryProps
   extends HTMLAttributes<HTMLDivElement>,
-    StyleProps {
+    ThemeProps {
   columns: GridAxisOptions & {
     getProps?: (options: {
       index: number;
-    }) => Omit<HTMLAttributes<HTMLDivElement>, 'children'> & StyleProps;
+    }) => Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
   };
 }
 
 export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
   ({ columns, children, ...rest }, ref) => {
-    const ThemedMasonry = useThemed('div', { path: 'masonry' });
-    const ThemedMasonryColumn = useThemed('div', { path: 'masonry.column' });
+    const ThemedMasonry = useThemed('div', 'masonry');
+    const ThemedMasonryColumn = useThemed('div', 'masonry.column');
 
     const { style, columnsCount, handleElement } = useGrid<HTMLDivElement>({
       columns
@@ -41,32 +41,35 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
       const elements = new Array(columnsCount).fill(
         null as HTMLDivElement | null
       );
-      return elements.map((_, i) => (
-        <ThemedMasonryColumn
-          key={i}
-          ref={(element: HTMLDivElement | null) => {
-            if (element) {
-              elements[i] = element;
-              if (++mountedCount === columnsCount) {
-                const heights = new Array(elements.length).fill(0);
-                entries.forEach(({ container }) => {
-                  const targetIndex = heights.indexOf(Math.min(...heights));
-                  elements[targetIndex]!.appendChild(container);
-                  heights[targetIndex] = elements[targetIndex]!.offsetHeight;
+      return elements.map((_, i) => {
+        const { style, ...restProps } = columns.getProps?.({ index: i }) ?? {};
+        return (
+          <ThemedMasonryColumn
+            key={i}
+            ref={(element: HTMLDivElement | null) => {
+              if (element) {
+                elements[i] = element;
+                if (++mountedCount === columnsCount) {
+                  const heights = new Array(elements.length).fill(0);
+                  entries.forEach(({ container }) => {
+                    const targetIndex = heights.indexOf(Math.min(...heights));
+                    elements[targetIndex]!.appendChild(container);
+                    heights[targetIndex] = elements[targetIndex]!.offsetHeight;
+                  });
+                }
+              } else {
+                elements.forEach(v => {
+                  while (v && v.firstChild) {
+                    v.removeChild(v.firstChild);
+                  }
                 });
               }
-            } else {
-              elements.forEach(v => {
-                while (v && v.firstChild) {
-                  v.removeChild(v.firstChild);
-                }
-              });
-            }
-          }}
-          style={{ display: 'flex', flexDirection: 'column' }}
-          {...columns.getProps?.({ index: i })}
-        />
-      ));
+            }}
+            style={{ ...style, display: 'flex', flexDirection: 'column' }}
+            {...restProps}
+          />
+        );
+      });
     }, [columns, columnsCount, entries]);
 
     return (

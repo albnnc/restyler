@@ -1,5 +1,7 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const masonry: Theme = {
-  column: {}
+export const masonry: BasicTheme = {
+  componenets: {
+    column: {}
+  }
 };

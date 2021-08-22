@@ -1,27 +1,26 @@
+/** @jsx jsx */
 import { Meta } from '@storybook/react';
-import React from 'react';
+import { jsx } from '@theme-ui/core';
 import { Card, CardBody, CardFooter, CardHeader } from 'src';
+import { compact } from 'storybook/decorators';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'containers/Card',
+  title: 'Containers/Card',
+  decorators: [compact()],
   parameters: {
     backgrounds: { default: 'lightGrey' }
   }
 } as Meta;
 
-export const Basics = () => {
-  return <Card>Lorem ipsum</Card>;
-};
+export const Basics = () => <Card sx={{ padding: '1em' }}>Lorem ipsum</Card>;
 
-export const ContentParts = () => {
-  return (
-    <Card css={{ width: '300px' }}>
-      <CardHeader>Header</CardHeader>
-      <CardBody>Body</CardBody>
-      <CardFooter>Footer</CardFooter>
-    </Card>
-  );
-};
+export const ContentParts = () => (
+  <Card>
+    <CardHeader>Header</CardHeader>
+    <CardBody>Body</CardBody>
+    <CardFooter>Footer</CardFooter>
+  </Card>
+);
 
 export const Blueprint = createBlueprint('card');

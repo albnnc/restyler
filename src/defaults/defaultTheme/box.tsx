@@ -1,5 +1,7 @@
-export const box = {
-  extend: {
+import { BasicTheme } from '../../models';
+
+export const box: BasicTheme = {
+  style: {
     minWidth: 0
   }
 };

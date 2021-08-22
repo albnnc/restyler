@@ -5,68 +5,58 @@ import React, {
   ForwardRefExoticComponent
 } from 'react';
 import { SystemContext } from '../components';
-import { Style, StyleProps, Theme } from '../models';
-import {
-  capitalizeFirst,
-  createStyle,
-  filterStyleProps,
-  get,
-  hash,
-  merge,
-  mergeThemes
-} from '../utils';
+import { ThemeProps } from '../models';
+import { capitalizeFirst } from '../utils';
 
-export const useThemed = <
-  Tag extends keyof JSX.IntrinsicElements,
-  ExtraProps = {}
->(
-  tag: Tag,
-  options: { path: string; style?: Style }
-): ForwardRefExoticComponent<
-  ComponentPropsWithRef<Tag> & StyleProps & ExtraProps
-> => {
-  const { path, style } = options;
-  const { styled, registry } = useContext(SystemContext);
-  const token = `${tag}.${path}`;
-  if (registry[token]) {
-    return registry[token];
-  }
+export interface ThemedOptions {
+  getStyle?: <Props extends ThemeProps>(props: Props, key: string) => any;
+}
 
-  const displayName = path
-    .split('.')
-    .map(v => capitalizeFirst(v))
-    .join('');
+export const useThemedFactory =
+  <ExtraProps extends {} = {}>(defaultOptions?: ThemedOptions) =>
+  <Tag extends keyof JSX.IntrinsicElements>(
+    tag: Tag,
+    id: string,
+    options?: ThemedOptions
+  ): ForwardRefExoticComponent<
+    ComponentPropsWithRef<Tag> & ThemeProps & ExtraProps
+  > => {
+    const { defaults, registry, styled } = useContext(SystemContext);
+    const { getStyle } = {
+      ...defaults?.themedOptions,
+      ...defaultOptions,
+      ...options
+    };
 
-  const StyledComponent = styled<Tag, StyleProps & ExtraProps>(tag, props => {
-    const { styleProps, ...rest } = filterStyleProps(props);
-    const defaultStyleProps = styleProps.theme?.defaults ?? {};
-    const themeStyleProps = get(styleProps.theme, path ?? '') ?? {};
-    const kindStyleProps = themeStyleProps.kinds?.[styleProps.kind] ?? {};
-    const mergedStyleProps = mergeThemes(
-      {},
-      defaultStyleProps,
-      themeStyleProps,
-      kindStyleProps,
-      styleProps
-    ) as Theme;
-    return merge(
-      {},
-      style,
-      createStyle({
-        variables: styleProps.theme.variables,
-        props: { ...mergedStyleProps, ...rest }
-      })
+    const token = `${tag}:${id}`;
+    if (registry[token]) {
+      return registry[token];
+    }
+
+    const displayName = id
+      .split('.')
+      .map(v => capitalizeFirst(v))
+      .join('');
+
+    const StyledComponent = styled<Tag, ThemeProps & ExtraProps>(
+      tag as Tag,
+      props => getStyle?.(props, id)
     );
-  });
-  StyledComponent.displayName = 'Styled' + displayName;
+    StyledComponent.displayName = 'Styled' + displayName;
 
-  const ThemedComponent = forwardRef<Tag, any>((props, ref) => {
-    const { theme } = useContext(SystemContext);
-    return <StyledComponent ref={ref} theme={theme} {...props} />;
-  });
-  ThemedComponent.displayName = 'Themed' + displayName;
+    const ThemedComponent = forwardRef<any, any>((props, ref) => {
+      const { theme } = useContext(SystemContext);
+      return <StyledComponent ref={ref} theme={theme} {...props} />;
+    });
+    ThemedComponent.displayName = 'Themed' + displayName;
 
-  registry[token] = ThemedComponent;
+    registry[token] = ThemedComponent;
 
-  return registry[token];
-};
+    return registry[token];
+  };
+
+export const useThemed = <Tag extends keyof JSX.IntrinsicElements>(
+  tag: Tag,
+  id: string,
+  options?: ThemedOptions
+) => useThemedFactory()<Tag>(tag, id, options);

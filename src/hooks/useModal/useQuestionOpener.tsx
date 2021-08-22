@@ -1,5 +1,12 @@
 import React, { Fragment, ReactNode, useCallback, useContext } from 'react';
-import { Box, Button, Heading, SystemContext } from '../../components';
+import {
+  Heading,
+  Button,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  SystemContext
+} from '../../components';
 import { StandaloneTransitionerProps } from '../useStandaloneTransition';
 import {
   ModalOptions,
@@ -29,20 +36,20 @@ export const useQuestionOpener = () => {
       { cancelText, okText, content, heading }: QuestionOptions
     ) => (
       <Fragment>
-        {heading && <Heading>{heading}</Heading>}
-        {content && <Box margin={{ top: 'medium' }}>{content}</Box>}
-        <Box direction="row" justify="end" margin={{ top: 'medium' }}>
+        {heading && (
+          <ModalHeader>
+            <Heading>{heading}</Heading>
+          </ModalHeader>
+        )}
+        {content && <ModalBody>{content}</ModalBody>}
+        <ModalFooter>
           <Button kind="secondary" onClick={() => handleClose(false)}>
             {cancelText ?? locale.cancel}
           </Button>
-          <Button
-            kind="primary"
-            margin={{ left: 'small' }}
-            onClick={() => handleClose(true)}
-          >
+          <Button kind="primary" onClick={() => handleClose(true)}>
             {okText ?? locale.ok}
           </Button>
-        </Box>
+        </ModalFooter>
       </Fragment>
     ),
     []

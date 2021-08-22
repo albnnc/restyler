@@ -8,7 +8,7 @@ import React, {
   ReactNode
 } from 'react';
 import { useThemed } from '../hooks';
-import { FormWidgetProps, StyleProps } from '../models';
+import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface FileLabelRenderer {
   (fileNames: string[]): ReactNode;
@@ -17,16 +17,16 @@ export interface FileLabelRenderer {
 export interface FileProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps<FileList | undefined>,
-    StyleProps {
+    ThemeProps {
   children?: ReactNode | FileLabelRenderer;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
 }
 
 export const File = forwardRef<HTMLDivElement, FileProps>(
   ({ onChange, value, inputProps, children, ...rest }, ref) => {
-    const ThemedFile = useThemed('div', { path: 'file' });
-    const ThemedFileInput = useThemed('input', { path: 'file.input' });
-    const ThemedFileInputLabel = useThemed('label', { path: 'file.label' });
+    const ThemedFile = useThemed('div', 'file');
+    const ThemedFileInput = useThemed('input', 'file.input');
+    const ThemedFileInputLabel = useThemed('label', 'file.label');
     const inputRef = useRef<HTMLInputElement>(null);
     const [innerValue, setInnerValue] = useState(value);
     useEffect(() => {
@@ -50,10 +50,7 @@ export const File = forwardRef<HTMLDivElement, FileProps>(
           onChange={handleInputChange}
           {...inputProps}
         />
-        <ThemedFileInputLabel
-          onClick={() => inputRef.current?.click()}
-          direction="row"
-        >
+        <ThemedFileInputLabel onClick={() => inputRef.current?.click()}>
           {children && typeof children === 'function'
             ? (children as FileLabelRenderer)(
                 Array(innerValue?.length ?? 0)
@@ -71,6 +68,8 @@ export const File = forwardRef<HTMLDivElement, FileProps>(
   }
 );
 
+File.displayName = 'File';
+
 const getLabel = (files: FileList | undefined) => {
   if (!files || files.length === 0) return 'Choose file';
   if (files.length > 1) {
@@ -78,5 +77,3 @@ const getLabel = (files: FileList | undefined) => {
   }
   return `${files.item(0)?.name}`;
 };
-
-File.displayName = 'File';

@@ -1,24 +1,33 @@
-import React, { useMemo, useState } from 'react';
+/** @jsx jsx */
+import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
+import { useMemo, useState } from 'react';
 import { Box, Button, Collapse } from 'src';
+import { compact } from 'storybook/decorators';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'containers/Collapse'
-};
+  title: 'Containers/Collapse',
+  decorators: [compact()]
+} as Meta;
 
 export const Basics = () => {
   const [isOpen, setIsOpen] = useState(false);
   const content = useMemo(
-    () => <Box background="primary" css={{ height: '100px' }} />,
+    () => (
+      <Box
+        sx={{
+          marginTop: 2,
+          height: '100px',
+          backgroundColor: 'primary'
+        }}
+      />
+    ),
     []
   );
   return (
-    <Box css={{ width: '200px' }}>
-      <Button
-        kind="primary"
-        margin={{ bottom: 'medium' }}
-        onClick={() => setIsOpen(!isOpen)}
-      >
+    <Box>
+      <Button kind="primary" onClick={() => setIsOpen(!isOpen)}>
         Toggle
       </Button>
       <Collapse isOpen={isOpen}>{content}</Collapse>

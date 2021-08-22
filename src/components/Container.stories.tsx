@@ -1,22 +1,22 @@
-import React from 'react';
+/** @jsx jsx */
+import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { Container } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'containers/Container'
-};
+  title: 'Containers/Container'
+} as Meta;
 
-export const Basics = () => {
-  const dimm = 'rgba(0, 0, 0, 0.2)';
-  return (
-    <Container
-      background={dimm}
-      contentProps={{ background: dimm }}
-      css={{ width: '500px' }}
-    >
-      Lorem ipsum dolor sit amet
-    </Container>
-  );
-};
+export const Basics = () => (
+  <Container
+    sx={{
+      width: '500px',
+      '&, & > *': { bg: 'rgba(0, 0, 0, 0.2)' }
+    }}
+  >
+    Lorem ipsum dolor sit amet
+  </Container>
+);
 
 export const Blueprint = createBlueprint('container');

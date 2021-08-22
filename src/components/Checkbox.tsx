@@ -1,29 +1,29 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
-import { useThemed } from '../hooks';
-import { FormWidgetProps, StyleProps } from '../models';
+import React, { forwardRef, HTMLAttributes, useCallback } from 'react';
+import { useThemedFactory } from '../hooks';
+import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface CheckboxProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
-    StyleProps {}
+    ThemeProps {}
 
 export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
-  (props, ref) => {
-    const ThemedCheckbox = useThemed('div', { path: 'checkbox' });
-    const ThemedCheckboxChecker = useThemed<'span', CheckboxProps>('span', {
-      path: 'checkbox.checker'
-    });
-    const ThemedCheckboxLabel = useThemed<'label', CheckboxProps>('label', {
-      path: 'checkbox.label'
-    });
-    const { children, value, onChange, ...rest } = props;
-    const onClick = () => {
+  ({ children, value, placeholder, disabled, onChange, ...rest }, ref) => {
+    const useThemed =
+      useThemedFactory<
+        Pick<CheckboxProps, 'value' | 'placeholder' | 'disabled'>
+      >();
+    const ThemedCheckbox = useThemed('div', 'checkbox');
+    const ThemedCheckboxChecker = useThemed('span', 'checkbox.checker');
+    const ThemedCheckboxLabel = useThemed('label', 'checkbox.label');
+    const extraProps = { value, placeholder, disabled };
+    const handleClick = useCallback(() => {
       onChange?.(!value);
-    };
+    }, [onChange]);
     return (
-      <ThemedCheckbox ref={ref} {...rest}>
-        <ThemedCheckboxChecker value={value} onClick={onClick} />
-        <ThemedCheckboxLabel value={value} onClick={onClick}>
+      <ThemedCheckbox ref={ref} {...extraProps} {...rest}>
+        <ThemedCheckboxChecker onClick={handleClick} {...extraProps} />
+        <ThemedCheckboxLabel onClick={handleClick} {...extraProps}>
           {children}
         </ThemedCheckboxLabel>
       </ThemedCheckbox>

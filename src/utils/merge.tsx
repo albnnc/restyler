@@ -1,5 +1,4 @@
 import { clone } from './clone';
-import { isFunction, isObject } from './guards';
 
 type MergeFn = (a: any, b: any, key?: string) => any;
 
@@ -12,7 +11,12 @@ const mergeSingle = (target: any, source: any, fn?: MergeFn) => {
       target[key] = fnValue;
     } else if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
       target[key] = [...clone(targetValue), ...clone(sourceValue)];
-    } else if (isObject(targetValue) && isObject(sourceValue)) {
+    } else if (
+      targetValue &&
+      sourceValue &&
+      typeof targetValue === 'object' &&
+      typeof sourceValue === 'object'
+    ) {
       target[key] = mergeSingle({ ...targetValue }, { ...sourceValue }, fn);
     } else {
       target[key] = clone(sourceValue);
@@ -22,13 +26,13 @@ const mergeSingle = (target: any, source: any, fn?: MergeFn) => {
 };
 
 export const merge = (...args: any[]) => {
-  const hasMergeFn = isFunction(args[args.length - 1]);
+  const hasMergeFn = typeof args[args.length - 1] === 'function';
   const fn = hasMergeFn ? (args.pop() as MergeFn) : undefined;
   const objects = args.filter(v => !!v);
   if (objects.length < 2) {
     throw new Error('At least 2 objects have to be provided');
   }
-  if (objects.some(object => !isObject(object))) {
+  if (objects.some(object => !object && typeof object === 'object')) {
     throw new Error('All values should be of type "object"');
   }
   const target = objects.shift();

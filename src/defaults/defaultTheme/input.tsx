@@ -1,4 +1,4 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
 export interface CreateInputLikeThemeOptions {
   canBeDisabled?: boolean;
@@ -17,24 +17,28 @@ export const createInputLikeTheme = ({
     [selector]: style,
     ...(isForced ? style : {})
   });
-
   const createBasicStyle = () => {
-    return { width: '100%' };
-  };
-
-  const createBorderStyle = ({ createStyle, props, color, focusColor }) => {
-    const palette = props.theme.variables?.palette ?? {};
     return {
       width: '100%',
-      transition: ['border 0.2s', 'box-shadow 0.2s'].join(', '),
-      ...createStyle({ border: color }),
+      lineHeight: 'calc(1.5 * 1rem)',
+      fontSize: 3
+    };
+  };
+  const createBorderStyle = ({ props, color, focusColor }) => {
+    const { colors = {} } = props.theme ?? {};
+    return {
+      width: '100%',
+      transition: 'border 0.2s linear, box-shadow 0.2s linear',
+      border: '1px solid',
+      borderColor: color,
       ...(canBeFocused
         ? createConditionalStyle({
             selector: '&:focus',
             isForced: props.focused,
             style: {
-              ...createStyle({ border: focusColor }),
-              boxShadow: `inset 0 0 0 1px ${palette[focusColor] ?? focusColor}`
+              border: '1px solid',
+              borderColor: focusColor,
+              boxShadow: `inset 0 0 0 1px ${colors[focusColor] ?? focusColor}`
             }
           })
         : {}),
@@ -43,9 +47,8 @@ export const createInputLikeTheme = ({
             selector: '&:disabled',
             isForced: props.disabled,
             style: {
-              ...createStyle({
-                border: { width: '1px', color, style: 'dashed' }
-              }),
+              border: '1px dashed',
+              borderColor: color,
               pointerEvents: 'none'
             }
           })
@@ -53,36 +56,39 @@ export const createInputLikeTheme = ({
       ...(canBeHovered
         ? {
             cursor: 'pointer',
-            '&:hover': createStyle({ border: focusColor })
+            '&:hover': {
+              border: '1px solid',
+              borderColor: focusColor
+            }
           }
         : {})
     };
   };
 
   return {
-    padding: 'small',
-    radius: 'small',
-    extend: options => {
-      const { props } = options;
-      return {
-        ...createBasicStyle(),
-        ...(canBeInvalid && props.invalid
-          ? createBorderStyle({
-              ...options,
-              color: 'danger',
-              focusColor: 'danger'
-            })
-          : createBorderStyle({
-              ...options,
-              color: 'border',
-              focusColor: 'primary'
-            }))
-      };
-    }
+    style: props => ({
+      padding: 2,
+      borderRadius: 2,
+      border: 'none',
+      background: 'transparent',
+      outline: 'none',
+      ...createBasicStyle(),
+      ...(canBeInvalid && props.invalid
+        ? createBorderStyle({
+            props,
+            color: 'danger',
+            focusColor: 'danger'
+          })
+        : createBorderStyle({
+            props,
+            color: 'border',
+            focusColor: 'primary'
+          }))
+    })
   };
 };
 
-export const input: Theme = createInputLikeTheme({
+export const input: BasicTheme = createInputLikeTheme({
   canBeDisabled: true,
   canBeFocused: true,
   canBeHovered: false,

@@ -1,37 +1,22 @@
 import React, { forwardRef, AnchorHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { StyleProps } from '../models';
-
-const isModifiedEvent = e => {
-  return !!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey);
-};
+import { ThemeProps } from '../models';
 
 export interface AnchorProps
   extends AnchorHTMLAttributes<HTMLAnchorElement>,
-    StyleProps {
+    ThemeProps {
   navigate?: () => void;
 }
 
 export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
   ({ navigate, onClick, ...rest }, ref) => {
-    const ThemedAnchor = useThemed('a', {
-      path: 'anchor',
-      style: {
-        font: 'inherit',
-        cursor: 'pointer',
-        color: 'inherit',
-        outline: 'none',
-        textDecoration: 'none'
-      }
-    });
+    const ThemedAnchor = useThemed('a', 'anchor');
     return (
       <ThemedAnchor
         ref={ref}
         onClick={event => {
           try {
-            if (onClick) {
-              onClick(event);
-            }
+            onClick?.(event);
           } catch (e) {
             event.preventDefault();
             throw e;
@@ -54,3 +39,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
 );
 
 Anchor.displayName = 'Anchor';
+
+const isModifiedEvent = e => {
+  return !!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey);
+};

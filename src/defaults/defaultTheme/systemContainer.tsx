@@ -1,9 +1,9 @@
-import { Theme } from '../..';
+import { BasicTheme } from '../..';
 
-export const systemContainer: Theme = {
-  color: 'text',
-  font: 'medium',
-  extend: {
+export const systemContainer: BasicTheme = {
+  style: {
+    color: 'text',
+    fontSize: 'medium',
     boxSizing: 'border-box',
     minHeight: '100%',
     lineHeight: 1.5,

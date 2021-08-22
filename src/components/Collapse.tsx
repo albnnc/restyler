@@ -1,32 +1,26 @@
 import React, { forwardRef, useState, HTMLAttributes } from 'react';
 import {
-  TransitionerProps,
   useIsomorphicLayoutEffect,
   useMeter,
   useSharedRef,
-  useThemed,
+  useThemedFactory,
   useTransition
 } from '../hooks';
+import { ThemeProps } from '../models';
 import { hash } from '../utils';
-import { StyleProps } from '../models';
 
 export interface CollapseProps
   extends HTMLAttributes<HTMLDivElement>,
-    StyleProps {
+    ThemeProps {
   contentHeight?: number;
   isOpen?: boolean;
 }
 
 export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
   ({ contentHeight: forcedContentHeight, isOpen, children, ...rest }, ref) => {
-    const ThemedColapse = useThemed<'div', CollapseProps & TransitionerProps>(
-      'div',
-      {
-        path: 'collapse',
-        style: { overflow: 'hidden' }
-      }
-    );
-
+    const useThemed =
+      useThemedFactory<Pick<CollapseProps, 'contentHeight' | 'isOpen'>>();
+    const ThemedColapse = useThemed('div', 'collapse');
     const [contentHeight, setContentHeight] = useState<number | undefined>(
       forcedContentHeight
     );
@@ -43,16 +37,14 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
       }
       measureHeight?.(children).then(setContentHeight);
     }, [children, measureHeight]);
-
     return useTransition<HTMLDivElement>(
-      (props, innerRef) => {
+      ({ isVisible }, innerRef) => {
         const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, innerRef]);
         return (
           <ThemedColapse
             ref={sharedRef}
             contentHeight={contentHeight}
-            isOpen={props.isVisible}
-            {...props}
+            isOpen={isVisible}
             {...rest}
           >
             {children}

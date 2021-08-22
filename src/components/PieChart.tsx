@@ -1,6 +1,6 @@
 import React, { forwardRef, ReactNode, SVGProps } from 'react';
 import { useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface PieChartDatum {
   color: string;
@@ -11,8 +11,8 @@ export interface PieChartDatum {
 }
 
 export interface PieChartProps
-  extends Omit<SVGProps<SVGSVGElement>, 'ref' | keyof StyleProps>,
-    StyleProps {
+  extends Omit<SVGProps<SVGSVGElement>, 'ref' | keyof ThemeProps>,
+    ThemeProps {
   angleGap?: number;
   data: PieChartDatum[];
   radiusGap?: number;
@@ -20,16 +20,8 @@ export interface PieChartProps
 
 export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
   ({ data, radiusGap = 0, angleGap = 0, ...rest }, ref) => {
-    const ThemedPieChart = useThemed('svg', {
-      path: 'pieChart',
-      style: {
-        width: '100%',
-        verticalAlign: 'middle'
-      }
-    });
-    const ThemedPieChartSegment = useThemed('circle', {
-      path: 'pieChart.segment'
-    });
+    const ThemedPieChart = useThemed('svg', 'pieChart');
+    const ThemedPieChartSegment = useThemed('circle', 'pieChart.segment');
 
     const totalCount = data.reduce(
       (prev, curr) => prev + (curr.value > 0 ? 1 : 0),
@@ -71,14 +63,14 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
         segments.push(
           <ThemedPieChartSegment
             key={`segment-${i}-${value}-${color}`}
-            fill={'none'}
             cx={circleX}
             cy={circleY}
+            fill={'none'}
             r={circleRadius}
             stroke={color}
-            strokeWidth={strokeWidth}
-            strokeDashoffset={dashOffset}
             strokeDasharray={`${dashLength} ${totalLength - dashLength}`}
+            strokeDashoffset={dashOffset}
+            strokeWidth={strokeWidth}
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
@@ -90,13 +82,13 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(
       segments.push(
         <ThemedPieChartSegment
           key={`segment`}
-          fill={'none'}
           cx={circleX}
           cy={circleY}
+          fill={'none'}
           r={circleRadius}
           stroke={'rgba(0, 0, 0, 0.1)'}
-          strokeWidth={strokeWidth}
           strokeDasharray={`100 0`}
+          strokeWidth={strokeWidth}
         />
       );
     }

@@ -1,14 +1,14 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../../hooks';
-import { StyleProps } from '../../models';
+import { ThemeProps } from '../../models';
 
 export interface CardFooterProps
   extends HTMLAttributes<HTMLDivElement>,
-    StyleProps {}
+    ThemeProps {}
 
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   (props, ref) => {
-    const ThemedCardFooter = useThemed('div', { path: 'card.footer' });
+    const ThemedCardFooter = useThemed('div', 'card.footer');
     return <ThemedCardFooter ref={ref} {...props} />;
   }
 );

@@ -1,10 +1,12 @@
+/** @jsx jsx */
 import { Meta } from '@storybook/react';
-import React, { useReducer } from 'react';
+import { jsx } from '@theme-ui/core';
+import { useReducer } from 'react';
 import { Menu, MenuGroup, MenuItem } from 'src';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'navigation/Menu'
+  title: 'Navigation/Menu'
 } as Meta;
 
 export const Basics = () => {
@@ -24,9 +26,9 @@ export const Basics = () => {
   return (
     <Menu
       activeIds={activeIds}
+      sx={{ width: '100%', maxWidth: '250px' }}
       onGroupClick={id => handle({ id, target: 'group' })}
       onItemClick={id => handle({ id, target: 'item' })}
-      css={{ width: '250px' }}
     >
       <MenuGroup id="group-1" title="Group 1">
         <MenuItem id="item-11">Item 11</MenuItem>
@@ -37,7 +39,7 @@ export const Basics = () => {
         <MenuItem id="item-21">Item 21</MenuItem>
         <MenuItem id="item-22">Item 22</MenuItem>
         <MenuItem id="item-23">Item 23</MenuItem>
-        <MenuItem id="item-23">Item 24</MenuItem>
+        <MenuItem id="item-24">Item 24</MenuItem>
       </MenuGroup>
       <MenuItem id="item-3">Item 3</MenuItem>
       <MenuItem id="item-4">Item 4</MenuItem>

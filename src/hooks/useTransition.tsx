@@ -1,4 +1,4 @@
-import {
+import React, {
   useMemo,
   useState,
   useEffect,
@@ -11,8 +11,8 @@ import {
   ForwardRefRenderFunction,
   useRef
 } from 'react';
-import { requestAnimationDelay } from '../utils';
 import { SystemContext } from '../components';
+import { requestAnimationDelay } from '../utils';
 import { useCleanableRef } from './useCleanableRef';
 import { useForwardRef } from './useForwardRef';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
@@ -129,8 +129,8 @@ export const useTransition = <T extends HTMLElement>(
       isReallyMounted ? (
         <Component
           ref={handleBinding}
-          isVisible={isVisible}
           isEntering={isEntering}
+          isVisible={isVisible}
         />
       ) : null,
     [Component, isReallyMounted, isVisible, isEntering, handleBinding]

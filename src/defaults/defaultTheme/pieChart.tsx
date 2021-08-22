@@ -1,11 +1,15 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const pieChart: Theme = {
-  segment: {
-    extend: {
-      transition: 'opacity 0.2s',
-      '&:hover': {
-        opacity: 0.8
+export const pieChart: BasicTheme = {
+  style: {
+    width: '100%',
+    verticalAlign: 'middle'
+  },
+  components: {
+    segment: {
+      style: {
+        transition: 'opacity 0.2s linear',
+        '&:hover': { opacity: 0.8 }
       }
     }
   }

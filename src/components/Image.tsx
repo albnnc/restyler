@@ -1,19 +1,13 @@
 import React, { forwardRef, ImgHTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 
 export interface ImageProps
   extends ImgHTMLAttributes<HTMLImageElement>,
-    StyleProps {}
+    ThemeProps {}
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
-  const ThemedImage = useThemed('img', {
-    path: 'image',
-    style: {
-      verticalAlign: 'middle',
-      maxWidth: '100%'
-    }
-  });
+  const ThemedImage = useThemed('img', 'image');
   return <ThemedImage ref={ref} {...props} />;
 });
 

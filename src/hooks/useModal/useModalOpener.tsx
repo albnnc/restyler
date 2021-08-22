@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useEffect, useMemo } from 'react';
-import { disableScroll } from '../../utils';
 import { Layer, Modal, ModalProps } from '../../components';
+import { disableScroll } from '../../utils';
 import { useClickOutside } from '../useClickOutside';
 import { useFocusTrap } from '../useFocusTrap';
 import { useSharedRef } from '../useSharedRef';

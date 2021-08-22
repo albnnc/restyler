@@ -1,66 +1,66 @@
-import { Theme } from '../../models';
+import { BasicTheme } from '../../models';
 
-export const table: Theme = {
-  font: 'medium',
-  extend: {
+export const table: BasicTheme = {
+  style: {
     width: '100%',
-    borderSpacing: 0
+    borderSpacing: 0,
+    fontSize: 3
   },
-
-  head: {
-    background: 'rgba(0, 0, 0, 0.05)',
-    extend: {
-      userSelect: 'none',
-      textTransform: 'uppercase',
-      letterSpacing: '0.04rem',
-      '& th, & td': {
-        borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
-      }
-    }
-  },
-
-  body: {
-    extend: {
-      '& tr:not(:first-of-type) td': {
-        borderTop: '1px solid rgba(0, 0, 0, 0.1)'
-      }
-    }
-  },
-
-  row: {
-    extend: {
-      '&:hover': { background: 'rgba(0, 0, 0, 0.03)' }
-    }
-  },
-
-  cell: {
-    padding: 'medium',
-    extend: {
-      minWidth: '50px',
-      textAlign: 'left',
-      '&:last-of-type:not(:first-of-type)': {
-        textAlign: 'right'
-      }
-    },
-    kinds: {
-      hoverable: { extend: { cursor: 'pointer' } },
-      empty: {
-        color: 'weakText',
-        extend: {
-          textAlign: 'center',
-          textTransform: 'uppercase',
-          letterSpacing: '0.04rem'
+  components: {
+    head: {
+      style: {
+        background: 'rgba(0, 0, 0, 0.05)',
+        userSelect: 'none',
+        textTransform: 'uppercase',
+        letterSpacing: '0.04em',
+        '& th, & td': {
+          borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
         }
       }
-    }
-  },
-
-  caption: {
-    padding: { horizontal: 'medium', vertical: 'small' },
-    color: 'white',
-    extend: {
-      textAlign: 'left',
-      fontWeight: 400
+    },
+    body: {
+      style: {
+        '& tr:not(:first-of-type) td': {
+          borderTop: '1px solid rgba(0, 0, 0, 0.1)'
+        }
+      }
+    },
+    row: {
+      style: {
+        '&:hover': { background: 'rgba(0, 0, 0, 0.03)' }
+      }
+    },
+    cell: {
+      style: {
+        padding: 3,
+        minWidth: '50px',
+        textAlign: 'left',
+        '&:last-of-type:not(:first-of-type)': {
+          textAlign: 'right'
+        }
+      },
+      kinds: {
+        hoverable: {
+          style: { cursor: 'pointer' }
+        },
+        empty: {
+          style: {
+            color: 'weakText',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04rem'
+          }
+        }
+      }
+    },
+    caption: {
+      style: {
+        paddingX: 3,
+        paddingY: 2,
+        color: 'white',
+        textAlign: 'left',
+        fontWeight: 400
+      }
     }
   }
 };

@@ -1,11 +1,11 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { useThemed } from '../hooks';
-import { StyleProps } from '../models';
+import { ThemeProps } from '../models';
 
-export interface BoxProps extends HTMLAttributes<HTMLDivElement>, StyleProps {}
+export interface BoxProps extends HTMLAttributes<HTMLDivElement>, ThemeProps {}
 
 export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
-  const ThemedBox = useThemed('div', { path: 'box' });
+  const ThemedBox = useThemed('div', 'box');
   return <ThemedBox ref={ref} {...props} />;
 });
 

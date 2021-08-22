@@ -1,16 +1,19 @@
+/** @jsx jsx */
 import { Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { jsx } from '@theme-ui/core';
+import { useState } from 'react';
 import {
-  Box,
   Button,
   Form,
   FormField,
   FormGrid,
   Heading,
+  ModalBody,
   Select,
   SelectOption,
   useModal
 } from 'src';
+import { ModalFooter, ModalHeader } from 'src/components';
 
 export default {
   title: 'hooks/useModal'
@@ -25,11 +28,11 @@ export const Basics = () => {
         openModal({
           kind: 'small',
           render: ({ handleClose }) => (
-            <Box>
+            <ModalBody>
               <Button kind="secondary" onClick={handleClose}>
                 Close
               </Button>
-            </Box>
+            </ModalBody>
           )
         });
       }}
@@ -48,7 +51,7 @@ export const Question = () => {
       onClick={async () => {
         const isOk = await openQuestion({
           heading: 'Important question',
-          content: 'Are you sure?'
+          content: 'Are you sure you want to continue?'
         });
         setAnswer(isOk ? '(yes)' : '(no)');
       }}
@@ -67,21 +70,28 @@ export const WithForm = () => {
         openModal({
           render: ({ handleClose }) => (
             <Form onSubmit={handleClose}>
-              <Heading kind="4">Let's leave feedback</Heading>
-              <FormGrid margin={{ top: 'medium' }}>
-                <FormField name="username" label="Username">
-                  <Select>
-                    <SelectOption value="admin" />
-                    <SelectOption value="guest" />
-                  </Select>
-                </FormField>
-                <FormField name="email" label="Email" />
-              </FormGrid>
-              <Box direction="row" justify="end" margin={{ top: 'medium' }}>
-                <Button type="submit" kind="primary">
+              <ModalHeader>
+                <Heading kind="4">Let's leave feedback</Heading>
+              </ModalHeader>
+              <ModalBody>
+                <FormGrid>
+                  <FormField label="Username" name="username">
+                    <Select>
+                      <SelectOption value="admin" />
+                      <SelectOption value="guest" />
+                    </Select>
+                  </FormField>
+                  <FormField label="Email" name="email" />
+                </FormGrid>
+              </ModalBody>
+              <ModalFooter>
+                <Button kind="secondary" type="submit" onClick={handleClose}>
+                  Cancel
+                </Button>
+                <Button kind="primary" type="submit">
                   Submit
                 </Button>
-              </Box>
+              </ModalFooter>
             </Form>
           )
         })

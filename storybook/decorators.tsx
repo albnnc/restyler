@@ -1,44 +1,58 @@
-import React from 'react';
+/** @jsx jsx */
 import isPropValid from '@emotion/is-prop-valid';
-import { default as emotionStyled } from '@emotion/styled';
 import { Global } from '@emotion/react';
-import { Box, isStyleProp, SystemContainer } from 'src';
+import { jsx, ThemeProvider } from '@theme-ui/core';
+import { forwardRef } from 'react';
+import { Box, defaultTheme, SystemContainer } from 'src';
 
-const styled = (tag: any, fn: any) =>
-  emotionStyled(tag, {
-    shouldForwardProp: (prop: any) => isPropValid(prop) && !isStyleProp(prop)
-  })(fn) as any;
+const styled = (Tag: any, fn: Function) =>
+  forwardRef((props: any, ref: any) => {
+    const { theme, kind, ...rest } = props as any;
+    const validProps = Object.keys(rest).reduce(
+      (p, k) => (isPropValid(k) ? { ...p, [k]: rest[k] } : p),
+      { sx: fn(props) }
+    );
+    return <Tag ref={ref} {...validProps} />;
+  }) as any;
 
 export const systemized = (Story, context) => {
   return (
-    <SystemContainer styled={styled}>
-      <Global
-        styles={{
-          'html, body, #root': {
-            margin: '0 !important',
-            padding: '0 !important',
-            minHeight: '100%'
-          }
-        }}
-      />
-      <Story {...context} />
-    </SystemContainer>
+    <ThemeProvider theme={defaultTheme as any}>
+      <SystemContainer styled={styled}>
+        <Global
+          styles={{
+            'html, body, #root': {
+              margin: '0 !important',
+              padding: '0 !important',
+              minHeight: '100%'
+            }
+          }}
+        />
+        <Story {...context} />
+      </SystemContainer>
+    </ThemeProvider>
   );
 };
 
-export const compact = Story => (
-  <div style={{ maxWidth: '500px' }}>
-    <Story />
-  </div>
-);
-
 export const centered = Story => (
   <Box
-    direction="row"
-    justify="center"
-    align="center"
-    style={{ minHeight: '100vh' }}
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+      paddingX: 3
+    }}
   >
     <Story />
   </Box>
 );
+
+export const compact =
+  (maxWidth = '500px') =>
+  Story =>
+    (
+      <Box sx={{ width: '100%', maxWidth }}>
+        <Story />
+      </Box>
+    );

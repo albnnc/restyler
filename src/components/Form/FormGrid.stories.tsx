@@ -1,20 +1,24 @@
-import React from 'react';
+/** @jsx jsx */
+import { Meta } from '@storybook/react';
+import { jsx } from '@theme-ui/core';
 import { Button, Form, FormField, FormGrid } from 'src';
+import { compact } from 'storybook/decorators';
 import { createBlueprint } from 'storybook/utils';
 
 export default {
-  title: 'forms/FormGrid'
-};
+  title: 'Forms/FormGrid',
+  decorators: [compact('700px')]
+} as Meta;
 
 export const Basics = () => (
-  <Form css={{ width: '100%', maxWidth: '700px' }}>
+  <Form>
     <FormGrid>
-      <FormField name="a" label="a" />
-      <FormField name="b" label="b" />
-      <FormField name="c" label="c" />
-      <FormField name="d" label="d" />
+      <FormField label="a" name="a" />
+      <FormField label="b" name="b" />
+      <FormField label="c" name="c" />
+      <FormField label="d" name="d" />
     </FormGrid>
-    <Button kind="primary" margin={{ top: 'medium' }}>
+    <Button kind="primary" sx={{ mt: 3 }}>
       Submit
     </Button>
   </Form>

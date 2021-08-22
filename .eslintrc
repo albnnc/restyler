@@ -4,7 +4,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": ["@typescript-eslint", "import", "react"],
   "rules": {
     "@typescript-eslint/adjacent-overload-signatures": ["error"],
     "@typescript-eslint/array-type": ["error"],
@@ -88,7 +88,33 @@
     "@typescript-eslint/no-base-to-string": ["error"],
     "import/no-cycle": ["error"],
     "import/no-unresolved": ["error"],
-    "import/order": ["error"]
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        },
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object"
+        ]
+      }
+    ],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "ignoreCase": true,
+        "reservedFirst": true,
+        "shorthandFirst": true
+      }
+    ]
   },
   "settings": {
     "import/resolver": "eslint-import-resolver-typescript"
