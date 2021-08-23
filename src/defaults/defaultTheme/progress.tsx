@@ -1,7 +1,7 @@
 import { BasicTheme } from '../../models';
 
-const createColorKind = color => ({
-  style: { '&::-webkit-progress-value': { backgroundColor: color } }
+const createKind = backgroundColor => ({
+  style: { '&::-webkit-progress-value': { backgroundColor } }
 });
 
 export const progress: BasicTheme = {
@@ -11,14 +11,14 @@ export const progress: BasicTheme = {
     appearance: 'none',
     height: '4px',
     '&::-webkit-progress-bar': {
-      background: 'rgba(0, 0, 0, 0.1)',
+      background: 'border',
       overflow: 'hidden'
     }
   },
   kinds: {
-    primary: createColorKind('primary'),
-    success: createColorKind('success'),
-    warning: createColorKind('warning'),
-    danger: createColorKind('danger')
+    primary: createKind('primary'),
+    success: createKind('success'),
+    warning: createKind('warning'),
+    danger: createKind('danger')
   }
 };

@@ -1,6 +1,6 @@
 import { BasicTheme } from '../../models';
 
-const createBasicKind = (color: string, extras?: any): BasicTheme => ({
+const createKind = (color: string, extras?: any): BasicTheme => ({
   style: props => ({
     paddingX: 3,
     paddingY: 2,
@@ -8,17 +8,19 @@ const createBasicKind = (color: string, extras?: any): BasicTheme => ({
     border: '1px solid',
     borderColor: 'border',
     backgroundColor: 'transparent',
+    color: 'inherit',
     fontSize: 2,
     fontFamily: 'body',
     cursor: 'pointer',
     textTransform: 'uppercase',
-    letterSpacing: '0.04rem',
+    letterSpacing: '0.04em',
     outline: 'none',
     transition: 'all 0.15s',
     ...(props.disabled
       ? {
-          color: 'weakText',
-          borderStyle: 'dashed'
+          color: 'border',
+          borderStyle: 'dashed',
+          pointerEvents: 'none'
         }
       : {
           '&:hover, &:focus': {
@@ -32,10 +34,10 @@ const createBasicKind = (color: string, extras?: any): BasicTheme => ({
 
 export const button: BasicTheme = {
   kinds: {
-    primary: createBasicKind('primary'),
-    secondary: createBasicKind('primary', { borderStyle: 'dashed' }),
-    success: createBasicKind('success'),
-    warning: createBasicKind('warning'),
-    danger: createBasicKind('danger')
+    primary: createKind('primary'),
+    secondary: createKind('primary', { borderStyle: 'dashed' }),
+    success: createKind('success'),
+    warning: createKind('warning'),
+    danger: createKind('danger')
   }
 };

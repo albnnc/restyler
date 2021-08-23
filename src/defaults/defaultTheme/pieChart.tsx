@@ -8,6 +8,9 @@ export const pieChart: BasicTheme = {
   components: {
     segment: {
       style: {
+        // Default stroke used in cases
+        // when no data for pie were found.
+        stroke: 'border',
         transition: 'opacity 0.2s linear',
         '&:hover': { opacity: 0.8 }
       }

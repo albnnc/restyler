@@ -11,7 +11,8 @@ export const getBasicStyle = <Props extends ThemeProps<BasicTheme>>(
   const maybeCall = (v: object | Function) =>
     typeof v === 'object' ? v : v(props);
   const { style = {}, kinds = {} } = get(theme, themePath) ?? {};
-  const basicStype = maybeCall(style);
+  const defaultStyle = maybeCall(theme.components?.defaults?.style ?? {});
+  const basicStyle = maybeCall(style);
   const kindStyle = maybeCall(kinds[kind]?.style ?? {});
-  return merge({}, basicStype, kindStyle);
+  return merge({}, defaultStyle, basicStyle, kindStyle);
 };

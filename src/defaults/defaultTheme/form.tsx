@@ -10,18 +10,25 @@ export const form: BasicTheme = {
       components: {
         label: {
           style: ({ required }) =>
-            required ? { '&:after': { content: '" *"', color: 'danger' } } : {}
+            required
+              ? {
+                  '&:after': {
+                    content: '" *"',
+                    color: 'danger'
+                  }
+                }
+              : {}
         },
         control: {
-          style: { display: 'flex', marginTop: 2 }
+          style: { marginTop: 2 }
         },
         help: {
-          style: { color: 'weakText', marginTop: 1 }
+          style: { marginTop: 1, opacity: 0.7 }
         },
         errors: {
           components: {
             item: {
-              style: { color: 'danger', marginTop: 1 }
+              style: { marginTop: 1, color: 'danger' }
             }
           }
         }

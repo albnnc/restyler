@@ -27,7 +27,14 @@ export const Basics = () => {
       update();
     }, []);
     return (
-      <Box sx={{ height: `${height}px`, bg: 'rgba(0, 0, 0, 0.2)' }}>
+      <Box
+        sx={{
+          height: `${height}px`,
+          backgroundColor: 'border',
+          color: 'onPrimary',
+          fontWeight: 300
+        }}
+      >
         <Box>#{index}</Box>
         <Box>Times mounted: {mountsCounts[index]}</Box>
         <Box>Times rendered: {rendersCounts[index]}</Box>

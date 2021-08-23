@@ -28,42 +28,40 @@ import { textArea } from './textArea';
 
 export const defaultTheme: BasicTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
+  radii: [0, 2, 4, 8],
+  fontSizes: [10, 12, 14, 16, 20, 26, 42, 48, 56],
   fonts: {
     body: 'Roboto, "Helvetica Neue", sans-serif',
     heading: 'inherit',
     monospace: 'Menlo, monospace'
   },
-  fontSizes: [10, 12, 14, 16, 20, 26, 42, 48, 56],
-  radii: [0, 2, 4, 8],
   fontWeights: {
-    light: 300,
-    normal: 400,
-    bold: 600
+    body: 400,
+    heading: 300
   },
   lineHeights: {
     body: 1.5,
     heading: 1.125
   },
   colors: {
-    lighterGrey: '#f5f5f5',
-    lightGrey: '#c3c3c3',
-    grey: '#636363',
-    darkGrey: '#494949',
-    darkerGrey: '#212121',
-
-    primary: '#17a1f7',
-    info: '#51b8d8',
-    success: '#40af45',
-    danger: '#f44336',
-    warning: '#f59200',
-
-    text: 'rgba(0, 0, 0, 0.7)',
-    weakText: 'rgba(0, 0, 0, 0.4)',
-    strongText: 'rgba(0, 0, 0, 0.9)',
-
-    border: 'rgba(0, 0, 0, 0.15)',
-    weakBorder: 'rgba(0, 0, 0, 0.1)',
-    strongBorder: 'rgba(0, 0, 0, 0.2)'
+    primary: '#17A1F7',
+    success: '#40AF45',
+    warning: '#F59200',
+    danger: '#F44336',
+    surface: '#FFFFFF',
+    background: '#EFEFEF',
+    accentPrimary: '#1393E2',
+    accentSuccess: '#35973A',
+    accentWarning: '#DB8400',
+    accentDanger: '#D33125',
+    accentSurface: '#F3F3F3',
+    accentBackground: '#E0E0E0',
+    onPrimary: '#FFFFFF',
+    onSuccess: '#FFFFFF',
+    onDanger: '#FFFFFF',
+    onSurface: '#282828',
+    onBackground: '#121212',
+    border: 'rgba(0, 0, 0, 0.17)'
   },
   shadows: [
     'none',
@@ -89,9 +87,7 @@ export const defaultTheme: BasicTheme = {
       '0px 10px 14px 1px rgba(0, 0, 0, 0.12), ' +
       '0px 4px 18px 3px rgba(0, 0, 0, 0.12)'
   ],
-
   components: {
-    defaults,
     anchor,
     box,
     button,
@@ -99,6 +95,7 @@ export const defaultTheme: BasicTheme = {
     checkbox,
     collapse,
     container,
+    defaults,
     file,
     form,
     heading,

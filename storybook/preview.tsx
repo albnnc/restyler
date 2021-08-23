@@ -1,22 +1,20 @@
-import { defaultTheme } from 'src';
 import { centered, systemized } from './decorators';
 
-const { colors = {} } = defaultTheme;
 export const parameters = {
   controls: { hideNoControlsWarning: true },
   backgrounds: {
     values: [
       {
         name: 'white',
-        value: 'white'
+        value: '#FFFFFF'
       },
       {
         name: 'grey',
-        value: colors.grey
+        value: '#636363'
       },
       {
         name: 'lightGrey',
-        value: colors.lightGrey
+        value: '#C3C3C3'
       }
     ]
   }

@@ -7,14 +7,6 @@ const titleStyle = {
 };
 
 export const menu: BasicTheme = {
-  style: {
-    padding: 3,
-    fontSize: 3,
-    backgroundColor: 'lighterGrey',
-    color: 'rgba(0, 0, 0, 0.5)',
-    textTransform: 'uppercase',
-    letterSpacing: '0.04rem'
-  },
   components: {
     group: {
       style: {

@@ -1,13 +1,14 @@
-import { BasicTheme } from '../../models';
+import { BasicTheme } from 'src/models';
 
 export const defaults: BasicTheme = {
   style: {
-    padding: 0,
     margin: 0,
+    padding: 0,
+    boxSizing: 'border-box',
+    border: 'none',
     font: 'inherit',
+    fontSize: 'inherit',
     color: 'inherit',
-    lineHeight: 'inherit',
-    fontFamily: 'inherit',
-    boxSizing: 'border-box'
+    backgroundColor: 'transparent'
   }
 };

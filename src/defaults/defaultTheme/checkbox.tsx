@@ -37,9 +37,13 @@ export const checkbox: BasicTheme = {
         });
         return value
           ? createStateStyle('primary', 'primary', '0.5rem')
-          : createStateStyle('strongBorder', 'white', 0);
+          : createStateStyle('border', 'white', 0);
       }
     },
-    label: {}
+    label: {
+      style: {
+        cursor: 'pointer'
+      }
+    }
   }
 };

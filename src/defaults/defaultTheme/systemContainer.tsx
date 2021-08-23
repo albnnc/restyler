@@ -2,7 +2,8 @@ import { BasicTheme } from '../..';
 
 export const systemContainer: BasicTheme = {
   style: {
-    color: 'text',
+    backgroundColor: 'background',
+    color: 'onBackground',
     fontSize: 'medium',
     boxSizing: 'border-box',
     minHeight: '100%',

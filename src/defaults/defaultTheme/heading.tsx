@@ -5,9 +5,10 @@ export const heading: BasicTheme = {
     marginTop: 2,
     marginBottom: 1,
     fontSize: 5,
-    fontWeight: 'light',
+    letterSpacing: '0.04em',
+    fontWeight: 'heading',
     lineHeight: 'heading',
-    color: 'strongText'
+    color: 'inherit'
   },
   kinds: {
     1: { style: { mt: 3, mb: 2, fontSize: 8 } },

@@ -4,7 +4,8 @@ export const card: BasicTheme = {
   style: {
     borderRadius: 2,
     boxShadow: 2,
-    backgroundColor: 'white'
+    backgroundColor: 'surface',
+    color: 'onSurface'
   },
   kinds: {
     body: { style: { p: 3 } }

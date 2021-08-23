@@ -12,7 +12,7 @@ export const Basics = () => (
   <Container
     sx={{
       width: '500px',
-      '&, & > *': { bg: 'rgba(0, 0, 0, 0.2)' }
+      '&, & > *': { bg: 'accentSurface' }
     }}
   >
     Lorem ipsum dolor sit amet

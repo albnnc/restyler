@@ -34,7 +34,7 @@ export const select: BasicTheme = {
           borderLeft: '5px solid transparent',
           borderRight: '5px solid transparent',
           borderTop: `5px solid`,
-          borderTopColor: 'text'
+          borderTopColor: 'currentColor'
         }
       }
     }
@@ -47,7 +47,9 @@ export const select: BasicTheme = {
         cursor: 'pointer',
         padding: 2,
         paddingRight: isActive ? `calc(${markMargin} * 2)` : 2,
-        '&:hover': { background: 'rgba(0, 0, 0, 0.05)' },
+        '&:hover': {
+          backgroundColor: 'accentSurface'
+        },
         '&::after': {
           content: '""',
           display: 'block',
@@ -65,7 +67,7 @@ export const select: BasicTheme = {
       kinds: {
         empty: {
           style: {
-            color: 'weakText',
+            opacity: 0.7,
             userSelect: 'none',
             cursor: 'not-allowed',
             '&::after': { display: 'none' }
@@ -80,21 +82,22 @@ export const select: BasicTheme = {
           pl: 2,
           ml: 2,
           borderLeft: '1px solid',
-          borderLeftColor: 'strongBorder'
+          borderLeftColor: 'border'
         }
       }
     },
 
     placeholder: {
       style: {
-        color: 'weakText'
+        opacity: 0.7
       }
     },
 
     drop: {
       style: ({ isVisible }) => ({
         zIndex: 1001,
-        backgroundColor: 'white',
+        backgroundColor: 'surface',
+        color: 'onSurface',
         borderRadius: 2,
         boxShadow: 3,
         minWidth: '200px',

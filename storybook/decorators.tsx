@@ -3,7 +3,7 @@ import isPropValid from '@emotion/is-prop-valid';
 import { Global } from '@emotion/react';
 import { jsx, ThemeProvider } from '@theme-ui/core';
 import { forwardRef } from 'react';
-import { Box, defaultTheme, SystemContainer } from 'src';
+import { Box, defaultTheme, mergeBasicThemes, SystemContainer } from 'src';
 
 const styled = (Tag: any, fn: Function) =>
   forwardRef((props: any, ref: any) => {
@@ -15,16 +15,23 @@ const styled = (Tag: any, fn: Function) =>
     return <Tag ref={ref} {...validProps} />;
   }) as any;
 
+const theme = mergeBasicThemes({}, defaultTheme, {
+  colors: {
+    background: 'transparent',
+    accentBackground: 'transparent'
+  }
+});
+
 export const systemized = (Story, context) => {
   return (
-    <ThemeProvider theme={defaultTheme as any}>
-      <SystemContainer styled={styled}>
+    <ThemeProvider theme={theme as any}>
+      <SystemContainer styled={styled} theme={theme}>
         <Global
           styles={{
             'html, body, #root': {
               margin: '0 !important',
               padding: '0 !important',
-              minHeight: '100%'
+              minHeight: '100vh'
             }
           }}
         />

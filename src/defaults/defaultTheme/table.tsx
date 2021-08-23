@@ -9,25 +9,27 @@ export const table: BasicTheme = {
   components: {
     head: {
       style: {
-        background: 'rgba(0, 0, 0, 0.05)',
+        backgroundColor: 'accentSurface',
         userSelect: 'none',
         textTransform: 'uppercase',
         letterSpacing: '0.04em',
         '& th, & td': {
-          borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
+          borderBottom: '1px solid',
+          borderBottomColor: 'border'
         }
       }
     },
     body: {
       style: {
         '& tr:not(:first-of-type) td': {
-          borderTop: '1px solid rgba(0, 0, 0, 0.1)'
+          borderTop: '1px solid',
+          borderTopColor: 'border'
         }
       }
     },
     row: {
       style: {
-        '&:hover': { background: 'rgba(0, 0, 0, 0.03)' }
+        '&:hover': { backgroundColor: 'accentSurface' } // FIXME
       }
     },
     cell: {
@@ -45,7 +47,7 @@ export const table: BasicTheme = {
         },
         empty: {
           style: {
-            color: 'weakText',
+            color: 'muted',
             textAlign: 'center',
             textTransform: 'uppercase',
             letterSpacing: '0.04rem'

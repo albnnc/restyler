@@ -41,7 +41,7 @@ export const radio: BasicTheme = {
             });
             return isActive
               ? createStateStyle('primary', 'primary', '0.5rem')
-              : createStateStyle('strongBorder', 'white', 0);
+              : createStateStyle('border', 'white', 0);
           }
         },
         label: {

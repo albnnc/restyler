@@ -14,7 +14,7 @@ export const tab: BasicTheme = {
         cursor: 'pointer',
         transition: 'all 0.2s',
         textTransform: 'uppercase',
-        letterSpacing: '0.04rem',
+        letterSpacing: '0.04em',
         '&:hover': { color: 'primary' },
         ...(isActive ? { color: 'primary', borderBottomColor: 'primary' } : {})
       })
