@@ -29,7 +29,7 @@ export const table: BasicTheme = {
     },
     row: {
       style: {
-        '&:hover': { backgroundColor: 'accentSurface' } // FIXME
+        '&:hover': { backgroundColor: 'accentSurface' }
       }
     },
     cell: {
@@ -50,7 +50,7 @@ export const table: BasicTheme = {
             color: 'muted',
             textAlign: 'center',
             textTransform: 'uppercase',
-            letterSpacing: '0.04rem'
+            letterSpacing: '0.04em'
           }
         }
       }
@@ -59,7 +59,8 @@ export const table: BasicTheme = {
       style: {
         paddingX: 3,
         paddingY: 2,
-        color: 'white',
+        color: 'onSurface',
+        backgroundColor: 'accentSurface',
         textAlign: 'left',
         fontWeight: 400
       }
