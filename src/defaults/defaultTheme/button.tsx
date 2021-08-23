@@ -8,7 +8,6 @@ const createKind = (color: string, extras?: any): BasicTheme => ({
     border: '1px solid',
     borderColor: 'border',
     backgroundColor: 'transparent',
-    color: 'inherit',
     fontSize: 2,
     fontFamily: 'body',
     cursor: 'pointer',
@@ -23,6 +22,7 @@ const createKind = (color: string, extras?: any): BasicTheme => ({
           pointerEvents: 'none'
         }
       : {
+          color: 'inherit',
           '&:hover, &:focus': {
             color,
             borderColor: color
