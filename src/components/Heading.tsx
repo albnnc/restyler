@@ -7,8 +7,9 @@ export interface HeadingProps
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   (props, ref) => {
+    const level = levels.find(v => v === props.kind) ?? '6';
     const ThemedHeading = useThemed(
-      `h${+(props.kind ?? 1)}` as keyof JSX.IntrinsicElements,
+      `h${level}` as keyof JSX.IntrinsicElements,
       'heading'
     );
     return <ThemedHeading ref={ref} {...props} />;
@@ -16,3 +17,5 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
 );
 
 Heading.displayName = 'Heading';
+
+const levels = ['1', '2', '3', '4', '5', '6'];
