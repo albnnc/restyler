@@ -44,7 +44,6 @@ export const useNotification = () => {
     NotificationOptions
   >(
     ({ context, handleClose: handleCurrentClose, ...rest }, ref) => {
-      console.log(notifications);
       const options = useMemo(
         () => ({
           ...defaults?.notificationOptions,
