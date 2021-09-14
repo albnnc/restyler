@@ -13,6 +13,7 @@ import React, {
   useState
 } from 'react';
 import { createPortal } from 'react-dom';
+import { isHtmlElement } from '../utils';
 
 export interface ImperativePortal extends ReactElement {
   set: (children: ReactNode[]) => void;
@@ -24,13 +25,13 @@ export const useImperativePortal = (
   target: HTMLElement | ImperativePortal | null
 ) => {
   const [element, setElement] = useState<HTMLElement | null>(
-    target instanceof HTMLElement ? target : null
+    isHtmlElement(target) ? target : null
   );
   useEffect(() => {
     if (target === element) {
       return;
     }
-    if (target instanceof HTMLElement || target === null) {
+    if (isHtmlElement(target) || target === null) {
       setElement(target);
       return;
     }

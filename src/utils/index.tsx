@@ -5,6 +5,7 @@ export * from './get';
 export * from './getBasicStyle';
 export * from './getChildrenKey';
 export * from './hash';
+export * from './isHtmlElement';
 export * from './merge';
 export * from './mergeBasicThemes';
 export * from './pick';
