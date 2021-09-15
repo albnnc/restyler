@@ -30,8 +30,10 @@ export const useMeter = <T extends unknown>(
               if (!container) {
                 return;
               }
-              resolve(extract?.(container));
-              remove(wrap);
+              requestAnimationFrame(() => {
+                resolve(extract?.(container));
+                remove(wrap);
+              });
             }}
             style={{
               position: 'fixed',
