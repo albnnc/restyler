@@ -11,6 +11,7 @@ export const table: BasicTheme = {
       style: {
         backgroundColor: 'accentSurface',
         userSelect: 'none',
+        fontSize: 2,
         textTransform: 'uppercase',
         letterSpacing: '0.04em',
         '& th, & td': {
