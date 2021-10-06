@@ -8,14 +8,24 @@ export const heading: BasicTheme = {
     letterSpacing: '0.04em',
     fontWeight: 'heading',
     lineHeight: 'heading',
-    color: 'inherit'
+    color: 'inherit',
+    '&:is(h1)': { mt: 3, mb: 2, fontSize: 8 },
+    '&:is(h2)': { mt: 3, mb: 2, fontSize: 7 },
+    '&:is(h3)': { mt: 3, mb: 2, fontSize: 6 },
+    '&:is(h4)': { mt: 2, mb: 1, fontSize: 5 },
+    '&:is(h5)': { mt: 2, mb: 1, fontSize: 4 },
+    '&:is(h6)': { mt: 2, mb: 1, fontSize: 3 }
   },
   kinds: {
-    1: { style: { mt: 3, mb: 2, fontSize: 8 } },
-    2: { style: { mt: 3, mb: 2, fontSize: 7 } },
-    3: { style: { mt: 3, mb: 2, fontSize: 6 } },
-    4: { style: { mt: 2, mb: 1, fontSize: 5 } },
-    5: { style: { mt: 2, mb: 1, fontSize: 4 } },
-    6: { style: { mt: 2, mb: 1, fontSize: 3 } }
+    motto: {
+      style: {
+        '&&': {
+          marginX: 0,
+          marginY: 0,
+          fontSize: 8,
+          textTransform: 'uppercase'
+        }
+      }
+    }
   }
 };
