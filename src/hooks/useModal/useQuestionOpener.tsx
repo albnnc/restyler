@@ -38,7 +38,7 @@ export const useQuestionOpener = () => {
       <Fragment>
         {heading && (
           <ModalHeader>
-            <Heading>{heading}</Heading>
+            <Heading kind="modal">{heading}</Heading>
           </ModalHeader>
         )}
         {content && <ModalBody>{content}</ModalBody>}

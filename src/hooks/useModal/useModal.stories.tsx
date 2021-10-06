@@ -71,7 +71,7 @@ export const WithForm = () => {
           render: ({ handleClose }) => (
             <Form onSubmit={handleClose}>
               <ModalHeader>
-                <Heading kind="4">Let's leave feedback</Heading>
+                <Heading kind="modal">Let's leave feedback</Heading>
               </ModalHeader>
               <ModalBody>
                 <FormGrid>

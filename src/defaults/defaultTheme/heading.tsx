@@ -17,6 +17,9 @@ export const heading: BasicTheme = {
     '&:is(h6)': { mt: 2, mb: 1, fontSize: 3 }
   },
   kinds: {
+    modal: {
+      style: { '&&': { mt: 2, mb: 1, fontSize: 5 } }
+    },
     motto: {
       style: {
         '&&': {
