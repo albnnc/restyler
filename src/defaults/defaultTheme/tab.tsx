@@ -10,11 +10,11 @@ export const tab: BasicTheme = {
         paddingY: 2,
         paddingX: 3,
         borderBottom: '2px solid transparent',
+        fontSize: 2,
+        letterSpacing: '0.04em',
+        textTransform: 'uppercase',
         color: 'text',
         cursor: 'pointer',
-        transition: 'all 0.2s',
-        textTransform: 'uppercase',
-        letterSpacing: '0.04em',
         '&:hover': { color: 'primary' },
         ...(isActive ? { color: 'primary', borderBottomColor: 'primary' } : {})
       })

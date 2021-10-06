@@ -25,20 +25,7 @@ export const menu: BasicTheme = {
         title: {
           style: ({ isActive }) => ({
             ...titleStyle,
-            position: 'relative',
-            '&::after': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              width: '0.3em',
-              height: '0.3em',
-              borderRadius: '100vw',
-              top: '50%',
-              right: isActive ? '0.5em' : 0,
-              transform: 'translateY(-50%)',
-              transition: 'all 0.15s',
-              background: isActive ? 'currentColor' : 'transparent'
-            }
+            color: isActive ? 'primary' : 'inherit'
           })
         }
       }
