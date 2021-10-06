@@ -1,6 +1,6 @@
-# About
+# Restyler 🎨
 
-Restyler — is a general purpose design system for React. It was designed to be simple and responsive while preserving flexibility and ease of code writing. Restyler is distributed via the [npm package](https://www.npmjs.com/restyler) and its code is hosted on [GitHub](https://github.com/albnnc/restyler). We also host [storybook](https://albnnc.github.io/restyler) that contains various component demos and documentation.
+Restyler is a general purpose design system for React. It was designed to be simple and responsive while preserving flexibility and ease of code writing. Restyler is distributed via the [npm package](https://www.npmjs.com/restyler) and its code is hosted on [GitHub](https://github.com/albnnc/restyler). We also host [storybook](https://albnnc.github.io/restyler) that contains various component demos and documentation.
 
 # Installation
 
