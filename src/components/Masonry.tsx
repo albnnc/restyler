@@ -84,3 +84,5 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
     );
   }
 );
+
+Masonry.displayName = 'Masonry';
