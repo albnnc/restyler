@@ -3,4 +3,5 @@ export interface Locale {
   cancel: string;
   empty: string;
   required: string;
+  [key: string]: string;
 }
