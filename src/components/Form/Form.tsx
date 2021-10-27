@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import { useFormManager, useThemed } from '../../hooks';
 import { FormManager, ThemeProps } from '../../models';
+import { get, set } from '../../utils';
 import { FormContext } from './FormContext';
 
 export interface FormProps
@@ -28,9 +29,9 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
     const validate = useCallback(() => {
       const newErrors = {} as any;
       Reflect.ownKeys(validators).forEach((name: string) => {
-        const newFieldErrors = validators[name](values[name]);
+        const newFieldErrors = validators[name](get(values, name));
         if (newFieldErrors?.length > 0) {
-          newErrors[name] = newFieldErrors;
+          set(newErrors, name, newFieldErrors);
         }
       });
       const hasNewErrors = Reflect.ownKeys(newErrors).length > 0;

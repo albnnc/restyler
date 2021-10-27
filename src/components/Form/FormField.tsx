@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { useThemed } from '../../hooks';
 import { FormFieldValidator, FormWidgetProps, ThemeProps } from '../../models';
-import { get, hash } from '../../utils';
+import { clone, get, hash, merge, set } from '../../utils';
 import { Input, InputProps } from '../Input';
 import { SystemContext } from '../SystemContext';
 import { FormContext } from './FormContext';
@@ -83,15 +83,9 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         }
       }));
       return () => {
-        setValidators(v =>
-          Object.keys(v).reduce(
-            (prev, curr) => ({
-              ...prev,
-              ...(curr === name ? {} : { [curr]: v[curr] })
-            }),
-            {}
-          )
-        );
+        const wipe = {};
+        set(wipe, name, undefined);
+        setValidators(v => merge({}, v, wipe));
       };
     }, [required, hash(validate)]);
 
@@ -108,7 +102,11 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       name,
       value: fieldValue,
       onChange: newFieldValue => {
-        setValues(v => ({ ...v, [name]: newFieldValue }));
+        setValues(v => {
+          const cloned = clone(v);
+          set(cloned, name, newFieldValue);
+          return cloned;
+        });
       },
       ...validityProps
     };
