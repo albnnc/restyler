@@ -19,27 +19,27 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
     const ThemedMasonry = useThemed('div', 'masonry');
     const ThemedMasonryColumn = useThemed('div', 'masonry.column');
 
-    const { style, columnsCount, handleElement, element } = useGrid<
+    const { style, columnsCount, handleElement, canUpdate } = useGrid<
       HTMLDivElement,
-      { element: HTMLDivElement | undefined }
+      { canUpdate: boolean }
     >({
       columns,
-      getExtras: element => ({ element })
+      getExtras: container => ({ canUpdate: !!container })
     });
     const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, handleElement]);
     const entries = useMemo(
       () =>
-        element
+        canUpdate
           ? Children.map(children, (v, i) => {
               const container = document.createElement('div');
               const portal = createPortal(v, container, i.toString());
               return { container, portal };
             }) ?? []
-          : // If element is undefined, then grid is not
-            // initialized yet, so we should not prepare containers
+          : // If masonry container is not defined, then grid is not
+            // initialized yet, so we should not prepare wraps
             // for masonry items. This might be helpful for SSR.
             [],
-      [element, getChildrenKey(children)]
+      [canUpdate, getChildrenKey(children)]
     );
 
     const columnChildren = useMemo(() => {
@@ -93,5 +93,3 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
     );
   }
 );
-
-Masonry.displayName = 'Masonry';
