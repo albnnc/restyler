@@ -83,9 +83,12 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         }
       }));
       return () => {
-        const wipe = {};
-        set(wipe, name, undefined);
-        setValidators(v => merge({}, v, wipe));
+        setValidators(v =>
+          Reflect.ownKeys(v).reduce(
+            (p: object, k: string) => (k === name ? p : { ...p, [k]: v[k] }),
+            {}
+          )
+        );
       };
     }, [required, hash(validate)]);
 
