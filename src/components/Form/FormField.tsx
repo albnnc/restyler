@@ -6,11 +6,12 @@ import React, {
   FormEventHandler,
   HTMLAttributes,
   ReactElement,
-  ReactNode
+  ReactNode,
+  useMemo
 } from 'react';
 import { useThemed } from '../../hooks';
 import { FormFieldValidator, FormWidgetProps, ThemeProps } from '../../models';
-import { clone, get, hash, merge, set } from '../../utils';
+import { clone, get, getChildrenKey, hash, set } from '../../utils';
 import { Input, InputProps } from '../Input';
 import { SystemContext } from '../SystemContext';
 import { FormContext } from './FormContext';
@@ -65,12 +66,10 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     );
     const ThemedFormFieldLabel = useThemed('label', 'form.field.label');
     const ThemedFormFieldHelp = useThemed('div', 'form.field.help');
-
     const { locale } = useContext(SystemContext);
     const {
       manager: { values, setValues, errors, setValidators }
     } = useContext(FormContext);
-
     useEffect(() => {
       setValidators(v => ({
         ...v,
@@ -91,58 +90,78 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         );
       };
     }, [required, hash(validate)]);
-
-    const fieldValue = get(values, name);
-    const fieldErrors = get(errors, name) as string[] | undefined;
-
-    const validityProps = {
-      disabled,
-      invalid: invalid ?? (fieldErrors?.length ?? 0) > 0,
-      required
-    };
-
-    const childProps = {
-      name,
-      value: fieldValue,
-      onChange: newFieldValue => {
-        setValues(v => {
-          const cloned = clone(v);
-          set(cloned, name, newFieldValue);
-          return cloned;
-        });
-      },
-      ...validityProps
-    };
-
-    const child = children ? (
-      cloneElement(children, childProps)
-    ) : (
-      <Input {...(childProps as InputProps)} />
+    const fieldValue = useMemo(() => get(values, name), [values, name]);
+    const fieldErrors = useMemo<string[]>(
+      () => get(errors, name, []),
+      [errors, name]
     );
-
-    return (
-      <ThemedFormField ref={ref} {...rest}>
-        {label && (
-          <ThemedFormFieldLabel {...validityProps}>
-            {label}
-          </ThemedFormFieldLabel>
-        )}
-        <ThemedFormFieldControl>
-          {prefix}
-          {child}
-          {suffix}
-        </ThemedFormFieldControl>
-        {help && <ThemedFormFieldHelp>{help}</ThemedFormFieldHelp>}
-        {(fieldErrors?.length ?? 0) > 0 && (
-          <ThemedFormFieldErrors>
-            {fieldErrors?.map(v => (
-              <ThemedFormFieldErrorsItem key={v}>{v}</ThemedFormFieldErrorsItem>
-            ))}
-          </ThemedFormFieldErrors>
-        )}
-      </ThemedFormField>
+    const validityProps = useMemo(
+      () => ({
+        disabled,
+        required,
+        invalid: invalid ?? fieldErrors.length > 0
+      }),
+      [disabled, required, invalid, fieldErrors]
+    );
+    const childProps = useMemo(
+      () => ({
+        name,
+        value: fieldValue,
+        onChange: newFieldValue => {
+          setValues(v => {
+            const cloned = clone(v);
+            set(cloned, name, newFieldValue);
+            return cloned;
+          });
+        },
+        ...validityProps
+      }),
+      [name, fieldValue, validityProps]
+    );
+    const child = useMemo(
+      () =>
+        children ? (
+          cloneElement(children, childProps)
+        ) : (
+          <Input {...(childProps as InputProps)} />
+        ),
+      [childProps, getChildrenKey(children)]
+    );
+    return useMemo(
+      () => (
+        <ThemedFormField ref={ref} {...rest}>
+          {label && (
+            <ThemedFormFieldLabel {...validityProps}>
+              {label}
+            </ThemedFormFieldLabel>
+          )}
+          <ThemedFormFieldControl>
+            {prefix}
+            {child}
+            {suffix}
+          </ThemedFormFieldControl>
+          {help && <ThemedFormFieldHelp>{help}</ThemedFormFieldHelp>}
+          {fieldErrors.length > 0 && (
+            <ThemedFormFieldErrors>
+              {fieldErrors.map(v => (
+                <ThemedFormFieldErrorsItem key={v}>
+                  {v}
+                </ThemedFormFieldErrorsItem>
+              ))}
+            </ThemedFormFieldErrors>
+          )}
+        </ThemedFormField>
+      ),
+      [
+        child,
+        fieldErrors,
+        help,
+        label,
+        prefix,
+        suffix,
+        validityProps,
+        hash(rest)
+      ]
     );
   }
 );
-
-FormField.displayName = 'FormField';
