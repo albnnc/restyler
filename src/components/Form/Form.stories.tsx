@@ -9,6 +9,8 @@ import {
   FormField,
   FormGrid,
   Input,
+  Select,
+  SelectOption,
   useFormManager
 } from 'src';
 import { compact } from 'storybook/decorators';
@@ -59,6 +61,28 @@ export const Nesting = () => {
         Save
         {submitCount ? ` (${submitCount})` : ''}
       </Button>
+    </Form>
+  );
+};
+
+export const TwoMultiselects = () => {
+  return (
+    <Form>
+      <FormGrid>
+        <FormField label="A" name="a">
+          <Select isMultiple>
+            <SelectOption value="a1">a1</SelectOption>
+            <SelectOption value="a2">a2</SelectOption>
+            <SelectOption value="a3">a3</SelectOption>
+          </Select>
+        </FormField>
+        <FormField label="B" name="b">
+          <Select isMultiple>
+            <SelectOption value="b1">b1</SelectOption>
+            <SelectOption value="b2">b2</SelectOption>
+          </Select>
+        </FormField>
+      </FormGrid>
     </Form>
   );
 };

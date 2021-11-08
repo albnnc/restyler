@@ -74,11 +74,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     );
 
     useUpdateEffect(() => {
-      onChange?.(innerValue);
+      innerValue !== value && onChange?.(innerValue);
     }, [innerValue]);
 
     useUpdateEffect(() => {
-      setInnerValue({ value, isForced: true });
+      innerValue !== value && setInnerValue({ value, isForced: true });
     }, [value]);
 
     const childrenArray = useMemo(
