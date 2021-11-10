@@ -4,19 +4,23 @@ import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, keyof FormWidgetProps>,
-    FormWidgetProps<string>,
+    FormWidgetProps<string | number>,
     ThemeProps {}
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ value, onChange, ...rest }, ref) => {
+  ({ type, value, onChange, ...rest }, ref) => {
     const ThemedInput = useThemed('input', 'input');
     return (
       <ThemedInput
         ref={ref}
-        type="text"
+        type={type ?? 'text'}
         value={value ?? ''}
         onChange={e => {
-          onChange?.(e.target.value);
+          let value: string | number = e.target.value;
+          if (type === 'number') {
+            value = parseFloat(value);
+          }
+          onChange?.(value);
         }}
         {...rest}
       />
