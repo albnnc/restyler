@@ -15,6 +15,7 @@ export * from './Masonry';
 export * from './Menu';
 export * from './Modal';
 export * from './Notification';
+export * from './PairList';
 export * from './PieChart';
 export * from './Progress';
 export * from './Radio';
