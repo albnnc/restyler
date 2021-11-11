@@ -19,7 +19,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
     const extraProps = { value, placeholder, disabled };
     const handleClick = useCallback(() => {
       onChange?.(!value);
-    }, [onChange]);
+    }, [onChange, value]);
     return (
       <ThemedCheckbox ref={ref} {...extraProps} {...rest}>
         <ThemedCheckboxChecker onClick={handleClick} {...extraProps} />
