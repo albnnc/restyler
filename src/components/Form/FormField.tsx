@@ -141,7 +141,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         ),
       [childProps, getChildrenKey(children)]
     );
-    console.log('readOnly', readOnly, formReadOnly);
     return useMemo(
       () => (
         <ThemedFormField ref={ref} {...scalarProps} {...rest}>
