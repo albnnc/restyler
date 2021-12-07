@@ -8,13 +8,13 @@ export const radio: BasicTheme = {
       },
       components: {
         checker: {
-          style: ({ isActive }) => {
+          style: ({ isActive, disabled }) => {
             const createStateStyle = (
               borderColor,
               checkerColor,
               checkerSize
             ) => ({
-              border: '1px solid',
+              border: disabled ? '1px dashed' : '1px solid',
               borderColor,
               marginRight: 2,
               borderRadius: '100vw',

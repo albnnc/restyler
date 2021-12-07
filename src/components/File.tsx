@@ -5,9 +5,11 @@ import React, {
   useState,
   HTMLAttributes,
   InputHTMLAttributes,
-  ReactNode
+  ReactNode,
+  useMemo,
+  useCallback
 } from 'react';
-import { useThemed } from '../hooks';
+import { useThemedFactory } from '../hooks';
 import { FormWidgetProps, ThemeProps } from '../models';
 
 export interface FileLabelRenderer {
@@ -23,15 +25,28 @@ export interface FileProps
 }
 
 export const File = forwardRef<HTMLDivElement, FileProps>(
-  ({ onChange, value, inputProps, children, ...rest }, ref) => {
+  (
+    {
+      children,
+      inputProps,
+      value,
+      disabled,
+      readOnly,
+      invalid,
+      required,
+      onChange,
+      ...rest
+    },
+    ref
+  ) => {
+    const useThemed =
+      useThemedFactory<Pick<FileProps, 'disabled' | 'readOnly' | 'invalid'>>();
     const ThemedFile = useThemed('div', 'file');
     const ThemedFileInput = useThemed('input', 'file.input');
     const ThemedFileInputLabel = useThemed('label', 'file.label');
+    const extraProps = { disabled, readOnly, invalid, required };
     const inputRef = useRef<HTMLInputElement>(null);
     const [innerValue, setInnerValue] = useState(value);
-    useEffect(() => {
-      setInnerValue(value);
-    }, [value]);
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { files } = event.target;
       if (!files || files.length === 0) {
@@ -42,15 +57,25 @@ export const File = forwardRef<HTMLDivElement, FileProps>(
         onChange?.(files);
       }
     };
+    const handleLabelClick = useCallback(() => {
+      if (disabled || readOnly) {
+        return;
+      }
+      inputRef.current?.click();
+    }, [disabled, readOnly]);
+    useEffect(() => {
+      setInnerValue(value);
+    }, [value]);
     return (
-      <ThemedFile ref={ref} {...rest}>
+      <ThemedFile ref={ref} {...rest} {...extraProps}>
         <ThemedFileInput
           ref={inputRef}
           type="file"
           onChange={handleInputChange}
+          {...extraProps}
           {...inputProps}
         />
-        <ThemedFileInputLabel onClick={() => inputRef.current?.click()}>
+        <ThemedFileInputLabel onClick={handleLabelClick} {...extraProps}>
           {children && typeof children === 'function'
             ? (children as FileLabelRenderer)(
                 Array(innerValue?.length ?? 0)

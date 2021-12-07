@@ -1,4 +1,5 @@
 import React, { forwardRef, HTMLAttributes, useCallback } from 'react';
+import { FormWidgetDepiction } from 'src/models/FormWidgetDepiction';
 import { useThemedFactory } from '../hooks';
 import { FormWidgetProps, ThemeProps } from '../models';
 
@@ -8,18 +9,32 @@ export interface CheckboxProps
     ThemeProps {}
 
 export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
-  ({ children, value, placeholder, disabled, onChange, ...rest }, ref) => {
-    const useThemed =
-      useThemedFactory<
-        Pick<CheckboxProps, 'value' | 'placeholder' | 'disabled'>
-      >();
+  (
+    {
+      children,
+      value,
+      disabled,
+      readOnly,
+      invalid,
+      required,
+      onChange,
+      ...rest
+    },
+    ref
+  ) => {
+    const useThemed = useThemedFactory<
+      FormWidgetDepiction & Pick<CheckboxProps, 'value'>
+    >();
     const ThemedCheckbox = useThemed('div', 'checkbox');
     const ThemedCheckboxChecker = useThemed('span', 'checkbox.checker');
     const ThemedCheckboxLabel = useThemed('label', 'checkbox.label');
-    const extraProps = { value, placeholder, disabled };
+    const extraProps = { value, disabled, readOnly, invalid, required };
     const handleClick = useCallback(() => {
+      if (disabled || readOnly) {
+        return;
+      }
       onChange?.(!value);
-    }, [onChange, value]);
+    }, [onChange, value, disabled, readOnly]);
     return (
       <ThemedCheckbox ref={ref} {...extraProps} {...rest}>
         <ThemedCheckboxChecker onClick={handleClick} {...extraProps} />

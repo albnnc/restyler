@@ -49,6 +49,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       name,
       validate,
       disabled,
+      readOnly,
       required,
       invalid,
       prefix,
@@ -68,6 +69,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const ThemedFormFieldHelp = useThemed('div', 'form.field.help');
     const { locale } = useContext(SystemContext);
     const {
+      disabled: formDisabled,
+      readOnly: formReadOnly,
       manager: { values, setValues, errors, setValidators }
     } = useContext(FormContext);
     useEffect(() => {
@@ -95,28 +98,39 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       () => get(errors, name, []),
       [errors, name]
     );
-    const validityProps = useMemo(
+    const scalarProps = useMemo(
       () => ({
-        disabled,
+        disabled: !!(disabled || formDisabled),
+        invalid: invalid ?? fieldErrors.length > 0,
+        name,
+        readOnly: !!(readOnly || formReadOnly),
         required,
-        invalid: invalid ?? fieldErrors.length > 0
+        value: fieldValue
       }),
-      [disabled, required, invalid, fieldErrors]
+      [
+        disabled,
+        fieldErrors,
+        fieldValue,
+        formReadOnly,
+        formDisabled,
+        invalid,
+        name,
+        readOnly,
+        required
+      ]
     );
     const childProps = useMemo(
       () => ({
-        name,
-        value: fieldValue,
+        ...scalarProps,
         onChange: newFieldValue => {
           setValues(v => {
             const cloned = clone(v);
             set(cloned, name, newFieldValue);
             return cloned;
           });
-        },
-        ...validityProps
+        }
       }),
-      [name, fieldValue, validityProps]
+      [scalarProps]
     );
     const child = useMemo(
       () =>
@@ -127,15 +141,16 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         ),
       [childProps, getChildrenKey(children)]
     );
+    console.log('readOnly', readOnly, formReadOnly);
     return useMemo(
       () => (
-        <ThemedFormField ref={ref} {...rest}>
+        <ThemedFormField ref={ref} {...scalarProps} {...rest}>
           {label && (
-            <ThemedFormFieldLabel {...validityProps}>
+            <ThemedFormFieldLabel {...scalarProps}>
               {label}
             </ThemedFormFieldLabel>
           )}
-          <ThemedFormFieldControl>
+          <ThemedFormFieldControl {...scalarProps}>
             {prefix}
             {child}
             {suffix}
@@ -152,16 +167,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           )}
         </ThemedFormField>
       ),
-      [
-        child,
-        fieldErrors,
-        help,
-        label,
-        prefix,
-        suffix,
-        validityProps,
-        hash(rest)
-      ]
+      [child, fieldErrors, help, label, prefix, suffix, scalarProps, hash(rest)]
     );
   }
 );

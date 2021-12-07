@@ -5,9 +5,11 @@ import React, {
   useState,
   Children,
   HTMLAttributes,
-  ReactElement
+  ReactElement,
+  useMemo
 } from 'react';
-import { useThemed } from '../../hooks';
+import { FormWidgetDepiction } from 'src/models/FormWidgetDepiction';
+import { useThemed, useThemedFactory } from '../../hooks';
 import { FormWidgetProps, ThemeProps } from '../../models';
 import { RadioOptionProps } from './RadioOption';
 
@@ -19,8 +21,22 @@ export interface RadioGroupProps
 }
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
-  ({ children, onChange, value, ...rest }, ref) => {
+  (
+    {
+      children,
+      value,
+      disabled,
+      readOnly,
+      invalid,
+      required,
+      onChange,
+      ...rest
+    },
+    ref
+  ) => {
+    const useThemed = useThemedFactory<FormWidgetDepiction>();
     const ThemedRadioGroup = useThemed('div', 'radio.group');
+    const extraProps = { disabled, readOnly, invalid, required };
     const [innerValue, setInnerValue] = useState(value);
     useEffect(() => {
       if (value !== innerValue) {
@@ -33,14 +49,18 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         return cloneElement(child, {
           isActive: innerValue === child.props.value,
           onClick: () => {
+            if (disabled || readOnly) {
+              return;
+            }
             setInnerValue(child.props.value);
             onChange?.(child.props.value);
-          }
+          },
+          ...extraProps
         });
       }
     );
     return (
-      <ThemedRadioGroup ref={ref} {...rest}>
+      <ThemedRadioGroup ref={ref} {...rest} {...extraProps}>
         {childrenWithProps}
       </ThemedRadioGroup>
     );

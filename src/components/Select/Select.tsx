@@ -11,6 +11,7 @@ import React, {
   useCallback,
   Fragment
 } from 'react';
+import { FormWidgetDepiction } from 'src/models/FormWidgetDepiction';
 import {
   interactiveStackId,
   useClickOutside,
@@ -37,17 +38,31 @@ export interface SelectProps
 }
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
-  ({ children, isMultiple, value, placeholder, disabled, onChange }, ref) => {
-    const useThemed =
-      useThemedFactory<
-        Pick<SelectProps, 'isMultiple' | 'value' | 'placeholder' | 'disabled'>
-      >();
+  (
+    {
+      children,
+      isMultiple,
+      value,
+      disabled,
+      readOnly,
+      invalid,
+      required,
+      placeholder,
+      onChange
+    },
+    ref
+  ) => {
+    const useThemed = useThemedFactory<
+      FormWidgetDepiction & Pick<SelectProps, 'isMultiple'>
+    >();
     const ThemedSelect = useThemed('div', 'select');
     const ThemedSelectPlaceholder = useThemed('span', 'select.placeholder');
     const ThemedSelectSelection = useThemed('span', 'select.selection');
+    // Needs to be memoized since it's used
+    // as dependency for other memoization.
     const extraProps = useMemo(
-      () => ({ isMultiple, value, placeholder, disabled }),
-      [isMultiple, value, placeholder, disabled]
+      () => ({ isMultiple, disabled, readOnly, invalid, required }),
+      [isMultiple, disabled, readOnly, invalid, required]
     );
 
     const {
@@ -141,7 +156,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const [handleClose, setHandleClose] = useState<(() => void) | undefined>();
     const handleClick = useCallback(() => {
-      if (disabled) {
+      if (disabled || readOnly) {
         return;
       }
       if (handleClose) {
@@ -153,7 +168,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           setHandleClose(undefined);
         });
       }
-    }, [disabled, handleClose]);
+    }, [disabled, readOnly, handleClose]);
+
+    useEffect(() => {
+      if ((disabled || readOnly) && handleClose) {
+        handleClose();
+      }
+    }, [disabled, readOnly, handleClose]);
 
     return (
       <ThemedSelect ref={sharedRef} onClick={handleClick} {...extraProps}>

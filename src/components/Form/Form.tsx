@@ -15,13 +15,26 @@ export interface FormProps
   extends Omit<HTMLAttributes<HTMLFormElement>, 'onChange' | 'onSubmit'>,
     ThemeProps {
   manager?: FormManager;
+  disabled?: boolean;
+  readOnly?: boolean;
+  shouldLiveValidate?: boolean;
   onChange?: (manager: FormManager) => void;
   onSubmit?: (manager: FormManager) => void;
-  shouldLiveValidate?: boolean;
 }
 
 export const Form = forwardRef<HTMLFormElement, FormProps>(
-  ({ manager, onChange, onSubmit, shouldLiveValidate, ...rest }, ref) => {
+  (
+    {
+      manager,
+      disabled,
+      readOnly,
+      shouldLiveValidate,
+      onChange,
+      onSubmit,
+      ...rest
+    },
+    ref
+  ) => {
     const ThemedForm = useThemed('form', 'form');
     const innerManager = useFormManager();
     const targetManager = manager ?? innerManager;
@@ -61,9 +74,11 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
     const contextValue = useMemo(
       () => ({
         manager: targetManager,
+        disabled: !!disabled,
+        readOnly: !!readOnly,
         shouldLiveValidate: !!shouldLiveValidate
       }),
-      [targetManager, shouldLiveValidate]
+      [targetManager, disabled, readOnly, shouldLiveValidate]
     );
     return (
       <FormContext.Provider value={contextValue}>

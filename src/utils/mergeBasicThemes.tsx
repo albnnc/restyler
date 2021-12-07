@@ -4,8 +4,8 @@ import { merge } from './merge';
 export const mergeBasicThemes = (...args: BasicTheme[]): BasicTheme => {
   return merge(...args, (a: any, b: any, key: string) => {
     if (key === 'style') {
-      const aFn = typeof a === 'function' ? a : () => a;
-      const bFn = typeof b === 'function' ? b : () => b;
+      const aFn = a instanceof Function ? a : () => a;
+      const bFn = b instanceof Function ? b : () => b;
       return props => ({ ...aFn(props), ...bFn(props) });
     }
     return undefined;

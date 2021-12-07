@@ -10,5 +10,7 @@ export const FormContext = createContext({
     validators: {},
     setValidators: () => {}
   } as FormManager,
+  disabled: false,
+  readOnly: false,
   shouldLiveValidate: false
 });

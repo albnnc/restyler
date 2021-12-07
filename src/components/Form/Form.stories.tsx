@@ -3,6 +3,7 @@ import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useCallback, useState } from 'react';
 import {
+  Box,
   Button,
   Checkbox,
   Form,
@@ -11,7 +12,11 @@ import {
   Input,
   Select,
   SelectOption,
-  useFormManager
+  useFormManager,
+  File,
+  RadioGroup,
+  RadioOption,
+  TextArea
 } from 'src';
 import { compact } from 'storybook/decorators';
 import { createBlueprint } from 'storybook/utils';
@@ -62,6 +67,51 @@ export const Nesting = () => {
         {submitCount ? ` (${submitCount})` : ''}
       </Button>
     </Form>
+  );
+};
+
+export const Disabling = () => {
+  const [disabled, setDisabled] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
+  return (
+    <Box>
+      <Box sx={{ mb: 3 }}>
+        <Checkbox value={disabled} onChange={setDisabled}>
+          Disabled
+        </Checkbox>
+        <Checkbox value={readOnly} onChange={setReadOnly}>
+          ReadOnly
+        </Checkbox>
+      </Box>
+      <Form disabled={disabled} readOnly={readOnly}>
+        <FormGrid>
+          <FormField label="A" name="a" />
+          <FormField label="A" name="b">
+            <Select isMultiple>
+              <SelectOption value="a1">a1</SelectOption>
+              <SelectOption value="a2">a2</SelectOption>
+              <SelectOption value="a3">a3</SelectOption>
+            </Select>
+          </FormField>
+          <FormField name="c">
+            <Checkbox>C</Checkbox>
+          </FormField>
+          <FormField label="D" name="d">
+            <File />
+          </FormField>
+          <FormField label="E" name="e">
+            <RadioGroup>
+              <RadioOption value="A">Option A</RadioOption>
+              <RadioOption value="B">Option B</RadioOption>
+              <RadioOption value="C">Option C</RadioOption>
+            </RadioGroup>
+          </FormField>
+          <FormField label="F" name="f">
+            <TextArea />
+          </FormField>
+        </FormGrid>
+      </Form>
+    </Box>
   );
 };
 

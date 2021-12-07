@@ -4,12 +4,12 @@ export const checkbox: BasicTheme = {
   style: { cursor: 'pointer' },
   components: {
     checker: {
-      style: ({ value }) => {
+      style: ({ value, disabled }) => {
         const createStateStyle = (borderColor, checkerColor, checkerSize) => ({
           marginRight: 2,
           borderRadius: 1,
           background: 'white',
-          border: '1px solid',
+          border: disabled ? '1px dashed' : '1px solid',
           borderColor,
           position: 'relative',
           display: 'inline-block',
