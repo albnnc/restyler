@@ -15,11 +15,11 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "start-storybook -c storybook -p 6006 --ci",
-    "doc": "build-storybook -c storybook -o dist/docs",
+    "dev": "start-storybook -c docs -p 6006 --ci",
+    "doc": "build-storybook -c docs -o dist/docs",
     "lint": "npm run lint:static && npm run lint:format",
-    "lint:format": "prettier ./{src,storybook}/**/*.{ts,tsx} --write",
-    "lint:static": "eslint ./{src,storybook}/**/*.{ts,tsx} --fix",
+    "lint:format": "prettier ./{lib,docs}/**/*.{ts,tsx} --write",
+    "lint:static": "eslint ./{lib,docs}/**/*.{ts,tsx} --fix",
     "pages": "npm run doc && npm run pages:404 && npm run pages:deploy",
     "pages:404": "cpy ./dist/docs/index.html ./dist/docs/404.html",
     "pages:deploy": "gh-pages -d ./dist/docs",
@@ -75,7 +75,7 @@
       "esm"
     ],
     "entryPoints": [
-      "src/index.tsx"
+      "lib/index.tsx"
     ]
   }
 }
