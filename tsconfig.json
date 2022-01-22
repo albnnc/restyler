@@ -18,5 +18,5 @@
     "suppressImplicitAnyIndexErrors": true,
     "target": "esnext"
   },
-  "exclude": ["node_modules", "build", "**/*.json", "**/*.js"]
+  "exclude": ["node_modules", "dist", "**/*.json", "**/*.js"]
 }

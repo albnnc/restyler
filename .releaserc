@@ -1,0 +1,6 @@
+{
+  "script": "build",
+  "message": "{{version}}",
+  "tag": "{{version}}",
+  "publish": true
+}

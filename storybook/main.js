@@ -1,4 +1,3 @@
-const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
@@ -8,23 +7,18 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-storysource'
   ],
+  core: {
+    builder: 'webpack5'
+  },
   // https://github.com/styleguidist/react-docgen-typescript/issues/356
   typescript: {
     reactDocgen: 'none'
   },
   webpackFinal: async config => {
-    const modulesDir = path.join(__dirname, '../node_modules');
     config.resolve.plugins = [
       new TsconfigPathsPlugin(),
       ...(config.resolve.plugins ?? [])
     ];
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@emotion/core': path.join(modulesDir, '@emotion/react'),
-      '@emotion/styled': path.join(modulesDir, '@emotion/styled'),
-      '@emotion/styled-base': path.join(modulesDir, '@emotion/styled'),
-      'emotion-theming': path.join(modulesDir, '@emotion/react')
-    };
     return config;
   }
 };
