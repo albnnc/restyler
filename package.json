@@ -7,8 +7,8 @@
     "url": "https://github.com/albnnc/restyler.git"
   },
   "license": "MIT",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*"
