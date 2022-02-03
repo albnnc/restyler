@@ -13,7 +13,13 @@ export const Basics = () => {
     <PairList
       pairs={[
         [1, 2],
-        [3, 4]
+        [3, 4],
+        {
+          title: 'Expanded',
+          content: 'Lorem ipsum dolor sit amet',
+          kind: 'expanded'
+        },
+        [5, 6]
       ]}
     />
   );

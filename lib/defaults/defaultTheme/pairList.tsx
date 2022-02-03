@@ -6,9 +6,16 @@ export const pairList: BasicTheme = {
       style: {
         display: 'flex'
       },
+      kinds: {
+        expanded: {
+          style: {
+            flexDirection: 'column'
+          }
+        }
+      },
       components: {
-        left: { style: { minWidth: '200px' } },
-        right: { style: {} }
+        title: { style: { minWidth: '200px' } },
+        content: { style: {} }
       }
     }
   }

@@ -3,24 +3,38 @@ import { useThemed } from '../hooks';
 import { ThemeProps } from '../models';
 
 interface PairListProps extends HTMLAttributes<HTMLDivElement>, ThemeProps {
-  pairs: ReactNode[][];
+  pairs: (
+    | ReactNode[]
+    | {
+        title: ReactNode;
+        content: ReactNode;
+        kind?: string;
+      }
+  )[];
 }
 
 export const PairList = ({ pairs, ...rest }: PairListProps) => {
   const ThemedPairList = useThemed('div', 'pairList');
   const ThemedItem = useThemed('div', 'pairList.item');
-  const ThemedItemLeft = useThemed('div', 'pairList.item.left');
-  const ThemedItemRight = useThemed('div', 'pairList.item.right');
+  const ThemedItemTitle = useThemed('div', 'pairList.item.title');
+  const ThemedItemContent = useThemed('div', 'pairList.item.content');
   return (
     <ThemedPairList {...rest}>
-      {pairs.map(([left, right], i) => (
-        <ThemedItem key={i}>
-          <ThemedItemLeft>{left}</ThemedItemLeft>
-          <ThemedItemRight>
-            {Array.isArray(right) ? right.join(', ') : right || '—'}
-          </ThemedItemRight>
-        </ThemedItem>
-      ))}
+      {pairs.map((pair, i) => {
+        const {
+          title,
+          content,
+          kind = undefined
+        } = Array.isArray(pair) ? { title: pair[0], content: pair[1] } : pair;
+        return (
+          <ThemedItem key={i} kind={kind}>
+            <ThemedItemTitle>{title}</ThemedItemTitle>
+            <ThemedItemContent>
+              {Array.isArray(content) ? content.join(', ') : content || '—'}
+            </ThemedItemContent>
+          </ThemedItem>
+        );
+      })}
     </ThemedPairList>
   );
 };
