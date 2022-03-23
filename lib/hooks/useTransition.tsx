@@ -71,8 +71,13 @@ export const useTransition = <T extends HTMLElement>(
         }
         properties.current = properties.current.filter(v => v !== propertyName);
         if (properties.current.length < 1) {
-          setIsReallyMounted(isMounted);
+          // `setIsEntering` has to be before `setIsReallyMounted` call,
+          // since this part of code runs in async and is not batched by React.
+          // This means that in case of `setIsReallyMounted(false)` ran before
+          // `setIsEntering`, component could pontentially be unmounted
+          // and then used again.
           setIsEntering(false);
+          setIsReallyMounted(isMounted);
         }
       }
     }),
