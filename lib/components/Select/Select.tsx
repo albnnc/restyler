@@ -122,8 +122,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const openSelect = useStandaloneTransition<HTMLDivElement>(
       (props, ref) => {
-        const dropRef = useSharedRef<HTMLDivElement>(null, [ref]);
-        useClickOutside(dropRef, props.handleClose);
+        const clickOutsideRef = useClickOutside<HTMLDivElement>(
+          props.handleClose
+        );
+        const sharedRef = useSharedRef(null, [ref, clickOutsideRef]);
         useStack(interactiveStackId);
         useEffect(() => {
           return disableScroll();
@@ -136,7 +138,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         } = sharedRef.current?.getBoundingClientRect() ?? {};
         return (
           <SelectDrop
-            ref={dropRef}
+            ref={sharedRef}
             style={{ position: 'fixed', top: top + height, left, width }}
             {...props}
           >

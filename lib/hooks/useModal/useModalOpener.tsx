@@ -34,13 +34,15 @@ export const useModalOpener = () =>
       }, []);
       const modalTransition = useTransition<HTMLDivElement>(
         (modalTransitionProps, ref) => {
+          const clickOutsideRef = useClickOutside<HTMLDivElement>(
+            () => isOnTop && handleClose()
+          );
+          const sharedRed = useSharedRef(null, [ref, clickOutsideRef]);
+          const isOnTop = useStack(interactiveStackId);
           const content = useMemo(
             () => render?.({ handleClose, ...modalTransitionProps }) ?? null,
             []
           );
-          const sharedRed = useSharedRef<HTMLDivElement>(null, [ref]);
-          const isOnTop = useStack(interactiveStackId);
-          useClickOutside(sharedRed, () => isOnTop && handleClose());
           return (
             <Modal ref={sharedRed} {...modalProps} {...modalTransitionProps}>
               {content}
