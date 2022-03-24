@@ -2,8 +2,8 @@
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
 import { useReducer } from 'react';
-import { Menu, MenuGroup, MenuItem } from 'lib';
 import { createBlueprint } from 'docs/utils';
+import { Menu, MenuGroup, MenuItem } from 'lib';
 
 export default {
   title: 'Navigation/Menu'
