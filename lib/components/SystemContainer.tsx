@@ -35,6 +35,7 @@ export const SystemContainer = forwardRef<HTMLDivElement, SystemContainerProps>(
     useEffect(() => {
       const portalPaths = [
         'defaults.standaloneTransitionOptions.portal',
+        'defaults.dropOptions.portal',
         'defaults.meterOptions.portal'
       ];
       const next = { ...system };

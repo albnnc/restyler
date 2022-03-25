@@ -12,20 +12,16 @@ import React, {
   Fragment
 } from 'react';
 import {
-  interactiveStackId,
-  useClickOutside,
+  useDrop,
   useImperativePortal,
   useSharedRef,
-  useStack,
-  useStandaloneTransition,
   useThemedFactory,
   useUpdateEffect
 } from '../../hooks';
 import { FormWidgetDepiction, FormWidgetProps, ThemeProps } from '../../models';
-import { disableScroll, getChildrenKey } from '../../utils';
+import { getChildrenKey } from '../../utils';
 import { SystemContext } from '../SystemContext';
 import { SelectContext } from './SelectContext';
-import { SelectDrop } from './SelectDrop';
 import { SelectOption, SelectOptionProps } from './SelectOption';
 
 export interface SelectProps
@@ -70,7 +66,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       } = {},
       locale
     } = useContext(SystemContext);
-    const sharedRef = useSharedRef<HTMLDivElement>(null, [ref]);
+
     const portal = useImperativePortal(rootPortal);
     const [innerValue, setInnerValue] = useReducer(
       (active: any, action: { isForced?: boolean; value: any }) => {
@@ -120,39 +116,20 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       ));
     }, [extraProps, innerValue, childrenArray]);
 
-    const openSelect = useStandaloneTransition<HTMLDivElement>(
-      (props, ref) => {
-        const clickOutsideRef = useClickOutside<HTMLDivElement>(
-          props.handleClose
-        );
-        const dropRef = useSharedRef(null, [ref, clickOutsideRef]);
-        useStack(interactiveStackId);
-        useEffect(() => {
-          return disableScroll();
-        }, []);
-        const {
-          top = 0,
-          left = 0,
-          height = 0,
-          width = 0
-        } = sharedRef.current?.getBoundingClientRect() ?? {};
-        return (
-          <SelectDrop
-            ref={dropRef}
-            style={{ position: 'fixed', top: top + height, left, width }}
-            {...props}
-          >
-            {childrenArray.length > 0 ? (
-              childrenArray
-            ) : (
-              <SelectOption kind="empty" value={undefined}>
-                {locale.empty}
-              </SelectOption>
-            )}
-          </SelectDrop>
-        );
-      },
-      { deps: [childrenArray], portal }
+    const [open, anchorRef] = useDrop<HTMLDivElement>(
+      () =>
+        childrenArray.length > 0 ? (
+          childrenArray
+        ) : (
+          <SelectOption kind="empty" value={undefined}>
+            {locale.empty}
+          </SelectOption>
+        ),
+      {
+        deps: [childrenArray],
+        portal,
+        isTailored: true
+      }
     );
 
     const [handleClose, setHandleClose] = useState<(() => void) | undefined>();
@@ -163,13 +140,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       if (handleClose) {
         handleClose();
       } else {
-        const close = openSelect();
+        const close = open();
         setHandleClose(() => () => {
           close();
           setHandleClose(undefined);
         });
       }
-    }, [disabled, readOnly, handleClose]);
+    }, [open, disabled, readOnly, handleClose]);
 
     useEffect(() => {
       if ((disabled || readOnly) && handleClose) {
@@ -177,6 +154,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       }
     }, [disabled, readOnly, handleClose]);
 
+    const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, anchorRef]);
     return (
       <ThemedSelect ref={sharedRef} onClick={handleClick} {...extraProps}>
         <SelectContext.Provider

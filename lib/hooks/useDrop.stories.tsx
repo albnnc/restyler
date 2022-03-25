@@ -13,7 +13,21 @@ export default {
 export const Basics = () => {
   const [isTailored, setIsTailored] = useState(false);
   const [isTopPlaced, setIsTopPlaced] = useState(false);
-  const [openDrop, anchorRef] = useDrop<HTMLButtonElement>();
+  const [openDrop, anchorRef] = useDrop<HTMLButtonElement>(
+    ({ handleClose }) => (
+      <Box sx={{ p: 2 }}>
+        <Box>Lorem ipsum</Box>
+        <Button kind="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Box>
+    ),
+    {
+      deps: [],
+      isTailored,
+      placement: isTopPlaced ? DropPlacement.Top : DropPlacement.Bottom
+    }
+  );
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Checkbox value={isTailored} onChange={setIsTailored}>
@@ -22,24 +36,7 @@ export const Basics = () => {
       <Checkbox value={isTopPlaced} onChange={setIsTopPlaced}>
         Top-placed
       </Checkbox>
-      <Button
-        ref={anchorRef}
-        kind="primary"
-        onClick={() => {
-          openDrop({
-            isTailored,
-            placement: isTopPlaced ? DropPlacement.Top : DropPlacement.Bottom,
-            render: ({ handleClose }) => (
-              <Box sx={{ p: 2 }}>
-                <Box>Lorem ipsum</Box>
-                <Button kind="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-              </Box>
-            )
-          });
-        }}
-      >
+      <Button ref={anchorRef} kind="primary" onClick={() => openDrop()}>
         Open
       </Button>
     </Box>

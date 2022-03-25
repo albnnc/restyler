@@ -4,7 +4,8 @@ import React, {
   useCallback,
   useMemo,
   useContext,
-  useRef
+  useRef,
+  DependencyList
 } from 'react';
 import {
   Drop,
@@ -13,6 +14,7 @@ import {
 } from '../components';
 import { disableScroll } from '../utils';
 import { useClickOutside } from './useClickOutside';
+import { ImperativePortal } from './useImperativePortal';
 import { useSharedRef } from './useSharedRef';
 import { interactiveStackId, useStack } from './useStack';
 import {
@@ -26,33 +28,38 @@ export enum DropPlacement {
 }
 
 export interface DropOptions extends Omit<DropProps, 'children'> {
-  render: (props: StandaloneTransitionerProps) => ReactNode;
-  isTailored?: boolean;
+  deps: DependencyList;
+  portal?: ImperativePortal;
   placement?: DropPlacement;
+  isTailored?: boolean;
   onClose?: () => void;
 }
 
-export const useDrop = <T extends HTMLElement>() => {
+export const useDrop = <T extends HTMLElement>(
+  render: (props: StandaloneTransitionerProps) => ReactNode,
+  options: DropOptions
+) => {
   const { defaults } = useContext(SystemContext);
+  const {
+    deps,
+    isTailored,
+    placement = DropPlacement.Bottom,
+    portal,
+    onClose,
+    ...dropProps
+  } = useMemo(
+    () => ({
+      ...defaults?.dropOptions,
+      ...options
+    }),
+    [options]
+  );
   const anchorRef = useRef<T>(null);
-  const openDrop = useStandaloneTransition<HTMLDivElement, DropOptions>(
+  const openDrop = useStandaloneTransition<HTMLDivElement>(
     (
       { context, handleClose: handleImplicitClose, ...transitionProps },
       ref
     ) => {
-      const {
-        render,
-        isTailored,
-        placement = DropPlacement.Bottom,
-        onClose,
-        ...dropProps
-      } = useMemo(
-        () => ({
-          ...defaults?.dropOptions,
-          ...context
-        }),
-        [context]
-      );
       const handleClose = useCallback(() => {
         handleImplicitClose();
         onClose?.();
@@ -96,7 +103,8 @@ export const useDrop = <T extends HTMLElement>() => {
       );
     },
     {
-      deps: []
+      deps: [render, isTailored, onClose, ...deps],
+      portal
     }
   );
   return [openDrop, anchorRef] as const;

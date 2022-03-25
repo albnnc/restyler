@@ -9,7 +9,8 @@ import React, {
   PropsWithoutRef,
   RefAttributes,
   ForwardRefRenderFunction,
-  useRef
+  useRef,
+  DependencyList
 } from 'react';
 import { SystemContext } from '../components';
 import { requestAnimationDelay } from '../utils';
@@ -27,7 +28,7 @@ export type Transitioner<T, P = TransitionerProps> =
   | ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 
 export interface TransitionOptions {
-  deps: any[];
+  deps: DependencyList;
   isMounted: boolean;
 }
 
