@@ -1,5 +1,6 @@
 export * from './useCleanableRef';
 export * from './useClickOutside';
+export * from './useDrop';
 export * from './useFocusTrap';
 export * from './useFormManager';
 export * from './useGrid';

@@ -1,10 +1,11 @@
 import {
+  DropOptions,
   MeterOptions,
-  TransitionOptions,
-  StandaloneTransitionOptions,
   ModalOptions,
   QuestionOptions,
-  ThemedOptions
+  StandaloneTransitionOptions,
+  ThemedOptions,
+  TransitionOptions
 } from '../hooks';
 import { Locale } from './Locale';
 import { Styled } from './Styled';
@@ -12,6 +13,7 @@ import { SystemRegistry } from './SystemRegistry';
 
 export interface System<Theme = any> {
   defaults?: {
+    dropOptions?: Partial<DropOptions>;
     meterOptions?: Partial<MeterOptions>;
     modalOptions?: Partial<ModalOptions>;
     notificationOptions?: Partial<NotificationOptions>;

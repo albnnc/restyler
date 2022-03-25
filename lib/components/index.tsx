@@ -5,6 +5,7 @@ export * from './Card';
 export * from './Checkbox';
 export * from './Collapse';
 export * from './Container';
+export * from './Drop';
 export * from './File';
 export * from './Form';
 export * from './Heading';
