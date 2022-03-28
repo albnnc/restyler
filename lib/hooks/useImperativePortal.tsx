@@ -35,10 +35,14 @@ export const useImperativePortal = (
       setElement(target);
       return;
     }
+    let isActual = true;
     const key = Math.random();
-    const container = <div key={key} ref={v => setElement(v)} />;
+    const container = <div key={key} ref={v => isActual && setElement(v)} />;
     target.push(container);
-    return () => target.remove(container);
+    return () => {
+      isActual = false;
+      target.remove(container);
+    };
   }, [target]);
   const portalRef = useRef<{ update: () => void }>(null);
   const childrenRef = useRef<ReactNode[]>([]);
