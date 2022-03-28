@@ -1,8 +1,9 @@
-import { isValidElement, useCallback, Fragment, ReactNode } from 'react';
+import React, { isValidElement, useCallback, Fragment, ReactNode } from 'react';
+import { BasicQuestion } from '../components';
 import { useLoader } from './useLoader';
-import { useModal } from './useModal';
-import { QuestionOptions } from './useModal';
 import { NotificationOptions, useNotification } from './useNotification';
+import { QuestionRenderDescription } from './useQuestion';
+import { useQuestion } from './useQuestion';
 
 export interface OperationOptions<OperationInput, OperationOutput> {
   deps: any[];
@@ -10,7 +11,7 @@ export interface OperationOptions<OperationInput, OperationOutput> {
     isOk: T,
     output: T extends true ? OperationOutput : Error
   ) => ReactNode | NotificationOptions;
-  getQuestion?: (input?: OperationInput) => QuestionOptions;
+  getQuestion?: (input?: OperationInput) => QuestionRenderDescription;
   loaderIds?: any[];
 }
 
@@ -24,13 +25,21 @@ export const useOperation = <OperationInput, OperationOutput>(
   }: OperationOptions<OperationInput, OperationOutput>
 ) => {
   const [_, load] = useLoader(loaderIds);
-  const { openQuestion } = useModal();
-  const { openNotification } = useNotification();
+  const openQuestion = useQuestion<QuestionRenderDescription>(
+    ({ context: description, ...rest }) =>
+      description instanceof Function ? (
+        description(rest)
+      ) : (
+        <BasicQuestion onClose={rest.handleClose} {...description!} />
+      ),
+    { deps: [] }
+  );
+  const openNotification = useNotification();
   const operation = useCallback(
     async (input?: OperationInput): Promise<void> => {
-      const questionOptions = getQuestion?.(input);
-      const shouldContinue = questionOptions
-        ? await openQuestion(questionOptions)
+      const questionDescription = getQuestion?.(input);
+      const shouldContinue = questionDescription
+        ? await openQuestion(questionDescription)
         : true;
       if (!shouldContinue) {
         return undefined;

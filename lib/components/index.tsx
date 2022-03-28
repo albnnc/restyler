@@ -1,4 +1,5 @@
 export * from './Anchor';
+export * from './BasicQuestion';
 export * from './Box';
 export * from './Button';
 export * from './Card';

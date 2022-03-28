@@ -138,5 +138,5 @@ export const useNotification = () => {
       deps: []
     }
   );
-  return { openNotification };
+  return openNotification;
 };

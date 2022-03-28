@@ -56,10 +56,7 @@ export const useDrop = <T extends HTMLElement>(
   );
   const anchorRef = useRef<T>(null);
   const openDrop = useStandaloneTransition<HTMLDivElement>(
-    (
-      { context, handleClose: handleImplicitClose, ...transitionProps },
-      ref
-    ) => {
+    ({ handleClose: handleImplicitClose, ...transitionProps }, ref) => {
       const handleClose = useCallback(() => {
         handleImplicitClose();
         onClose?.();

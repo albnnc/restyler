@@ -11,6 +11,7 @@ export * from './useMeter';
 export * from './useModal';
 export * from './useNotification';
 export * from './useOperation';
+export * from './useQuestion';
 export * from './useSharedRef';
 export * from './useStack';
 export * from './useStandaloneTransition';

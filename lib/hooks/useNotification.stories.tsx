@@ -8,7 +8,7 @@ export default {
 } as Meta;
 
 export const Basics = () => {
-  const { openNotification } = useNotification();
+  const openNotification = useNotification();
   return (
     <Button
       kind="primary"
