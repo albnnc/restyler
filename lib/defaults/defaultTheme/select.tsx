@@ -91,22 +91,6 @@ export const select: BasicTheme = {
       style: {
         opacity: 0.7
       }
-    },
-
-    drop: {
-      style: ({ isVisible }) => ({
-        zIndex: 1001,
-        backgroundColor: 'surface',
-        color: 'onSurface',
-        borderRadius: 2,
-        boxShadow: 3,
-        minWidth: '200px',
-        maxHeight: '300px',
-        overflowY: 'auto',
-        opacity: isVisible ? 1 : 0,
-        transform: `translateY(${isVisible ? '0' : '-0.5rem'})`,
-        transition: 'all 0.2s'
-      })
     }
   }
 };

@@ -1,5 +1,6 @@
 import { BasicTheme } from '../../models';
 import { anchor } from './anchor';
+import { autocomplete } from './autocomplete';
 import { box } from './box';
 import { button } from './button';
 import { card } from './card';
@@ -91,6 +92,7 @@ export const defaultTheme: BasicTheme = {
   ],
   components: {
     anchor,
+    autocomplete,
     box,
     button,
     card,

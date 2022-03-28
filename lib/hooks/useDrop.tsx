@@ -32,6 +32,7 @@ export interface DropOptions extends Omit<DropProps, 'children'> {
   portal?: ImperativePortal;
   placement?: DropPlacement;
   isTailored?: boolean;
+  isBlurResistant?: boolean;
   onClose?: () => void;
 }
 
@@ -46,6 +47,7 @@ export const useDrop = <T extends HTMLElement>(
     placement = DropPlacement.Bottom,
     portal,
     onClose,
+    isBlurResistant,
     ...dropProps
   } = useMemo(
     () => ({
@@ -61,7 +63,9 @@ export const useDrop = <T extends HTMLElement>(
         handleImplicitClose();
         onClose?.();
       }, []);
-      const clickOusideRef = useClickOutside<HTMLDivElement>(handleClose);
+      const clickOusideRef = useClickOutside<HTMLDivElement>(
+        () => !isBlurResistant && handleClose()
+      );
       const sharedRef = useSharedRef(null, [ref, clickOusideRef]);
       useStack(interactiveStackId);
       useEffect(() => {

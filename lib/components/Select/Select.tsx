@@ -61,13 +61,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     );
 
     const {
-      defaults: {
-        standaloneTransitionOptions: { portal: rootPortal = null } = {}
-      } = {},
+      defaults: { dropOptions: { portal: rootPortal = null } = {} } = {},
       locale
     } = useContext(SystemContext);
-
     const portal = useImperativePortal(rootPortal);
+
     const [innerValue, setInnerValue] = useReducer(
       (active: any, action: { isForced?: boolean; value: any }) => {
         if (action.isForced || !isMultiple) {
@@ -126,7 +124,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           </SelectOption>
         ),
       {
-        deps: [childrenArray],
+        deps: [locale, childrenArray],
         portal,
         isTailored: true
       }
