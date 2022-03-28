@@ -10,8 +10,15 @@ export const AutocompleteContent = () => {
   }>();
   const ThemedOption = useThemed('div', 'autocomplete.option');
   const { locale } = useContext(SystemContext);
-  const { options, innerValue, setInnerValue, selectedIndex } =
-    useContext(AutocompleteContext);
+  const {
+    inputRef,
+    options,
+    setQuery,
+    innerValue,
+    setInnerValue,
+    selectedIndex,
+    handleDropClose
+  } = useContext(AutocompleteContext);
   return (
     <Fragment>
       {options.length > 0 ? (
@@ -21,7 +28,10 @@ export const AutocompleteContent = () => {
             isActive={'value' in v && v.value === innerValue}
             isSelected={i === selectedIndex}
             onClick={e => {
+              setQuery(v.query);
               setInnerValue('value' in v ? v.value : v.query);
+              handleDropClose();
+              inputRef.current?.focus();
               e.stopPropagation();
             }}
           >

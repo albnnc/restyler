@@ -53,7 +53,6 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const [options, setOptions] = useState<AutocompleteOption[]>([]);
     const [innerValue, setInnerValue] = useState<unknown>(value);
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const closeDrop = useRef<undefined | (() => void)>();
     const [openDrop, anchorRef] = useDrop<HTMLInputElement>(
       () => <AutocompleteContent />,
       {
@@ -63,31 +62,33 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         isBlurResistant: true
       }
     );
-    const handleDrop = useCallback(() => {
-      if (closeDrop.current) {
-        return;
-      }
-      const closeDropWithoutCleaning = openDrop();
-      closeDrop.current = () => {
-        closeDropWithoutCleaning();
-        closeDrop.current = undefined;
-      };
+    const closeDrop = useRef<undefined | (() => void)>();
+    const handleDropOpen = useCallback(() => {
+      !closeDrop.current && (closeDrop.current = openDrop());
     }, [openDrop]);
+    const handleDropClose = useCallback(() => {
+      closeDrop.current?.();
+      closeDrop.current = undefined;
+    }, []);
     const handleCompletion = useCallback(async (query: string) => {
       const options = await getOptions(query);
       setOptions(options);
-      options.length > 0 && handleDrop();
+      options.length > 0 && handleDropOpen();
     }, []);
     const sharedRef = useSharedRef<HTMLInputElement>(null, [ref, anchorRef]);
     const contextValue = useMemo(
       () => ({
+        inputRef: sharedRef,
         options,
+        query,
+        setQuery,
         innerValue,
         setInnerValue,
         selectedIndex,
-        setSelectedIndex
+        setSelectedIndex,
+        handleDropClose
       }),
-      [options, innerValue, selectedIndex]
+      [options, query, innerValue, selectedIndex]
     );
 
     useUpdateEffect(() => {
@@ -100,7 +101,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       handleCompletion(query);
     }, [query]);
     useUpdateEffect(() => {
-      options.length < 1 && closeDrop.current?.();
+      options.length < 1 && handleDropClose();
     }, [options]);
     useEffect(() => {
       setSelectedIndex(
@@ -118,7 +119,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
           ref={sharedRef}
           value={query}
           onBlur={ev => {
-            closeDrop.current?.();
+            handleDropClose();
             onBlur?.(ev);
           }}
           onChange={(v: string) => setQuery(v)}
@@ -137,7 +138,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
                     : selectedOption.query
                 );
               }
-              closeDrop.current?.();
+              handleDropClose();
               ev.preventDefault();
             } else if (ev.key === 'ArrowUp') {
               setSelectedIndex(v => v - 1);
