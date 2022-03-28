@@ -18,14 +18,14 @@ export const AutocompleteContent = () => {
         options.map((v, i) => (
           <ThemedOption
             key={v.key}
-            isActive={v.value === innerValue}
+            isActive={'value' in v && v.value === innerValue}
             isSelected={i === selectedIndex}
             onClick={e => {
-              setInnerValue(v.value);
+              setInnerValue('value' in v ? v.value : v.query);
               e.stopPropagation();
             }}
           >
-            {v.title}
+            {v.render?.() ?? v.query}
           </ThemedOption>
         ))
       ) : (

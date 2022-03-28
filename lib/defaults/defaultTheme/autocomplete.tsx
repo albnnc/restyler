@@ -14,8 +14,6 @@ export const autocomplete: BasicTheme = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
-        direction: 'rtl',
-        textAlign: 'left',
         '&:hover': {
           backgroundColor: 'accentSurface'
         },

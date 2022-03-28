@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   HTMLAttributes,
   Key,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -23,8 +24,9 @@ import { AutocompleteContext } from './AutocompleteContext';
 
 export interface AutocompleteOption {
   key: Key;
-  title: string;
-  value: unknown;
+  query: string;
+  value?: unknown;
+  render?: () => ReactNode;
 }
 
 export interface AutocompleteProps
@@ -32,19 +34,22 @@ export interface AutocompleteProps
     FormWidgetProps,
     ThemeProps {
   getOptions: (
-    title: string
+    query: string
   ) => AutocompleteOption[] | Promise<AutocompleteOption[]>;
 }
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
-  ({ getOptions, value, onChange, onBlur, onKeyDown, ...rest }, ref) => {
+  (
+    { getOptions, value, onChange, onFocus, onBlur, onKeyDown, ...rest },
+    ref
+  ) => {
     const {
       defaults: { dropOptions: { portal: rootPortal = null } = {} } = {},
       locale
     } = useContext(SystemContext);
     const portal = useImperativePortal(rootPortal);
 
-    const [title, setTitle] = useState('');
+    const [query, setQuery] = useState('');
     const [options, setOptions] = useState<AutocompleteOption[]>([]);
     const [innerValue, setInnerValue] = useState<unknown>(value);
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -58,9 +63,20 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         isBlurResistant: true
       }
     );
-    const handleTitleChange = useCallback(async (title: string) => {
-      const options = await getOptions(title);
+    const handleDrop = useCallback(() => {
+      if (closeDrop.current) {
+        return;
+      }
+      const closeDropWithoutCleaning = openDrop();
+      closeDrop.current = () => {
+        closeDropWithoutCleaning();
+        closeDrop.current = undefined;
+      };
+    }, [openDrop]);
+    const handleCompletion = useCallback(async (query: string) => {
+      const options = await getOptions(query);
       setOptions(options);
+      options.length > 0 && handleDrop();
     }, []);
     const sharedRef = useSharedRef<HTMLInputElement>(null, [ref, anchorRef]);
     const contextValue = useMemo(
@@ -81,21 +97,18 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       innerValue !== value && setInnerValue(value);
     }, [value]);
     useUpdateEffect(() => {
-      handleTitleChange(title);
-    }, [title]);
+      handleCompletion(query);
+    }, [query]);
     useUpdateEffect(() => {
-      if (closeDrop.current) {
-        return;
-      }
-      const closeDropRaw = openDrop();
-      closeDrop.current = () => {
-        closeDropRaw();
-        closeDrop.current = undefined;
-      };
-    }, [title]);
+      options.length < 1 && closeDrop.current?.();
+    }, [options]);
     useEffect(() => {
       setSelectedIndex(
-        Math.max(Math.min(selectedIndex, options.length - 1), 0)
+        selectedIndex < 0
+          ? options.length - 1
+          : selectedIndex >= options.length
+          ? 0
+          : selectedIndex
       );
     }, [options.length, selectedIndex]);
 
@@ -103,18 +116,26 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       <AutocompleteContext.Provider value={contextValue}>
         <Input
           ref={sharedRef}
-          value={title}
+          value={query}
           onBlur={ev => {
             closeDrop.current?.();
             onBlur?.(ev);
           }}
-          onChange={(v: string) => setTitle(v)}
+          onChange={(v: string) => setQuery(v)}
+          onFocus={ev => {
+            handleCompletion(query);
+            onFocus?.(ev);
+          }}
           onKeyDown={ev => {
             if (ev.key === 'Enter') {
               const selectedOption = options[selectedIndex];
               if (selectedOption) {
-                setTitle(selectedOption.title);
-                setInnerValue(selectedOption.value);
+                setQuery(selectedOption.query);
+                setInnerValue(
+                  'value' in selectedOption
+                    ? selectedOption.value
+                    : selectedOption.query
+                );
               }
               closeDrop.current?.();
               ev.preventDefault();
@@ -123,6 +144,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
               ev.preventDefault();
             } else if (ev.key === 'ArrowDown') {
               setSelectedIndex(v => v + 1);
+              ev.preventDefault();
+            } else if (ev.key === 'Escape') {
+              sharedRef.current?.blur();
               ev.preventDefault();
             }
             onKeyDown?.(ev);
