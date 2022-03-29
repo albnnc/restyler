@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Box, Heading } from 'lib';
 import { createBlueprint } from 'docs/utils';
+import { Box, Heading } from 'lib';
 
 export default {
   title: 'General/Heading'

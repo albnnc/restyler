@@ -13,6 +13,7 @@ import { file } from './file';
 import { form } from './form';
 import { heading } from './heading';
 import { input } from './input';
+import { inputable } from './inputable';
 import { layer } from './layer';
 import { masonry } from './masonry';
 import { menu } from './menu';
@@ -105,6 +106,7 @@ export const defaultTheme: BasicTheme = {
     form,
     heading,
     input,
+    inputable,
     layer,
     masonry,
     menu,
