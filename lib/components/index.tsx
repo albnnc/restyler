@@ -1,4 +1,5 @@
 export * from './Anchor';
+export * from './Autocomplete';
 export * from './BasicQuestion';
 export * from './Box';
 export * from './Button';
@@ -12,6 +13,7 @@ export * from './Form';
 export * from './Heading';
 export * from './Image';
 export * from './Input';
+export * from './Inputable';
 export * from './Layer';
 export * from './Masonry';
 export * from './Menu';
