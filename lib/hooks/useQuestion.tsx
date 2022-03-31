@@ -46,15 +46,24 @@ export const useQuestion = <C extends unknown = never>(
     undefined | QuestionRendererProps['handleClose']
   >();
   const openModal = useModal<C>(
-    props =>
-      renderDescription instanceof Function ? (
-        renderDescription(props)
+    props => {
+      const targetProps = {
+        ...props,
+        handleClose: (v: boolean) => handleQuestionClose.current?.(v)
+      };
+      return renderDescription instanceof Function ? (
+        renderDescription(targetProps)
       ) : (
-        <BasicQuestion onClose={props.handleClose} {...renderDescription} />
-      ),
+        <BasicQuestion
+          onClose={targetProps.handleClose}
+          {...renderDescription}
+        />
+      );
+    },
     {
       deps: [locale, ...deps],
-      kind: 'question'
+      kind: 'question',
+      ...modalProps
     }
   );
   return useCallback(
