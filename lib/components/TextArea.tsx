@@ -12,10 +12,10 @@ export interface TextAreaProps
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ wrap, value, onChange, ...rest }, ref) => {
+    const ThemedTextArea = useThemed('textarea', 'textArea');
     return (
-      <textarea
+      <ThemedTextArea
         ref={ref}
-        sx={{}}
         value={value ?? ''}
         onChange={e => {
           onChange?.(e.target.value);
