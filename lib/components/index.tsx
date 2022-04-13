@@ -1,5 +1,4 @@
 export * from './Anchor';
-export * from './Autocomplete';
 export * from './BasicQuestion';
 export * from './Box';
 export * from './Button';
@@ -31,3 +30,4 @@ export * from './SystemContext';
 export * from './Tab';
 export * from './Table';
 export * from './TextArea';
+export * from './TextCompletion';

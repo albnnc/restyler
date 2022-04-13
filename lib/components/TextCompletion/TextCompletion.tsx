@@ -19,26 +19,24 @@ import {
 import { FormWidgetProps, ThemeProps } from '../../models';
 import { Input } from '../Input';
 import { SystemContext } from '../SystemContext';
-import { AutocompleteContent } from './AutocompleteContent';
-import { AutocompleteContext } from './AutocompleteContext';
+import { TextCompletionContent } from './TextCompletionContent';
+import { TextCompletionContext } from './TextCompletionContext';
 
-export interface AutocompleteOption {
-  key: Key;
-  query: string;
-  value?: unknown;
+export interface TextCompletionOption {
+  value: string;
   render?: () => ReactNode;
 }
 
-export interface AutocompleteProps
+export interface TextCompletionProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
     ThemeProps {
   getOptions: (
-    query: string
-  ) => AutocompleteOption[] | Promise<AutocompleteOption[]>;
+    value: string
+  ) => TextCompletionOption[] | Promise<TextCompletionOption[]>;
 }
 
-export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
+export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
   (
     { getOptions, value, onChange, onFocus, onBlur, onKeyDown, ...rest },
     ref
@@ -49,12 +47,11 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     } = useContext(SystemContext);
     const portal = useImperativePortal(rootPortal);
 
-    const [query, setQuery] = useState('');
-    const [options, setOptions] = useState<AutocompleteOption[]>([]);
-    const [innerValue, setInnerValue] = useState<unknown>(value);
+    const [innerValue, setInnerValue] = useState('');
+    const [options, setOptions] = useState<TextCompletionOption[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [openDrop, anchorRef] = useDrop<HTMLInputElement>(
-      () => <AutocompleteContent />,
+      () => <TextCompletionContent />,
       {
         deps: [locale, options],
         portal,
@@ -70,8 +67,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       closeDrop.current?.();
       closeDrop.current = undefined;
     }, []);
-    const handleCompletion = useCallback(async (query: string) => {
-      const options = await getOptions(query);
+    const handleCompletion = useCallback(async (innerValue: string) => {
+      const options = await getOptions(innerValue);
       setOptions(options);
       options.length > 0 && handleDropOpen();
     }, []);
@@ -80,26 +77,22 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       () => ({
         inputRef: sharedRef,
         options,
-        query,
-        setQuery,
         innerValue,
         setInnerValue,
         selectedIndex,
         setSelectedIndex,
         handleDropClose
       }),
-      [options, query, innerValue, selectedIndex]
+      [options, innerValue, selectedIndex]
     );
 
     useUpdateEffect(() => {
       innerValue !== value && onChange?.(innerValue);
+      handleCompletion(innerValue);
     }, [innerValue]);
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
     }, [value]);
-    useUpdateEffect(() => {
-      handleCompletion(query);
-    }, [query]);
     useUpdateEffect(() => {
       options.length < 1 && handleDropClose();
     }, [options]);
@@ -114,29 +107,24 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     }, [options.length, selectedIndex]);
 
     return (
-      <AutocompleteContext.Provider value={contextValue}>
+      <TextCompletionContext.Provider value={contextValue}>
         <Input
           ref={sharedRef}
-          value={query}
+          value={innerValue}
           onBlur={ev => {
             handleDropClose();
             onBlur?.(ev);
           }}
-          onChange={(v: string) => setQuery(v)}
+          onChange={(v: string) => setInnerValue(v)}
           onFocus={ev => {
-            handleCompletion(query);
+            handleCompletion(innerValue);
             onFocus?.(ev);
           }}
           onKeyDown={ev => {
             if (ev.key === 'Enter') {
               const selectedOption = options[selectedIndex];
               if (selectedOption) {
-                setQuery(selectedOption.query);
-                setInnerValue(
-                  'value' in selectedOption
-                    ? selectedOption.value
-                    : selectedOption.query
-                );
+                setInnerValue(selectedOption.value);
               }
               handleDropClose();
               ev.preventDefault();
@@ -155,7 +143,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
           {...rest}
         />
         {portal}
-      </AutocompleteContext.Provider>
+      </TextCompletionContext.Provider>
     );
   }
 );

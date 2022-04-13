@@ -1,6 +1,5 @@
 import { BasicTheme } from '../../models';
 import { anchor } from './anchor';
-import { autocomplete } from './autocomplete';
 import { box } from './box';
 import { button } from './button';
 import { card } from './card';
@@ -29,6 +28,7 @@ import { systemContainer } from './systemContainer';
 import { tab } from './tab';
 import { table } from './table';
 import { textArea } from './textArea';
+import { textCompletion } from './textCompletion';
 
 export const defaultTheme: BasicTheme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
@@ -93,7 +93,6 @@ export const defaultTheme: BasicTheme = {
   ],
   components: {
     anchor,
-    autocomplete,
     box,
     button,
     card,
@@ -121,6 +120,7 @@ export const defaultTheme: BasicTheme = {
     systemContainer,
     tab,
     table,
-    textArea
+    textArea,
+    textCompletion
   }
 };

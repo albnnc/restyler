@@ -2,7 +2,7 @@ import { BasicTheme } from '../../models';
 
 const markMargin = '1em';
 
-export const autocomplete: BasicTheme = {
+export const textCompletion: BasicTheme = {
   components: {
     option: {
       style: ({ isActive, isSelected }) => ({
