@@ -88,7 +88,8 @@ export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
 
     useUpdateEffect(() => {
       innerValue !== value && onChange?.(innerValue);
-      handleCompletion(innerValue);
+      sharedRef.current === document.activeElement &&
+        handleCompletion(innerValue);
     }, [innerValue]);
     useUpdateEffect(() => {
       innerValue !== value && setInnerValue(value);
