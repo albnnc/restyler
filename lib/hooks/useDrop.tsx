@@ -81,7 +81,6 @@ export const useDrop = <T extends HTMLElement>(
           ref={sharedRef}
           style={{
             position: 'fixed',
-            zIndex: 1,
             left,
             width: isTailored ? width : undefined,
             ...(placement === 'bottom'
