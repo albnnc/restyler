@@ -22,10 +22,7 @@ import {
   useStandaloneTransition
 } from './useStandaloneTransition';
 
-export enum DropPlacement {
-  Top = 'top',
-  Bottom = 'bottom'
-}
+export type DropPlacement = 'top' | 'bottom';
 
 export interface DropOptions extends Omit<DropProps, 'children'> {
   deps: DependencyList;
@@ -44,7 +41,7 @@ export const useDrop = <T extends HTMLElement>(
   const {
     deps,
     isTailored,
-    placement = DropPlacement.Bottom,
+    placement = 'bottom',
     portal,
     onClose,
     isBlurResistant,
@@ -87,7 +84,7 @@ export const useDrop = <T extends HTMLElement>(
             zIndex: 1,
             left,
             width: isTailored ? width : undefined,
-            ...(placement === DropPlacement.Bottom
+            ...(placement === 'bottom'
               ? { top: top + height }
               : { bottom: parentHeight - top })
           }}

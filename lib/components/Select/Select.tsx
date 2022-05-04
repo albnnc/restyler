@@ -12,6 +12,7 @@ import React, {
   Fragment
 } from 'react';
 import {
+  DropPlacement,
   useDrop,
   useImperativePortal,
   useSharedRef,
@@ -30,6 +31,7 @@ export interface SelectProps
     ThemeProps {
   children: ReactElement<SelectOptionProps> | ReactElement<SelectOptionProps>[];
   isMultiple?: boolean;
+  placement?: DropPlacement;
 }
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
@@ -37,6 +39,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     {
       children,
       isMultiple,
+      placement,
       value,
       disabled,
       readOnly,
@@ -56,8 +59,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     // Needs to be memoized since it's used
     // as dependency for other memoization.
     const extraProps = useMemo(
-      () => ({ isMultiple, disabled, readOnly, invalid, required }),
-      [isMultiple, disabled, readOnly, invalid, required]
+      () => ({ isMultiple, placement, disabled, readOnly, invalid, required }),
+      [isMultiple, placement, disabled, readOnly, invalid, required]
     );
 
     const {
@@ -126,6 +129,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       {
         deps: [locale, childrenArray],
         portal,
+        placement,
         isTailored: true
       }
     );
