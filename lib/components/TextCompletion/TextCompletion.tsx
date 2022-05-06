@@ -47,7 +47,7 @@ export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
     } = useContext(SystemContext);
     const portal = useImperativePortal(rootPortal);
 
-    const [innerValue, setInnerValue] = useState('');
+    const [innerValue, setInnerValue] = useState(value);
     const [options, setOptions] = useState<TextCompletionOption[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [openDrop, anchorRef] = useDrop<HTMLInputElement>(
