@@ -1,7 +1,6 @@
 import React, {
   forwardRef,
   HTMLAttributes,
-  Key,
   ReactNode,
   useCallback,
   useContext,
@@ -31,6 +30,7 @@ export interface TextCompletionProps
   extends Omit<HTMLAttributes<HTMLDivElement>, keyof FormWidgetProps>,
     FormWidgetProps,
     ThemeProps {
+  bindKeys?: boolean;
   getOptions: (
     value: string
   ) => TextCompletionOption[] | Promise<TextCompletionOption[]>;
@@ -38,7 +38,16 @@ export interface TextCompletionProps
 
 export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
   (
-    { getOptions, value, onChange, onFocus, onBlur, onKeyDown, ...rest },
+    {
+      bindKeys = true,
+      getOptions,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+      onKeyDown,
+      ...rest
+    },
     ref
   ) => {
     const {
@@ -122,22 +131,24 @@ export const TextCompletion = forwardRef<HTMLInputElement, TextCompletionProps>(
             onFocus?.(ev);
           }}
           onKeyDown={ev => {
-            if (ev.key === 'Enter') {
-              const selectedOption = options[selectedIndex];
-              if (selectedOption) {
-                setInnerValue(selectedOption.value);
+            if (bindKeys) {
+              if (ev.key === 'Enter') {
+                const selectedOption = options[selectedIndex];
+                if (selectedOption) {
+                  setInnerValue(selectedOption.value);
+                }
+                handleDropClose();
+                ev.preventDefault();
+              } else if (ev.key === 'ArrowUp') {
+                setSelectedIndex(v => v - 1);
+                ev.preventDefault();
+              } else if (ev.key === 'ArrowDown') {
+                setSelectedIndex(v => v + 1);
+                ev.preventDefault();
+              } else if (ev.key === 'Escape') {
+                sharedRef.current?.blur();
+                ev.preventDefault();
               }
-              handleDropClose();
-              ev.preventDefault();
-            } else if (ev.key === 'ArrowUp') {
-              setSelectedIndex(v => v - 1);
-              ev.preventDefault();
-            } else if (ev.key === 'ArrowDown') {
-              setSelectedIndex(v => v + 1);
-              ev.preventDefault();
-            } else if (ev.key === 'Escape') {
-              sharedRef.current?.blur();
-              ev.preventDefault();
             }
             onKeyDown?.(ev);
           }}
