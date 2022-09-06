@@ -46,7 +46,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       invalid,
       required,
       placeholder,
-      onChange
+      onChange,
+      ...rest
     },
     ref
   ) => {
@@ -158,7 +159,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const sharedRef = useSharedRef<HTMLDivElement>(null, [ref, anchorRef]);
     return (
-      <ThemedSelect ref={sharedRef} onClick={handleClick} {...extraProps}>
+      <ThemedSelect
+        ref={sharedRef}
+        onClick={handleClick}
+        {...extraProps}
+        {...rest}
+      >
         <SelectContext.Provider
           value={{
             value: innerValue,
