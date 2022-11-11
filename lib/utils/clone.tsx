@@ -6,6 +6,7 @@ export const clone = <T extends any>(data: T): T => {
   }
 
   let result;
+
   [Number, String, Boolean].forEach(function (type) {
     if (item instanceof type) {
       result = type(item);
