@@ -96,7 +96,6 @@ export const File = forwardRef<HTMLDivElement, FileProps>(
 File.displayName = 'File';
 
 const getLabel = (files: FileList | undefined) => {
-
   if (!files || files.length === 0) return 'Choose file';
   if (files.length > 1) {
     return `${files?.length} files selected`;
