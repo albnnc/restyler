@@ -23,7 +23,7 @@
     "pages": "npm run doc && npm run pages:404 && npm run pages:deploy",
     "pages:404": "cpy ./dist/docs/index.html ./dist/docs/404.html",
     "pages:deploy": "gh-pages -d ./dist/docs",
-    "release": "delta-release",
+    "release": "delta-release --force",
     "test": "jest"
   },
   "devDependencies": {
@@ -46,7 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "cpy-cli": "^3.1.1",
-    "delta-release": "^0.2.6",
+    "delta-release": "^0.2.7",
     "eslint": "^7.27.0",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.23.4",
