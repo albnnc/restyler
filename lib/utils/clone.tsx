@@ -22,6 +22,8 @@ export const clone = <T extends any>(data: T): T => {
     } else if (typeof item === 'object') {
       if (item.nodeType && typeof item.cloneNode == 'function') {
         result = item.cloneNode(true);
+      } else if (item instanceof FileList) {
+        result = item;
       } else if (!item.prototype) {
         if (item instanceof Date) {
           result = new Date(item);
