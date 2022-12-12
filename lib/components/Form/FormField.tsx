@@ -34,8 +34,8 @@ export interface FormFieldProps
     onChange?: FormEventHandler<HTMLElement>;
     value?: any;
   }>;
-  help?: string;
-  label?: string;
+  help?: ReactNode;
+  label?: ReactNode;
   name: string;
   validate?: FormFieldValidator;
 }
