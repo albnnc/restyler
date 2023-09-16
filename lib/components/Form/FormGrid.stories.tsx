@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { Meta } from '@storybook/react';
 import { jsx } from '@theme-ui/core';
-import { Button, Form, FormField, FormGrid } from 'lib';
 import { compact } from 'docs/decorators';
 import { createBlueprint } from 'docs/utils';
+import { Button, Form, FormField, FormGrid } from 'lib';
 
 export default {
   title: 'Forms/FormGrid',

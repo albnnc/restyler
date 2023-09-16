@@ -37,6 +37,7 @@ export interface FormFieldProps
   help?: string;
   label?: string;
   name: string;
+  placeholder?: string;
   validate?: FormFieldValidator;
 }
 
@@ -44,16 +45,17 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   (
     {
       children,
+      disabled,
       help,
+      invalid,
       label,
       name,
-      validate,
-      disabled,
+      placeholder,
+      prefix,
       readOnly,
       required,
-      invalid,
-      prefix,
       suffix,
+      validate,
       ...rest
     },
     ref
@@ -103,6 +105,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         disabled: !!(disabled || formDisabled),
         invalid: invalid ?? fieldErrors.length > 0,
         name,
+        placeholder,
         readOnly: !!(readOnly || formReadOnly),
         required,
         value: fieldValue
